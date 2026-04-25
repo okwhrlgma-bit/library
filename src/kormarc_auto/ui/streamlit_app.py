@@ -39,15 +39,15 @@ logger = logging.getLogger(__name__)
 def _record_to_mrk(record) -> str:  # type: ignore[no-untyped-def]
     """pymarc.Record → 사람이 읽는 mrk 형식 (사서 검토용)."""
     lines = [f"=LDR  {record.leader}"]
-    for f in record.fields:
-        if f.is_control_field():
-            lines.append(f"={f.tag}  {f.data}")
+    for field in record.fields:
+        if field.is_control_field():
+            lines.append(f"={field.tag}  {field.data}")
         else:
-            ind1, ind2 = f.indicators[0], f.indicators[1]
+            ind1, ind2 = field.indicators[0], field.indicators[1]
             ind1 = "\\" if ind1 == " " else ind1
             ind2 = "\\" if ind2 == " " else ind2
-            sf = "".join("$" + sf.code + sf.value for sf in f.subfields)
-            lines.append(f"={f.tag}  {ind1}{ind2}{sf}")
+            subs = "".join("$" + s.code + s.value for s in field.subfields)
+            lines.append(f"={field.tag}  {ind1}{ind2}{subs}")
     return "\n".join(lines)
 
 
@@ -252,7 +252,7 @@ def _tab_photo(agency: str) -> None:
 
         tmp_dir = Path(".cache/kormarc-auto/ui-uploads")
         tmp_dir.mkdir(parents=True, exist_ok=True)
-        paths: list[Path] = []
+        paths: list[str | Path] = []
         for up in uploads:
             p = tmp_dir / up.name
             p.write_bytes(up.getvalue())

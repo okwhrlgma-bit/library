@@ -16,10 +16,10 @@ from typing import Any
 
 from kormarc_auto.constants import (
     FREE_QUOTA_DEFAULT,
-    PAYMENT_INFO_URL,
     PRICE_PER_RECORD_KRW,
     USAGE_DB_PATH,
     USAGE_LOG_PATH,
+    get_payment_info_url,
 )
 
 logger = logging.getLogger(__name__)
@@ -85,7 +85,7 @@ def can_consume(api_key: str) -> tuple[bool, dict[str, Any]]:
         **record,
         "remaining": remaining,
         "price_per_record_krw": PRICE_PER_RECORD_KRW,
-        "payment_url": PAYMENT_INFO_URL if remaining <= 5 else None,
+        "payment_url": get_payment_info_url() if remaining <= 5 else None,
     }
 
 

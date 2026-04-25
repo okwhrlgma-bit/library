@@ -23,7 +23,7 @@ from pathlib import Path
 from threading import Lock
 from typing import Any
 
-from kormarc_auto.constants import FREE_QUOTA_DEFAULT, PAYMENT_INFO_URL
+from kormarc_auto.constants import FREE_QUOTA_DEFAULT, get_payment_info_url
 
 logger = logging.getLogger(__name__)
 
@@ -128,7 +128,7 @@ def issue_free_trial_key(
         "library_name": library_name,
         "ui_url": os.getenv("KORMARC_PUBLIC_UI_URL", "http://localhost:8501"),
         "api_url": os.getenv("KORMARC_PUBLIC_API_URL", "http://localhost:8000"),
-        "payment_url": PAYMENT_INFO_URL,
+        "payment_url": get_payment_info_url(),
         "expires_at": None,
         "next_steps": [
             "위 api_key를 안전한 곳에 보관하세요. 분실 시 재발급 필요합니다.",

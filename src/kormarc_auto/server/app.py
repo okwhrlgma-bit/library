@@ -33,8 +33,8 @@ from kormarc_auto.api.search import search_by_query
 from kormarc_auto.classification.kdc_classifier import recommend_kdc
 from kormarc_auto.classification.subject_recommender import recommend_subjects
 from kormarc_auto.constants import (
-    PAYMENT_INFO_URL,
     PRICE_PER_RECORD_KRW,
+    get_payment_info_url,
 )
 from kormarc_auto.kormarc.builder import build_kormarc_record
 from kormarc_auto.kormarc.validator import validate_record
@@ -90,7 +90,7 @@ def create_app() -> FastAPI:
             {
                 "price_per_record_krw": PRICE_PER_RECORD_KRW,
                 "free_quota_default": 50,
-                "payment_url": PAYMENT_INFO_URL,
+                "payment_url": get_payment_info_url(),
                 "currency": "KRW",
                 "notes": "권당 과금. 신규 키 50건 무료 체험. 정식 결제는 곧 출시 예정.",
             }
@@ -151,7 +151,7 @@ def create_app() -> FastAPI:
             used=st["used"],
             remaining=remaining,
             price_per_record_krw=PRICE_PER_RECORD_KRW,
-            payment_url=PAYMENT_INFO_URL if remaining <= 5 else None,
+            payment_url=get_payment_info_url() if remaining <= 5 else None,
         )
 
     @app.post("/isbn", response_model=KormarcResponse, tags=["kormarc"])
@@ -208,7 +208,7 @@ def create_app() -> FastAPI:
 
         from kormarc_auto.vision.photo_pipeline import photo_to_book_data
 
-        tmp_paths: list[Path] = []
+        tmp_paths: list[str | Path] = []
         try:
             for upload in files:
                 suffix = Path(upload.filename or "image.jpg").suffix or ".jpg"
