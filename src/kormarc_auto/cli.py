@@ -565,6 +565,44 @@ def cmd_info(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_account(args: argparse.Namespace) -> int:
+    """본인 데이터 다운로드/삭제 — 개인정보보호법 §35-3·§36."""
+    import json
+
+    from kormarc_auto.server.usage import (
+        delete_account_data,
+        export_account_data,
+    )
+
+    api_key = args.api_key
+    if not api_key:
+        print("❌ --api-key 또는 KORMARC_API_KEY 환경변수 필요")
+        return 2
+
+    if args.action == "export":
+        data = export_account_data(api_key)
+        out = Path(args.output or "account_export.json")
+        out.write_text(
+            json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        print(f"✓ 본인 데이터 다운로드: {out}")
+        print(f"  사용 로그: {data['usage_log_count']}건")
+        print(f"  피드백: {len(data['feedback'])}건")
+        return 0
+
+    if args.action == "delete":
+        if not args.yes:
+            print("⚠ 본인 데이터를 영구 삭제합니다. 복구 불가.")
+            print("   계속하려면 --yes 플래그를 추가하세요.")
+            return 1
+        result = delete_account_data(api_key)
+        print(f"✓ 삭제 완료: {result['deleted']}")
+        return 0
+
+    print(f"❌ 알 수 없는 동작: {args.action}")
+    return 2
+
+
 def build_parser() -> argparse.ArgumentParser:
     """argparse 트리 구성."""
     parser = argparse.ArgumentParser(
@@ -709,6 +747,27 @@ def build_parser() -> argparse.ArgumentParser:
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")
     p_info.set_defaults(func=cmd_info)
+
+    # account — 개인정보보호법 §35-3 / §36
+    p_acc = sub.add_parser(
+        "account",
+        help="본인 데이터 다운로드/삭제 (개인정보보호법 §35-3·§36)",
+    )
+    p_acc.add_argument(
+        "action",
+        choices=["export", "delete"],
+        help="export=본인 데이터 JSON 다운로드 / delete=영구 삭제",
+    )
+    p_acc.add_argument(
+        "--api-key",
+        default=os.getenv("KORMARC_API_KEY"),
+        help="API 키 (또는 KORMARC_API_KEY 환경변수)",
+    )
+    p_acc.add_argument("--output", default=None, help="export 저장 경로")
+    p_acc.add_argument(
+        "--yes", action="store_true", help="delete 확인 (필수)"
+    )
+    p_acc.set_defaults(func=cmd_account)
 
     return parser
 
