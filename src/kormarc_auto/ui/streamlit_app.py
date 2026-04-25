@@ -227,15 +227,27 @@ def _process_isbn(isbn: str, agency: str) -> dict | None:
         st.error("ISBN을 입력하세요.")
         return None
 
-    with st.spinner(f"외부 API 조회 중... ({isbn})"):
+    with st.spinner(f"외부 API 조회 중 (약 3초)... {isbn}"):
         try:
             book_data = aggregate_by_isbn(isbn)
         except Exception as e:
             st.error(f"외부 API 호출 실패: {e}")
+            st.info(
+                "💡 **해결 방법:**\n"
+                "1. 인터넷 연결을 확인하세요\n"
+                "2. 잠시 후 다시 시도하세요 (외부 API 일시 장애일 수 있음)\n"
+                "3. 계속 실패하면 [사진] 탭으로 표지 업로드"
+            )
             return None
 
     if not book_data.get("sources"):
-        st.error(f"ISBN {isbn}: 모든 소스에서 미조회")
+        st.error(f"ISBN {isbn}: 등록 정보를 찾을 수 없습니다.")
+        st.info(
+            "💡 **해결 방법:**\n"
+            "1. ISBN 13자리가 맞는지 확인 (978로 시작)\n"
+            "2. [검색] 탭에서 표제·저자로 시도\n"
+            "3. 옛 책·자가출판이면 [사진] 탭으로 표지 업로드"
+        )
         return None
 
     user_key = st.session_state.get("user_anthropic_key") or None
@@ -245,17 +257,17 @@ def _process_isbn(isbn: str, agency: str) -> dict | None:
 
         os.environ.pop("KORMARC_DISABLE_AI", None)
 
-    with st.spinner("KDC 분류 추천..."):
+    with st.spinner("KDC 분류 추천 중 (약 2초)..."):
         kdc_candidates = recommend_kdc(book_data, user_api_key=user_key if use_ai else None)
     if kdc_candidates and not book_data.get("kdc"):
         book_data["kdc"] = kdc_candidates[0]["code"]
 
-    with st.spinner("주제명 추천..."):
+    with st.spinner("주제명 추천 중 (약 2초)..."):
         subject_candidates = recommend_subjects(
             book_data, user_api_key=user_key if use_ai else None
         )
 
-    with st.spinner("KORMARC 빌드..."):
+    with st.spinner("KORMARC 빌드 중..."):
         record = build_kormarc_record(book_data, cataloging_agency=agency)
         add_880_pairs(record)
         errors = validate_record(record)
@@ -356,7 +368,14 @@ def _tab_search(agency: str) -> None:
                 st.error(f"검색 실패: {e}")
                 return
         if not candidates:
-            st.warning("검색 결과 없음")
+            st.warning("검색 결과가 없습니다.")
+            st.info(
+                "💡 **다음을 시도해 보세요:**\n"
+                "- 띄어쓰기/오타 확인 (예: '한강 작별' vs '한강작별')\n"
+                "- 표제 일부만 (예: '작별')\n"
+                "- 저자명 단독\n"
+                "- ISBN을 알면 [ISBN 단건] 탭이 더 정확합니다"
+            )
             return
         st.session_state["search_candidates"] = candidates
 
@@ -378,7 +397,10 @@ def _tab_search(agency: str) -> None:
 
 def _tab_photo(agency: str) -> None:
     st.subheader("사진 → KORMARC")
-    st.caption("표지·판권지·뒷표지 사진 1~3장 업로드. 모바일에서는 카메라 직접 촬영 가능.")
+    st.caption(
+        "표지·판권지·뒷표지 사진 1~3장 업로드. 폰에서 사용 시 [사진 촬영]을 누르세요. "
+        "ISBN이 있는 판권지(책 뒷쪽 4페이지)가 가장 정확합니다."
+    )
     uploads = st.file_uploader(
         "이미지 선택",
         type=["jpg", "jpeg", "png", "webp"],
@@ -414,6 +436,13 @@ def _tab_photo(agency: str) -> None:
 
         if book_data.get("vision_only") and not book_data.get("isbn"):
             st.error("ISBN 추출 실패 — 사진 품질을 확인하세요.")
+            st.info(
+                "💡 **해결 방법:**\n"
+                "1. **판권지(책 뒷쪽)** 사진을 찍으세요 — ISBN 13자리가 인쇄된 페이지\n"
+                "2. 흔들림 없이 평면으로 촬영 (모서리 4개가 모두 보이게)\n"
+                "3. 형광등이 직접 비치지 않도록 (글자 가림 방지)\n"
+                "4. ISBN이 정 안 보이면 [검색] 탭에서 표제로 찾으세요"
+            )
             if book_data.get("warnings"):
                 for w in book_data["warnings"]:
                     st.warning(w)
@@ -935,18 +964,38 @@ def main() -> None:
     st.title("📚 kormarc-auto")
     st.caption(f"한국 도서관용 KORMARC 자동 생성 · v{__version__}")
 
+    st.info(
+        "✨ **처음이신가요?** 신규 가입자는 **50건 무료**입니다. "
+        "아래 [ISBN] 탭에 ISBN 13자리만 넣으면 5초 안에 KORMARC가 생성됩니다.",
+        icon="👋",
+    )
+    with st.expander("📖 5분 가이드 (처음 사용 시 권장)"):
+        st.markdown(
+            "**1. ISBN 단건** — 13자리 ISBN 입력 → KORMARC 생성  \n"
+            "**2. 검색** — 표제/저자로 후보 보고 선택  \n"
+            "**3. 사진** — 표지·판권지 1~3장 (폰 카메라 OK)  \n"
+            "**4. 일괄** — ISBN 여러 개를 한 번에  \n\n"
+            "결과 카드의 KDC·주제명은 **AI 추천** 후보입니다. "
+            "사서가 검토 후 사용하세요. KOLAS 반입 폴더에 .mrc 파일을 넣으면 자동 인식."
+        )
+
     with st.sidebar:
         st.markdown("### 설정")
-        agency = st.text_input("우리 도서관 부호 (040 ▾a)", "OURLIB", key="agency_input")
+        agency = st.text_input(
+            "우리 도서관 부호",
+            "OURLIB",
+            key="agency_input",
+            help="KOLAS 관리자 화면의 도서관 식별부호 (KORMARC 040 ▾a). 모르시면 OURLIB 그대로 두세요.",
+        )
         st.markdown("---")
-        st.markdown("### AI 보조 (선택)")
-        st.markdown("KDC·주제명 AI 추천을 쓰려면 본인 Anthropic 키 입력. 비용은 본인 부담 (권당 약 0.5원).")
+        st.markdown("### AI 추천 보조 (선택)")
+        st.caption("⚙ KDC·주제명 AI 자동 추천을 쓰려면 입력. 안 입력해도 ISBN 기능은 100% 작동합니다.")
         ai_key = st.text_input(
-            "Anthropic API 키",
+            "AI 추천 보조 키 (선택)",
             type="password",
             placeholder="sk-ant-api03-...",
             key="user_anthropic_key",
-            help="https://console.anthropic.com/settings/keys 에서 발급",
+            help="https://console.anthropic.com/settings/keys 에서 발급. 비용 본인 부담 (권당 약 0.5원).",
         )
         st.checkbox(
             "AI 보조 사용",
