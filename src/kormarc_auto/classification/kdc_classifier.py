@@ -127,7 +127,11 @@ KDC 6판 주류:
 """
 
 
-def recommend_kdc(book_data: dict[str, Any]) -> list[dict[str, Any]]:
+def recommend_kdc(
+    book_data: dict[str, Any],
+    *,
+    user_api_key: str | None = None,
+) -> list[dict[str, Any]]:
     """KDC 분류 후보 추천 (다단계).
 
     Args:
@@ -171,7 +175,7 @@ def recommend_kdc(book_data: dict[str, Any]) -> list[dict[str, Any]]:
     top_conf = max((c["confidence"] for c in candidates), default=0.0)
     if top_conf < 0.80 and _has_ai_signal(book_data):
         try:
-            ai_results = _ai_kdc_recommend(book_data)
+            ai_results = _ai_kdc_recommend(book_data, user_api_key=user_api_key)
             candidates.extend(ai_results)
         except AnthropicClientError as e:
             logger.warning("KDC AI 추천 실패: %s", e)
@@ -198,7 +202,11 @@ def _has_ai_signal(book_data: dict[str, Any]) -> bool:
     )
 
 
-def _ai_kdc_recommend(book_data: dict[str, Any]) -> list[dict[str, Any]]:
+def _ai_kdc_recommend(
+    book_data: dict[str, Any],
+    *,
+    user_api_key: str | None = None,
+) -> list[dict[str, Any]]:
     """Claude로 KDC 후보 3개 + 신뢰도 + 이유 반환."""
     use_model = os.getenv("CLAUDE_TEXT_MODEL") or DEFAULT_TEXT_MODEL
 
@@ -233,6 +241,7 @@ def _ai_kdc_recommend(book_data: dict[str, Any]) -> list[dict[str, Any]]:
         tools=[_KDC_TOOL],
         tool_name="recommend_kdc_codes",
         max_tokens=600,
+        user_api_key=user_api_key,
     )
 
     tool_input = result.get("tool_input") or {}

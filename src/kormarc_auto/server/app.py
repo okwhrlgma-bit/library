@@ -62,6 +62,9 @@ logger = logging.getLogger(__name__)
 
 def create_app() -> FastAPI:
     """FastAPI 앱 팩토리."""
+    from dotenv import load_dotenv
+
+    load_dotenv()
     setup_logging()
 
     app = FastAPI(

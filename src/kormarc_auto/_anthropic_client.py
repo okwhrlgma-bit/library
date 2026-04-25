@@ -34,7 +34,12 @@ class AnthropicClientError(Exception):
 
 @lru_cache(maxsize=1)
 def get_anthropic_client() -> Any:
-    """전역 Anthropic 클라이언트 (lazy import)."""
+    """전역 Anthropic 클라이언트 — 환경변수 키 사용 (PO/관리자용)."""
+    return _build_client(api_key=os.getenv("ANTHROPIC_API_KEY"))
+
+
+def _build_client(api_key: str | None) -> Any:
+    """주어진 키로 Anthropic 클라이언트 생성. BYOK 호출자에서 사용."""
     try:
         from anthropic import Anthropic
     except ImportError as e:
@@ -42,10 +47,10 @@ def get_anthropic_client() -> Any:
             "anthropic SDK 미설치 — `pip install anthropic`로 설치하세요."
         ) from e
 
-    api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
-        raise AnthropicClientError("ANTHROPIC_API_KEY 환경변수가 설정되지 않았습니다.")
-
+        raise AnthropicClientError(
+            "ANTHROPIC_API_KEY 미설정. 사서 본인 키를 UI에 입력하거나 .env에 ANTHROPIC_API_KEY 추가."
+        )
     return Anthropic(api_key=api_key, timeout=ANTHROPIC_TIMEOUT_SECONDS)
 
 
@@ -114,6 +119,7 @@ def cached_messages(
     max_tokens: int = ANTHROPIC_DEFAULT_MAX_TOKENS,
     temperature: float = 0.0,
     use_cache: bool = True,
+    user_api_key: str | None = None,
 ) -> dict[str, Any]:
     """anthropic.messages.create() 래퍼.
 
@@ -139,6 +145,11 @@ def cached_messages(
     Raises:
         AnthropicClientError: 호출·파싱 실패
     """
+    # AI 비활성 모드 — 크레딧 절감용 (KDC 1·2순위 + 외부 API만으로 동작)
+    if os.getenv("KORMARC_DISABLE_AI", "").lower() in ("1", "true", "yes"):
+        logger.info("KORMARC_DISABLE_AI 설정됨 — Anthropic 호출 건너뜀: %s", cache_key)
+        return {"tool_input": None, "text": None, "raw": None, "cached": False, "disabled": True}
+
     cache = get_anthropic_cache() if use_cache else None
     if cache is not None:
         cached = cache.get(cache_key)
@@ -146,7 +157,9 @@ def cached_messages(
             logger.debug("Anthropic 캐시 히트: %s", cache_key)
             return {**cached, "cached": True}
 
-    client = get_anthropic_client()
+    # BYOK: 호출자가 user_api_key 명시 시 그 키 사용 (사서 본인 비용)
+    # 없으면 환경변수 기본 키 (PO/관리자용)
+    client = _build_client(user_api_key) if user_api_key else get_anthropic_client()
 
     create_kwargs: dict[str, Any] = {
         "model": model,

@@ -34,6 +34,9 @@ dev = [
 ui = [
   "streamlit>=1.39",
 ]
+ocr = [
+  "easyocr>=1.7",  # AI 없이 한국어 OCR (바코드 실패 시 폴백)
+]
 
 [project.scripts]
 kormarc-auto = "kormarc_auto.cli:main"

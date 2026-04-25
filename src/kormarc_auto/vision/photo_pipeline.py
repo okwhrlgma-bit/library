@@ -25,6 +25,10 @@ from kormarc_auto.vision.claude_vision import (
     extract_isbn_via_vision,
     extract_metadata_from_photos,
 )
+from kormarc_auto.vision.ocr import (
+    extract_isbn_from_image_ocr,
+    extract_metadata_hints_from_ocr,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -56,6 +60,30 @@ def photo_to_book_data(image_paths: list[str | Path]) -> dict[str, Any]:
         if isbn:
             logger.info("바코드 ISBN 추출 성공: %s", isbn)
             return _enrich_with_isbn(isbn, source="barcode")
+
+    # 2. OCR로 ISBN 텍스트 추출 (AI 없이, 무료)
+    for path in image_paths:
+        isbn = extract_isbn_from_image_ocr(path)
+        if isbn:
+            logger.info("OCR ISBN 추출 성공: %s", isbn)
+            return _enrich_with_isbn(isbn, source="ocr_isbn")
+
+    # AI 비활성 모드 — OCR도 실패하면 OCR 힌트만 반환 (사서 수기 입력)
+    import os
+
+    if os.getenv("KORMARC_DISABLE_AI", "").lower() in ("1", "true", "yes"):
+        logger.info("KORMARC_DISABLE_AI 설정됨 — Vision 호출 건너뜀, OCR 힌트만")
+        ocr_hints = extract_metadata_hints_from_ocr(image_paths)
+        return {
+            "confidence": ocr_hints.get("confidence", 0.0),
+            "vision_only": True,
+            "extraction_method": "ocr_hints",
+            "ocr_isbn_candidate": ocr_hints.get("isbn"),
+            "ocr_title_candidates": ocr_hints.get("title_candidates", []),
+            "ocr_publisher_candidates": ocr_hints.get("publisher_candidates", []),
+            "ocr_raw_lines": ocr_hints.get("raw_lines", []),
+            "warnings": ["AI 비활성 + OCR 힌트만 — 사서 수기 입력 필요"],
+        }
 
     # 2. Vision Stage 1: ISBN 텍스트 추출 (Haiku, 저렴)
     isbn = extract_isbn_via_vision(image_paths)

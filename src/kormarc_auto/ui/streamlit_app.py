@@ -108,13 +108,22 @@ def _process_isbn(isbn: str, agency: str) -> dict | None:
         st.error(f"ISBN {isbn}: 모든 소스에서 미조회")
         return None
 
+    user_key = st.session_state.get("user_anthropic_key") or None
+    use_ai = bool(st.session_state.get("ai_enabled")) and user_key
+    if use_ai:
+        import os
+
+        os.environ.pop("KORMARC_DISABLE_AI", None)
+
     with st.spinner("KDC 분류 추천..."):
-        kdc_candidates = recommend_kdc(book_data)
+        kdc_candidates = recommend_kdc(book_data, user_api_key=user_key if use_ai else None)
     if kdc_candidates and not book_data.get("kdc"):
         book_data["kdc"] = kdc_candidates[0]["code"]
 
     with st.spinner("주제명 추천..."):
-        subject_candidates = recommend_subjects(book_data)
+        subject_candidates = recommend_subjects(
+            book_data, user_api_key=user_key if use_ai else None
+        )
 
     with st.spinner("KORMARC 빌드..."):
         record = build_kormarc_record(book_data, cataloging_agency=agency)
@@ -358,6 +367,10 @@ def _rows_to_csv(rows: list[dict]) -> bytes:
 
 
 def main() -> None:
+    from dotenv import load_dotenv
+
+    # .env를 작업 폴더에서 우선, 없으면 부모로 거슬러 올라가며 자동 탐색
+    load_dotenv()
     setup_logging()
     _setup_page()
 
@@ -367,6 +380,25 @@ def main() -> None:
     with st.sidebar:
         st.markdown("### 설정")
         agency = st.text_input("우리 도서관 부호 (040 ▾a)", "OURLIB", key="agency_input")
+        st.markdown("---")
+        st.markdown("### AI 보조 (선택)")
+        st.markdown("KDC·주제명 AI 추천을 쓰려면 본인 Anthropic 키 입력. 비용은 본인 부담 (권당 약 0.5원).")
+        ai_key = st.text_input(
+            "Anthropic API 키",
+            type="password",
+            placeholder="sk-ant-api03-...",
+            key="user_anthropic_key",
+            help="https://console.anthropic.com/settings/keys 에서 발급",
+        )
+        st.checkbox(
+            "AI 보조 사용",
+            value=bool(ai_key),
+            key="ai_enabled",
+            disabled=not bool(ai_key),
+            help="키 입력 시에만 활성. AI 미사용 시 ISBN 부가기호·KDC 트리만 사용.",
+        )
+        if ai_key:
+            st.caption("✓ AI 사용 가능 — 본인 비용으로 호출됨")
         st.markdown("---")
         st.markdown("### 가격 안내")
         st.markdown(f"- 권당 **{PRICE_PER_RECORD_KRW:,}원**")
