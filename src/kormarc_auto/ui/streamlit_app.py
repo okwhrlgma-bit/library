@@ -36,6 +36,21 @@ from kormarc_auto.vernacular.field_880 import add_880_pairs
 logger = logging.getLogger(__name__)
 
 
+def _record_to_mrk(record) -> str:  # type: ignore[no-untyped-def]
+    """pymarc.Record → 사람이 읽는 mrk 형식 (사서 검토용)."""
+    lines = [f"=LDR  {record.leader}"]
+    for f in record.fields:
+        if f.is_control_field():
+            lines.append(f"={f.tag}  {f.data}")
+        else:
+            ind1, ind2 = f.indicators[0], f.indicators[1]
+            ind1 = "\\" if ind1 == " " else ind1
+            ind2 = "\\" if ind2 == " " else ind2
+            sf = "".join("$" + sf.code + sf.value for sf in f.subfields)
+            lines.append(f"={f.tag}  {ind1}{ind2}{sf}")
+    return "\n".join(lines)
+
+
 def _send_feedback(api_key: str, rating: int, comment: str, category: str) -> None:
     """Streamlit 사이드바에서 피드백을 백엔드로 전송 (서버 도움 없이도 동작 — 로컬 저장)."""
     if not comment and rating == 0:
@@ -160,6 +175,9 @@ def _render_result(result: dict) -> None:
                 st.warning(e)
     else:
         st.success("✓ 검증 통과")
+
+    with st.expander("📄 KORMARC 미리보기 (mrk 텍스트)"):
+        st.code(_record_to_mrk(result["record"]), language="text")
 
     st.download_button(
         label="📥 .mrc 다운로드 (KOLAS 자동 반입)",

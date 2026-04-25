@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>가격 — kormarc-auto</title>
+<style>
+* { box-sizing:border-box; }
+body { margin:0; font-family:system-ui,"Apple SD Gothic Neo","Malgun Gothic",sans-serif; color:#1f2937; line-height:1.6; }
+.wrap { max-width:760px; margin:0 auto; padding:32px 18px 80px; }
+h1 { font-size:30px; margin:0 0 8px; }
+.lead { color:#6b7280; margin:0 0 32px; }
+.plans { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); margin-bottom:36px; }
+.plan { padding:20px; border:1px solid #e5e7eb; border-radius:12px; }
+.plan.recommended { border-color:#1f6feb; box-shadow:0 4px 12px rgba(31,111,235,0.08); position:relative; }
+.plan.recommended::before { content:"추천"; position:absolute; top:-12px; right:14px; background:#1f6feb; color:#fff; font-size:12px; padding:3px 10px; border-radius:12px; }
+.plan small { color:#6b7280; }
+.plan strong { display:block; font-size:24px; margin:6px 0; }
+.plan ul { padding-left:18px; margin:8px 0 0; color:#374151; font-size:14px; }
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+th, td { padding:10px 8px; border-bottom:1px solid #e5e7eb; text-align:left; }
+th { background:#f9fafb; }
+.note { background:#fff8e1; border-left:3px solid #fbbf24; padding:14px 16px; border-radius:6px; margin:18px 0; font-size:14px; }
+.cta { display:inline-block; padding:12px 22px; background:#1f6feb; color:#fff; border-radius:8px; text-decoration:none; font-weight:600; margin-top:14px; }
+a { color:#1f6feb; }
+hr { border:0; border-top:1px solid #e5e7eb; margin:36px 0; }
+.faq dt { font-weight:600; margin-top:14px; }
+.faq dd { margin:4px 0 0; color:#4b5563; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p><a href="./">← 홈으로</a></p>
+
+<h1>가격 안내</h1>
+<p class="lead">사서 한 명이 본인 예산으로 결제할 수 있는 수준에 맞췄습니다. 신규 50건 무료 체험 후 결정하세요.</p>
+
+<div class="plans">
+  <div class="plan">
+    <small>체험</small>
+    <strong>50건 무료</strong>
+    <ul>
+      <li>가입 즉시</li>
+      <li>카드 등록 불필요</li>
+      <li>모든 기능 동일</li>
+    </ul>
+  </div>
+  <div class="plan">
+    <small>권당</small>
+    <strong>100원/건</strong>
+    <ul>
+      <li>소규모·간헐 사용</li>
+      <li>월말 정산</li>
+      <li>최소 결제 5,000원</li>
+    </ul>
+  </div>
+  <div class="plan recommended">
+    <small>월 정액 (소)</small>
+    <strong>50,000원/월</strong>
+    <ul>
+      <li>1,000건/월</li>
+      <li>학교/소규모 공공</li>
+      <li>월 100권 미만 신착에 적합</li>
+    </ul>
+  </div>
+  <div class="plan">
+    <small>월 정액 (중)</small>
+    <strong>150,000원/월</strong>
+    <ul>
+      <li>5,000건/월</li>
+      <li>일반 공공도서관</li>
+    </ul>
+  </div>
+  <div class="plan">
+    <small>월 정액 (대)</small>
+    <strong>300,000원/월</strong>
+    <ul>
+      <li>무제한</li>
+      <li>대형·기업</li>
+      <li>전담 지원</li>
+    </ul>
+  </div>
+</div>
+
+<h3>비교</h3>
+<table>
+  <tr><th></th><th>기존 솔루션 (북이즈·제이넷)</th><th>kormarc-auto</th></tr>
+  <tr><td>가격</td><td>도서관 1관 연 수백~수천만원</td><td>권당 100원 / 월 5만원~</td></tr>
+  <tr><td>도입</td><td>시스템 교체 1~2주</td><td>5분 (가입+키)</td></tr>
+  <tr><td>매체</td><td>PC 전용</td><td>폰 브라우저까지</td></tr>
+  <tr><td>옛 책·기증</td><td>사서 수기</td><td>AI Vision 자동</td></tr>
+  <tr><td>책임</td><td>자동 결정 → 사서 책임</td><td>AI 후보 → 사서 결정</td></tr>
+</table>
+
+<div class="note">
+<strong>베타 기간 안내</strong> — 정식 결제 시스템(포트원·토스)은 곧 가동됩니다.
+지금은 <strong>베타 사서 무료 체험</strong>이 핵심이며, 사용 후 결제 의사가 있으시면 PO와 직접 협의 (계좌 입금 또는 카카오페이).
+세금계산서 발행 가능. <a href="terms-beta.html">베타 약관 →</a>
+</div>
+
+<h3>연간 할인</h3>
+<p>모든 월 정액 플랜은 <strong>연간 결제 시 10% 할인</strong>. 도서관 예산 분기제와 호환되도록 4월·10월 결제 환영.</p>
+
+<hr>
+
+<h3 class="faq-title">자주 묻는 질문</h3>
+<dl class="faq">
+  <dt>도서관 예산으로 결제 가능한가요?</dt>
+  <dd>네. 사업자 등록 후 세금계산서 발행 가능. 도서관 도서구입비 외 자료실 운영비·정보화 사업비로 처리.</dd>
+
+  <dt>사용 횟수는 어떻게 카운트되나요?</dt>
+  <dd>성공한 KORMARC 생성 1건 = 1회. 외부 API 미조회·검색·바코드 실패 등은 차감하지 않습니다.</dd>
+
+  <dt>1관에 사서 여러 명이 사용해도 되나요?</dt>
+  <dd>네. 1키 = 1관 단위. 같은 키를 사서들이 공유하면 됩니다. 사용자 분리는 MVP-2.</dd>
+
+  <dt>한도 초과하면?</dt>
+  <dd>응답에 결제 안내가 포함됩니다. 즉시 결제 또는 다음 달까지 대기 중 선택.</dd>
+
+  <dt>해지·환불</dt>
+  <dd>월 정액은 다음 달부터 자동 해지. 권당 과금은 사용분만 청구.</dd>
+</dl>
+
+<a class="cta" href="./#try">50건 무료 시작</a>
+
+<p style="color:#9ca3af; font-size:12px; margin-top:48px; text-align:center;">© 2026 kormarc-auto · 사서 출신 1인 창업 · 베타 운영 중</p>
+
+</div>
+</body>
+</html>

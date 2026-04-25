@@ -60,3 +60,6 @@ logs/
 
 # Cache
 .cache/
+
+# Backups (운영 데이터 zip — git X)
+backups/
