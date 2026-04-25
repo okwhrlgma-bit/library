@@ -227,6 +227,65 @@ def cmd_ui(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_romanize(args: argparse.Namespace) -> int:
+    """한글 → 로마자 (RR/ALA-LC)."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    from kormarc_auto.librarian_helpers.romanization import hangul_to_alalc, hangul_to_rr
+
+    print(f"입력: {args.text}")
+    print(f"RR (정부 표준):    {hangul_to_rr(args.text)}")
+    print(f"ALA-LC (학술):     {hangul_to_alalc(args.text)}")
+    return 0
+
+
+def cmd_label(args: argparse.Namespace) -> int:
+    """청구기호·바코드 라벨 PDF (A4 Avery)."""
+    from kormarc_auto.output.labels import make_label_pdf
+
+    items = []
+    for line in Path(args.csv).read_text(encoding="utf-8").splitlines()[1:]:
+        parts = [p.strip() for p in line.split(",")]
+        if len(parts) >= 3:
+            items.append(
+                {
+                    "call_number": parts[0],
+                    "registration_no": parts[1],
+                    "title": parts[2],
+                    "barcode_value": parts[1],
+                }
+            )
+
+    if not items:
+        print("❌ 입력 CSV가 비어있음 (헤더 + 데이터 필요)")
+        return 1
+
+    out = make_label_pdf(items, output_path=args.output, layout=args.layout)
+    print(f"✓ {out} ({len(items)} 라벨)")
+    return 0
+
+
+def cmd_inventory(args: argparse.Namespace) -> int:
+    """자관 장서 검색·통계."""
+    from kormarc_auto.inventory.library_db import search_local, stats
+
+    if args.command == "search":
+        results = search_local(args.query, kdc_prefix=args.kdc, limit=args.limit)
+        print(f"  {len(results)}건:")
+        for r in results:
+            print(
+                f"  {r.get('isbn', '?')} | {r.get('title', '?')[:40]} | "
+                f"{r.get('author', '?')[:20]} | KDC {r.get('kdc', '-')}"
+            )
+    elif args.command == "stats":
+        s = stats()
+        print(f"총 레코드: {s['total']}")
+        print("KDC 주류 분포:")
+        for k, v in s.get("by_kdc_main", {}).items():
+            print(f"  {k}: {v}")
+    return 0
+
+
 def cmd_info(args: argparse.Namespace) -> int:
     """프로젝트·환경 진단."""
     import os
@@ -311,6 +370,26 @@ def build_parser() -> argparse.ArgumentParser:
     p_ui = sub.add_parser("ui", help="Streamlit UI 실행 (모바일 반응형)")
     p_ui.add_argument("--port", type=int, default=8501)
     p_ui.set_defaults(func=cmd_ui)
+
+    # romanize
+    p_rom = sub.add_parser("romanize", help="한글 → 로마자 (RR/ALA-LC)")
+    p_rom.add_argument("text", help="한글 텍스트")
+    p_rom.set_defaults(func=cmd_romanize)
+
+    # label
+    p_lbl = sub.add_parser("label", help="청구기호·바코드 라벨 PDF")
+    p_lbl.add_argument("csv", help="청구기호,등록번호,표제 CSV")
+    p_lbl.add_argument("--output", default=None)
+    p_lbl.add_argument("--layout", default="L7160", choices=["L7160", "L7159", "A4_one"])
+    p_lbl.set_defaults(func=cmd_label)
+
+    # inventory
+    p_inv = sub.add_parser("inventory", help="자관 장서 검색·통계")
+    p_inv.add_argument("command", choices=["search", "stats"])
+    p_inv.add_argument("query", nargs="?", default="")
+    p_inv.add_argument("--kdc", default=None, help="KDC prefix 필터")
+    p_inv.add_argument("--limit", type=int, default=20)
+    p_inv.set_defaults(func=cmd_inventory)
 
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")

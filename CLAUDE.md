@@ -204,6 +204,7 @@
 - 2026-04-25 v0.1 — 최초 작성. Phase 1 (ISBN→KORMARC) 구현 시작
 - 2026-04-25 v0.2 — `cli.py` + `constants.py` + `logging_config.py` + `api/_http.py` 추가. 캐싱·재시도 도입. 슬래시 명령 6종 + 에이전트 3종.
 - 2026-04-25 v0.3 — Phase 2 (Vision: Haiku→Sonnet 2단계) + Phase 3 (KDC AI) + Phase 3+ (Subject AI) 실구현. `_anthropic_client.py` 신규 (prompt caching + diskcache + tenacity). FastAPI 서버 (`server/`) + Streamlit UI (`ui/`) + 키워드 검색 (`api/search.py`) 추가. 사서 가치 모듈 3종(`librarian_helpers/call_number.py`, `kormarc/kolas_validator.py`, `api/kolisnet_compare.py`) 추가. 모바일 cloudflared/ngrok 자동 설치 + 권한 사전 등록. 수익화 인프라 (`server/usage.py` 사용량 카운터 + 결제 안내). 슬래시 명령 6종 신규 (/serve, /ui, /search, /vision-test, /kdc-test, /mobile-status). §12 수익 모델 헌법화.
+- 2026-04-26 v0.4 — PO 실 도서관 자료 30+종 흡수 + KORMARC 5대 자료유형 모듈 신규. `kormarc/serial.py`(연속간행물·022·310·362), `kormarc/non_book.py`(비도서·전자자료·007·502·538·856), `kormarc/rare_book.py`(고서·한자·간지·葉), `kormarc/authority_data.py`(전거 100/110/111 + ▾d/e/f/g), `kormarc/material_type.py`(자료유형 분기). 사서 보조: `normalize.py`(입력 패턴), `publisher_db.py`(ISBN→출판사 캐시), `kdc_tree.py`(KDC 트리), `subfield_input.py`($a→▾a), `romanization.py`(한글→RR/ALA-LC), `loss_damage.py`(583 처리 7종). 분류: `scheme.py`(KDC/DDC/NDC/LCC/UDC 추상), `nlsh_vocabulary.py`. 변환: `conversion/marc21.py`. 자관: `inventory/library_db.py`·`importer.py`. 출력: `output/labels.py`(A4 Avery). OCR: `vision/ocr.py`(EasyOCR). 서버: `signup`/`feedback`/`admin`. BYOK 모델. CLI 신규: `romanize`/`label`/`inventory`. 테스트 97건. docs 35+ (사서 도메인·법률·KOLAS·사업·연구).
 
 ---
 
