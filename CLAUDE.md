@@ -204,6 +204,13 @@
 - 2026-04-25 v0.1 — 최초 작성. Phase 1 (ISBN→KORMARC) 구현 시작
 - 2026-04-25 v0.2 — `cli.py` + `constants.py` + `logging_config.py` + `api/_http.py` 추가. 캐싱·재시도 도입. 슬래시 명령 6종 + 에이전트 3종.
 - 2026-04-25 v0.3 — Phase 2 (Vision: Haiku→Sonnet 2단계) + Phase 3 (KDC AI) + Phase 3+ (Subject AI) 실구현. `_anthropic_client.py` 신규 (prompt caching + diskcache + tenacity). FastAPI 서버 (`server/`) + Streamlit UI (`ui/`) + 키워드 검색 (`api/search.py`) 추가. 사서 가치 모듈 3종(`librarian_helpers/call_number.py`, `kormarc/kolas_validator.py`, `api/kolisnet_compare.py`) 추가. 모바일 cloudflared/ngrok 자동 설치 + 권한 사전 등록. 수익화 인프라 (`server/usage.py` 사용량 카운터 + 결제 안내). 슬래시 명령 6종 신규 (/serve, /ui, /search, /vision-test, /kdc-test, /mobile-status). §12 수익 모델 헌법화.
+- 2026-04-26 v0.4.10 — PO 제공 자료 4종 HIGH 흡수: `acquisition/wishlist.py`(희망도서→자관 중복+KDC 균형+예상 비용, 장서개발지침 §2). 1인 사서 수서 시간 30분→5분. CLI `wishlist`. 테스트 193건.
+- 2026-04-26 v0.4.9 — 상호대차 어댑터 `interlibrary/exporters.py`. 책나래(13컬럼)·책바다(서명 컬럼)·RISS(12컬럼) CSV/XLSX. 책나래 운영자 업무지침서 p3-15 흡수. CLI `interlibrary`. 테스트 186건.
+- 2026-04-26 v0.4.8 — 등록번호 자동 부여 `librarian_helpers/registration.py`. 12자리 EM01YY00001 + 누락번호 검출 + 다권본 일괄 (245▾n+490▾v). 알파스 매뉴얼 p72-89 흡수. CLI `registration {next,missing,multivolume}`. 테스트 181건.
+- 2026-04-26 v0.4.7 — 납본 별지 제3호서식 PDF `legal/deposit_form.py`. 도서관법 §21 + 시행규칙 §4 + 시행령 §15. 부수 자동 산정(정부3/보존1/표준2). CLI `deposit form`, `/legal/deposit-form`. 테스트 171건.
+- 2026-04-26 v0.4.6 — CLI `account export/delete` (개인정보보호법 §35-3·§36).
+- 2026-04-26 v0.4.5 — 정식 이용약관 + 개인정보처리방침 v1.0. signup 응답에 terms_url/privacy_url. 운영 감사 HIGH #1 흡수.
+- 2026-04-26 v0.4.4 — `/account/export`·`/account/delete` 엔드포인트 (자기결정권). 테스트 160건.
 - 2026-04-26 v0.4.3 — UX 감사 즉시 수정 + 법적 준수 + B2B 가이드. `streamlit_app.py` UX Top 10 적용(첫 화면 안내·용어 부드럽게·해결법 카드·예상시간), `scripts/rotate_logs.py`(90일/365일 정책, 개인정보보호법 §21), `docs/b2b-vendor-guide.md`(도서납품업체 5분 도입+마진 계산+KOLAS 마이그 메일). 테스트 156건.
 - 2026-04-26 v0.4.2 — 청구·B2B·KOLAS 마이그·사서 친화 UI. `server/billing.py`(월간 집계+청구서 JSON+영수증 PDF+권장 플랜), 신규 엔드포인트 3종(`/batch-vendor` 도서납품업체 1000건/회, `/migrate-from-kolas` 영업, `/billing/monthly/{y}/{m}` 관리자), `streamlit_app.py` Pretendard·네이비/살구·16px 사서 친화 테마. 테스트 152건.
 - 2026-04-26 v0.4.1 — 사서 미충족 영역 4종: `inventory/inspection.py`(책장 사진 OCR → 자관 DB 대조 = 장서점검), `output/reports.py`(신착 안내문·월간 운영 보고서·일괄 검증 리포트 PDF). CLI `inspect`/`report`, FastAPI `/inspect`·`/report/{announcement,monthly,validate}`, Streamlit 도구 탭 2개 신규(장서점검·보고서). 테스트 11건 추가 (총 108).
