@@ -286,6 +286,99 @@ def cmd_inventory(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_inspect(args: argparse.Namespace) -> int:
+    """책장 사진 OCR → 자관 DB 대조 (장서 점검)."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    from kormarc_auto.inventory.inspection import inspect_shelf_images
+
+    kdc_range: tuple[str, str] | None = None
+    if args.kdc_range:
+        parts = [p.strip() for p in args.kdc_range.split("-", 1)]
+        if len(parts) == 2:
+            kdc_range = (parts[0], parts[1])
+
+    print(f"📷 {len(args.images)}장 책장 사진 점검...")
+    result = inspect_shelf_images(args.images, expected_kdc_range=kdc_range)
+
+    print("\n📊 결과:")
+    print(f"  검출 청구기호: {result['detected_count']}건")
+    print(f"  자관 일치:    {len(result['matched'])}건 ({result['summary']['matched_pct']:.1f}%)")
+    print(f"  오배가:       {len(result['missorted'])}건 ({result['summary']['missorted_pct']:.1f}%)")
+    print(f"  자관 미등록:  {len(result['missing_in_db'])}건 ({result['summary']['missing_pct']:.1f}%)")
+
+    if result["missorted"]:
+        print("\n  [오배가 후보]")
+        for cn in result["missorted"][:10]:
+            print(f"    - {cn}")
+    if result["missing_in_db"]:
+        print("\n  [미등록 후보]")
+        for cn in result["missing_in_db"][:10]:
+            print(f"    - {cn}")
+    if result["warnings"]:
+        print("\n  [경고]")
+        for w in result["warnings"][:5]:
+            print(f"    ! {w}")
+
+    if args.csv:
+        from kormarc_auto.inventory.inspection import write_inspection_csv
+
+        csv_path = write_inspection_csv(result, output_path=args.csv)
+        print(f"\n✓ CSV 저장: {csv_path}")
+    return 0
+
+
+def cmd_report(args: argparse.Namespace) -> int:
+    """PDF 보고서 생성 (announcement/monthly/validate)."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    from kormarc_auto.output.reports import (
+        make_acquisition_announcement,
+        make_monthly_report,
+        make_validation_report,
+    )
+
+    if args.report_type == "announcement":
+        from kormarc_auto.inventory.library_db import search_local
+
+        items = search_local(query="", limit=args.limit)
+        if not items:
+            print("❌ 자관 인덱스에 항목이 없습니다 — 먼저 isbn/photo로 .mrc를 생성하세요.")
+            return 1
+        out = make_acquisition_announcement(
+            items,
+            title=args.title or "신착도서 안내",
+            library_name=args.library or "○○도서관",
+            output_path=args.output,
+        )
+        print(f"✓ 신착 안내문: {out} ({len(items)}권)")
+        return 0
+
+    if args.report_type == "monthly":
+        from datetime import datetime as _dt
+
+        now = _dt.now()
+        out = make_monthly_report(
+            library_name=args.library or "○○도서관",
+            year=args.year or now.year,
+            month=args.month or now.month,
+            output_path=args.output,
+        )
+        print(f"✓ 월간 보고서: {out}")
+        return 0
+
+    if args.report_type == "validate":
+        if not args.files:
+            print("❌ .mrc 파일 경로를 1개 이상 입력하세요.")
+            return 1
+        out = make_validation_report(args.files, output_path=args.output)
+        print(f"✓ 검증 리포트: {out} ({len(args.files)}개 파일)")
+        return 0
+
+    print(f"❌ 알 수 없는 보고서 유형: {args.report_type}")
+    return 1
+
+
 def cmd_info(args: argparse.Namespace) -> int:
     """프로젝트·환경 진단."""
     import os
@@ -390,6 +483,39 @@ def build_parser() -> argparse.ArgumentParser:
     p_inv.add_argument("--kdc", default=None, help="KDC prefix 필터")
     p_inv.add_argument("--limit", type=int, default=20)
     p_inv.set_defaults(func=cmd_inventory)
+
+    # inspect
+    p_insp = sub.add_parser("inspect", help="책장 사진 OCR로 장서 점검 (오배가·미등록)")
+    p_insp.add_argument("images", nargs="+", help="책장 사진 1장 이상")
+    p_insp.add_argument(
+        "--kdc-range",
+        default=None,
+        help="이 책장의 예상 KDC 범위, 예: '810-820'",
+    )
+    p_insp.add_argument(
+        "--csv",
+        default=None,
+        help="결과를 CSV로 저장할 경로 (사서 공유용)",
+    )
+    p_insp.set_defaults(func=cmd_inspect)
+
+    # report
+    p_rep = sub.add_parser("report", help="PDF 보고서 (신착 안내·월간·검증)")
+    p_rep.add_argument(
+        "report_type",
+        choices=["announcement", "monthly", "validate"],
+        help="보고서 유형",
+    )
+    p_rep.add_argument("--library", default=None, help="도서관명 (announcement·monthly)")
+    p_rep.add_argument("--title", default=None, help="안내문 제목 (announcement)")
+    p_rep.add_argument("--year", type=int, default=None, help="연도 (monthly)")
+    p_rep.add_argument("--month", type=int, default=None, help="월 (monthly)")
+    p_rep.add_argument("--limit", type=int, default=30, help="안내 게재 권수 (announcement)")
+    p_rep.add_argument(
+        "files", nargs="*", help="검증할 .mrc 파일 목록 (validate 전용)"
+    )
+    p_rep.add_argument("--output", default=None, help="출력 PDF 경로")
+    p_rep.set_defaults(func=cmd_report)
 
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")

@@ -147,6 +147,126 @@ def create_app() -> FastAPI:
         )
         return {"count": len(results), "results": results}
 
+    @app.post("/inspect", tags=["tools"])
+    async def inspect_endpoint(
+        files: list[UploadFile] = File(..., description="책장 사진 1장 이상"),  # noqa: B008
+        kdc_range: str = Form("", description="예상 KDC 범위, 예: '810-820'"),
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """책장 사진 OCR → 자관 DB 대조 (장서 점검)."""
+        check_quota(api_key)
+        from kormarc_auto.inventory.inspection import inspect_shelf_images
+
+        if not files:
+            raise HTTPException(status_code=400, detail="이미지 1장 이상 필요")
+
+        kdc_pair: tuple[str, str] | None = None
+        if kdc_range:
+            parts = [p.strip() for p in kdc_range.split("-", 1)]
+            if len(parts) == 2:
+                kdc_pair = (parts[0], parts[1])
+
+        tmp_paths: list[str | Path] = []
+        try:
+            for upload in files:
+                suffix = Path(upload.filename or "shelf.jpg").suffix or ".jpg"
+                with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                    tmp.write(await upload.read())
+                    tmp_paths.append(Path(tmp.name))
+            try:
+                result = inspect_shelf_images(tmp_paths, expected_kdc_range=kdc_pair)
+            except Exception as e:
+                consume(api_key, kind="inspect", ok=False, ref=str(len(tmp_paths)))
+                raise HTTPException(status_code=502, detail=f"점검 실패: {e}") from e
+            consume(api_key, kind="inspect", ok=True, ref=str(len(tmp_paths)))
+            return result
+        finally:
+            for p in tmp_paths:
+                with contextlib.suppress(OSError):
+                    p.unlink(missing_ok=True)
+
+    @app.post("/report/announcement", tags=["tools"])
+    def report_announcement(
+        body: dict[str, Any],
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """신착도서 안내문 PDF — 자관 인덱스에서 최근 N권."""
+        from kormarc_auto.inventory.library_db import search_local
+        from kormarc_auto.output.reports import make_acquisition_announcement
+
+        limit = int(body.get("limit", 30))
+        items = search_local(query="", limit=limit)
+        if not items:
+            raise HTTPException(status_code=404, detail="자관 인덱스에 항목이 없습니다")
+        out_path = Path(tempfile.gettempdir()) / "kormarc_announcement.pdf"
+        make_acquisition_announcement(
+            items,
+            title=str(body.get("title") or "신착도서 안내"),
+            library_name=str(body.get("library_name") or "○○도서관"),
+            output_path=str(out_path),
+        )
+        consume(api_key, kind="report", ok=True, ref="announcement")
+        pdf_b64 = base64.b64encode(out_path.read_bytes()).decode("ascii")
+        with contextlib.suppress(OSError):
+            out_path.unlink(missing_ok=True)
+        return {"ok": True, "count": len(items), "pdf_base64": pdf_b64}
+
+    @app.post("/report/monthly", tags=["tools"])
+    def report_monthly(
+        body: dict[str, Any],
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """월간 자관 운영 보고서 PDF (상부기관 제출용)."""
+        from datetime import datetime as _dt
+
+        from kormarc_auto.output.reports import make_monthly_report
+
+        now = _dt.now()
+        year = int(body.get("year", now.year))
+        month = int(body.get("month", now.month))
+        out_path = Path(tempfile.gettempdir()) / f"kormarc_monthly_{year}_{month:02d}.pdf"
+        make_monthly_report(
+            library_name=str(body.get("library_name") or "○○도서관"),
+            year=year,
+            month=month,
+            output_path=str(out_path),
+        )
+        consume(api_key, kind="report", ok=True, ref=f"monthly_{year}_{month:02d}")
+        pdf_b64 = base64.b64encode(out_path.read_bytes()).decode("ascii")
+        with contextlib.suppress(OSError):
+            out_path.unlink(missing_ok=True)
+        return {"ok": True, "year": year, "month": month, "pdf_base64": pdf_b64}
+
+    @app.post("/report/validate", tags=["tools"])
+    async def report_validate(
+        files: list[UploadFile] = File(..., description=".mrc 파일 1개 이상"),  # noqa: B008
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """일괄 .mrc 검증 리포트 PDF."""
+        from kormarc_auto.output.reports import make_validation_report
+
+        if not files:
+            raise HTTPException(status_code=400, detail=".mrc 파일 1개 이상 필요")
+
+        tmp_paths: list[str | Path] = []
+        try:
+            for upload in files:
+                suffix = Path(upload.filename or "data.mrc").suffix or ".mrc"
+                with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as tmp:
+                    tmp.write(await upload.read())
+                    tmp_paths.append(Path(tmp.name))
+            out_path = Path(tempfile.gettempdir()) / "kormarc_validation.pdf"
+            make_validation_report(tmp_paths, output_path=str(out_path))
+            consume(api_key, kind="report", ok=True, ref="validate")
+            pdf_b64 = base64.b64encode(out_path.read_bytes()).decode("ascii")
+            with contextlib.suppress(OSError):
+                out_path.unlink(missing_ok=True)
+            return {"ok": True, "file_count": len(tmp_paths), "pdf_base64": pdf_b64}
+        finally:
+            for p in tmp_paths:
+                with contextlib.suppress(OSError):
+                    p.unlink(missing_ok=True)
+
     @app.get("/inventory/stats", tags=["tools"])
     def inventory_stats(api_key: str = Depends(require_api_key)) -> dict[str, Any]:
         """자관 KDC 분포·연도 통계."""

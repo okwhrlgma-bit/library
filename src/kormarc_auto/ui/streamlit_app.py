@@ -365,7 +365,9 @@ def _tab_batch(agency: str) -> None:
 def _tab_tools() -> None:
     """사서 도구 모음 탭 — 로마자·라벨·자관 검색·KDC 트리·식별기호 도움말."""
     st.subheader("🛠 사서 도구")
-    sub_tabs = st.tabs(["로마자", "라벨 PDF", "자관 검색", "KDC 트리", "식별기호 ▾"])
+    sub_tabs = st.tabs(
+        ["로마자", "라벨 PDF", "자관 검색", "KDC 트리", "식별기호 ▾", "장서점검", "보고서"]
+    )
 
     with sub_tabs[0]:
         st.markdown("**한글 → 로마자 (RR + ALA-LC)**")
@@ -470,6 +472,182 @@ def _tab_tools() -> None:
             sub = get_subtree(main_code)
             for code, name in sub.items():
                 st.markdown(f"- **{code}** {name}")
+
+    with sub_tabs[5]:
+        st.markdown("**장서 점검** — 책장 사진 OCR → 자관 DB 대조")
+        st.caption("연 1~2회 사서가 며칠 걸리는 전수 점검을 자동화합니다.")
+        uploads = st.file_uploader(
+            "책장(책등) 사진 업로드",
+            type=["jpg", "jpeg", "png"],
+            accept_multiple_files=True,
+            key="insp_imgs",
+        )
+        col1, col2 = st.columns(2)
+        with col1:
+            kdc_start = st.text_input(
+                "예상 KDC 시작",
+                key="insp_start",
+                placeholder="810",
+                help="이 책장에 있어야 할 KDC 범위 시작",
+            )
+        with col2:
+            kdc_end = st.text_input(
+                "예상 KDC 끝",
+                key="insp_end",
+                placeholder="820",
+                help="범위 끝. 비우면 오배가 판별 생략.",
+            )
+        if uploads and st.button("점검 시작", key="insp_btn"):
+            from kormarc_auto.inventory.inspection import inspect_shelf_images
+
+            tmp_dir = Path(".cache/kormarc-auto/inspection")
+            tmp_dir.mkdir(parents=True, exist_ok=True)
+            paths: list[Path] = []
+            for u in uploads:
+                p = tmp_dir / (u.name or "shelf.jpg")
+                p.write_bytes(u.read())
+                paths.append(p)
+            kdc_pair = (
+                (kdc_start.strip(), kdc_end.strip()) if kdc_start and kdc_end else None
+            )
+            with st.spinner("OCR + 대조 진행 중..."):
+                try:
+                    result = inspect_shelf_images(paths, expected_kdc_range=kdc_pair)
+                except Exception as e:
+                    st.error(f"점검 실패: {e}\n\n`pip install -e .[ocr]` 필요할 수 있음")
+                    result = None
+            if result:
+                c1, c2, c3, c4 = st.columns(4)
+                c1.metric("검출", result["detected_count"])
+                c2.metric("일치", len(result["matched"]))
+                c3.metric("오배가", len(result["missorted"]))
+                c4.metric("미등록", len(result["missing_in_db"]))
+                if result["missorted"]:
+                    st.markdown("**오배가 후보**")
+                    for cn in result["missorted"][:20]:
+                        st.markdown(f"- `{cn}`")
+                if result["missing_in_db"]:
+                    st.markdown("**미등록 후보 (자관 DB에 없음)**")
+                    for cn in result["missing_in_db"][:20]:
+                        st.markdown(f"- `{cn}`")
+                if result["warnings"]:
+                    with st.expander("경고 메시지"):
+                        for w in result["warnings"]:
+                            st.caption(f"- {w}")
+
+                from kormarc_auto.inventory.inspection import (
+                    inspection_result_to_csv_bytes,
+                )
+
+                st.download_button(
+                    "📥 점검 결과 CSV 다운로드",
+                    data=inspection_result_to_csv_bytes(result),
+                    file_name="inspection_result.csv",
+                    mime="text/csv",
+                )
+
+    with sub_tabs[6]:
+        st.markdown("**보고서 PDF** — 신착 안내·월간 보고·일괄 검증")
+        report_kind = st.radio(
+            "유형",
+            ["신착 안내문 (이용자용)", "월간 운영 보고서 (상부기관)", "일괄 검증 리포트"],
+            key="rep_kind",
+        )
+        library = st.text_input("도서관명", "○○도서관", key="rep_lib")
+
+        if report_kind.startswith("신착"):
+            n = st.number_input("게재 권수", 5, 200, 30, key="rep_ann_n")
+            title = st.text_input("안내문 제목", "신착도서 안내", key="rep_ann_title")
+            if st.button("PDF 생성", key="rep_ann_btn"):
+                from kormarc_auto.inventory.library_db import search_local
+                from kormarc_auto.output.reports import make_acquisition_announcement
+
+                items = search_local(query="", limit=int(n))
+                if not items:
+                    st.warning("자관 인덱스가 비었습니다 — 먼저 ISBN/사진 탭에서 .mrc를 생성하세요.")
+                else:
+                    out_path = Path(".cache/kormarc-auto/reports/announcement.pdf")
+                    out_path.parent.mkdir(parents=True, exist_ok=True)
+                    try:
+                        pdf = make_acquisition_announcement(
+                            items,
+                            title=title,
+                            library_name=library,
+                            output_path=str(out_path),
+                        )
+                        st.download_button(
+                            "📥 안내문 PDF 다운로드",
+                            data=pdf.read_bytes(),
+                            file_name="acquisition_announcement.pdf",
+                            mime="application/pdf",
+                        )
+                        st.success(f"{len(items)}권 게재")
+                    except Exception as e:
+                        st.error(f"PDF 생성 실패: {e}")
+
+        elif report_kind.startswith("월간"):
+            from datetime import datetime as _dt
+
+            now = _dt.now()
+            col_y, col_m = st.columns(2)
+            with col_y:
+                year = st.number_input("연도", 2020, 2100, now.year, key="rep_year")
+            with col_m:
+                month = st.number_input("월", 1, 12, now.month, key="rep_month")
+            if st.button("PDF 생성", key="rep_mon_btn"):
+                from kormarc_auto.output.reports import make_monthly_report
+
+                out_path = Path(
+                    f".cache/kormarc-auto/reports/monthly_{int(year)}_{int(month):02d}.pdf"
+                )
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    pdf = make_monthly_report(
+                        library_name=library,
+                        year=int(year),
+                        month=int(month),
+                        output_path=str(out_path),
+                    )
+                    st.download_button(
+                        "📥 월간 보고서 다운로드",
+                        data=pdf.read_bytes(),
+                        file_name=f"monthly_{int(year)}_{int(month):02d}.pdf",
+                        mime="application/pdf",
+                    )
+                except Exception as e:
+                    st.error(f"PDF 생성 실패: {e}")
+
+        else:  # 일괄 검증
+            mrcs = st.file_uploader(
+                ".mrc 파일 업로드 (다중 가능)",
+                type=["mrc"],
+                accept_multiple_files=True,
+                key="rep_val_files",
+            )
+            if mrcs and st.button("PDF 생성", key="rep_val_btn"):
+                from kormarc_auto.output.reports import make_validation_report
+
+                tmp_dir = Path(".cache/kormarc-auto/reports/validate")
+                tmp_dir.mkdir(parents=True, exist_ok=True)
+                paths: list[Path] = []
+                for u in mrcs:
+                    p = tmp_dir / (u.name or "data.mrc")
+                    p.write_bytes(u.read())
+                    paths.append(p)
+                try:
+                    pdf = make_validation_report(
+                        paths,
+                        output_path=str(tmp_dir / "validation_report.pdf"),
+                    )
+                    st.download_button(
+                        "📥 검증 리포트 다운로드",
+                        data=pdf.read_bytes(),
+                        file_name="validation_report.pdf",
+                        mime="application/pdf",
+                    )
+                    st.success(f"{len(paths)}개 파일 검증 완료")
+                except Exception as e:
+                    st.error(f"PDF 생성 실패: {e}")
 
     with sub_tabs[4]:
         st.markdown("**식별기호 ▾ 변환·도움말**")

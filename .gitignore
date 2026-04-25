@@ -29,8 +29,8 @@ build/
 dist/
 *.whl
 
-# 출력 .mrc 파일 (생성물, 커밋 금지)
-output/
+# 출력 .mrc 파일 (생성물, 커밋 금지). src/kormarc_auto/output/ 소스 디렉토리는 제외 안 됨.
+/output/
 *.mrc
 !tests/samples/golden/*.mrc
 
