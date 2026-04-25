@@ -120,3 +120,49 @@ def test_signup_email_validation(client):
     """이메일 너무 짧으면 422."""
     r = client.post("/signup", json={"email": "x"})
     assert r.status_code == 422
+
+
+def test_signup_invalid_email_format(client):
+    """이메일 형식 오류는 429 (signup error)."""
+    r = client.post("/signup", json={"email": "notanemail"})
+    assert r.status_code == 429
+
+
+def test_feedback_endpoint(client):
+    """피드백 저장 엔드포인트."""
+    r = client.post(
+        "/feedback",
+        json={"rating": 4, "comment": "사용 편함", "category": "ux"},
+        headers={"X-API-Key": "fb_test_key_xxx"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert "key_hash" in body
+
+
+def test_feedback_requires_content(client):
+    """rating·comment 둘 다 비면 400."""
+    r = client.post(
+        "/feedback",
+        json={"rating": 0, "comment": ""},
+        headers={"X-API-Key": "fb_test_key_xxx"},
+    )
+    assert r.status_code == 400
+
+
+def test_admin_stats_requires_admin_key(client):
+    """일반 키는 403."""
+    r = client.get("/admin/stats", headers={"X-API-Key": "regular_user_key_xxx"})
+    assert r.status_code == 403
+
+
+def test_admin_stats_with_admin_key(client, monkeypatch):
+    """관리자 키면 통계 반환."""
+    monkeypatch.setenv("KORMARC_ADMIN_KEYS", "admin_key_for_test_xxx")
+    r = client.get("/admin/stats", headers={"X-API-Key": "admin_key_for_test_xxx"})
+    assert r.status_code == 200
+    body = r.json()
+    assert "users" in body
+    assert "usage_24h" in body
+    assert "revenue_estimate_30d_krw" in body

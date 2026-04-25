@@ -15,8 +15,10 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 import secrets
 import time
+from collections import deque
 from pathlib import Path
 from threading import Lock
 from typing import Any
@@ -27,6 +29,47 @@ logger = logging.getLogger(__name__)
 
 _lock = Lock()
 
+# 분당 가입 시도 윈도우 (이메일/IP별)
+_SIGNUP_WINDOW_SECONDS = 60
+_SIGNUP_MAX_PER_WINDOW = 5
+_signup_attempts: dict[str, deque[float]] = {}
+_attempts_lock = Lock()
+
+# 이메일 정규식 (RFC 5322 단순화 — 99% 케이스 충분)
+_EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
+
+
+class SignupError(Exception):
+    """가입 실패 (검증·레이트 리밋)."""
+
+
+def validate_email(email: str) -> str:
+    """이메일 형식 검증 + 정규화 (소문자 trim)."""
+    email = (email or "").strip().lower()
+    if not _EMAIL_RE.match(email):
+        raise SignupError(f"이메일 형식이 올바르지 않습니다: {email}")
+    if len(email) > 200:
+        raise SignupError("이메일이 너무 깁니다 (최대 200자)")
+    return email
+
+
+def check_rate_limit(key: str) -> None:
+    """동일 키(이메일/IP)의 분당 가입 시도 제한.
+
+    Raises:
+        SignupError: 분당 한도 초과
+    """
+    now = time.time()
+    with _attempts_lock:
+        bucket = _signup_attempts.setdefault(key, deque())
+        while bucket and now - bucket[0] > _SIGNUP_WINDOW_SECONDS:
+            bucket.popleft()
+        if len(bucket) >= _SIGNUP_MAX_PER_WINDOW:
+            raise SignupError(
+                f"가입 시도가 너무 잦습니다. {_SIGNUP_WINDOW_SECONDS}초 후 다시 시도하세요."
+            )
+        bucket.append(now)
+
 
 def _signup_log_path() -> Path:
     """신규 가입자 누적 로그 (PO가 매월 점검·정식 결제 전환)."""
@@ -35,24 +78,34 @@ def _signup_log_path() -> Path:
     return path
 
 
-def issue_free_trial_key(email: str, library_name: str | None = None) -> dict[str, Any]:
+def issue_free_trial_key(
+    email: str,
+    library_name: str | None = None,
+    *,
+    client_ip: str | None = None,
+) -> dict[str, Any]:
     """이메일·도서관명 받아 신규 무료 체험 키 발급.
 
     Args:
         email: 사서 이메일 (식별·연락용)
         library_name: 도서관명 (옵션, 통계용)
+        client_ip: 호출자 IP (레이트 리밋용)
 
     Returns:
-        {
-            "api_key": str,             # 32자 안전 토큰
-            "free_quota": int,
-            "library_name": str | None,
-            "ui_url": str,              # Streamlit 안내
-            "api_url": str,
-            "payment_url": str,
-            "expires_at": int | None,   # 현재는 None (무제한)
-        }
+        Dict with api_key, free_quota, library_name, ui_url, api_url,
+        payment_url, expires_at, next_steps.
+
+    Raises:
+        SignupError: 이메일 형식 오류 또는 레이트 리밋
     """
+    email = validate_email(email)
+    if library_name:
+        library_name = library_name.strip()[:200] or None
+
+    check_rate_limit(f"email:{email}")
+    if client_ip:
+        check_rate_limit(f"ip:{client_ip}")
+
     api_key = "kma_" + secrets.token_urlsafe(24)
 
     # usage DB 초기화 (get_usage가 첫 호출 시 자동 등록)

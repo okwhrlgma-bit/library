@@ -125,7 +125,21 @@ footer { margin-top:60px; padding-top:24px; border-top:1px solid var(--line); co
 <script>
 const form = document.getElementById('signup');
 const result = document.getElementById('result');
-const apiBase = window.KORMARC_API_BASE || (location.origin.startsWith('http') ? location.origin : 'http://localhost:8000');
+// API 베이스 결정 우선순위:
+// 1. URL ?api= 쿼리 파라미터 (PO가 한 번 공유 시)
+// 2. localStorage('kormarc_api_base') (사용자가 첫 입력 후 저장)
+// 3. 같은 origin (랜딩과 API 같은 도메인일 때)
+// 4. localhost:8000 폴백 (PO PC에서 직접 띄울 때)
+const params = new URLSearchParams(location.search);
+let apiBase = params.get('api')
+  || localStorage.getItem('kormarc_api_base')
+  || window.KORMARC_API_BASE;
+if (!apiBase) {
+  apiBase = (location.protocol === 'http:' || location.protocol === 'https:')
+    ? location.origin
+    : 'http://localhost:8000';
+}
+if (params.get('api')) localStorage.setItem('kormarc_api_base', apiBase);
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   const fd = new FormData(form);

@@ -10,6 +10,11 @@ from fastapi import Header, HTTPException, status
 from kormarc_auto.server.usage import can_consume, get_usage
 
 
+def get_admin_keys() -> set[str]:
+    """관리자 키 집합 (공개 API)."""
+    return _admin_keys()
+
+
 def _admin_keys() -> set[str]:
     """관리자 키 (모든 사용량 무제한). 환경변수 KORMARC_ADMIN_KEYS (쉼표 구분)."""
     raw = os.getenv("KORMARC_ADMIN_KEYS", "")

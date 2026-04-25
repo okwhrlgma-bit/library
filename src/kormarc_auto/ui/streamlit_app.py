@@ -36,6 +36,25 @@ from kormarc_auto.vernacular.field_880 import add_880_pairs
 logger = logging.getLogger(__name__)
 
 
+def _send_feedback(api_key: str, rating: int, comment: str, category: str) -> None:
+    """Streamlit 사이드바에서 피드백을 백엔드로 전송 (서버 도움 없이도 동작 — 로컬 저장)."""
+    if not comment and rating == 0:
+        st.warning("평점 또는 의견 중 하나는 입력하세요.")
+        return
+    try:
+        from kormarc_auto.server.feedback import save_feedback
+
+        save_feedback(
+            api_key=api_key or "anonymous",
+            rating=rating,
+            comment=comment,
+            category=category,
+        )
+        st.success("✓ 피드백 저장 완료. 감사합니다!")
+    except Exception as e:
+        st.error(f"저장 실패: {e}")
+
+
 def _setup_page() -> None:
     st.set_page_config(
         page_title="kormarc-auto",
@@ -336,9 +355,26 @@ def main() -> None:
         st.markdown("- 신규 50건 무료 체험")
         st.markdown(f"- [가격 페이지]({PAYMENT_INFO_URL})")
         st.markdown("---")
-        st.markdown("### 처음이신가요")
-        st.markdown("- [5분 시작 가이드 (사서용)](docs/quickstart-librarian.md)")
-        st.markdown("- 도움 필요 시 PO에게 이메일")
+        with st.expander("📖 처음이신가요? (5분 가이드)"):
+            st.markdown(
+                "**1. ISBN 단건** — 13자리 ISBN 입력 → KORMARC 생성  \n"
+                "**2. 검색** — 표제/저자로 후보 보고 선택  \n"
+                "**3. 사진** — 표지·판권지 1~3장 (폰 카메라 OK)  \n"
+                "**4. 일괄** — ISBN 여러 개를 한 번에  \n\n"
+                "결과 카드의 KDC·주제명은 **AI 추천** 후보입니다. "
+                "사서가 검토 후 사용하세요. KOLAS 반입 폴더에 .mrc 파일을 넣으면 자동 인식."
+            )
+        with st.expander("💬 피드백 보내기"):
+            fb_rating = st.slider("평점 (선택)", 0, 5, 0, key="fb_rating")
+            fb_category = st.selectbox(
+                "분류",
+                ["bug", "feature", "ux", "정확도", "기타"],
+                key="fb_cat",
+            )
+            fb_comment = st.text_area("사용 소감·요청", height=100, key="fb_comment")
+            fb_key = st.text_input("API 키 (있으면)", type="password", key="fb_key")
+            if st.button("피드백 전송", key="fb_send"):
+                _send_feedback(fb_key, fb_rating, fb_comment, fb_category)
         st.markdown("---")
         st.caption("MVP 베타 — 사서 피드백 환영")
 

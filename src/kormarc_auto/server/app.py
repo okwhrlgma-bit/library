@@ -23,7 +23,7 @@ import tempfile
 from pathlib import Path
 from typing import Any
 
-from fastapi import Depends, FastAPI, File, Form, HTTPException, UploadFile
+from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
@@ -53,7 +53,7 @@ from kormarc_auto.server.schemas import (
     ValidateRequest,
     ValidationResponse,
 )
-from kormarc_auto.server.signup import issue_free_trial_key
+from kormarc_auto.server.signup import SignupError, issue_free_trial_key
 from kormarc_auto.server.usage import consume
 from kormarc_auto.vernacular.field_880 import add_880_pairs
 
@@ -97,13 +97,49 @@ def create_app() -> FastAPI:
         )
 
     @app.post("/signup", response_model=SignupResponse, tags=["meta"])
-    def signup(body: SignupRequest) -> SignupResponse:
-        """무료 체험 키 자동 발급 (인증 없음 — 누구나 1회).
+    def signup(body: SignupRequest, request: Request) -> SignupResponse:
+        """무료 체험 키 자동 발급 (인증 없음).
 
-        악용 방지: rate limit는 cloudflared/Cloudflare 앞단에서 처리 권장.
+        보호:
+        - 이메일 형식 검증
+        - 같은 이메일/IP 분당 5회 한도
         """
-        result = issue_free_trial_key(body.email, body.library_name)
+        client_ip = request.client.host if request.client else None
+        try:
+            result = issue_free_trial_key(body.email, body.library_name, client_ip=client_ip)
+        except SignupError as e:
+            raise HTTPException(status_code=429, detail=str(e)) from e
         return SignupResponse(**result)
+
+    @app.post("/feedback", tags=["meta"])
+    def feedback(
+        body: dict[str, Any],
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """베타 사서 피드백 수집 — 자유 텍스트 + 별점."""
+        from kormarc_auto.server.feedback import save_feedback
+
+        rating = int(body.get("rating", 0))
+        comment = str(body.get("comment", "")).strip()[:2000]
+        category = str(body.get("category", "")).strip()[:50]
+        if not comment and rating == 0:
+            raise HTTPException(status_code=400, detail="rating 또는 comment 필수")
+        return save_feedback(
+            api_key=api_key,
+            rating=rating,
+            comment=comment,
+            category=category,
+        )
+
+    @app.get("/admin/stats", tags=["meta"])
+    def admin_stats(api_key: str = Depends(require_api_key)) -> dict[str, Any]:
+        """관리자 대시보드 — 가입자·사용량·피드백 요약. 관리자 키 필수."""
+        from kormarc_auto.server.admin import build_stats
+        from kormarc_auto.server.auth import get_admin_keys
+
+        if api_key not in get_admin_keys():
+            raise HTTPException(status_code=403, detail="관리자 키만 가능")
+        return build_stats()
 
     @app.get("/usage", response_model=UsageResponse, tags=["meta"])
     def usage(api_key: str = Depends(require_api_key)) -> UsageResponse:
@@ -249,6 +285,13 @@ def _build_response(
     record = build_kormarc_record(book_data, cataloging_agency=agency)
     add_880_pairs(record)
     errors = validate_record(record)
+
+    # KOLAS 반입 사전 엄격 검증 (errors는 합치고 warnings는 별도)
+    from kormarc_auto.kormarc.kolas_validator import kolas_strict_validate
+
+    strict = kolas_strict_validate(record)
+    for warn in strict.get("warnings", []):
+        errors.append(f"[KOLAS warn] {warn}")
 
     subject_candidates = recommend_subjects(book_data)
 
