@@ -17,6 +17,7 @@ import argparse
 import os
 import sys
 from pathlib import Path
+from typing import Any
 
 from dotenv import load_dotenv
 
@@ -284,6 +285,72 @@ def cmd_inventory(args: argparse.Namespace) -> int:
         for k, v in s.get("by_kdc_main", {}).items():
             print(f"  {k}: {v}")
     return 0
+
+
+def cmd_xlsx(args: argparse.Namespace) -> int:
+    """Excel 일괄 처리 — ISBN 컬럼 채우면 자동 채움 또는 빈 템플릿 생성."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+    if args.xlsx_command == "template":
+        from kormarc_auto.output.xlsx_writer import write_isbn_template_xlsx
+
+        out = write_isbn_template_xlsx(output_path=args.output or "isbn_template.xlsx")
+        print(f"✓ 템플릿: {out}")
+        print("  → ISBN을 A열에 채운 뒤: kormarc-auto xlsx fill <파일> --output <결과>")
+        return 0
+
+    if args.xlsx_command == "fill":
+        try:
+            import openpyxl
+        except ImportError:
+            print("❌ openpyxl 미설치 — `pip install openpyxl`")
+            return 1
+        from kormarc_auto.api.aggregator import aggregate_by_isbn
+        from kormarc_auto.output.xlsx_writer import write_books_xlsx
+
+        wb = openpyxl.load_workbook(args.input, read_only=True)
+        ws = wb.active
+        isbns: list[str] = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if not row:
+                continue
+            cell = row[0]
+            if cell is None:
+                continue
+            isbn = str(cell).replace("-", "").strip()
+            if isbn and isbn.isdigit():
+                isbns.append(isbn)
+        wb.close()
+
+        if not isbns:
+            print("❌ A열에 ISBN이 없습니다 (1행은 헤더, 2행부터 데이터)")
+            return 1
+
+        print(f"📚 {len(isbns)}건 조회 중...")
+        books: list[dict[str, Any]] = []
+        for i, isbn in enumerate(isbns, 1):
+            print(f"[{i}/{len(isbns)}] {isbn}", end=" ... ")
+            try:
+                data = aggregate_by_isbn(isbn)
+                if data.get("sources"):
+                    data["source"] = ", ".join(data["sources"])
+                    books.append(data)
+                    print(f"✓ {data.get('title', '?')[:30]}")
+                else:
+                    print("미조회")
+                    books.append({"isbn": isbn, "title": "(미조회)"})
+            except Exception as e:
+                print(f"오류: {e}")
+                books.append({"isbn": isbn, "title": f"(오류: {e})"})
+
+        out = write_books_xlsx(books, output_path=args.output or "filled.xlsx")
+        ok = sum(1 for b in books if b.get("title", "").startswith("(") is False)
+        print(f"\n✓ {out} ({ok}/{len(isbns)} 성공)")
+        return 0
+
+    print(f"❌ 알 수 없는 명령: {args.xlsx_command}")
+    return 1
 
 
 def cmd_notify(args: argparse.Namespace) -> int:
@@ -570,6 +637,13 @@ def build_parser() -> argparse.ArgumentParser:
     p_inv.add_argument("--kdc", default=None, help="KDC prefix 필터")
     p_inv.add_argument("--limit", type=int, default=20)
     p_inv.set_defaults(func=cmd_inventory)
+
+    # xlsx
+    p_xls = sub.add_parser("xlsx", help="Excel 일괄 처리 (template 생성 또는 fill 채우기)")
+    p_xls.add_argument("xlsx_command", choices=["template", "fill"])
+    p_xls.add_argument("input", nargs="?", default=None, help="입력 .xlsx (fill 시)")
+    p_xls.add_argument("--output", default=None)
+    p_xls.set_defaults(func=cmd_xlsx)
 
     # notify
     p_not = sub.add_parser("notify", help="이용자 알림 메시지 생성 (overdue/return/reservation/closure)")
