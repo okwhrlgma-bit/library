@@ -82,5 +82,7 @@ class SignupResponse(BaseModel):
     ui_url: str
     api_url: str
     payment_url: str
+    terms_url: str | None = None
+    privacy_url: str | None = None
     expires_at: int | None = None
     next_steps: list[str] = []

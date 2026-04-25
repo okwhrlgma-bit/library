@@ -122,6 +122,7 @@ def issue_free_trial_key(
     }
     _append_signup_log(entry)
 
+    docs_base = os.getenv("KORMARC_PUBLIC_DOCS_URL", "https://github.com/okwhr/kormarc-auto/blob/main/docs")
     return {
         "api_key": api_key,
         "free_quota": FREE_QUOTA_DEFAULT,
@@ -129,11 +130,14 @@ def issue_free_trial_key(
         "ui_url": os.getenv("KORMARC_PUBLIC_UI_URL", "http://localhost:8501"),
         "api_url": os.getenv("KORMARC_PUBLIC_API_URL", "http://localhost:8000"),
         "payment_url": get_payment_info_url(),
+        "terms_url": f"{docs_base}/terms-of-service.md",
+        "privacy_url": f"{docs_base}/privacy-policy.md",
         "expires_at": None,
         "next_steps": [
             "위 api_key를 안전한 곳에 보관하세요. 분실 시 재발급 필요합니다.",
             f"무료 체험은 {FREE_QUOTA_DEFAULT}건. 초과 시 결제 안내가 응답에 포함됩니다.",
             "Streamlit UI 또는 REST API 모두 X-API-Key 헤더로 사용.",
+            "이용약관·개인정보 처리방침을 확인하세요 (terms_url / privacy_url 필드).",
         ],
     }
 

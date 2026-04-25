@@ -1012,6 +1012,14 @@ def main() -> None:
         st.markdown("- 신규 50건 무료 체험")
         st.markdown(f"- [가격 페이지]({PAYMENT_INFO_URL})")
         st.markdown("---")
+        st.markdown("### 약관·개인정보")
+        _docs_base = (
+            "https://github.com/okwhr/kormarc-auto/blob/main/docs"
+        )
+        st.markdown(f"- [이용약관]({_docs_base}/terms-of-service.md)")
+        st.markdown(f"- [개인정보 처리방침]({_docs_base}/privacy-policy.md)")
+        st.caption("개인정보보호법 §35-3·§36에 따라 본인 데이터 다운로드/삭제 권리가 있습니다.")
+        st.markdown("---")
         with st.expander("📖 처음이신가요? (5분 가이드)"):
             st.markdown(
                 "**1. ISBN 단건** — 13자리 ISBN 입력 → KORMARC 생성  \n"
