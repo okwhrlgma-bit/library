@@ -17,7 +17,6 @@ from __future__ import annotations
 import re
 from typing import Any
 
-
 # 식별기호 변환 패턴 (우선순위 순)
 _SUBFIELD_PATTERNS = [
     # $a, $b, ... → ▾a, ▾b
