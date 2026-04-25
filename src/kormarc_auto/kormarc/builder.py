@@ -220,6 +220,67 @@ def build_kormarc_record(
             )
         )
 
+    # 041 — 본문 언어 (다국어 도서)
+    languages = book_data.get("languages")
+    if languages and isinstance(languages, list) and len(languages) > 1:
+        lang_subfields = [Subfield(code="a", value=lang) for lang in languages[:5]]
+        record.add_field(
+            Field(tag="041", indicators=Indicators("0", " "), subfields=lang_subfields)
+        )
+
+    # 246 — 변형표제 (표지·이전 제목·로마자)
+    if book_data.get("alternative_title"):
+        record.add_field(
+            Field(
+                tag="246",
+                indicators=Indicators("3", " "),
+                subfields=[Subfield(code="a", value=str(book_data["alternative_title"]))],
+            )
+        )
+
+    # 250 — 판차
+    if book_data.get("edition"):
+        record.add_field(
+            Field(
+                tag="250",
+                indicators=Indicators(" ", " "),
+                subfields=[Subfield(code="a", value=str(book_data["edition"]))],
+            )
+        )
+
+    # 500 — 일반주기
+    if book_data.get("general_note"):
+        record.add_field(
+            Field(
+                tag="500",
+                indicators=Indicators(" ", " "),
+                subfields=[Subfield(code="a", value=str(book_data["general_note"])[:1000])],
+            )
+        )
+
+    # 504 — 서지·색인 주기
+    if book_data.get("bibliography_note"):
+        record.add_field(
+            Field(
+                tag="504",
+                indicators=Indicators(" ", " "),
+                subfields=[Subfield(code="a", value=str(book_data["bibliography_note"])[:500])],
+            )
+        )
+
+    # 856 — 전자자료 URL
+    if book_data.get("url"):
+        record.add_field(
+            Field(
+                tag="856",
+                indicators=Indicators("4", "0"),
+                subfields=[
+                    Subfield(code="u", value=str(book_data["url"])),
+                    Subfield(code="y", value=str(book_data.get("url_label") or "전자자료")),
+                ],
+            )
+        )
+
     # 653 — 비통제 색인어 (도정나 키워드)
     keywords = book_data.get("keywords", [])
     if keywords:
