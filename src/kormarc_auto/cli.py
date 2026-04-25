@@ -286,6 +286,93 @@ def cmd_inventory(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_notify(args: argparse.Namespace) -> int:
+    """이용자 알림 메시지 생성 (overdue/return/reservation/closure)."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    from kormarc_auto.librarian_helpers import notifications
+
+    if args.notify_type == "overdue":
+        msg = notifications.overdue_notice(
+            user_name=args.user,
+            book_title=args.book,
+            due_date=args.due,
+            overdue_days=args.days or notifications.calculate_overdue_days(args.due),
+            library_name=args.library,
+            fine_per_day=args.fine_per_day,
+        )
+    elif args.notify_type == "return":
+        msg = notifications.return_reminder(
+            user_name=args.user,
+            book_title=args.book,
+            due_date=args.due,
+            library_name=args.library,
+            days_before=args.days or 3,
+        )
+    elif args.notify_type == "reservation":
+        msg = notifications.reservation_ready(
+            user_name=args.user,
+            book_title=args.book,
+            pickup_deadline=args.due,
+            library_name=args.library,
+        )
+    elif args.notify_type == "closure":
+        msg = notifications.closure_notice(
+            library_name=args.library,
+            closure_dates=(args.dates or "").split(","),
+            reason=args.reason or "정기 휴관",
+        )
+    else:
+        print(f"❌ 알 수 없는 알림 유형: {args.notify_type}")
+        return 1
+
+    print("\n[SMS]")
+    print(msg.get("sms", ""))
+    print("\n[LMS]")
+    print(msg.get("lms", ""))
+    print("\n[email subject]")
+    print(msg.get("email_subject", ""))
+    return 0
+
+
+def cmd_deposit(args: argparse.Namespace) -> int:
+    """납본(legal deposit) 추적 — 도서관법 제20조."""
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    from kormarc_auto.librarian_helpers import deposit
+
+    if args.deposit_command == "add":
+        entry = deposit.record_deposit(
+            title=args.title,
+            isbn=args.isbn,
+            publication_date=args.pub_date,
+            deposit_date=args.dep_date,
+            recipient=args.recipient or "국립중앙도서관",
+            copies=args.copies,
+            note=args.note or "",
+        )
+        print(f"✓ 납본 기록: {entry['id']} | {entry['title']} ({entry['deposit_date']})")
+        return 0
+
+    if args.deposit_command == "list":
+        items = deposit.list_deposits(limit=args.limit)
+        print(f"전체 {len(items)}건:")
+        for e in items:
+            print(
+                f"  {e['deposit_date']} | {e.get('title', '?')[:30]} | "
+                f"ISBN {e.get('isbn', '-')} | {e['recipient']} {e['copies']}부"
+            )
+        return 0
+
+    if args.deposit_command == "deadline":
+        d = deposit.deposit_deadline(args.pub_date)
+        print(f"발행일 {args.pub_date} → 납본 마감일: {d.isoformat()}")
+        return 0
+
+    print(f"❌ 알 수 없는 명령: {args.deposit_command}")
+    return 1
+
+
 def cmd_inspect(args: argparse.Namespace) -> int:
     """책장 사진 OCR → 자관 DB 대조 (장서 점검)."""
     if hasattr(sys.stdout, "reconfigure"):
@@ -483,6 +570,34 @@ def build_parser() -> argparse.ArgumentParser:
     p_inv.add_argument("--kdc", default=None, help="KDC prefix 필터")
     p_inv.add_argument("--limit", type=int, default=20)
     p_inv.set_defaults(func=cmd_inventory)
+
+    # notify
+    p_not = sub.add_parser("notify", help="이용자 알림 메시지 생성 (overdue/return/reservation/closure)")
+    p_not.add_argument(
+        "notify_type", choices=["overdue", "return", "reservation", "closure"]
+    )
+    p_not.add_argument("--user", default="이용자", help="이용자명")
+    p_not.add_argument("--book", default="", help="도서명")
+    p_not.add_argument("--due", default="", help="만기/수령기한 (YYYY-MM-DD)")
+    p_not.add_argument("--days", type=int, default=0, help="연체 일수 또는 사전 알림 일수")
+    p_not.add_argument("--library", default="○○도서관", help="도서관명")
+    p_not.add_argument("--fine-per-day", type=int, default=0, help="일 연체료 (원)")
+    p_not.add_argument("--dates", default="", help="휴관일 (콤마 구분, closure 전용)")
+    p_not.add_argument("--reason", default="", help="휴관 사유 (closure 전용)")
+    p_not.set_defaults(func=cmd_notify)
+
+    # deposit
+    p_dep = sub.add_parser("deposit", help="납본 추적 (도서관법 제20조)")
+    p_dep.add_argument("deposit_command", choices=["add", "list", "deadline"])
+    p_dep.add_argument("--title", default="")
+    p_dep.add_argument("--isbn", default=None)
+    p_dep.add_argument("--pub-date", default="", help="발행일 (YYYY-MM-DD)")
+    p_dep.add_argument("--dep-date", default=None, help="납본일 (없으면 오늘)")
+    p_dep.add_argument("--recipient", default="국립중앙도서관")
+    p_dep.add_argument("--copies", type=int, default=2)
+    p_dep.add_argument("--note", default="")
+    p_dep.add_argument("--limit", type=int, default=50)
+    p_dep.set_defaults(func=cmd_deposit)
 
     # inspect
     p_insp = sub.add_parser("inspect", help="책장 사진 OCR로 장서 점검 (오배가·미등록)")

@@ -78,7 +78,7 @@ def make_acquisition_announcement(
 
     c = canvas.Canvas(str(out), pagesize=A4)
     font = _korean_font(c)
-    page_w, page_h = A4
+    _page_w, page_h = A4
 
     today = datetime.now().strftime("%Y-%m-%d")
     margin = 20 * mm
@@ -162,7 +162,7 @@ def make_monthly_report(
 
     c = canvas.Canvas(str(out), pagesize=A4)
     font = _korean_font(c)
-    page_w, page_h = A4
+    _page_w, page_h = A4
 
     margin = 20 * mm
     y = page_h - margin
@@ -243,7 +243,7 @@ def make_validation_report(
 
     c = canvas.Canvas(str(out), pagesize=A4)
     font = _korean_font(c)
-    page_w, page_h = A4
+    _page_w, page_h = A4
 
     margin = 20 * mm
     y = page_h - margin
@@ -284,7 +284,7 @@ def make_validation_report(
                 y -= 5 * mm
 
                 for e in errors[:3]:
-                    c.drawString(margin + 10 * mm, y, f"× {e[:60]}")
+                    c.drawString(margin + 10 * mm, y, f"x {e[:60]}")
                     y -= 4 * mm
                 y -= 2 * mm
 

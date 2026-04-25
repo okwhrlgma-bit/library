@@ -1,11 +1,11 @@
 """청구기호·바코드 라벨 PDF 출력 (A4 Avery 호환).
 
 사서가 신착도서에 붙이는 라벨 자동 생성:
-- 청구기호 라벨 (책등용, 25mm × 38mm 권장)
+- 청구기호 라벨 (책등용, 25mm x 38mm 권장)
 - 바코드 라벨 (Code 128 또는 EAN-13, 책 안쪽 표지용)
 - 도서 카드 (구식이지만 일부 도서관 사용)
 
-A4 21장 (3×7) Avery L7160 호환 / 24장 (3×8) L7159 호환.
+A4 21장 (3x7) Avery L7160 호환 / 24장 (3x8) L7159 호환.
 """
 
 from __future__ import annotations
@@ -20,8 +20,8 @@ logger = logging.getLogger(__name__)
 
 def _ensure_libs() -> tuple[bool, str | None]:
     try:
-        import reportlab  # noqa: F401
         import barcode  # noqa: F401
+        import reportlab  # noqa: F401
         return True, None
     except ImportError as e:
         return False, f"라이브러리 미설치: {e}. `pip install -e .[labels]`로 설치."
@@ -62,7 +62,7 @@ def make_label_pdf(
     Args:
         items: [{"call_number": "813.7 한31ㅈ", "registration_no": "K000123", "title": "작별..."}]
         output_path: 기본 ./output/labels.pdf
-        layout: "L7160" (3×7=21) / "L7159" (3×8=24) / "A4_one"
+        layout: "L7160" (3x7=21) / "L7159" (3x8=24) / "A4_one"
 
     Returns:
         생성된 PDF 경로
@@ -100,13 +100,13 @@ def make_label_pdf(
     c = canvas.Canvas(str(out), pagesize=A4)
     page_w, page_h = A4
 
-    if layout == "L7160":  # 63.5 × 38.1 mm, 3 col × 7 row
+    if layout == "L7160":  # 63.5 x 38.1 mm, 3 col x 7 row
         cols, rows = 3, 7
         cell_w = 63.5 * mm
         cell_h = 38.1 * mm
         margin_left = 7.2 * mm
         margin_top = 15.15 * mm
-    elif layout == "L7159":  # 63.5 × 33.9 mm, 3 col × 8 row
+    elif layout == "L7159":  # 63.5 x 33.9 mm, 3 col x 8 row
         cols, rows = 3, 8
         cell_w = 63.5 * mm
         cell_h = 33.9 * mm
@@ -174,7 +174,7 @@ def make_label_pdf(
                     preserveAspectRatio=True,
                     mask="auto",
                 )
-            except Exception as e:  # noqa: BLE001
+            except Exception as e:
                 logger.warning("바코드 생성 실패: %s — %s", bc_value, e)
 
     c.save()

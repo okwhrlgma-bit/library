@@ -366,7 +366,17 @@ def _tab_tools() -> None:
     """사서 도구 모음 탭 — 로마자·라벨·자관 검색·KDC 트리·식별기호 도움말."""
     st.subheader("🛠 사서 도구")
     sub_tabs = st.tabs(
-        ["로마자", "라벨 PDF", "자관 검색", "KDC 트리", "식별기호 ▾", "장서점검", "보고서"]
+        [
+            "로마자",
+            "라벨 PDF",
+            "자관 검색",
+            "KDC 트리",
+            "식별기호 ▾",
+            "장서점검",
+            "보고서",
+            "알림",
+            "납본",
+        ]
     )
 
     with sub_tabs[0]:
@@ -648,6 +658,110 @@ def _tab_tools() -> None:
                     st.success(f"{len(paths)}개 파일 검증 완료")
                 except Exception as e:
                     st.error(f"PDF 생성 실패: {e}")
+
+    with sub_tabs[7]:
+        st.markdown("**이용자 알림 메시지** — 연체·반납·예약·휴관 SMS/LMS/email 본문 생성")
+        from kormarc_auto.librarian_helpers import notifications
+
+        kind = st.selectbox(
+            "유형",
+            ["연체 (overdue)", "반납 안내 (return)", "예약 도착 (reservation)", "휴관 (closure)"],
+            key="not_kind",
+        )
+        lib = st.text_input("도서관명", "○○도서관", key="not_lib")
+        if "휴관" in kind:
+            dates = st.text_input(
+                "휴관일 (콤마 구분, YYYY-MM-DD)",
+                "2026-05-05",
+                key="not_dates",
+            )
+            reason = st.text_input("사유", "정기 휴관", key="not_reason")
+            if st.button("메시지 생성", key="not_btn_clo"):
+                msg = notifications.closure_notice(
+                    library_name=lib,
+                    closure_dates=[d.strip() for d in dates.split(",") if d.strip()],
+                    reason=reason,
+                )
+                st.code(msg["sms"], language=None)
+                st.text_area("LMS", msg["lms"], height=200)
+                st.text_input("email subject", msg["email_subject"])
+        else:
+            user = st.text_input("이용자명", "", key="not_user")
+            book = st.text_input("도서명", "", key="not_book")
+            due = st.text_input("만기/수령기한 (YYYY-MM-DD)", "", key="not_due")
+            days = st.number_input("연체일/사전알림일", 0, 365, 0, key="not_days")
+            fine = st.number_input("일 연체료(원)", 0, 10000, 0, key="not_fine")
+            if st.button("메시지 생성", key="not_btn") and user and book and due:
+                if "연체" in kind:
+                    od = days or notifications.calculate_overdue_days(due)
+                    msg = notifications.overdue_notice(
+                        user_name=user,
+                        book_title=book,
+                        due_date=due,
+                        overdue_days=od,
+                        library_name=lib,
+                        fine_per_day=fine,
+                    )
+                elif "반납 안내" in kind:
+                    msg = notifications.return_reminder(
+                        user_name=user,
+                        book_title=book,
+                        due_date=due,
+                        library_name=lib,
+                        days_before=days or 3,
+                    )
+                else:  # 예약
+                    msg = notifications.reservation_ready(
+                        user_name=user,
+                        book_title=book,
+                        pickup_deadline=due,
+                        library_name=lib,
+                    )
+                st.code(msg["sms"], language=None)
+                st.text_area("LMS", msg["lms"], height=200)
+                st.text_input("email subject", msg["email_subject"])
+
+    with sub_tabs[8]:
+        st.markdown("**납본 추적** — 도서관법 제20조 (발행 후 30일 내 국립중앙도서관)")
+        from kormarc_auto.librarian_helpers import deposit
+
+        action = st.radio("작업", ["기록 추가", "이력 조회", "마감일 계산"], key="dep_act")
+
+        if action == "기록 추가":
+            d_title = st.text_input("자료 표제", key="dep_title")
+            d_isbn = st.text_input("ISBN/ISSN (선택)", key="dep_isbn")
+            d_pub = st.text_input("발행일 (YYYY-MM-DD)", key="dep_pub")
+            d_dep = st.text_input("납본일 (비우면 오늘)", key="dep_dep")
+            d_copies = st.number_input("부수", 1, 10, 2, key="dep_copies")
+            d_note = st.text_input("메모", key="dep_note")
+            if st.button("기록", key="dep_btn") and d_title and d_pub:
+                e = deposit.record_deposit(
+                    title=d_title,
+                    isbn=d_isbn or None,
+                    publication_date=d_pub,
+                    deposit_date=d_dep or None,
+                    copies=int(d_copies),
+                    note=d_note,
+                )
+                st.success(f"✓ 기록됨: {e['id']}")
+
+        elif action == "이력 조회":
+            items = deposit.list_deposits(limit=200)
+            st.write(f"전체 {len(items)}건")
+            for e in items[:50]:
+                st.markdown(
+                    f"- {e['deposit_date']} · **{e.get('title', '?')}** · "
+                    f"ISBN `{e.get('isbn', '-')}` · {e['recipient']} {e['copies']}부"
+                )
+
+        else:  # 마감일 계산
+            pub = st.text_input("발행일 (YYYY-MM-DD)", key="dep_calc_pub")
+            if pub:
+                try:
+                    d = deposit.deposit_deadline(pub)
+                    st.info(f"발행일 {pub} → 납본 마감일: **{d.isoformat()}** (발행 후 30일)")
+                except Exception as ex:
+                    st.error(f"날짜 형식 오류: {ex}")
 
     with sub_tabs[4]:
         st.markdown("**식별기호 ▾ 변환·도움말**")
