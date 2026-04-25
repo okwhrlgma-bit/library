@@ -166,3 +166,91 @@ def test_admin_stats_with_admin_key(client, monkeypatch):
     assert "users" in body
     assert "usage_24h" in body
     assert "revenue_estimate_30d_krw" in body
+
+
+def test_migrate_from_kolas_public(client):
+    """KOLAS 종료 마이그레이션 안내 — 인증 없이 공개."""
+    r = client.get("/migrate-from-kolas")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert body["kolas_eos"] == "2026-12-31"
+    assert "key_points" in body
+    assert len(body["compatible_systems"]) >= 3
+    assert "po_contact" in body
+
+
+def test_batch_vendor_requires_key(client):
+    """B2B 일괄 — 키 없으면 401."""
+    r = client.post("/batch-vendor", json={"isbns": ["9788936434120"]})
+    assert r.status_code == 401
+
+
+def test_batch_vendor_rejects_empty(client):
+    r = client.post(
+        "/batch-vendor",
+        json={"isbns": []},
+        headers={"X-API-Key": "vendor_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 400
+
+
+def test_batch_vendor_rejects_too_many(client):
+    r = client.post(
+        "/batch-vendor",
+        json={"isbns": ["9788936434120"] * 1001},
+        headers={"X-API-Key": "vendor_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 400
+
+
+@patch("kormarc_auto.server.app.aggregate_by_isbn")
+def test_batch_vendor_success(mock_agg, client):
+    """B2B 일괄 — 정상 케이스 (1건)."""
+    mock_agg.return_value = {
+        "isbn": "9788936434120",
+        "title": "테스트",
+        "author": "저자",
+        "publisher": "출판사",
+        "pub_year": "2024",
+        "pages": "200",
+        "language": "kor",
+        "kdc": "813.7",
+        "confidence": 0.9,
+        "sources": ["nl_korea"],
+    }
+    r = client.post(
+        "/batch-vendor",
+        json={"isbns": ["9788936434120"], "agency": "VENDOR1"},
+        headers={"X-API-Key": "vendor_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert body["total"] == 1
+    assert body["success"] == 1
+    assert body["results"][0]["mrc_base64"]
+
+
+def test_billing_monthly_requires_admin(client, monkeypatch):
+    """월간 청구는 관리자 키만."""
+    monkeypatch.setenv("KORMARC_ADMIN_KEYS", "admin_only_zzz_xxx")
+    r = client.get(
+        "/billing/monthly/2026/4",
+        headers={"X-API-Key": "regular_user_key_xxx"},
+    )
+    assert r.status_code == 403
+
+
+def test_billing_monthly_with_admin(client, monkeypatch):
+    """관리자 키로 월간 집계 — 빈 로그라도 200."""
+    monkeypatch.setenv("KORMARC_ADMIN_KEYS", "admin_only_zzz_xxx")
+    r = client.get(
+        "/billing/monthly/2026/4",
+        headers={"X-API-Key": "admin_only_zzz_xxx"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["year"] == 2026
+    assert body["month"] == 4
+    assert "total_records" in body

@@ -71,19 +71,149 @@ def _send_feedback(api_key: str, rating: int, comment: str, category: str) -> No
 
 
 def _setup_page() -> None:
+    """페이지 설정 + 사서 친화적 UI 테마 (큰 글씨·차분한 색·터치 영역).
+
+    UX 원칙:
+    - 50대 사서가 폰·PC 양쪽 사용 가정
+    - 본문 16px (작은 글씨 거부감)
+    - 도서관 톤 (네이비·살구·아이보리)
+    - 버튼 높이 48px+ (모바일 터치 안전)
+    - 카드 둥근 모서리 12px, 약한 그림자
+    - 한글 폰트 우선 (Pretendard fallback Noto Sans KR)
+    """
     st.set_page_config(
-        page_title="kormarc-auto",
+        page_title="kormarc-auto · 사서 KORMARC 자동 생성",
         page_icon="📚",
         layout="centered",
         initial_sidebar_state="collapsed",
+        menu_items={
+            "Get Help": "mailto:okwhrlgma@gmail.com",
+            "Report a bug": "mailto:okwhrlgma@gmail.com",
+            "About": "kormarc-auto · 한국 도서관 KORMARC 자동 생성 SaaS",
+        },
     )
     st.markdown(
         """
         <style>
-        .block-container {max-width: 720px; padding-top: 1.2rem; padding-bottom: 4rem;}
-        .stButton button {width: 100%;}
-        .candidate-card {border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin: 8px 0;}
-        .small-muted {color: #888; font-size: 0.85em;}
+        @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+        :root {
+          --primary: #2C5282;          /* 차분한 네이비 (도서관 톤) */
+          --primary-soft: #EBF4FF;
+          --accent: #ED8936;           /* 살구색 (CTA·강조) */
+          --bg: #FAFAF7;               /* 아이보리 배경 */
+          --text: #1A202C;
+          --muted: #718096;
+          --success: #38A169;
+          --warning: #D69E2E;
+          --error: #C53030;
+        }
+
+        html, body, [class*="css"] {
+          font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif !important;
+          font-size: 16px !important;
+          line-height: 1.6 !important;
+          color: var(--text) !important;
+        }
+
+        .block-container {
+          max-width: 760px;
+          padding-top: 1.5rem;
+          padding-bottom: 5rem;
+        }
+
+        h1, h2, h3 {
+          letter-spacing: -0.02em;
+          color: var(--primary) !important;
+        }
+        h1 { font-size: 28px !important; }
+        h2 { font-size: 22px !important; }
+        h3 { font-size: 18px !important; }
+
+        /* 버튼 — 큰 터치 영역, 차분한 톤 */
+        .stButton button {
+          width: 100%;
+          min-height: 48px;
+          font-size: 16px !important;
+          font-weight: 600;
+          border-radius: 10px !important;
+          background: var(--primary) !important;
+          color: white !important;
+          border: none !important;
+          transition: all 0.2s;
+        }
+        .stButton button:hover {
+          background: #1A365D !important;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(44, 82, 130, 0.2);
+        }
+
+        /* 다운로드 버튼은 살구색 (강조) */
+        .stDownloadButton button {
+          background: var(--accent) !important;
+          min-height: 48px;
+          font-size: 16px !important;
+          border-radius: 10px !important;
+        }
+
+        /* 입력 — 큰 글씨, 명확한 테두리 */
+        .stTextInput input, .stTextArea textarea, .stNumberInput input {
+          font-size: 16px !important;
+          padding: 12px !important;
+          border-radius: 8px !important;
+          border: 1.5px solid #CBD5E0 !important;
+        }
+        .stTextInput input:focus, .stTextArea textarea:focus {
+          border-color: var(--primary) !important;
+          box-shadow: 0 0 0 3px var(--primary-soft) !important;
+        }
+
+        /* 카드 */
+        .candidate-card {
+          border: 1px solid #E2E8F0;
+          border-radius: 12px;
+          padding: 16px;
+          margin: 10px 0;
+          background: white;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .candidate-card:hover {
+          box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+          border-color: var(--primary);
+        }
+
+        /* 메시지 박스 */
+        .stAlert {
+          border-radius: 10px !important;
+          font-size: 15px !important;
+        }
+
+        /* 작은 안내 글 */
+        .small-muted {
+          color: var(--muted);
+          font-size: 14px;
+        }
+
+        /* 메트릭 카드 */
+        [data-testid="metric-container"] {
+          background: white;
+          padding: 16px;
+          border-radius: 10px;
+          border: 1px solid #E2E8F0;
+        }
+
+        /* 탭 */
+        button[data-baseweb="tab"] {
+          font-size: 16px !important;
+          font-weight: 600;
+        }
+
+        /* 모바일 ≤ 480px */
+        @media (max-width: 480px) {
+          .block-container { padding: 1rem; }
+          h1 { font-size: 24px !important; }
+          .stButton button { min-height: 52px; }
+        }
         </style>
         """,
         unsafe_allow_html=True,

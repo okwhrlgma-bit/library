@@ -318,6 +318,113 @@ def create_app() -> FastAPI:
             payment_url=get_payment_info_url() if remaining <= 5 else None,
         )
 
+    @app.post("/batch-vendor", tags=["b2b"])
+    def batch_vendor(
+        body: dict[str, Any],
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """B2B 도서납품업체 전용 — ISBN 리스트 일괄 처리.
+
+        요청: {"isbns": ["978...", "978...", ...], "agency": "..."}
+        응답: 각 ISBN별 KORMARC 결과 + 총 사용량 + .mrc base64 리스트.
+
+        학교도서관 95% 마크 외주 의존 (2023 뉴시스). 납품업체에 라이선스
+        판매로 신규 매출 라인 가능.
+        """
+        check_quota(api_key)
+        isbns = [str(x).replace("-", "").strip() for x in body.get("isbns", [])]
+        if not isbns:
+            raise HTTPException(status_code=400, detail="isbns 리스트 필요")
+        if len(isbns) > 1000:
+            raise HTTPException(status_code=400, detail="최대 1000건/회")
+
+        agency = str(body.get("agency", "OURLIB"))
+        results: list[dict[str, Any]] = []
+        ok_count = 0
+        for isbn in isbns:
+            try:
+                book_data = aggregate_by_isbn(isbn)
+                if not book_data.get("sources"):
+                    results.append({"isbn": isbn, "ok": False, "reason": "no_data"})
+                    consume(api_key, kind="batch-vendor", ok=False, ref=isbn)
+                    continue
+                kdc = recommend_kdc(book_data)
+                if kdc and not book_data.get("kdc"):
+                    book_data["kdc"] = kdc[0]["code"]
+                record = build_kormarc_record(book_data, cataloging_agency=agency)
+                add_880_pairs(record)
+                errors = validate_record(record)
+                out_dir = Path(tempfile.gettempdir()) / "kormarc_b2b"
+                out_path = write_kolas_mrc(record, isbn, output_dir=str(out_dir))
+                mrc_b64 = base64.b64encode(out_path.read_bytes()).decode("ascii")
+                with contextlib.suppress(OSError):
+                    out_path.unlink(missing_ok=True)
+                results.append(
+                    {
+                        "isbn": isbn,
+                        "ok": True,
+                        "title": book_data.get("title"),
+                        "author": book_data.get("author"),
+                        "kdc": book_data.get("kdc"),
+                        "confidence": book_data.get("confidence", 0),
+                        "errors": errors,
+                        "mrc_base64": mrc_b64,
+                    }
+                )
+                consume(api_key, kind="batch-vendor", ok=True, ref=isbn)
+                ok_count += 1
+            except Exception as e:
+                results.append({"isbn": isbn, "ok": False, "reason": str(e)})
+                consume(api_key, kind="batch-vendor", ok=False, ref=isbn)
+
+        return {
+            "ok": True,
+            "total": len(isbns),
+            "success": ok_count,
+            "failed": len(isbns) - ok_count,
+            "results": results,
+        }
+
+    @app.get("/migrate-from-kolas", tags=["meta"])
+    def migrate_from_kolas() -> dict[str, Any]:
+        """KOLAS III 종료(2026-12-31) 마이그레이션 안내.
+
+        영업 메시지 + 호환 정보 + PO 연락처. 인증 불필요(공개).
+        """
+        return {
+            "ok": True,
+            "kolas_eos": "2026-12-31",
+            "title": "KOLAS III 표준형 종료 — 데이터 이전을 어떻게 하시나요?",
+            "key_points": [
+                "KOLAS III 표준형 기술지원이 2026-12-31 종료됩니다.",
+                "kormarc-auto는 KORMARC(KS X 6006-0) 표준 .mrc/MARCXML/CSV 출력 → 후속 시스템 어떤 것이든 import 가능",
+                "기존 KOLAS .mrc는 그대로 import 후 자관 .mrc 누적 시스템에 통합",
+                "신규 마크 작업은 ISBN/사진/검색 어느 입력으로도 5초 이내 완료",
+            ],
+            "compatible_systems": [
+                "후속 KOLAS III/IV (예정)",
+                "KOLASYS-NET (작은도서관)",
+                "독서로 DLS (학교도서관)",
+                "TULIP / SOLARS (대학도서관)",
+                "Koha / Alma (글로벌 표준)",
+            ],
+            "free_trial": "신규 가입 50건 무료 — `/signup` 호출",
+            "po_contact": "okwhrlgma@gmail.com",
+            "pricing_url": get_payment_info_url(),
+        }
+
+    @app.get("/billing/monthly/{year}/{month}", tags=["meta"])
+    def billing_monthly(
+        year: int, month: int, api_key: str = Depends(require_api_key)
+    ) -> dict[str, Any]:
+        """[관리자] 월간 사용 집계 — 청구서 생성용. admin 키 필수."""
+        from kormarc_auto.server.auth import get_admin_keys
+        from kormarc_auto.server.billing import aggregate_monthly
+
+        if api_key not in get_admin_keys():
+            raise HTTPException(status_code=403, detail="관리자 키만 가능")
+        return aggregate_monthly(year, month)
+
     @app.post("/isbn", response_model=KormarcResponse, tags=["kormarc"])
     def isbn_endpoint(
         body: IsbnRequest,
