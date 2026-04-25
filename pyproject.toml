@@ -37,6 +37,10 @@ ui = [
 ocr = [
   "easyocr>=1.7",  # AI 없이 한국어 OCR (바코드 실패 시 폴백)
 ]
+labels = [
+  "reportlab>=4.0",       # 청구기호·바코드 PDF 라벨 (A4 Avery)
+  "python-barcode>=0.15", # Code128/EAN-13 바코드 이미지
+]
 
 [project.scripts]
 kormarc-auto = "kormarc_auto.cli:main"

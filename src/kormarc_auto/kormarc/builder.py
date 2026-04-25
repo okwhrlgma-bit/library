@@ -100,15 +100,41 @@ def build_kormarc_record(
         )
 
     # 245 — 표제와 책임표시사항 (필수)
+    # 관제(冠題, 본표제 앞 수식어) 한국 특수 처리:
+    #   "(개정증보판) 작별하지 않는다" 같은 원괄호 표기
+    #   2지시기호 = 관제 길이 + 1 (정렬 무시 글자수)
     title = book_data.get("title") or "표제 미상"
-    title_subfields = [Subfield(code="a", value=title)]
+    crown = book_data.get("crown_title") or ""  # 관제 (없으면 빈)
+    if crown:
+        full_title = f"({crown}) {title}"
+        ind2 = str(min(9, len(crown) + 3))  # "(관제) " 길이 = len + 3
+    else:
+        full_title = title
+        ind2 = "0"
+    title_subfields = [Subfield(code="a", value=full_title)]
     if book_data.get("subtitle"):
         title_subfields.append(Subfield(code="b", value=f": {book_data['subtitle']}"))
     if author:
         title_subfields.append(Subfield(code="c", value=f"/ {author}"))
+    # 1지시기호: 1=주표목 있음(100), 0=없음
+    ind1 = "1" if primary_author else "0"
     record.add_field(
-        Field(tag="245", indicators=Indicators("1", "0"), subfields=title_subfields)
+        Field(tag="245", indicators=Indicators(ind1, ind2), subfields=title_subfields)
     )
+
+    # 090 청구기호 (대학도서관용, 옵션)
+    if book_data.get("call_number_090"):
+        cn = book_data["call_number_090"]
+        sf_090: list[Subfield] = []
+        if isinstance(cn, dict):
+            if cn.get("classification"):
+                sf_090.append(Subfield(code="a", value=str(cn["classification"])))
+            if cn.get("book_mark"):
+                sf_090.append(Subfield(code="b", value=str(cn["book_mark"])))
+        else:
+            sf_090.append(Subfield(code="a", value=str(cn)))
+        if sf_090:
+            record.add_field(Field(tag="090", indicators=Indicators(" ", " "), subfields=sf_090))
 
     # 264 — 발행/제작 (RDA)
     pub_subfields = []
