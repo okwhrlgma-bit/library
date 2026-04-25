@@ -595,6 +595,67 @@ def cmd_info(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_registration(args: argparse.Namespace) -> int:
+    """등록번호 자동 부여·누락번호 검출 — 알파스 워크플로우."""
+    from kormarc_auto.librarian_helpers.registration import (
+        assign_for_multivolume,
+        find_missing_numbers,
+        load_existing_from_index,
+        next_registration_number,
+    )
+
+    existing = load_existing_from_index() if args.use_index else []
+    if args.from_file:
+        with Path(args.from_file).open(encoding="utf-8") as f:
+            existing.extend(line.strip() for line in f if line.strip())
+
+    if args.action == "next":
+        n = next_registration_number(
+            existing,
+            kind=args.kind,
+            turn=args.turn,
+            year=args.year,
+            fill_gap=args.fill_gap,
+        )
+        print(n)
+        return 0
+
+    if args.action == "missing":
+        gaps = find_missing_numbers(
+            existing, kind=args.kind, turn=args.turn, year=args.year
+        )
+        if gaps:
+            print(f"누락번호 {len(gaps)}개 (kind={args.kind}, turn={args.turn}, year={args.year}):")
+            for g in gaps:
+                print(f"  · {args.kind}{args.turn:02d}{args.year:02d}{g:05d}")
+        else:
+            print("누락번호 없음")
+        return 0
+
+    if args.action == "multivolume":
+        if args.volumes < 1:
+            print("❌ --volumes는 1 이상")
+            return 2
+        results = assign_for_multivolume(
+            {"title": args.title or "(미입력)"},
+            volumes=args.volumes,
+            kind=args.kind,
+            turn=args.turn,
+            year=args.year,
+            existing=existing,
+        )
+        print(f"✓ 다권본 {args.volumes}권 등록번호 부여:")
+        for r in results:
+            print(
+                f"  · {r['registration_number']} | {r['volume_label']} | "
+                f"245 ▾n {r['marc_245_n']}"
+            )
+        return 0
+
+    print(f"❌ 알 수 없는 동작: {args.action}")
+    return 2
+
+
 def cmd_account(args: argparse.Namespace) -> int:
     """본인 데이터 다운로드/삭제 — 개인정보보호법 §35-3·§36."""
     import json
@@ -796,6 +857,39 @@ def build_parser() -> argparse.ArgumentParser:
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")
     p_info.set_defaults(func=cmd_info)
+
+    # registration — 등록번호 자동 부여
+    p_reg = sub.add_parser(
+        "registration",
+        help="등록번호 자동 부여·누락번호 검출 (알파스/KOLAS 워크플로우)",
+    )
+    p_reg.add_argument(
+        "action",
+        choices=["next", "missing", "multivolume"],
+        help="next=다음 번호 / missing=누락번호 / multivolume=다권본 일괄",
+    )
+    p_reg.add_argument("--kind", default="EM", help="등록구분 (EM·BM·AM 등)")
+    p_reg.add_argument("--turn", type=int, default=1, help="차수 (기본 1)")
+    p_reg.add_argument(
+        "--year",
+        type=int,
+        default=None,
+        help="연도 두 자리 (기본 올해)",
+    )
+    p_reg.add_argument(
+        "--fill-gap",
+        action="store_true",
+        help="next 시 누락번호 우선 채움",
+    )
+    p_reg.add_argument(
+        "--use-index",
+        action="store_true",
+        help="자관 DB 인덱스 자동 로드",
+    )
+    p_reg.add_argument("--from-file", default=None, help="기존 번호 파일 (한 줄당 하나)")
+    p_reg.add_argument("--volumes", type=int, default=1, help="multivolume 권수")
+    p_reg.add_argument("--title", default=None, help="multivolume 표제")
+    p_reg.set_defaults(func=cmd_registration)
 
     # account — 개인정보보호법 §35-3 / §36
     p_acc = sub.add_parser(
