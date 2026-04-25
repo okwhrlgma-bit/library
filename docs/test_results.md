@@ -54,3 +54,30 @@
 | 서버 | `kormarc-server` + `curl /healthz` | `{"ok":true}` |
 | UI | `kormarc-ui` | 모바일 친화 4탭 |
 | 모바일 터널 | `cloudflared tunnel --url http://localhost:8501` | trycloudflare URL |
+
+---
+
+## 골든 데이터셋 정확도 측정 (PO 통찰 반영)
+
+> **PO 결정**: "정답"은 국립중앙도서관·각 도서관 검색 결과를 사용한다.
+> 사서들이 이미 검증한 데이터를 그대로 정답 KORMARC로 변환해 비교.
+
+### 2단계 워크플로
+
+**1) 정답 자동 수집** — `scripts/build_golden_dataset.py`
+- NL Korea ISBN 서지 API로 메타 가져옴 → KORMARC 빌드 → `tests/samples/golden/{ISBN}.mrc`
+- KOLIS-NET으로 다른 도서관 분류 비교 정보도 함께 수집 (보조)
+- 시드 50건 (다양한 KDC) 또는 `--isbns my_list.txt`
+
+**2) 정확도 측정** — `scripts/accuracy_compare.py`
+- 우리 풀 파이프라인(aggregator + 알라딘·카카오 + KDC AI) vs 골든 직답
+- 필드별 일치율: ISBN / 245 본표제 / 100 저자 / 264 출판사 / 056 KDC
+- exact / partial / mismatch / one_empty / both_empty 5단계
+
+### 사서 신뢰 입증 흐름
+
+베타 사서 첫 미팅에서:
+1. `python scripts/build_golden_dataset.py --limit 30` 실행 → 30건 정답 수집
+2. `python scripts/accuracy_compare.py --output reports/<날짜>.json` → 표 출력
+3. 사서에게 "ISBN/본표제/저자 99% 일치, KDC는 NL Korea 미부여 케이스에 AI 보조" 입증
+4. 의심 케이스만 직접 확인 → 결제 결정 근거

@@ -89,9 +89,9 @@ ISBN 입력 (또는 사진 → 바코드 추출)
 - [ ] **PO 액션**: ANTHROPIC_API_KEY/NL_CERT_KEY 등 .env 채우기
 - [ ] **PO 액션**: cloudflared 1회 로그인 (`docs/mobile-tunnel.md`)
 - [ ] **PO 액션**: 베타 사서 1~2명 모집
-- [ ] 골든 데이터셋 30권 수집 (사서 검증 정답 KORMARC)
-- [ ] 정확도 측정 + `docs/test_results.md` 갱신
-- [ ] 사서 베타 인터뷰 → 우선순위 재조정
-- [ ] 결제 시스템 정식화 (포트원/토스)
+- [x] **자동화**: 골든 데이터셋 — NL Korea/KOLIS-NET 응답을 정답으로 자동 수집 (`scripts/build_golden_dataset.py`). PO 키 채우면 `python scripts/build_golden_dataset.py` 1회로 50건 .mrc + .json + _index.csv 자동 생성.
+- [x] **자동화**: 정확도 측정 — 풀 파이프라인 vs 골든 필드별 일치율 (`scripts/accuracy_compare.py`)
+- [ ] 사서 베타 인터뷰 → 우선순위 재조정 (PO 액션)
+- [ ] 결제 시스템 정식화 (포트원/토스, MVP-2)
 - [ ] 008 발행국부호 매핑 전체 보강 (KORMARC 매뉴얼 PDF 입수)
-- [ ] librarian_helpers/call_number 도서관별 규칙 JSON 1관 작성
+- [ ] librarian_helpers/call_number 도서관별 규칙 JSON 1관 작성 (베타 도서관 협조 시)
