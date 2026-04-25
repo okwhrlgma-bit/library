@@ -29,12 +29,18 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
 
 from pymarc import MARCReader, Record
+
+os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))

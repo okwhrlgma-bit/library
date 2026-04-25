@@ -1,0 +1,3 @@
+﻿isbn,status,title,author,kdc,validation_errors,kolas_strict_ok,kolas_strict_errors,kolas_strict_warnings,peer_libraries,peer_kdc_top,mrc_path,json_path,mrc_size_bytes,elapsed_ms,error
+9788936434120,nl_error,,,,,,,,,,,,,0,NL_CERT_KEY 환경변수가 설정되지 않았습니다.
+9788932020789,nl_error,,,,,,,,,,,,,0,NL_CERT_KEY 환경변수가 설정되지 않았습니다.
