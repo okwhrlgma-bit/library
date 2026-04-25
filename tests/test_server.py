@@ -254,3 +254,49 @@ def test_billing_monthly_with_admin(client, monkeypatch):
     assert body["year"] == 2026
     assert body["month"] == 4
     assert "total_records" in body
+
+
+def test_account_export_requires_key(client):
+    """본인 데이터 다운로드 — 키 필수 (인증)."""
+    r = client.get("/account/export")
+    assert r.status_code == 401
+
+
+def test_account_export_returns_data(client):
+    """본인 데이터 다운로드 — 키 있으면 자기 데이터만."""
+    r = client.get(
+        "/account/export",
+        headers={"X-API-Key": "exporter_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert "exported_at" in body
+    assert "key_hash" in body
+    assert "usage_log" in body
+    assert "feedback" in body
+
+
+def test_account_delete_requires_key(client):
+    r = client.delete("/account/delete")
+    assert r.status_code == 401
+
+
+def test_account_delete_returns_count(client):
+    """본인 데이터 영구 삭제."""
+    # 먼저 사용량 1건 발생
+    r = client.get(
+        "/usage",
+        headers={"X-API-Key": "deleter_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 200
+
+    r = client.delete(
+        "/account/delete",
+        headers={"X-API-Key": "deleter_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert "deleted" in body
+    assert isinstance(body["deleted"]["log_lines"], int)

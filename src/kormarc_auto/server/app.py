@@ -425,6 +425,28 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=403, detail="관리자 키만 가능")
         return aggregate_monthly(year, month)
 
+    @app.get("/account/export", tags=["account"])
+    def account_export(api_key: str = Depends(require_api_key)) -> dict[str, Any]:
+        """개인정보보호법 §35-3 — 본인 데이터 일괄 다운로드.
+
+        키 소유자가 본인의 사용량/로그/가입/피드백을 한 번에 조회.
+        ※ 결과 JSON에는 key_hash만 포함 (원본 키 비공개).
+        """
+        from kormarc_auto.server.usage import export_account_data
+
+        return export_account_data(api_key)
+
+    @app.delete("/account/delete", tags=["account"])
+    def account_delete(api_key: str = Depends(require_api_key)) -> dict[str, Any]:
+        """개인정보보호법 §36 — 본인 데이터 영구 삭제.
+
+        주의: 되돌릴 수 없음. 삭제 후 동일 키 재사용 불가 (DB에서 사라짐).
+        삭제 전 /account/export로 백업 권장.
+        """
+        from kormarc_auto.server.usage import delete_account_data
+
+        return delete_account_data(api_key)
+
     @app.post("/isbn", response_model=KormarcResponse, tags=["kormarc"])
     def isbn_endpoint(
         body: IsbnRequest,

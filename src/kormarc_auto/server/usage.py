@@ -148,3 +148,150 @@ def reset_usage(api_key: str) -> dict[str, Any]:
             db[key_hash]["used"] = 0
             _save_db(db)
     return get_usage(api_key)
+
+
+def export_account_data(api_key: str) -> dict[str, Any]:
+    """개인정보 자기결정권 — 키 소유자 본인 데이터 일괄 다운로드.
+
+    개인정보보호법 §35-3 (개인정보 전송요구권). 키별 모든 보유 데이터
+    (사용량 + 사용 로그 + 가입 정보 + 피드백)를 한 dict로 반환.
+
+    Returns:
+        {
+            "ok": True,
+            "exported_at": iso8601,
+            "key_hash": "...",
+            "usage_record": {used, free_quota, created_at},
+            "usage_log": [{ts, kind, ok, ref}, ...],
+            "signup_record": {ts, email, library_name} | None,
+            "feedback": [{ts, rating, category, comment}, ...],
+        }
+    """
+    from datetime import datetime
+
+    key_hash = _hash_key(api_key)
+    with _lock:
+        db = _load_db()
+        usage_record = db.get(key_hash)
+
+    # usage 로그 필터링
+    usage_log: list[dict[str, Any]] = []
+    log_path = _log_path()
+    if log_path.exists():
+        with log_path.open(encoding="utf-8") as f:
+            for line in f:
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    continue
+                if e.get("key_hash") == key_hash:
+                    usage_log.append(e)
+
+    # signup·feedback도 동일 key_hash로 필터링
+    signup_record = _read_match("logs/signups.jsonl", key_hash)
+    feedback_records = _read_match("logs/feedback.jsonl", key_hash, all_matches=True)
+
+    return {
+        "ok": True,
+        "exported_at": datetime.now().isoformat(),
+        "key_hash": key_hash,
+        "usage_record": usage_record,
+        "usage_log_count": len(usage_log),
+        "usage_log": usage_log,
+        "signup_record": signup_record,
+        "feedback": feedback_records or [],
+    }
+
+
+def delete_account_data(api_key: str) -> dict[str, Any]:
+    """개인정보 자기결정권 — 키 소유자 본인 데이터 영구 삭제.
+
+    개인정보보호법 §36 (정정·삭제 요구권). 사용량 카운터·사용 로그·
+    가입 기록·피드백을 모두 제거. 백업 zip은 별도(scripts/backup_logs.py).
+
+    Returns:
+        {"ok": True, "deleted": {usage: True/False, log_lines: int, signups: int, feedback: int}}
+    """
+    key_hash = _hash_key(api_key)
+    deleted = {"usage": False, "log_lines": 0, "signups": 0, "feedback": 0}
+
+    with _lock:
+        db = _load_db()
+        if key_hash in db:
+            del db[key_hash]
+            _save_db(db)
+            deleted["usage"] = True
+
+    log_path = _log_path()
+    if log_path.exists():
+        kept: list[str] = []
+        removed = 0
+        with log_path.open(encoding="utf-8") as f:
+            for line in f:
+                try:
+                    e = json.loads(line)
+                except json.JSONDecodeError:
+                    kept.append(line)
+                    continue
+                if e.get("key_hash") == key_hash:
+                    removed += 1
+                else:
+                    kept.append(line)
+        if removed:
+            with log_path.open("w", encoding="utf-8") as f:
+                f.writelines(kept)
+        deleted["log_lines"] = removed
+
+    deleted["signups"] = _strip_match("logs/signups.jsonl", key_hash)
+    deleted["feedback"] = _strip_match("logs/feedback.jsonl", key_hash)
+
+    return {"ok": True, "deleted": deleted}
+
+
+def _read_match(
+    relpath: str, key_hash: str, *, all_matches: bool = False
+) -> Any:
+    """logs/{relpath}에서 key_hash 일치 항목을 읽어옴."""
+    path = Path(relpath)
+    if not path.is_absolute():
+        path = Path(os.getcwd()) / path
+    if not path.exists():
+        return [] if all_matches else None
+    out = []
+    with path.open(encoding="utf-8") as f:
+        for line in f:
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if e.get("key_hash") == key_hash or e.get("api_key_hash") == key_hash:
+                out.append(e)
+                if not all_matches:
+                    return e
+    return out if all_matches else (out[0] if out else None)
+
+
+def _strip_match(relpath: str, key_hash: str) -> int:
+    """logs/{relpath}에서 key_hash 일치 줄 제거. 제거 건수 반환."""
+    path = Path(relpath)
+    if not path.is_absolute():
+        path = Path(os.getcwd()) / path
+    if not path.exists():
+        return 0
+    kept: list[str] = []
+    removed = 0
+    with path.open(encoding="utf-8") as f:
+        for line in f:
+            try:
+                e = json.loads(line)
+            except json.JSONDecodeError:
+                kept.append(line)
+                continue
+            if e.get("key_hash") == key_hash or e.get("api_key_hash") == key_hash:
+                removed += 1
+            else:
+                kept.append(line)
+    if removed:
+        with path.open("w", encoding="utf-8") as f:
+            f.writelines(kept)
+    return removed
