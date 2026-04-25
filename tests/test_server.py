@@ -300,3 +300,46 @@ def test_account_delete_returns_count(client):
     assert body["ok"] is True
     assert "deleted" in body
     assert isinstance(body["deleted"]["log_lines"], int)
+
+
+def test_deposit_form_requires_key(client):
+    r = client.post(
+        "/legal/deposit-form",
+        json={"book_data": {"title": "테스트"}},
+    )
+    assert r.status_code == 401
+
+
+def test_deposit_form_success(client):
+    pytest.importorskip("reportlab")
+    r = client.post(
+        "/legal/deposit-form",
+        json={
+            "book_data": {
+                "title": "사서 자료집",
+                "author": "○○사서",
+                "publisher": "테스트출판",
+                "publication_year": "2026",
+                "isbn": "9788912345678",
+            },
+            "submitter_name": "○○사서",
+            "publisher_address": "서울 강남구",
+            "consents_preservation": True,
+        },
+        headers={"X-API-Key": "depositor_test_key_xxxxxxx"},
+    )
+    assert r.status_code == 200
+    body = r.json()
+    assert body["ok"] is True
+    assert body["copies"] == 1  # 보존 동의 → 1부
+    assert body["deadline"]
+    assert body["pdf_base64"]
+
+
+def test_deposit_form_rejects_no_title(client):
+    r = client.post(
+        "/legal/deposit-form",
+        json={"book_data": {"author": "x"}},
+        headers={"X-API-Key": "depositor_test_key_yyyyyyy"},
+    )
+    assert r.status_code == 400

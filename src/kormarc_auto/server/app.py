@@ -447,6 +447,60 @@ def create_app() -> FastAPI:
 
         return delete_account_data(api_key)
 
+    @app.post("/legal/deposit-form", tags=["legal"])
+    def deposit_form(
+        body: dict[str, Any], api_key: str = Depends(require_api_key)
+    ) -> dict[str, Any]:
+        """도서관법 §21 별지 제3호서식 PDF 자동 생성.
+
+        요청: {
+          "book_data": {title, author, publisher, publication_year, isbn, ...},
+          "publisher_address": "...", "submitter_name": "...",
+          "is_government": false, "consents_preservation": true
+        }
+        응답: {ok, pdf_base64, deadline, copies}
+        """
+        check_quota(api_key)
+        from kormarc_auto.legal.deposit_form import (
+            build_deposit_form,
+            deposit_deadline,
+            render_deposit_form_pdf,
+            required_copies,
+        )
+
+        bd = body.get("book_data") or {}
+        try:
+            form = build_deposit_form(
+                bd,
+                publisher_address=body.get("publisher_address", ""),
+                publisher_contact=body.get("publisher_contact", ""),
+                publisher_biz_no=body.get("publisher_biz_no"),
+                submitter_name=body.get("submitter_name", ""),
+                submitter_role=body.get("submitter_role", "발행인"),
+                is_government=bool(body.get("is_government", False)),
+                consents_preservation=bool(body.get("consents_preservation", True)),
+            )
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e)) from e
+
+        out_dir = Path(tempfile.gettempdir()) / "kormarc_deposit_forms"
+        out = render_deposit_form_pdf(
+            form,
+            output_path=out_dir
+            / f"deposit_{form.title[:20].replace(' ', '_')}.pdf",
+        )
+        pdf_b64 = base64.b64encode(out.read_bytes()).decode("ascii")
+        with contextlib.suppress(OSError):
+            out.unlink(missing_ok=True)
+        consume(api_key, kind="deposit-form", ok=True, ref=form.title[:50])
+        return {
+            "ok": True,
+            "title": form.title,
+            "deadline": deposit_deadline(form.publication_date).isoformat(),
+            "copies": required_copies(form),
+            "pdf_base64": pdf_b64,
+        }
+
     @app.post("/isbn", response_model=KormarcResponse, tags=["kormarc"])
     def isbn_endpoint(
         body: IsbnRequest,

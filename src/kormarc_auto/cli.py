@@ -436,6 +436,36 @@ def cmd_deposit(args: argparse.Namespace) -> int:
         print(f"발행일 {args.pub_date} → 납본 마감일: {d.isoformat()}")
         return 0
 
+    if args.deposit_command == "form":
+        from kormarc_auto.legal.deposit_form import (
+            build_deposit_form,
+            render_deposit_form_pdf,
+        )
+
+        if not args.title:
+            print("❌ --title 필수 (자료 표제)")
+            return 2
+        bd = {
+            "title": args.title,
+            "author": args.author,
+            "publisher": args.publisher,
+            "publication_year": args.pub_date,
+            "isbn": args.isbn,
+        }
+        form = build_deposit_form(
+            bd,
+            publisher_address=args.address or "",
+            publisher_contact=args.contact or "",
+            publisher_biz_no=args.biz_no,
+            submitter_name=args.submitter or "",
+            submitter_role=args.role or "발행인",
+            is_government=args.government,
+            consents_preservation=not args.no_consent,
+        )
+        out = render_deposit_form_pdf(form, output_path=args.output)
+        print(f"✓ 납본서 PDF (별지 제3호서식): {out}")
+        return 0
+
     print(f"❌ 알 수 없는 명령: {args.deposit_command}")
     return 1
 
@@ -699,8 +729,8 @@ def build_parser() -> argparse.ArgumentParser:
     p_not.set_defaults(func=cmd_notify)
 
     # deposit
-    p_dep = sub.add_parser("deposit", help="납본 추적 (도서관법 제20조)")
-    p_dep.add_argument("deposit_command", choices=["add", "list", "deadline"])
+    p_dep = sub.add_parser("deposit", help="납본 추적 + 별지 제3호서식 (도서관법 §21)")
+    p_dep.add_argument("deposit_command", choices=["add", "list", "deadline", "form"])
     p_dep.add_argument("--title", default="")
     p_dep.add_argument("--isbn", default=None)
     p_dep.add_argument("--pub-date", default="", help="발행일 (YYYY-MM-DD)")
@@ -709,6 +739,25 @@ def build_parser() -> argparse.ArgumentParser:
     p_dep.add_argument("--copies", type=int, default=2)
     p_dep.add_argument("--note", default="")
     p_dep.add_argument("--limit", type=int, default=50)
+    # form 전용
+    p_dep.add_argument("--author", default=None, help="form: 저자")
+    p_dep.add_argument("--publisher", default=None, help="form: 발행처")
+    p_dep.add_argument("--address", default=None, help="form: 발행처 주소")
+    p_dep.add_argument("--contact", default=None, help="form: 연락처")
+    p_dep.add_argument("--biz-no", default=None, help="form: 사업자번호")
+    p_dep.add_argument("--submitter", default=None, help="form: 납본자 성명")
+    p_dep.add_argument("--role", default=None, help="form: 직책 (발행인/관장 등)")
+    p_dep.add_argument(
+        "--government",
+        action="store_true",
+        help="form: 국가·지자체·공공기관 발행 (3부)",
+    )
+    p_dep.add_argument(
+        "--no-consent",
+        action="store_true",
+        help="form: 디지털 영구 보존 미동의 (2부)",
+    )
+    p_dep.add_argument("--output", default=None, help="form: 출력 PDF 경로")
     p_dep.set_defaults(func=cmd_deposit)
 
     # inspect
