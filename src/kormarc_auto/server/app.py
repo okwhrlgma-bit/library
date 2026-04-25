@@ -114,6 +114,47 @@ def create_app() -> FastAPI:
             raise HTTPException(status_code=429, detail=str(e)) from e
         return SignupResponse(**result)
 
+    @app.post("/romanize", tags=["tools"])
+    def romanize_endpoint(
+        body: dict[str, Any],
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """한글 → 로마자 (RR + ALA-LC)."""
+        from kormarc_auto.librarian_helpers.romanization import (
+            hangul_to_alalc,
+            hangul_to_rr,
+        )
+
+        _ = api_key
+        text = str(body.get("text", "")).strip()
+        if not text:
+            raise HTTPException(status_code=400, detail="text 필드 필요")
+        return {"input": text, "rr": hangul_to_rr(text), "alalc": hangul_to_alalc(text)}
+
+    @app.post("/inventory/search", tags=["tools"])
+    def inventory_search(
+        body: dict[str, Any],
+        api_key: str = Depends(require_api_key),
+    ) -> dict[str, Any]:
+        """자관 .mrc 누적 인덱스 검색."""
+        from kormarc_auto.inventory.library_db import search_local
+
+        _ = api_key
+        results = search_local(
+            query=str(body.get("query", "")),
+            kdc_prefix=body.get("kdc_prefix"),
+            limit=int(body.get("limit", 50)),
+        )
+        return {"count": len(results), "results": results}
+
+    @app.get("/inventory/stats", tags=["tools"])
+    def inventory_stats(api_key: str = Depends(require_api_key)) -> dict[str, Any]:
+        """자관 KDC 분포·연도 통계."""
+        from kormarc_auto.inventory.library_db import stats
+
+        _ = api_key
+        return stats()
+
     @app.post("/feedback", tags=["meta"])
     def feedback(
         body: dict[str, Any],

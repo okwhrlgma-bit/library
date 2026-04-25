@@ -134,6 +134,14 @@ def _process_isbn(isbn: str, agency: str) -> dict | None:
     out_path = write_kolas_mrc(record, isbn, output_dir=str(out_dir))
     mrc_bytes = out_path.read_bytes()
 
+    # 자관 인덱스 자동 누적 (검색 가능)
+    try:
+        from kormarc_auto.inventory.library_db import add_record
+
+        add_record({**book_data, "isbn": isbn}, mrc_path=str(out_path))
+    except Exception:
+        pass
+
     return {
         "isbn": isbn,
         "book_data": book_data,
@@ -354,6 +362,134 @@ def _tab_batch(agency: str) -> None:
     )
 
 
+def _tab_tools() -> None:
+    """사서 도구 모음 탭 — 로마자·라벨·자관 검색·KDC 트리·식별기호 도움말."""
+    st.subheader("🛠 사서 도구")
+    sub_tabs = st.tabs(["로마자", "라벨 PDF", "자관 검색", "KDC 트리", "식별기호 ▾"])
+
+    with sub_tabs[0]:
+        st.markdown("**한글 → 로마자 (RR + ALA-LC)**")
+        text = st.text_input("한글 입력", key="rom_input", placeholder="한강 작별하지 않는다")
+        if text:
+            from kormarc_auto.librarian_helpers.romanization import (
+                hangul_to_alalc,
+                hangul_to_rr,
+            )
+
+            st.code(f"RR (정부 표준):  {hangul_to_rr(text)}\nALA-LC (학술): {hangul_to_alalc(text)}")
+
+    with sub_tabs[1]:
+        st.markdown("**A4 라벨 PDF 생성** (Avery L7160 21장 / L7159 24장)")
+        layout = st.selectbox("레이아웃", ["L7160", "L7159", "A4_one"], key="lbl_layout")
+        csv_text = st.text_area(
+            "라벨 데이터 (한 줄: 청구기호,등록번호,표제)",
+            placeholder="813.7 한31ㅈ,K000123,작별하지 않는다",
+            height=140,
+            key="lbl_csv",
+        )
+        if st.button("PDF 생성", key="lbl_btn"):
+            items = []
+            for line in csv_text.splitlines():
+                parts = [p.strip() for p in line.split(",")]
+                if len(parts) >= 3:
+                    items.append(
+                        {
+                            "call_number": parts[0],
+                            "registration_no": parts[1],
+                            "title": parts[2],
+                            "barcode_value": parts[1],
+                        }
+                    )
+            if not items:
+                st.warning("최소 1줄 (청구기호,등록번호,표제) 입력 필요")
+            else:
+                try:
+                    from kormarc_auto.output.labels import make_label_pdf
+
+                    out_path = Path(".cache/kormarc-auto/ui-labels/labels.pdf")
+                    out_path.parent.mkdir(parents=True, exist_ok=True)
+                    pdf = make_label_pdf(items, output_path=str(out_path), layout=layout)
+                    st.download_button(
+                        "📥 라벨 PDF 다운로드",
+                        data=pdf.read_bytes(),
+                        file_name=f"labels_{layout}.pdf",
+                        mime="application/pdf",
+                    )
+                except Exception as e:
+                    st.error(f"실패: {e}\n\n`pip install -e .[labels]` 필요할 수 있음")
+
+    with sub_tabs[2]:
+        st.markdown("**자관 장서 검색** (생성한 .mrc 누적 인덱스)")
+        from kormarc_auto.inventory.library_db import search_local, stats
+
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            q = st.text_input("검색어", key="inv_q", placeholder="ISBN·표제·저자·등록번호")
+        with col2:
+            kdc_pf = st.text_input("KDC 시작", key="inv_kdc", placeholder="813")
+        if st.button("검색", key="inv_btn") or q:
+            results = search_local(q, kdc_prefix=kdc_pf or None, limit=50)
+            st.write(f"{len(results)}건")
+            for r in results[:20]:
+                st.markdown(
+                    f"- **{r.get('title', '?')}** · {r.get('author', '?')} "
+                    f"· KDC `{r.get('kdc', '-')}` · ISBN `{r.get('isbn', '?')}`"
+                )
+
+        st.markdown("---")
+        st.markdown("**자관 통계**")
+        s = stats()
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("총 레코드", s["total"])
+        with col2:
+            top_kdc = max(s["by_kdc_main"].items(), key=lambda x: x[1], default=("-", 0))
+            st.metric("최다 KDC", f"{top_kdc[0]} ({top_kdc[1]})")
+        if s["by_kdc_main"]:
+            st.bar_chart(s["by_kdc_main"])
+
+    with sub_tabs[3]:
+        st.markdown("**KDC 6판 트리 탐색**")
+        from kormarc_auto.librarian_helpers.kdc_tree import (
+            get_main_classes,
+            get_subtree,
+            search_kdc,
+        )
+
+        kw = st.text_input("키워드 검색", key="kdc_search", placeholder="소설·역사·종교")
+        if kw:
+            results = search_kdc(kw, limit=20)
+            for code, name in results:
+                st.markdown(f"- **{code}** {name}")
+        st.markdown("---")
+        main_choice = st.selectbox(
+            "주류 선택", [f"{c} {n}" for c, n in get_main_classes()], key="kdc_main"
+        )
+        if main_choice:
+            main_code = main_choice.split()[0]
+            sub = get_subtree(main_code)
+            for code, name in sub.items():
+                st.markdown(f"- **{code}** {name}")
+
+    with sub_tabs[4]:
+        st.markdown("**식별기호 ▾ 변환·도움말**")
+        from kormarc_auto.librarian_helpers.subfield_input import (
+            common_subfield_hint,
+            expand_subfield_codes,
+        )
+
+        text = st.text_input(
+            "입력 ($a·//a → ▾a 변환)",
+            key="sf_input",
+            placeholder="245 10 $a작별하지 않는다 $c/ 한강",
+        )
+        if text:
+            st.code(expand_subfield_codes(text))
+        tag = st.text_input("필드 태그 (도움말)", key="sf_tag", placeholder="245")
+        if tag:
+            st.info(common_subfield_hint(tag))
+
+
 def _rows_to_csv(rows: list[dict]) -> bytes:
     import csv
 
@@ -428,7 +564,7 @@ def main() -> None:
         st.markdown("---")
         st.caption("MVP 베타 — 사서 피드백 환영")
 
-    tabs = st.tabs(["ISBN", "검색", "사진", "일괄"])
+    tabs = st.tabs(["ISBN", "검색", "사진", "일괄", "🛠 도구"])
     with tabs[0]:
         _tab_isbn(agency)
     with tabs[1]:
@@ -437,6 +573,8 @@ def main() -> None:
         _tab_photo(agency)
     with tabs[3]:
         _tab_batch(agency)
+    with tabs[4]:
+        _tab_tools()
 
 
 def run() -> None:
