@@ -15,26 +15,15 @@
 
 ---
 
-## 빠른 시작 (30분)
+## 빠른 시작 (5분, 더블클릭만)
 
-### 1. Python 환경
+### 1. 최초 셋업 (1회)
 
-```powershell
-# Python 3.12+ 확인
-python --version
+`setup-once.bat` 더블클릭 → Python·venv·의존성 자동 설치.
 
-# 프로젝트 폴더로
-cd "C:\Users\okwhr\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
+### 2. API 키 채우기
 
-# 가상환경 생성 + 활성화
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-
-# 의존성 설치
-pip install -e ".[dev]"
-```
-
-### 2. API 키 발급 (필수 4개)
+`.env` 파일을 메모장으로 열어 4개 키 입력:
 
 | 키 | 발급처 | 소요 |
 |---|---|---|
@@ -43,24 +32,37 @@ pip install -e ".[dev]"
 | `KAKAO_API_KEY` | https://developers.kakao.com | 즉시 |
 | `ANTHROPIC_API_KEY` | https://console.anthropic.com | 즉시 |
 
+(`KORMARC_ADMIN_KEYS`·`KORMARC_DEMO_KEY`는 자동 생성 완료 — 그대로 두거나 교체)
+
+### 3. 실행 (3가지 옵션)
+
+| 더블클릭 | 결과 |
+|---|---|
+| `start-all.bat` | API + UI + 랜딩 3개 창 동시 시작 (가장 편함) |
+| `start-server.bat` | API 서버만 (8000) — 다른 클라이언트가 호출 |
+| `start-ui.bat` | Streamlit UI만 (8501) — 사서 직접 사용 |
+| `start-tunnel.bat` | Cloudflare 단발 터널 → 폰에서 접속할 URL 발급 |
+
+### 4. 사서에게 공유
+
+- 랜딩 URL: `start-tunnel.bat` 실행 → 8080 선택 → 발급 URL을 카카오톡 등으로 공유
+- 사서가 랜딩에서 이메일 입력 → 자동 키 발급 → UI 사용
+
+### 5. CLI 사용 (개발자용)
+
 ```powershell
-Copy-Item .env.example .env
-notepad .env  # 위 4개 키 채우기
+.\.venv\Scripts\Activate.ps1
+kormarc-auto isbn 9788936434120
+kormarc-auto search "한강 작별"
+kormarc-auto photo cover.jpg
+kormarc-auto info
 ```
 
-### 3. 실행
+### 6. 테스트·검증
 
 ```powershell
-# ISBN으로 KORMARC 생성
-python examples/generate_from_isbn.py 9788936434120
-
-# 결과: output/9788936434120.mrc (KOLAS 자동 반입 형식)
-```
-
-### 4. 테스트
-
-```powershell
-pytest -v
+.\.venv\Scripts\python.exe -m pytest -q       # 단위 54건
+.\.venv\Scripts\python.exe scripts\accuracy_check.py  # 알려진 ISBN 5건 회귀
 ```
 
 ---
