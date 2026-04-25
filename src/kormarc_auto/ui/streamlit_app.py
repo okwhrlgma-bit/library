@@ -1,0 +1,381 @@
+"""kormarc-auto Streamlit UI — 모바일 반응형.
+
+탭:
+1. ISBN 단건 — ISBN 입력 → 결과 카드 → .mrc 다운로드 + 즉석 편집
+2. 검색 — 키워드 → 후보 리스트 → 선택 → 단건 흐름
+3. 사진 — 1~3장 업로드 (모바일 카메라) → 결과
+4. 일괄 — ISBN 목록 텍스트 → CSV·ZIP 다운로드
+
+실행: `streamlit run src/kormarc_auto/ui/streamlit_app.py` 또는 `kormarc-ui`
+"""
+
+from __future__ import annotations
+
+import io
+import logging
+import zipfile
+from pathlib import Path
+
+import streamlit as st
+
+from kormarc_auto import __version__
+from kormarc_auto.api.aggregator import aggregate_by_isbn
+from kormarc_auto.api.search import search_by_query
+from kormarc_auto.classification.kdc_classifier import recommend_kdc
+from kormarc_auto.classification.subject_recommender import recommend_subjects
+from kormarc_auto.constants import (
+    PAYMENT_INFO_URL,
+    PRICE_PER_RECORD_KRW,
+)
+from kormarc_auto.kormarc.builder import build_kormarc_record
+from kormarc_auto.kormarc.validator import validate_record
+from kormarc_auto.logging_config import setup_logging
+from kormarc_auto.output.kolas_writer import write_kolas_mrc
+from kormarc_auto.vernacular.field_880 import add_880_pairs
+
+logger = logging.getLogger(__name__)
+
+
+def _setup_page() -> None:
+    st.set_page_config(
+        page_title="kormarc-auto",
+        page_icon="📚",
+        layout="centered",
+        initial_sidebar_state="collapsed",
+    )
+    st.markdown(
+        """
+        <style>
+        .block-container {max-width: 720px; padding-top: 1.2rem; padding-bottom: 4rem;}
+        .stButton button {width: 100%;}
+        .candidate-card {border: 1px solid #ddd; border-radius: 8px; padding: 12px; margin: 8px 0;}
+        .small-muted {color: #888; font-size: 0.85em;}
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _process_isbn(isbn: str, agency: str) -> dict | None:
+    """ISBN → 통합 BookData + KDC + Subject + .mrc bytes."""
+    isbn = isbn.replace("-", "").strip()
+    if not isbn:
+        st.error("ISBN을 입력하세요.")
+        return None
+
+    with st.spinner(f"외부 API 조회 중... ({isbn})"):
+        try:
+            book_data = aggregate_by_isbn(isbn)
+        except Exception as e:
+            st.error(f"외부 API 호출 실패: {e}")
+            return None
+
+    if not book_data.get("sources"):
+        st.error(f"ISBN {isbn}: 모든 소스에서 미조회")
+        return None
+
+    with st.spinner("KDC 분류 추천..."):
+        kdc_candidates = recommend_kdc(book_data)
+    if kdc_candidates and not book_data.get("kdc"):
+        book_data["kdc"] = kdc_candidates[0]["code"]
+
+    with st.spinner("주제명 추천..."):
+        subject_candidates = recommend_subjects(book_data)
+
+    with st.spinner("KORMARC 빌드..."):
+        record = build_kormarc_record(book_data, cataloging_agency=agency)
+        add_880_pairs(record)
+        errors = validate_record(record)
+
+    out_dir = Path(".cache/kormarc-auto/ui-output")
+    out_path = write_kolas_mrc(record, isbn, output_dir=str(out_dir))
+    mrc_bytes = out_path.read_bytes()
+
+    return {
+        "isbn": isbn,
+        "book_data": book_data,
+        "kdc_candidates": kdc_candidates,
+        "subject_candidates": subject_candidates,
+        "record": record,
+        "errors": errors,
+        "mrc_bytes": mrc_bytes,
+        "field_count": len(record.fields),
+    }
+
+
+def _render_result(result: dict) -> None:
+    """단건 결과 카드 렌더."""
+    bd = result["book_data"]
+    st.success(f"✓ {bd.get('title') or '표제 미상'}")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.metric("신뢰도", f"{bd.get('confidence', 0):.2f}")
+    with col2:
+        st.metric("KORMARC 필드 수", result["field_count"])
+
+    st.markdown(f"**저자**: {bd.get('author', '?')}")
+    st.markdown(f"**출판**: {bd.get('publisher', '?')} ({bd.get('publication_year', '?')})")
+    st.markdown(f"**소스**: {', '.join(bd.get('sources', []))}")
+
+    if bd.get("attributions"):
+        st.caption(" / ".join(bd["attributions"]))
+
+    if result["kdc_candidates"]:
+        with st.expander(f"KDC 후보 ({len(result['kdc_candidates'])}개)"):
+            for c in result["kdc_candidates"]:
+                st.markdown(
+                    f"- **{c['code']}** (conf {c['confidence']:.2f}, {c['source']}) "
+                    f"<span class='small-muted'>{c.get('rationale', '')}</span>",
+                    unsafe_allow_html=True,
+                )
+
+    if result["subject_candidates"]:
+        with st.expander(f"주제명 후보 ({len(result['subject_candidates'])}개)"):
+            for c in result["subject_candidates"]:
+                st.markdown(f"- **{c['term']}** (conf {c['confidence']:.2f}, {c['source']})")
+
+    if result["errors"]:
+        with st.expander(f"⚠ 검증 경고 ({len(result['errors'])}개)"):
+            for e in result["errors"]:
+                st.warning(e)
+    else:
+        st.success("✓ 검증 통과")
+
+    st.download_button(
+        label="📥 .mrc 다운로드 (KOLAS 자동 반입)",
+        data=result["mrc_bytes"],
+        file_name=f"{result['isbn']}.mrc",
+        mime="application/marc",
+    )
+
+
+def _tab_isbn(agency: str) -> None:
+    st.subheader("ISBN 단건")
+    isbn = st.text_input("ISBN-13", placeholder="9788936434120", key="isbn_input")
+    if st.button("KORMARC 생성", key="isbn_btn"):
+        result = _process_isbn(isbn, agency)
+        if result:
+            _render_result(result)
+
+
+def _tab_search(agency: str) -> None:
+    st.subheader("키워드 검색")
+    query = st.text_input("검색어", placeholder="한강 작별하지 않는다", key="search_input")
+    limit = st.slider("최대 결과 수", 5, 30, 10, key="search_limit")
+
+    if st.button("검색", key="search_btn"):
+        with st.spinner("검색 중..."):
+            try:
+                candidates = search_by_query(query, limit=limit)
+            except Exception as e:
+                st.error(f"검색 실패: {e}")
+                return
+        if not candidates:
+            st.warning("검색 결과 없음")
+            return
+        st.session_state["search_candidates"] = candidates
+
+    cands = st.session_state.get("search_candidates", [])
+    for i, c in enumerate(cands):
+        with st.container():
+            st.markdown(
+                f"<div class='candidate-card'><strong>{c.get('title', '?')}</strong><br>"
+                f"<span class='small-muted'>{c.get('author', '?')} · {c.get('publisher', '?')} "
+                f"({c.get('publication_year', '?')}) · ISBN {c.get('isbn', '?')} · "
+                f"conf {c.get('confidence', 0):.2f}</span></div>",
+                unsafe_allow_html=True,
+            )
+            if c.get("isbn") and st.button("이 ISBN으로 KORMARC 생성", key=f"cand_{i}"):
+                result = _process_isbn(c["isbn"], agency)
+                if result:
+                    _render_result(result)
+
+
+def _tab_photo(agency: str) -> None:
+    st.subheader("사진 → KORMARC")
+    st.caption("표지·판권지·뒷표지 사진 1~3장 업로드. 모바일에서는 카메라 직접 촬영 가능.")
+    uploads = st.file_uploader(
+        "이미지 선택",
+        type=["jpg", "jpeg", "png", "webp"],
+        accept_multiple_files=True,
+        key="photo_upload",
+    )
+    if not uploads:
+        return
+    if len(uploads) > 3:
+        st.warning("최대 3장까지 사용. 처음 3장만 분석합니다.")
+        uploads = uploads[:3]
+
+    for up in uploads:
+        st.image(up, width=180)
+
+    if st.button("Vision 분석 + KORMARC 생성", key="photo_btn"):
+        from kormarc_auto.vision.photo_pipeline import photo_to_book_data
+
+        tmp_dir = Path(".cache/kormarc-auto/ui-uploads")
+        tmp_dir.mkdir(parents=True, exist_ok=True)
+        paths: list[Path] = []
+        for up in uploads:
+            p = tmp_dir / up.name
+            p.write_bytes(up.getvalue())
+            paths.append(p)
+
+        with st.spinner("이미지 분석 (바코드 → Vision)"):
+            try:
+                book_data = photo_to_book_data(paths)
+            except Exception as e:
+                st.error(f"Vision 실패: {e}")
+                return
+
+        if book_data.get("vision_only") and not book_data.get("isbn"):
+            st.error("ISBN 추출 실패 — 사진 품질을 확인하세요.")
+            if book_data.get("warnings"):
+                for w in book_data["warnings"]:
+                    st.warning(w)
+            return
+
+        # ISBN이 잡혔으면 단건 흐름 재사용
+        if book_data.get("isbn"):
+            result = _process_isbn(str(book_data["isbn"]), agency)
+            if result:
+                _render_result(result)
+        else:
+            st.info("Vision만으로 메타데이터 추출 — 사서 검토 필수")
+            st.json(book_data)
+
+
+def _tab_batch(agency: str) -> None:
+    st.subheader("일괄 처리")
+    st.caption("ISBN을 한 줄에 하나씩 입력. CSV 요약 + 모든 .mrc를 ZIP으로 다운로드.")
+    text = st.text_area("ISBN 목록", height=180, key="batch_input")
+    if not st.button("일괄 처리", key="batch_btn"):
+        return
+
+    isbns = [
+        line.strip().replace("-", "")
+        for line in text.splitlines()
+        if line.strip() and not line.strip().startswith("#")
+    ]
+    if not isbns:
+        st.warning("ISBN이 없습니다.")
+        return
+
+    progress = st.progress(0.0)
+    rows: list[dict] = []
+    zip_buf = io.BytesIO()
+    with zipfile.ZipFile(zip_buf, "w", zipfile.ZIP_DEFLATED) as zf:
+        for i, isbn in enumerate(isbns, 1):
+            progress.progress(i / len(isbns), text=f"{i}/{len(isbns)} {isbn}")
+            try:
+                result = _process_isbn(isbn, agency)
+                if result:
+                    bd = result["book_data"]
+                    rows.append(
+                        {
+                            "isbn": isbn,
+                            "title": bd.get("title", ""),
+                            "author": bd.get("author", ""),
+                            "publisher": bd.get("publisher", ""),
+                            "year": bd.get("publication_year", ""),
+                            "confidence": f"{bd.get('confidence', 0):.2f}",
+                            "fields": result["field_count"],
+                            "errors": len(result["errors"]),
+                            "ok": "Y",
+                        }
+                    )
+                    zf.writestr(f"{isbn}.mrc", result["mrc_bytes"])
+                else:
+                    rows.append({"isbn": isbn, "ok": "N", "title": "", "author": "", "publisher": "", "year": "", "confidence": "", "fields": "", "errors": ""})
+            except Exception as e:
+                rows.append({"isbn": isbn, "ok": "N", "title": str(e)[:40], "author": "", "publisher": "", "year": "", "confidence": "", "fields": "", "errors": ""})
+
+    progress.empty()
+    st.dataframe(rows, use_container_width=True)
+
+    csv_bytes = _rows_to_csv(rows)
+    st.download_button(
+        "📊 CSV 요약 다운로드",
+        data=csv_bytes,
+        file_name="batch_summary.csv",
+        mime="text/csv",
+    )
+    st.download_button(
+        "📦 모든 .mrc ZIP 다운로드",
+        data=zip_buf.getvalue(),
+        file_name="kormarc_batch.zip",
+        mime="application/zip",
+    )
+
+
+def _rows_to_csv(rows: list[dict]) -> bytes:
+    import csv
+
+    buf = io.StringIO()
+    if not rows:
+        return b""
+    writer = csv.DictWriter(buf, fieldnames=list(rows[0].keys()))
+    writer.writeheader()
+    writer.writerows(rows)
+    return buf.getvalue().encode("utf-8-sig")
+
+
+def main() -> None:
+    setup_logging()
+    _setup_page()
+
+    st.title("📚 kormarc-auto")
+    st.caption(f"한국 도서관용 KORMARC 자동 생성 · v{__version__}")
+
+    with st.sidebar:
+        st.markdown("### 설정")
+        agency = st.text_input("우리 도서관 부호 (040 ▾a)", "OURLIB", key="agency_input")
+        st.markdown("---")
+        st.markdown("### 가격 안내")
+        st.markdown(f"- 권당 **{PRICE_PER_RECORD_KRW:,}원**")
+        st.markdown("- 신규 50건 무료 체험")
+        st.markdown(f"- [가격 페이지]({PAYMENT_INFO_URL})")
+        st.markdown("---")
+        st.markdown("### 처음이신가요")
+        st.markdown("- [5분 시작 가이드 (사서용)](docs/quickstart-librarian.md)")
+        st.markdown("- 도움 필요 시 PO에게 이메일")
+        st.markdown("---")
+        st.caption("MVP 베타 — 사서 피드백 환영")
+
+    tabs = st.tabs(["ISBN", "검색", "사진", "일괄"])
+    with tabs[0]:
+        _tab_isbn(agency)
+    with tabs[1]:
+        _tab_search(agency)
+    with tabs[2]:
+        _tab_photo(agency)
+    with tabs[3]:
+        _tab_batch(agency)
+
+
+def run() -> None:
+    """`kormarc-ui` 엔트리포인트 — streamlit run을 wrapping."""
+    import os
+    import subprocess
+    import sys
+
+    script = Path(__file__).resolve()
+    port = os.getenv("KORMARC_UI_PORT", "8501")
+    cmd = [
+        sys.executable,
+        "-m",
+        "streamlit",
+        "run",
+        str(script),
+        "--server.port",
+        port,
+        "--server.address",
+        "127.0.0.1",
+        "--browser.gatherUsageStats",
+        "false",
+    ]
+    subprocess.run(cmd, check=False)
+
+
+if __name__ == "__main__":
+    main()

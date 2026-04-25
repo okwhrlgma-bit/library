@@ -1,0 +1,59 @@
+# 환경변수 (시크릿)
+.env
+.env.local
+.env.*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# 가상환경
+.venv/
+venv/
+env/
+ENV/
+
+# 빌드
+build/
+dist/
+*.whl
+
+# 출력 .mrc 파일 (생성물, 커밋 금지)
+output/
+*.mrc
+!tests/samples/golden/*.mrc
+
+# 테스트 샘플 이미지 (대용량)
+tests/samples/covers/*.jpg
+tests/samples/covers/*.png
+tests/samples/covers/*.heic
+!tests/samples/covers/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+*.log
+logs/
