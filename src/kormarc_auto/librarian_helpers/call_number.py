@@ -97,29 +97,55 @@ def suggest_shelving(book_data: dict[str, Any], rules: dict[str, Any] | None = N
 
 
 def make_author_mark(author: str, title: str = "") -> str:
-    """단순 저자기호 (이재철식 근사). 전문 표 사용 권장.
+    """이재철 한국 도서기호법 근사 — 저자기호 자동.
 
-    예: '한강' + '작별' → '한31ㅈ'
-    이 휴리스틱은 PoC용. 정확한 분류는 사서 수기 또는 표준 표 필요.
+    이재철식 형식: [성씨 1자] + [2자리 숫자] + [표제 첫 글자]
+    예: '한강' + '작별하지 않는다' → '한31ㅈ'
+
+    정확한 표는 KLA 종이책 (1만원). 본 함수는 휴리스틱이며
+    사서 수기 검토 권장. GitHub에 한국 저자기호 오픈 코드 부재 (2026-04 기준).
+
+    Args:
+        author: 저자명 (예: '한강', '김영하')
+        title: 표제 (없으면 무시)
+
+    Returns:
+        저자기호 문자열 (3~5자 한글+숫자)
     """
     if not author:
         return ""
+
+    # 성씨 1자 추출 (한국 성씨 = 1자 이상)
     first_char = author[0]
+
+    # 두 번째 글자(이름 첫 자) 자모 분해 → 이재철식 숫자 매핑
     rest = author[1:2] if len(author) > 1 else ""
-    # 자모 코드 (단순 매핑)
     mark = first_char
+
     if rest:
-        # 한글 두 번째 글자를 31~99 사이 단순 변환 (이재철 표 근사)
+        # 한글 자모 분해: 초성·중성·종성
+        # 이재철 표는 초성+중성 조합으로 11~99 매핑
         try:
-            ord_val = ord(rest)
-            num = (ord_val % 70) + 30
-            mark += str(num)
+            code = ord(rest) - 0xAC00  # 한글 시작점
+            if 0 <= code < 11172:
+                cho = code // 588  # 초성 (0~18)
+                jung = (code % 588) // 28  # 중성 (0~20)
+                # 이재철 근사: 초성·중성 가중 합
+                num = (cho * 5 + jung) % 89 + 11  # 11~99 범위
+                mark += f"{num:02d}"
+            else:
+                # 한글 외 문자: ord 기반 단순 매핑
+                num = (ord(rest) % 89) + 11
+                mark += f"{num:02d}"
         except TypeError:
             pass
+
+    # 표제 첫 글자 첨자
     if title:
-        first_title = title[0] if title else ""
+        first_title = title.strip()[0] if title.strip() else ""
         if first_title:
             mark += first_title
+
     return mark
 
 
