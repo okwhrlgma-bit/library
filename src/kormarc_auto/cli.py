@@ -595,6 +595,40 @@ def cmd_info(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_interlibrary(args: argparse.Namespace) -> int:
+    """상호대차 양식 어댑터 — 책나래·책바다·RISS 사서대리신청."""
+    import json
+
+    from kormarc_auto.interlibrary.exporters import (
+        from_inventory,
+        write_csv,
+        write_xlsx,
+    )
+
+    # 입력 books
+    if args.from_isbns:
+        with Path(args.from_isbns).open(encoding="utf-8") as f:
+            isbns = [line.strip() for line in f if line.strip()]
+        books = from_inventory(isbns)
+    elif args.from_json:
+        with Path(args.from_json).open(encoding="utf-8") as f:
+            books = json.load(f)
+        if not isinstance(books, list):
+            print("❌ JSON은 리스트여야 함")
+            return 2
+    else:
+        print("❌ --from-isbns 또는 --from-json 필요")
+        return 2
+
+    out = Path(args.output)
+    if args.format == "csv":
+        write_csv(books, out, system=args.system)
+    else:
+        write_xlsx(books, out, system=args.system)
+    print(f"✓ {args.system} 양식 {args.format.upper()}: {out} ({len(books)}건)")
+    return 0
+
+
 def cmd_registration(args: argparse.Namespace) -> int:
     """등록번호 자동 부여·누락번호 검출 — 알파스 워크플로우."""
     from kormarc_auto.librarian_helpers.registration import (
@@ -857,6 +891,32 @@ def build_parser() -> argparse.ArgumentParser:
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")
     p_info.set_defaults(func=cmd_info)
+
+    # interlibrary — 상호대차 양식 어댑터
+    p_il = sub.add_parser(
+        "interlibrary",
+        help="상호대차 양식 (책나래·책바다·RISS) 사서대리신청 자동",
+    )
+    p_il.add_argument(
+        "--system",
+        choices=["chaeknarae", "chaekbada", "riss"],
+        required=True,
+    )
+    p_il.add_argument(
+        "--format", choices=["csv", "xlsx"], default="xlsx", help="출력 형식"
+    )
+    p_il.add_argument(
+        "--from-isbns",
+        default=None,
+        help="ISBN 목록 파일 (한 줄당 1개) — 자관 인덱스 자동 조회",
+    )
+    p_il.add_argument(
+        "--from-json",
+        default=None,
+        help="신청 정보 JSON 배열 파일 (이용자/날짜 등 포함)",
+    )
+    p_il.add_argument("--output", required=True, help="저장 경로 (.csv/.xlsx)")
+    p_il.set_defaults(func=cmd_interlibrary)
 
     # registration — 등록번호 자동 부여
     p_reg = sub.add_parser(
