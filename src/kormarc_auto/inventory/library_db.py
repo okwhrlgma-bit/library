@@ -48,9 +48,8 @@ def add_record(book_data: dict[str, Any], *, mrc_path: str | None = None) -> str
         "call_number": book_data.get("call_number"),
         "mrc_path": mrc_path,
     }
-    with _lock:
-        with _index_path().open("a", encoding="utf-8") as f:
-            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+    with _lock, _index_path().open("a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
     return record_id
 
 

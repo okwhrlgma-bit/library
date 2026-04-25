@@ -37,7 +37,7 @@ def import_mrc_file(path: str | Path) -> list[dict[str, Any]]:
                 book_data = _record_to_book_data(record)
                 rid = add_record(book_data, mrc_path=str(p))
                 out.append({"id": rid, **book_data})
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         logger.warning(".mrc 파싱 실패: %s — %s", p, e)
         return out
 
@@ -62,7 +62,7 @@ def import_marcxml_file(path: str | Path) -> list[dict[str, Any]]:
             book_data = _record_to_book_data(record)
             rid = add_record(book_data, mrc_path=str(p))
             out.append({"id": rid, **book_data})
-    except Exception as e:  # noqa: BLE001
+    except Exception as e:
         logger.warning("MARCXML 파싱 실패: %s — %s", p, e)
         return out
 
