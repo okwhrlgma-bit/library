@@ -595,6 +595,51 @@ def cmd_info(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_wishlist(args: argparse.Namespace) -> int:
+    """비치희망도서 분석 — 자관 중복 + KDC 균형 + 예상 비용."""
+    import json as _json
+
+    from kormarc_auto.acquisition.wishlist import (
+        analyze_wishlist,
+        summarize,
+    )
+
+    if not args.input:
+        print("❌ --input ISBN 파일 필요")
+        return 2
+
+    with Path(args.input).open(encoding="utf-8") as f:
+        isbns = [line.strip() for line in f if line.strip()]
+
+    items = analyze_wishlist(isbns, use_external=not args.offline)
+    summary = summarize(items)
+
+    print(f"수서 분석: 총 {summary['total']}건")
+    print(f"  · 자관 중복: {summary['in_holdings']}건")
+    print(f"  · 신규 구입 후보: {summary['new_purchase']}건")
+    print(f"  · 예상 비용: {summary['estimated_cost_krw']:,}원")
+    print(f"  · KDC 분포: {summary['kdc_distribution']}")
+    if summary["balance_warnings"]:
+        print("\n⚠ 장서개발지침 경고:")
+        for w in summary["balance_warnings"]:
+            print(f"  · {w}")
+    if summary["errors"]:
+        print(f"\n조회 실패 {len(summary['errors'])}건:")
+        for e in summary["errors"]:
+            print(f"  · {e['isbn']}: {e['error']}")
+
+    if args.output:
+        out_data = {
+            "summary": summary,
+            "items": [vars(it) for it in items],
+        }
+        Path(args.output).write_text(
+            _json.dumps(out_data, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        print(f"\n✓ 상세 결과: {args.output}")
+    return 0
+
+
 def cmd_interlibrary(args: argparse.Namespace) -> int:
     """상호대차 양식 어댑터 — 책나래·책바다·RISS 사서대리신청."""
     import json
@@ -891,6 +936,20 @@ def build_parser() -> argparse.ArgumentParser:
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")
     p_info.set_defaults(func=cmd_info)
+
+    # wishlist — 비치희망도서 수서 분석
+    p_w = sub.add_parser(
+        "wishlist",
+        help="비치희망도서 분석 (자관 중복 + KDC 균형 + 비용)",
+    )
+    p_w.add_argument("--input", required=True, help="ISBN 목록 파일 (한 줄당 1개)")
+    p_w.add_argument("--output", default=None, help="JSON 결과 저장 경로 (선택)")
+    p_w.add_argument(
+        "--offline",
+        action="store_true",
+        help="외부 API 미사용 (자관 인덱스만 조회)",
+    )
+    p_w.set_defaults(func=cmd_wishlist)
 
     # interlibrary — 상호대차 양식 어댑터
     p_il = sub.add_parser(
