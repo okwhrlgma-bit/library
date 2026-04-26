@@ -1,0 +1,11 @@
+{
+  "case_id": "003",
+  "isbn": "9788983927774",
+  "title_hint": "우리가 빛의 속도로 갈 수 없다면",
+  "assertions": [
+    {"name": "title_kim_choyeop", "field": "title", "op": "contains", "value": "빛의 속도"},
+    {"name": "author_kim_choyeop", "field": "author", "op": "contains", "value": "김초엽"},
+    {"name": "kdc_lit", "field": "kdc", "op": "starts_with", "value": "8"},
+    {"name": "isbn_normalized", "field": "isbn", "op": "equals", "value": "9788983927774"}
+  ]
+}

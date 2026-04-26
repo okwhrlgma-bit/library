@@ -1,0 +1,12 @@
+{
+  "case_id": "002",
+  "isbn": "9788932473901",
+  "title_hint": "태백산맥",
+  "assertions": [
+    {"name": "title_taebaeksanmaek", "field": "title", "op": "contains", "value": "태백산맥"},
+    {"name": "author_jo_jung_rae", "field": "author", "op": "contains", "value": "조정래"},
+    {"name": "kdc_lit", "field": "kdc", "op": "starts_with", "value": "8"},
+    {"name": "isbn_normalized", "field": "isbn", "op": "equals", "value": "9788932473901"},
+    {"name": "confidence_min", "field": "confidence", "op": "ge", "value": 0.5}
+  ]
+}

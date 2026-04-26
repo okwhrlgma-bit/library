@@ -1,0 +1,13 @@
+{
+  "case_id": "001",
+  "isbn": "9788936434120",
+  "title_hint": "작별하지 않는다",
+  "assertions": [
+    {"name": "title_starts_with_jak", "field": "title", "op": "starts_with", "value": "작별"},
+    {"name": "author_contains_han_kang", "field": "author", "op": "contains", "value": "한강"},
+    {"name": "kdc_korean_lit", "field": "kdc", "op": "starts_with", "value": "8"},
+    {"name": "isbn_normalized", "field": "isbn", "op": "equals", "value": "9788936434120"},
+    {"name": "confidence_min", "field": "confidence", "op": "ge", "value": 0.5},
+    {"name": "has_at_least_one_source", "field": "sources_count", "op": "ge", "value": 1}
+  ]
+}
