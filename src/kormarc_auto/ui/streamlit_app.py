@@ -535,6 +535,11 @@ def _tab_tools() -> None:
             "보고서",
             "알림",
             "납본",
+            "등록번호",
+            "상호대차",
+            "수서 분석",
+            "제적·폐기",
+            "연간 통계",
         ]
     )
 
@@ -939,6 +944,305 @@ def _tab_tools() -> None:
         tag = st.text_input("필드 태그 (도움말)", key="sf_tag", placeholder="245")
         if tag:
             st.info(common_subfield_hint(tag))
+
+    # ── 9. 등록번호 자동 부여 ────────────────────────────
+    with sub_tabs[9]:
+        st.markdown("**등록번호 자동 부여** — 알파스/KOLAS 워크플로우")
+        from datetime import date as _date
+
+        from kormarc_auto.librarian_helpers.registration import (
+            assign_for_multivolume,
+            find_missing_numbers,
+            load_existing_from_index,
+            next_registration_number,
+        )
+
+        reg_action = st.radio(
+            "작업",
+            ["다음 번호", "누락번호 점검", "다권본 일괄"],
+            key="reg_action",
+        )
+        col_k, col_t, col_y = st.columns(3)
+        with col_k:
+            reg_kind = st.text_input("등록구분", "EM", key="reg_kind")
+        with col_t:
+            reg_turn = st.number_input("차수", 1, 99, 1, key="reg_turn")
+        with col_y:
+            reg_year = st.number_input(
+                "연도(2자리)", 0, 99, _date.today().year % 100, key="reg_year"
+            )
+
+        existing = load_existing_from_index()
+        st.caption(f"자관 인덱스 등록번호 {len(existing)}건 로드됨")
+
+        if reg_action == "다음 번호":
+            fill = st.checkbox("누락번호 우선 채움", value=True, key="reg_fill")
+            if st.button("다음 번호", key="reg_next_btn"):
+                n = next_registration_number(
+                    existing,
+                    kind=reg_kind,
+                    turn=int(reg_turn),
+                    year=int(reg_year),
+                    fill_gap=fill,
+                )
+                st.success(f"다음 등록번호: **{n}**")
+        elif reg_action == "누락번호 점검":
+            if st.button("점검", key="reg_miss_btn"):
+                gaps = find_missing_numbers(
+                    existing,
+                    kind=reg_kind,
+                    turn=int(reg_turn),
+                    year=int(reg_year),
+                )
+                if gaps:
+                    st.warning(f"누락번호 {len(gaps)}개 발견")
+                    st.code(
+                        "\n".join(
+                            f"{reg_kind}{int(reg_turn):02d}{int(reg_year):02d}{g:05d}"
+                            for g in gaps
+                        )
+                    )
+                else:
+                    st.success("누락번호 없음 — 깔끔합니다")
+        else:  # 다권본
+            mv_volumes = st.number_input("권수", 2, 50, 5, key="reg_vols")
+            mv_title = st.text_input("표제", "", key="reg_title")
+            if st.button("다권본 등록번호 부여", key="reg_mv_btn"):
+                results = assign_for_multivolume(
+                    {"title": mv_title or "(미입력)"},
+                    volumes=int(mv_volumes),
+                    kind=reg_kind,
+                    turn=int(reg_turn),
+                    year=int(reg_year),
+                    existing=existing,
+                )
+                for r in results:
+                    st.markdown(
+                        f"- `{r['registration_number']}` · {r['volume_label']} · "
+                        f"245 ▾n {r['marc_245_n']}"
+                    )
+
+    # ── 10. 상호대차 양식 어댑터 ─────────────────────────
+    with sub_tabs[10]:
+        st.markdown("**상호대차 양식** — 책나래·책바다·RISS 사서대리신청 일괄업로드")
+        from kormarc_auto.interlibrary.exporters import from_inventory, write_xlsx
+
+        il_system = st.selectbox(
+            "시스템",
+            ["chaeknarae", "chaekbada", "riss"],
+            format_func=lambda s: {
+                "chaeknarae": "책나래 (장애인 자료배달)",
+                "chaekbada": "책바다 (전국 상호대차)",
+                "riss": "RISS (KERIS 학술)",
+            }.get(s, s),
+            key="il_sys",
+        )
+        il_isbns = st.text_area(
+            "ISBN 목록 (한 줄당 1개)",
+            placeholder="9788912345678\n9788998765432",
+            height=140,
+            key="il_isbns",
+        )
+        if st.button("양식 XLSX 생성", key="il_btn"):
+            isbns = [x.strip() for x in il_isbns.splitlines() if x.strip()]
+            if not isbns:
+                st.warning("ISBN 1개 이상 입력")
+            else:
+                books = from_inventory(isbns)
+                out_path = Path(".cache/kormarc-auto/ui-interlibrary/req.xlsx")
+                out_path.parent.mkdir(parents=True, exist_ok=True)
+                try:
+                    p = write_xlsx(books, out_path, system=il_system)
+                    st.download_button(
+                        "📥 양식 XLSX 다운로드",
+                        data=p.read_bytes(),
+                        file_name=f"{il_system}_request.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    )
+                    held = sum(1 for b in books if b.get("holding_status") == "보유")
+                    st.success(f"✓ {len(books)}건 ({held}건 자관 보유 / {len(books)-held}건 미보유)")
+                except Exception as e:
+                    st.error(f"생성 실패: {e}")
+
+    # ── 11. 비치희망도서 수서 분석 ───────────────────────
+    with sub_tabs[11]:
+        st.markdown("**비치희망도서 수서 분석** — 자관 중복 + KDC 균형 + 예상 비용")
+        from kormarc_auto.acquisition.wishlist import analyze_wishlist, summarize
+
+        ws_isbns = st.text_area(
+            "희망도서 ISBN 목록 (한 줄당 1개)",
+            placeholder="9788912345678\n9788998765432",
+            height=140,
+            key="ws_isbns",
+        )
+        ws_offline = st.checkbox(
+            "오프라인 (자관 인덱스만)", value=False, key="ws_offline"
+        )
+        if st.button("분석", key="ws_btn"):
+            isbns = [x.strip() for x in ws_isbns.splitlines() if x.strip()]
+            if not isbns:
+                st.warning("ISBN 1개 이상")
+            else:
+                with st.spinner(f"수서 분석 중 (약 {len(isbns)*2}초)..."):
+                    items = analyze_wishlist(isbns, use_external=not ws_offline)
+                summary = summarize(items)
+                col_a, col_b, col_c = st.columns(3)
+                col_a.metric("총", summary["total"])
+                col_b.metric("자관 보유", summary["in_holdings"])
+                col_c.metric("신규 구입 후보", summary["new_purchase"])
+                if summary["estimated_cost_krw"]:
+                    st.metric("예상 비용", f"{summary['estimated_cost_krw']:,}원")
+                if summary["balance_warnings"]:
+                    st.warning("\n".join(summary["balance_warnings"]))
+                with st.expander(f"개별 결과 ({len(items)}건)"):
+                    for it in items:
+                        flag = "✓ 보유" if it.in_holdings else "○ 신규"
+                        st.markdown(
+                            f"- `{it.isbn}` {flag} · **{it.title or '?'}** · "
+                            f"KDC {it.kdc or '?'} · "
+                            f"{f'{it.price_krw:,}원' if it.price_krw else '가격 미상'}"
+                        )
+
+    # ── 12. 제적·폐기 결재서식 ──────────────────────────
+    with sub_tabs[12]:
+        st.markdown("**제적·폐기 결재서식** — 도서관법 §22 + 장서개발지침 §3.2")
+        from kormarc_auto.output.disposal_form import (
+            DISPOSAL_REASONS,
+            DisposalEntry,
+            render_disposal_form_pdf,
+            write_disposal_xlsx,
+        )
+
+        dis_lib = st.text_input("도서관명", "○○도서관", key="dis_lib")
+        dis_period = st.text_input("심의 기간", "2026 1분기", key="dis_period")
+        dis_director = st.text_input("결재자(관장)", "", key="dis_dir")
+        dis_csv = st.text_area(
+            "제적 자료 (한 줄: 등록번호,표제,사유코드,점검자)",
+            placeholder=(
+                "EM012600101,노후도서1,WORN,○○사서\n"
+                "EM012600102,복본도서,DUPL,○○사서"
+            ),
+            height=140,
+            key="dis_csv",
+        )
+        st.caption(
+            "사유코드: " + " / ".join(f"{k}={v}" for k, v in DISPOSAL_REASONS.items())
+        )
+
+        if st.button("결재서식 PDF + 폐기목록 XLSX 생성", key="dis_btn"):
+            entries: list[DisposalEntry] = []
+            for line in dis_csv.splitlines():
+                parts = [p.strip() for p in line.split(",")]
+                if len(parts) >= 3:
+                    entries.append(
+                        DisposalEntry(
+                            registration_number=parts[0],
+                            title=parts[1],
+                            reason_code=parts[2],
+                            inspector=parts[3] if len(parts) > 3 else "",
+                        )
+                    )
+            if not entries:
+                st.warning("최소 1줄 (등록번호,표제,사유코드)")
+            else:
+                out_dir = Path(".cache/kormarc-auto/ui-disposal")
+                out_dir.mkdir(parents=True, exist_ok=True)
+                try:
+                    pdf = render_disposal_form_pdf(
+                        entries,
+                        library_name=dis_lib,
+                        fiscal_period=dis_period,
+                        director=dis_director,
+                        output_path=out_dir / "disposal.pdf",
+                    )
+                    xlsx = write_disposal_xlsx(entries, out_dir / "disposal.xlsx")
+                    st.download_button(
+                        "📥 결재서식 PDF",
+                        data=pdf.read_bytes(),
+                        file_name="disposal_form.pdf",
+                        mime="application/pdf",
+                    )
+                    st.download_button(
+                        "📥 폐기목록 XLSX",
+                        data=xlsx.read_bytes(),
+                        file_name="disposal_list.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    )
+                    st.success(f"{len(entries)}건 결재서식 생성")
+                except Exception as e:
+                    st.error(f"생성 실패: {e}")
+
+    # ── 13. 연간 KOLIS-NET 통계 ─────────────────────────
+    with sub_tabs[13]:
+        st.markdown(
+            "**연간 통계** — KOLIS-NET 제출 + RISS 학교도서관 양식 (자관 인덱스 자동 집계)"
+        )
+        from datetime import datetime as _dt
+
+        from kormarc_auto.output.annual_statistics import (
+            build_annual_stats,
+            export_to_riss_for_school,
+            write_kolisnet_xlsx,
+        )
+
+        stats_lib = st.text_input("도서관명", "○○도서관", key="stats_lib")
+        stats_code = st.text_input(
+            "KOLIS-NET 도서관 코드 (옵션)", "", key="stats_code"
+        )
+        col_y, col_t = st.columns(2)
+        with col_y:
+            stats_year = st.number_input(
+                "통계연도", 2020, 2100, _dt.now().year, key="stats_year"
+            )
+        with col_t:
+            stats_target = st.selectbox(
+                "양식", ["KOLIS-NET (공공)", "RISS (학교도서관)"], key="stats_target"
+            )
+
+        st.markdown("**사서 보정값 (선택 입력)**")
+        col_l, col_v, col_m = st.columns(3)
+        with col_l:
+            stats_loans = st.number_input("연간 대출", 0, 10000000, 0, key="stats_loans")
+        with col_v:
+            stats_visits = st.number_input("이용자 방문", 0, 10000000, 0, key="stats_visits")
+        with col_m:
+            stats_members = st.number_input("회원 수", 0, 10000000, 0, key="stats_members")
+
+        if st.button("연간 통계 XLSX 생성", key="stats_btn"):
+            s = build_annual_stats(
+                year=int(stats_year),
+                library_name=stats_lib,
+                library_code=stats_code,
+                overrides={
+                    "loans_total": int(stats_loans),
+                    "visits_total": int(stats_visits),
+                    "members_total": int(stats_members),
+                },
+            )
+            out_dir = Path(".cache/kormarc-auto/ui-stats")
+            out_dir.mkdir(parents=True, exist_ok=True)
+            try:
+                if stats_target.startswith("KOLIS"):
+                    xlsx = write_kolisnet_xlsx(
+                        s, out_dir / f"kolisnet_{int(stats_year)}.xlsx"
+                    )
+                    fname = f"kolisnet_{int(stats_year)}.xlsx"
+                else:
+                    xlsx = export_to_riss_for_school(
+                        s, out_dir / f"riss_{int(stats_year)}.xlsx"
+                    )
+                    fname = f"riss_{int(stats_year)}.xlsx"
+                st.download_button(
+                    "📥 통계 XLSX 다운로드",
+                    data=xlsx.read_bytes(),
+                    file_name=fname,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
+                st.success(
+                    f"총 장서 {s.holdings_total}권 · KDC 분포 {s.holdings_by_kdc}"
+                )
+            except Exception as e:
+                st.error(f"생성 실패: {e}")
 
 
 def _rows_to_csv(rows: list[dict]) -> bytes:
