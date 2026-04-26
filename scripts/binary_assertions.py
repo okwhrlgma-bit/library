@@ -156,6 +156,27 @@ def assert_server_endpoints_documented() -> bool:
     return all(ep in text for ep in required)
 
 
+def assert_ops_scripts_present() -> bool:
+    """운영 자율성 핵심 스크립트 5종 존재 (PO 가이드 1·2·3·4단)."""
+    required = [
+        "scripts/binary_assertions.py",
+        "scripts/golden_check.py",
+        "scripts/aggregate_interviews.py",
+        "scripts/rotate_logs.py",
+        "scripts/backup_logs.py",
+    ]
+    return all((ROOT / r).exists() for r in required)
+
+
+def assert_adr_count_min() -> bool:
+    """ADR 7건 이상 (큰 결정 추적, PO 가이드 1단)."""
+    adr_dir = ROOT / "docs" / "adr"
+    if not adr_dir.exists():
+        return False
+    files = [p for p in adr_dir.glob("[0-9][0-9][0-9][0-9]-*.md") if p.is_file()]
+    return len(files) >= 7
+
+
 def assert_external_calls_have_timeout() -> bool:
     """src/kormarc_auto/api/ 외부 호출에 timeout 명시 (CLAUDE.md §4.2)."""
     rc, _, _ = _run(
@@ -213,6 +234,8 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("신규 엔드포인트 6종 존재", assert_server_endpoints_documented),
     ("Streamlit 도구 탭 14개", assert_streamlit_tabs_count),
     ("외부 API 호출에 timeout 명시", assert_external_calls_have_timeout),
+    ("운영 스크립트 5종 존재", assert_ops_scripts_present),
+    ("ADR 7건 이상", assert_adr_count_min),
 ]
 
 
