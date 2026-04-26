@@ -114,6 +114,19 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/scripts/binary_assertions.py\" --json 2>&1 | tail -1 > \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/logs/evals/last_session.json\" || true",
+            "timeout": 120,
+            "async": true,
+            "statusMessage": "세션 종료 어셔션 누적 중..."
+          }
+        ]
+      }
     ]
   }
 }

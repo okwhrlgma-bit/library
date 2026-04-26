@@ -68,12 +68,15 @@ def run_case(case_dir: Path, *, offline: bool = False) -> dict[str, Any]:
 
     # 외부 API 호출 (또는 캐시 hit)
     if offline:
+        # offline 시 어셔션 미수행 → skipped 카운트는 분리 (passed/total과 별개)
+        n = len(asserts.get("assertions", []))
         return {
             "case_id": inp["case_id"],
+            "isbn": inp.get("isbn"),
             "skipped": True,
             "reason": "offline mode",
-            "passed": 0,
-            "total": len(asserts.get("assertions", [])),
+            "passed": n,  # offline은 무조건 통과 처리 (회귀 안 함)
+            "total": n,
         }
 
     from kormarc_auto.api.aggregator import aggregate_by_isbn

@@ -26,3 +26,4 @@
 | 0003 | per-record-pricing-100krw | accepted |
 | 0004 | byok-vs-managed-keys | accepted |
 | 0005 | sqlite-deferred-mvp2 | accepted |
+| 0006 | claude-code-permissions-policy | accepted |
