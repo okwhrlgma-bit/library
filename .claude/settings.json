@@ -100,6 +100,19 @@
             "async": true
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git commit *)",
+            "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/scripts/binary_assertions.py\" 2>&1 | tail -16 || true",
+            "timeout": 180,
+            "async": true,
+            "statusMessage": "어셔션 12종 자동 평가 중..."
+          }
+        ]
       }
     ]
   }

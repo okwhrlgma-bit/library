@@ -85,6 +85,30 @@
 - 비가역 액션 (DB drop·force push·결제) — hook으로 명시 차단
 - 무한 루프 → `--max-iterations 30` + 토큰 예산 + 종료 토큰 3중 게이트
 
+## 2026-04-26 — 야간 자동 재시도·재개 셋업 (PO 가이드)
+
+### 도구 후보
+- **claude-auto-retry** (npm) — `npm i -g claude-auto-retry`. Claude Code 죽으면 자동 재실행
+- **claude-auto-resume** (셸 스크립트) — 한도 도달·세션 만료 시 자동 재개
+- 둘 다 `--dangerously-skip-permissions` 빈번 사용 → 반드시 deny 규칙 동반 필수
+
+### 권장 야간 셋업
+1. `tmux new -s kormarc` 또는 PowerShell 백그라운드 잡 안에서 Claude Code 실행
+2. `~/.claude/settings.json`·`.claude/settings.json` 양쪽 deny 강화 (이미 적용 — 38종)
+3. 한도 도달 시 `/rate-limit-options` → 3번 (자동 재개)
+4. 작업을 작은 todo로 분할 — 한 번에 1개 commit 단위, 중간 재시작 혼란 최소화
+5. `scripts/binary_assertions.py` 매 commit 후 자동 실행 (Stop hook으로 강제 가능)
+
+### 위험 신호 (즉시 중단)
+- 어셔션 통과율 80% 미만으로 떨어짐 → 자동 commit 중단
+- ruff 위반 누적 → hook이 막지 못한 회귀
+- git log에 `--no-verify` 또는 `--force` 등장 → 정책 우회 시도
+
+### 남은 적용 후보
+- Stop hook으로 commit 직후 `binary_assertions.py --strict` 자동 실행 — 미통과 시 commit revert
+- `tmux` 미설치 환경에서는 PowerShell `Start-Job` 또는 Windows Task Scheduler 활용
+- 매출·테스트·어셔션 메트릭을 `.claude/golden/dashboard.md`로 매일 자동 갱신
+
 ---
 
 ## 추가 양식 (다음 학습 추가 시 그대로 사용)
