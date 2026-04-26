@@ -168,6 +168,15 @@ def assert_ops_scripts_present() -> bool:
     return all((ROOT / r).exists() for r in required)
 
 
+def assert_us_module_inactive() -> bool:
+    """§33 미국 동아시아 모듈은 한국 BEP 전 inactive 유지 (ADR 0009)."""
+    p = ROOT / "src" / "kormarc_auto" / "conversion" / "marc21_east_asian.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return "ACTIVATED = False" in text
+
+
 def assert_adr_count_min() -> bool:
     """ADR 7건 이상 (큰 결정 추적, PO 가이드 1단)."""
     adr_dir = ROOT / "docs" / "adr"
@@ -236,6 +245,7 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("외부 API 호출에 timeout 명시", assert_external_calls_have_timeout),
     ("운영 스크립트 5종 존재", assert_ops_scripts_present),
     ("ADR 7건 이상", assert_adr_count_min),
+    ("§33 미국 모듈 inactive 유지", assert_us_module_inactive),
 ]
 
 

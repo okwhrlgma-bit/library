@@ -28,3 +28,5 @@
 | 0005 | sqlite-deferred-mvp2 | accepted |
 | 0006 | claude-code-permissions-policy | accepted |
 | 0007 | payment-gateway-portone | proposed |
+| 0008 | license-apache2-saas-commercial | accepted |
+| 0009 | us-east-asian-activation-trigger | accepted |
