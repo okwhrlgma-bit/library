@@ -156,6 +156,20 @@ def assert_server_endpoints_documented() -> bool:
     return all(ep in text for ep in required)
 
 
+def assert_external_calls_have_timeout() -> bool:
+    """src/kormarc_auto/api/ 외부 호출에 timeout 명시 (CLAUDE.md §4.2)."""
+    rc, _, _ = _run(
+        [
+            str(PYTHON),
+            "-c",
+            "import re, pathlib, sys; pat = re.compile(r'(requests|httpx|http_session|session)\\.(get|post|put|delete|head)\\s*\\('); bad = []; "
+            "[bad.extend([(str(p), i+1) for i, line in enumerate(p.read_text(encoding='utf-8', errors='replace').splitlines()) if pat.search(line) and 'timeout' not in line and 'timeout' not in (p.read_text(encoding='utf-8', errors='replace').splitlines() + [''])[i+1:i+5][0:4].__str__()]) for p in pathlib.Path('src/kormarc_auto/api').rglob('*.py') if p.exists()]; "
+            "sys.exit(1 if bad else 0)",
+        ]
+    )
+    return rc == 0
+
+
 def assert_streamlit_tabs_count() -> bool:
     """Streamlit 도구 탭 14개 이상."""
     p = ROOT / "src" / "kormarc_auto" / "ui" / "streamlit_app.py"
@@ -198,6 +212,7 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("법적 문서 3종 존재", assert_legal_docs_present),
     ("신규 엔드포인트 6종 존재", assert_server_endpoints_documented),
     ("Streamlit 도구 탭 14개", assert_streamlit_tabs_count),
+    ("외부 API 호출에 timeout 명시", assert_external_calls_have_timeout),
 ]
 
 

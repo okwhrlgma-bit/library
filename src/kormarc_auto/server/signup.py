@@ -123,6 +123,12 @@ def issue_free_trial_key(
     _append_signup_log(entry)
 
     docs_base = os.getenv("KORMARC_PUBLIC_DOCS_URL", "https://github.com/okwhr/kormarc-auto/blob/main/docs")
+    kakao_channel = os.getenv("KORMARC_KAKAO_CHANNEL_URL", "https://pf.kakao.com/_kormarc")
+    welcome = (
+        f"✨ 환영합니다, {library_name or '사서 선생님'}!\n"
+        f"무료 {FREE_QUOTA_DEFAULT}건 발급 완료. ISBN 13자리만 입력하시면 5초 안에 KORMARC 생성됩니다.\n"
+        f"막히는 부분은 카카오 채널({kakao_channel})로 24시간 SLA 응대."
+    )
     return {
         "api_key": api_key,
         "free_quota": FREE_QUOTA_DEFAULT,
@@ -132,12 +138,15 @@ def issue_free_trial_key(
         "payment_url": get_payment_info_url(),
         "terms_url": f"{docs_base}/terms-of-service.md",
         "privacy_url": f"{docs_base}/privacy-policy.md",
+        "kakao_channel_url": kakao_channel,
+        "welcome_message": welcome,
         "expires_at": None,
         "next_steps": [
             "위 api_key를 안전한 곳에 보관하세요. 분실 시 재발급 필요합니다.",
             f"무료 체험은 {FREE_QUOTA_DEFAULT}건. 초과 시 결제 안내가 응답에 포함됩니다.",
             "Streamlit UI 또는 REST API 모두 X-API-Key 헤더로 사용.",
             "이용약관·개인정보 처리방침을 확인하세요 (terms_url / privacy_url 필드).",
+            f"질문은 카카오 채널 1:1 문의: {kakao_channel} (24시간 SLA, 영업일).",
         ],
     }
 

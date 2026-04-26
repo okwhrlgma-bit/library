@@ -84,5 +84,7 @@ class SignupResponse(BaseModel):
     payment_url: str
     terms_url: str | None = None
     privacy_url: str | None = None
+    kakao_channel_url: str | None = None
+    welcome_message: str | None = None
     expires_at: int | None = None
     next_steps: list[str] = []
