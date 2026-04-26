@@ -1311,6 +1311,42 @@ def main() -> None:
         if ai_key:
             st.caption("✓ AI 사용 가능 — 본인 비용으로 호출됨")
         st.markdown("---")
+        st.markdown("### 내 사용량")
+        usage_key = st.text_input(
+            "내 API 키 (kma_...) — 가입 후 받은 키 입력",
+            type="password",
+            key="usage_api_key",
+            help="가입 시 발급된 kma_로 시작하는 키. 이 키 없이도 PC에서는 모든 도구가 작동하지만, 무료 잔여·결제 안내는 키가 있어야 표시됩니다.",
+        )
+        if usage_key and len(usage_key) >= 12:
+            try:
+                from kormarc_auto.server.usage import can_consume
+
+                _, status = can_consume(usage_key)
+                remaining = status.get("remaining", 0)
+                used = status.get("used", 0)
+                quota = status.get("free_quota", 50)
+                col_u, col_r = st.columns(2)
+                col_u.metric("사용", used)
+                col_r.metric("잔여 무료", remaining)
+                progress = min(used / quota, 1.0) if quota else 0
+                st.progress(progress)
+                if remaining <= 0:
+                    st.error(
+                        f"무료 한도 {quota}건 초과 — 결제 안내를 확인해 주세요. "
+                        f"권당 {PRICE_PER_RECORD_KRW:,}원 또는 월 정액."
+                    )
+                    st.markdown(f"[💳 결제 안내]({PAYMENT_INFO_URL})")
+                elif remaining <= 5:
+                    st.warning(
+                        f"⏳ 무료 잔여 **{remaining}건**. 곧 결제 전환이 필요합니다. "
+                        f"[가격 안내]({PAYMENT_INFO_URL})"
+                    )
+                elif remaining <= 10:
+                    st.info(f"📊 무료 잔여 {remaining}건. 미리 결제 옵션을 살펴보세요.")
+            except Exception:
+                st.caption("⚠ 사용량 조회 실패 (서버 비활성 또는 키 미등록).")
+        st.markdown("---")
         st.markdown("### 가격 안내")
         st.markdown(f"- 권당 **{PRICE_PER_RECORD_KRW:,}원**")
         st.markdown("- 신규 50건 무료 체험")
