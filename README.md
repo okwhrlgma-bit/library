@@ -119,14 +119,41 @@ kormarc-auto/
 
 ---
 
-## Phase별 진척
+## Phase별 진척 (v0.4.15 / 2026-04-26)
 
-- ✅ Phase 1 — ISBN → KORMARC 변환 + KOLAS 출력
-- 🚧 Phase 2 — 책 사진 → KORMARC (vision 모듈, 스텁만)
-- 🚧 Phase 3 — KDC 자동 분류 + 880 한자 병기 (스텁만)
-- ⏳ Phase 4 — Streamlit 베타 UI (Phase 1~3 검증 후)
+- ✅ Phase 1 — ISBN → KORMARC + KOLAS 자동 반입
+- ✅ Phase 2 — Vision 2단계 (Haiku ISBN → Sonnet 종합) + prompt caching
+- ✅ Phase 3 — KDC AI 추천 + 880 한자 병기 자동
+- ✅ Phase 4 — Streamlit 14탭 + 모바일 반응형 + Pretendard 사서 친화 테마
+- ✅ Phase 5 — FastAPI REST + X-API-Key + 사용량 카운터 + B2B + 결제 안내
 
-다음 세션에서 채워넣을 부분은 각 파일의 `TODO` 주석과 `docs/spec.md`를 참조.
+### v0.4.x 자율 흡수 (PO 자료 기반)
+
+| 모듈 | 근거 | 사서 효과 |
+|---|---|---|
+| `legal/deposit_form.py` | 도서관법 §21 별지 제3호서식 | 발행→납본서 PDF 5초 (자가출판 사서) |
+| `librarian_helpers/registration.py` | 알파스 매뉴얼 p72-89 | 12자리 등록번호+누락+다권본 자동 |
+| `interlibrary/exporters.py` | 책나래 운영자 업무지침서 | 책나래·책바다·RISS 양식 1초 |
+| `acquisition/wishlist.py` | 장서개발지침 §2 | 100건 희망도서 분석 5분 |
+| `output/disposal_form.py` | 도서관법 §22 + 장서개발지침 §3.2 | 분기 제적심의 결재서식 자동 |
+| `output/annual_statistics.py` | 도서관법 §22의2 + 학교진흥법 §6 | KOLIS-NET·RISS 양식 자동 |
+| `classification/nlsh_relations.py` | 주제명표목 업무지침(2021) | 비우선어 → 우선어 자동 치환 |
+| `server/billing.py` | 사업화 플레이북 §7.8 | 월간 청구·영수증 PDF |
+
+### Streamlit 도구 탭 14종
+
+로마자·라벨·자관 검색·KDC 트리·식별기호 도움말·**장서점검**·**보고서**·**알림**·**납본**·**등록번호**·**상호대차**·**수서 분석**·**제적·폐기**·**연간 통계**
+
+### 신규 엔드포인트 v0.4.x
+
+- `POST /batch-vendor` — B2B 도서납품업체 (1,000건/회)
+- `GET  /migrate-from-kolas` — KOLAS III 종료(2026-12-31) 영업
+- `GET  /billing/monthly/{year}/{month}` — [관리자] 월간 청구
+- `GET  /account/export` — 본인 데이터 다운로드 (개인정보보호법 §35-3)
+- `DELETE /account/delete` — 본인 데이터 영구 삭제 (§36)
+- `POST /legal/deposit-form` — 납본 별지 제3호서식 PDF
+
+테스트 **214건 통과**, ruff 0 errors. 자세한 내용은 `CLAUDE.md §11 변경 이력`.
 
 ---
 
