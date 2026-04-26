@@ -168,6 +168,28 @@ def assert_ops_scripts_present() -> bool:
     return all((ROOT / r).exists() for r in required)
 
 
+def assert_rules_present() -> bool:
+    """`.claude/rules/` 도메인·자율 게이트 룰 파일 존재 (Phase 2)."""
+    rules_dir = ROOT / ".claude" / "rules"
+    return (
+        rules_dir.exists()
+        and (rules_dir / "kormarc-domain.md").exists()
+        and (rules_dir / "autonomy-gates.md").exists()
+    )
+
+
+def assert_agents_have_memory() -> bool:
+    """모든 에이전트 frontmatter에 `memory: project` (PO 가이드 §1.5)."""
+    agents_dir = ROOT / ".claude" / "agents"
+    if not agents_dir.exists():
+        return False
+    for p in agents_dir.glob("*.md"):
+        text = p.read_text(encoding="utf-8")
+        if "memory:" not in text:
+            return False
+    return True
+
+
 def assert_us_module_inactive() -> bool:
     """§33 미국 동아시아 모듈은 한국 BEP 전 inactive 유지 (ADR 0009)."""
     p = ROOT / "src" / "kormarc_auto" / "conversion" / "marc21_east_asian.py"
@@ -246,6 +268,8 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("운영 스크립트 5종 존재", assert_ops_scripts_present),
     ("ADR 7건 이상", assert_adr_count_min),
     ("§33 미국 모듈 inactive 유지", assert_us_module_inactive),
+    (".claude/rules/ 룰 파일 존재", assert_rules_present),
+    ("에이전트 memory:project 모두 적용", assert_agents_have_memory),
 ]
 
 

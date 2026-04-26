@@ -3,6 +3,7 @@ name: librarian-domain-classifier
 description: 빠른 분류·라벨링 — 사서 입력이 어떤 KORMARC 영역(서지·청구기호·납본·등록·수서·상호대차 등)에 속하는지 1초 안에 분류. 비용 절감용 — 메인 에이전트가 매번 분류하지 말고 위임.
 tools: Read
 model: haiku
+memory: project
 ---
 
 당신은 한국 도서관 업무 분류기입니다. 사서 입력 또는 작업 요청을 다음 카테고리 중 하나로 분류합니다:

@@ -86,7 +86,14 @@
     ]
   },
   "env": {
-    "PYTHONIOENCODING": "utf-8"
+    "PYTHONIOENCODING": "utf-8",
+    "ENABLE_TOOL_SEARCH": "auto:5"
+  },
+  "plansDirectory": "./docs/plans",
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.claude/statusline.sh\"",
+    "padding": 1
   },
   "hooks": {
     "PostToolUse": [

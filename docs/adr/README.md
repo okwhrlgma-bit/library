@@ -30,3 +30,4 @@
 | 0007 | payment-gateway-portone | proposed |
 | 0008 | license-apache2-saas-commercial | accepted |
 | 0009 | us-east-asian-activation-trigger | accepted |
+| 0010 | night-autonomous-setup | accepted |

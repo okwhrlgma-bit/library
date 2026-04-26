@@ -111,6 +111,39 @@
 
 ---
 
+## 2026-04-26 — 야간 자율 운영 권한 모드 (PO 가이드 흡수)
+
+### 권한 모드 우선순위
+1. **Auto mode** (2026-03 출시, Team+) — `claude --enable-auto-mode` + Shift+Tab 순환. 분류기가 매 도구 위험도 자동 평가. 가장 안전하면서 거의 안 멈춤.
+2. **acceptEdits** (현재 적용) — 편집 자동, Bash·외부 영향은 prompt. Pro 플랜 호환.
+3. **YOLO** (`--dangerously-skip-permissions`) — **Docker/git worktree 격리 필수**. 메인 트리 절대 X.
+
+### 야간 자율 운영 표준 셋업
+```bash
+git worktree add ../kormarc-auto-night night-work
+cd ../kormarc-auto-night
+# Windows: 전원옵션 절전 OFF / macOS: caffeinate -dimsu / Linux: systemd-inhibit
+claude --enable-auto-mode "scoped task with checkpoint commits + CHANGELOG_NIGHT.md" 2>&1 | tee night-$(date +%Y%m%d).log
+```
+
+### 야간 작업 지시 표준 (failing test → pass 루프)
+- 매 단계 작은 commit + CHANGELOG_NIGHT.md 기록 (왜·무엇)
+- 새 의존성 추가 금지
+- src/legacy/ 등 read-only 영역 명시
+- 종료 조건: 모든 테스트 통과 + 어셔션 16/16
+- 검토: 아침에 `git diff main` + `cat night.log` + `cat CHANGELOG_NIGHT.md`
+
+### 한국 환경 추가
+- Windows 전원옵션: 절전 안 함 + 화면 끄기만 OK
+- tmux 미설치 시 PowerShell `Start-Job` 또는 Windows Terminal 분할창 + Task Scheduler
+- Claude.ai Pro Routines (Anthropic 클라우드) — 정기 작업에만, 인터랙티브 야간 X
+
+### Phase 진척 매핑 (PO 가이드 9단계)
+- 현재 Phase 6 후반 / Phase 7 초입
+- 다음: Phase 4 Skills + Plan Mode·Phase 5 PreToolUse 정규식 hook·Phase 6 Trust Counters
+
+---
+
 ## 추가 양식 (다음 학습 추가 시 그대로 사용)
 
 ```

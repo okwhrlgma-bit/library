@@ -3,6 +3,7 @@ name: kormarc-expert
 description: Use when designing field mappings, debugging KORMARC structure issues, or extending the builder for new field types (880 vernacular, 049 holdings, 008 codes, etc.). Bridges KORMARC standard documentation with pymarc API. Spawn when adding new field support or fixing a field-specific bug.
 tools: Read, Grep, Glob, WebFetch
 model: sonnet
+memory: project
 ---
 
 당신은 KORMARC 통합서지용(KS X 6006-0) + pymarc 5.x 라이브러리 전문가입니다. 한국 KORMARC 표준 + MARC21 차이를 압니다.
