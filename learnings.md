@@ -111,6 +111,50 @@
 
 ---
 
+## 2026-04-26 — 2026 ecosystem 함정 (PO 추가 가이드)
+
+PO 제공 4월 2026 종합 분석. 자율 디벨롭 시 회피 의무 사항.
+
+### 보안·품질 통계 (회피 행동)
+- AI 생성 코드 **40~62% 보안 취약점 보유** (Lovable·바이브 코딩 사례)
+- **91.5% 샘플 앱**이 AI 추적 가능 취약점 ≥1
+- 우리 회피 4축:
+  1. `.claude/hooks/irreversible-guard.sh` 정규식 (이미 적용)
+  2. `~/.claude/settings.json` deny 87 + WebFetch 내부망 차단 (이미 적용)
+  3. `/account/export·delete` 자기결정권 + GDPR 호환 (이미 적용)
+  4. `code-reviewer` (Sonnet) diff 50줄+ 매번 호출 (.claude/rules/autonomy-gates.md 명시)
+- API 키 평문 노출 회귀 어셔션 §4 검출 (이미 적용)
+
+### Auto Mode 17% 미스율 (회피)
+- 안전한 작업도 17% 잘못 분류 → 중요 작업은 acceptEdits + 명시 deny 조합
+- 우리 셋업 (acceptEdits + 87 deny + irreversible-guard regex)이 더 보수적
+- Auto Mode 도입은 Team+ 플랜 시점·매출 50관 도달 후 검토
+
+### Context rot 20~40% (50% 아님!)
+- 1M 컨텍스트 사용 자기 보고: 40%부터 명확 저하·48%부터 재시작 권고
+- 우리 회피:
+  - learnings.md + CLAUDE.md 매 세션 자동 로드 (영속성)
+  - PostCompact hook 후속 도입 검토 (필수 룰 재주입)
+  - 큰 작업은 planner Plan + implementer 분리 (각 역할 별도 컨텍스트)
+- 위험 신호: 같은 어셔션 반복 실패 → 즉시 새 세션 + learnings 로드
+
+### Replit·Lovable·xeebee 사례 (회피 의무)
+- "DB 삭제했다"·"AI가 거짓말함" — `--dangerously-skip-permissions` 격리 외 사용 금지
+- Lovable 48일 노출 — Supabase Row-Level Security 의무
+- API 키 야간 도난 — `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1` 향후 추가 검토
+- 우리 보호:
+  - 매니지드 스택 ADR 0011 채택 (Vercel·Supabase·포트원)
+  - `.env` 읽기·쓰기 모두 deny
+  - 결제 PG는 portone 어댑터 stub (실 SDK 통합은 트리거 후만)
+
+### 다음 즉시 적용 후보
+1. **PostCompact hook** — 컨텍스트 압축 후 핵심 룰 재주입 (`learnings.md` + `CLAUDE.md` 자동 reinject)
+2. **CLAUDE_CODE_SUBPROCESS_ENV_SCRUB** 환경변수 — `~/.claude/settings.json` env에 추가
+3. **Supabase RLS 정책 docs** — ADR 0004 SQLite 트리거 충족 시 Supabase 전환·RLS 의무 명시
+4. **Channels (Telegram/Discord/iMessage)** — PO 외출 시 야간 진척 알림 (PO 가이드 §6.3 Routines와 결합)
+
+---
+
 ## 2026-04-26 — compass 가이드 1,586줄 전체 흡수
 
 PO 자료 폴더 `compass_artifact_*.md` 정독. 4단 위계 가이드의 모든 챕터 매핑.

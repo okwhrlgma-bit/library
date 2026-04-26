@@ -6,7 +6,13 @@ PO 손 안 타고 매출 발생 가능하게:
 3. 결제 임박 알림 (잔여 5건 이하 시 응답에 자동 첨부)
 
 PO가 매월 invoice JSON을 보고 카카오뱅크/통장 입금 확인 후 reset_usage 호출.
-나중에 Stripe/포트원 정식 결제 연동 시 이 모듈만 교체.
+ADR 0007 트리거 충족 시 `payment_adapter.PortOneAdapter`로 1줄 교체 →
+PO 시간 0의 캐시카우 가동.
+
+PG 통합:
+- `KORMARC_PG_PROVIDER=local` (기본) — 현재 수동 입금 모드
+- `KORMARC_PG_PROVIDER=portone` + 키 설정 — 자동 정기결제·세금계산서
+- `KORMARC_PG_PROVIDER=stripe` — 미국 §33 활성화 시 (ADR 0009)
 """
 
 from __future__ import annotations
@@ -147,6 +153,65 @@ def write_monthly_invoice_json(
         out, summary["total_records"], f"{summary['total_revenue_krw']:,}",
     )
     return out
+
+
+def charge_monthly_via_pg(
+    year: int,
+    month: int,
+    *,
+    api_key: str,
+    api_key_hash: str,
+    provider: str | None = None,
+) -> dict[str, Any]:
+    """월말 키별 사용량 → PG 어댑터로 자동 결제 + 청구 결과 dict.
+
+    ADR 0007 트리거 충족 시 portone 어댑터로 자동 결제. 미충족 시 local
+    어댑터로 수동 입금 안내만 (PO 직접 카카오뱅크 확인).
+
+    Returns: {
+        "ok": bool,
+        "provider": "local-manual" | "portone" | "stripe",
+        "amount_krw": int,
+        "records": int,
+        "transaction_id": str | None,
+        "receipt_url": str | None,
+        "error": str | None,
+    }
+    """
+    from kormarc_auto.server.payment_adapter import get_adapter
+
+    summary = aggregate_monthly(year, month)
+    key_data = summary["by_key"].get(api_key_hash, {})
+    amount = int(key_data.get("revenue_krw", 0))
+    records = int(key_data.get("records", 0))
+
+    if amount == 0:
+        return {
+            "ok": True,
+            "provider": "skipped",
+            "amount_krw": 0,
+            "records": 0,
+            "transaction_id": None,
+            "receipt_url": None,
+            "error": "No usage in period",
+        }
+
+    adapter = get_adapter(provider)
+    result = adapter.charge(
+        api_key,
+        amount,
+        description=f"kormarc-auto {year}-{month:02d} ({records}건)",
+        idempotency_key=f"{api_key_hash}_{year}_{month:02d}",
+    )
+    return {
+        "ok": result.ok,
+        "provider": result.provider,
+        "amount_krw": result.amount_krw,
+        "records": records,
+        "transaction_id": result.transaction_id,
+        "receipt_url": result.receipt_url,
+        "error": result.error,
+    }
 
 
 def render_invoice_pdf(

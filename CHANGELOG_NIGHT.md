@@ -101,3 +101,44 @@
 - §12: 자율 commit 품질 ↑ → 사서 신뢰 ↑ → 결제 의향 ↑
 
 검증: 23/23 / 229 tests / ruff 0.
+
+## v0.4.35 — 2026-04-26 (캐시카우 1순위: PG 어댑터 + 안전 강화)
+
+### 캐시카우 결제 자동화 마지막 1축 완성
+
+**가장 빨리 캐시카우 도달하는 단일 commit (architect-deep + explorer 자문 결과)**:
+
+- `src/kormarc_auto/server/payment_adapter.py` (신규 358줄):
+  - `PaymentAdapter` Protocol — charge·subscribe·cancel·issue_tax_invoice·is_available
+  - `LocalManualAdapter` — 현재 운영 (카카오뱅크/통장 수동 입금)
+  - `PortOneAdapter` — ADR 0007 트리거 후 활성 (현재 NotImplemented + graceful fallback)
+  - `StripeAdapter` — ADR 0009 §33 미국 활성화 시 (KORMARC_EAST_ASIAN_ACTIVATED 보호)
+  - `get_adapter()` — KORMARC_PG_PROVIDER 환경변수 1줄로 교체
+  - `billing.py:9` 약속 "이 모듈만 교체" 정확히 이행
+
+- `src/kormarc_auto/server/billing.py`:
+  - `charge_monthly_via_pg()` 함수 신규
+  - PG 어댑터 통합 — 월말 자동 결제 흐름 완성
+
+- 단위 테스트 15건 (`tests/test_payment_adapter.py`) — 어댑터 격리·graceful fallback·§33 보호
+
+### 안전 강화 (PO 2026 ecosystem 가이드 흡수)
+- `~/.claude/settings.json` env:
+  - `CLAUDE_CODE_SUBPROCESS_ENV_SCRUB=1` (s1ngularity 공급망 공격 회피)
+  - `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1` (불필요 트래픽 차단)
+- 회피 통계: AI 코드 40~62% 취약점·91.5% 샘플 앱 ≥1 취약점·Auto Mode 17% 미스율
+- Replit DB 삭제·Lovable 48일 노출·xeebee API 키 도난 사례 회피 4축 매핑
+
+### 어셔션 24·25
+- assert_payment_adapter_present (LocalManual·PortOne·Stripe·get_adapter·Protocol)
+- assert_billing_pg_integrated (charge_monthly_via_pg + payment_adapter)
+
+### D 드라이브 권한 흡수
+- `D:\내를건너서 숲으로 도서관` 추가 흡수 권한 (PO 실 도서관 근무 자료)
+- 책나래·책바다·책이음·KOLAS·알파스 매뉴얼 신규 발견 → 다음 야간 흡수 후보
+
+평가축:
+- §0 마크 시간: 영향 X (사서가 결제 직접 처리 시간 0 증가)
+- §12 매출 의향: **+2** PG stub 박혀있으니 ADR 0007 트리거 충족(사업자 등록 1주) 직후 캐시카우 가동 가능. stub 없으면 등록 후 며칠 더 손실. 이 단일 commit이 캐시카우 도달 시점을 며칠~1주 단축.
+
+검증: 25/25 어셔션 / 244 tests / ruff 0.

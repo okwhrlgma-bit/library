@@ -168,6 +168,33 @@ def assert_ops_scripts_present() -> bool:
     return all((ROOT / r).exists() for r in required)
 
 
+def assert_payment_adapter_present() -> bool:
+    """PG 어댑터 stub 존재 (ADR 0007·0011 — 캐시카우 자동화 1축)."""
+    p = ROOT / "src" / "kormarc_auto" / "server" / "payment_adapter.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return all(
+        s in text
+        for s in (
+            "class LocalManualAdapter",
+            "class PortOneAdapter",
+            "class StripeAdapter",
+            "def get_adapter",
+            "Protocol",
+        )
+    )
+
+
+def assert_billing_pg_integrated() -> bool:
+    """billing.py가 PG 어댑터 통합 (월말 자동 결제)."""
+    p = ROOT / "src" / "kormarc_auto" / "server" / "billing.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return "charge_monthly_via_pg" in text and "payment_adapter" in text
+
+
 def assert_plan_act_agents() -> bool:
     """Explore-Plan-Act 3 에이전트 분리 (PO 가이드 §2.2·§2.4)."""
     agents_dir = ROOT / ".claude" / "agents"
@@ -328,6 +355,8 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("Trust Counter hook (RSI 1단)", assert_trust_counter_hook),
     ("Explore-Plan-Act 3 에이전트", assert_plan_act_agents),
     ("Pattern Library 누적 ≥10", assert_pattern_library_exists),
+    ("PG 어댑터 stub (ADR 0007·0011)", assert_payment_adapter_present),
+    ("billing.py PG 통합", assert_billing_pg_integrated),
 ]
 
 
