@@ -168,6 +168,23 @@ def assert_ops_scripts_present() -> bool:
     return all((ROOT / r).exists() for r in required)
 
 
+def assert_stop_double_gate_hook() -> bool:
+    """이중 게이트 Stop hook 존재 (PO 가이드 §8.11)."""
+    p = ROOT / ".claude" / "hooks" / "stop-double-gate.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return all(
+        s in text for s in ("<<<TASK_COMPLETE>>>", "stop_hook_active", "binary_assertions")
+    )
+
+
+def assert_trust_counter_hook() -> bool:
+    """Trust Counter hook 존재 (RSI Stage 1)."""
+    p = ROOT / ".claude" / "hooks" / "post-trust.py"
+    return p.exists() and "trust.json" in p.read_text(encoding="utf-8")
+
+
 def assert_irreversible_guard_present() -> bool:
     """PreToolUse 정규식 가드 hook 존재 (PO 가이드 §8.10)."""
     p = ROOT / ".claude" / "hooks" / "irreversible-guard.sh"
@@ -290,6 +307,8 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     (".claude/rules/ 룰 파일 존재", assert_rules_present),
     ("에이전트 memory:project 모두 적용", assert_agents_have_memory),
     ("PreToolUse 정규식 가드 7패턴", assert_irreversible_guard_present),
+    ("이중 게이트 Stop hook", assert_stop_double_gate_hook),
+    ("Trust Counter hook (RSI 1단)", assert_trust_counter_hook),
 ]
 
 

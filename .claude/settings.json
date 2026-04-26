@@ -129,7 +129,17 @@
             "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/scripts/binary_assertions.py\" 2>&1 | tail -16 || true",
             "timeout": 180,
             "async": true,
-            "statusMessage": "어셔션 12종 자동 평가 중..."
+            "statusMessage": "어셔션 19종 자동 평가 중..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.claude/hooks/post-trust.py\" 2>/dev/null || true",
+            "timeout": 5,
+            "async": true
           }
         ]
       }
