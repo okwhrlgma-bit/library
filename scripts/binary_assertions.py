@@ -168,6 +168,23 @@ def assert_ops_scripts_present() -> bool:
     return all((ROOT / r).exists() for r in required)
 
 
+def assert_plan_act_agents() -> bool:
+    """Explore-Plan-Act 3 에이전트 분리 (PO 가이드 §2.2·§2.4)."""
+    agents_dir = ROOT / ".claude" / "agents"
+    return all(
+        (agents_dir / f"{name}.md").exists()
+        for name in ("planner", "implementer", "explorer")
+    )
+
+
+def assert_pattern_library_exists() -> bool:
+    """RSI Stage 2 패턴 라이브러리 누적 (PO 가이드 §5.6 Stage 2)."""
+    pdir = ROOT / ".claude" / "patterns"
+    if not pdir.exists():
+        return False
+    return len(list(pdir.glob("*.md"))) >= 10
+
+
 def assert_stop_double_gate_hook() -> bool:
     """이중 게이트 Stop hook 존재 (PO 가이드 §8.11)."""
     p = ROOT / ".claude" / "hooks" / "stop-double-gate.py"
@@ -309,6 +326,8 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("PreToolUse 정규식 가드 7패턴", assert_irreversible_guard_present),
     ("이중 게이트 Stop hook", assert_stop_double_gate_hook),
     ("Trust Counter hook (RSI 1단)", assert_trust_counter_hook),
+    ("Explore-Plan-Act 3 에이전트", assert_plan_act_agents),
+    ("Pattern Library 누적 ≥10", assert_pattern_library_exists),
 ]
 
 

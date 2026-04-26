@@ -2,12 +2,28 @@
 
 > 자율 commit이 안전하게 닫히기 위한 종료 조건·블래스트 반경.
 
+## 캐시카우 평가축 (PO 정점 목표)
+
+**목표**: 사서 대상 자동화 앱 → **두면 계속 돈 버는 캐시카우**.
+
+매 자율 commit은 다음 둘 중 하나 이상에 양수 영향이어야 함:
+- §0 **사서 마크 시간 단축** (권당 8분 → 2분)
+- §12 **사서 본인 예산 결제 의향 ↑** (캐시카우 직결)
+
+평가축 음수면 commit 거부. 흥미·완성도·기술 호기심은 평가축 X.
+
+캐시카우 측정:
+- `scripts/aggregate_revenue.py` — 월별 매출·베타 사서·LOI 자동
+- 200관 × 3.3만원 ≈ 월 660만원 = 캐시카우 도달 (Phase 3 목표)
+- "두면 자동 결제" = 월정액 자동 차감 + PG 자동 결제 + PO 시간 0
+
 ## 종료 게이트 (이중)
 
 매 자율 commit 직전 **둘 다 충족**해야 commit:
 
 1. `pytest -q` 종료 코드 0 (전체 테스트 통과)
-2. `scripts/binary_assertions.py --strict` 종료 코드 0 (16/16)
+2. `scripts/binary_assertions.py --strict` 종료 코드 0 (현재 23/23)
+3. **평가축 §0 또는 §12 양수 영향 (commit 메시지에 명시)**
 
 **완료 마커**: commit 메시지에 `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>` 포함.
 
