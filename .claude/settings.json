@@ -87,5 +87,20 @@
   },
   "env": {
     "PYTHONIOENCODING": "utf-8"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" -c \"import sys, json, subprocess, os; d = json.load(sys.stdin); fp = (d.get('tool_response') or {}).get('filePath') or (d.get('tool_input') or {}).get('file_path'); fp.endswith('.py') and 'kormarc-auto' in fp and subprocess.run([sys.executable, '-m', 'ruff', 'check', '--fix', fp], capture_output=True)\" 2>/dev/null || true",
+            "timeout": 30,
+            "async": true
+          }
+        ]
+      }
+    ]
   }
 }
