@@ -595,6 +595,42 @@ def cmd_info(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_dispose(args: argparse.Namespace) -> int:
+    """제적·폐기 결재서식 PDF + 폐기목록 엑셀."""
+    import json as _json
+
+    from kormarc_auto.output.disposal_form import (
+        DisposalEntry,
+        render_disposal_form_pdf,
+        write_disposal_xlsx,
+    )
+
+    if not args.input:
+        print("❌ --input JSON 파일 필요 ([{registration_number, title, reason_code, ...}])")
+        return 2
+    rows = _json.loads(Path(args.input).read_text(encoding="utf-8"))
+    if not isinstance(rows, list):
+        print("❌ JSON은 리스트여야 함")
+        return 2
+    entries = [DisposalEntry(**r) for r in rows]
+
+    if args.format in ("pdf", "both"):
+        pdf_out = Path(args.output_pdf or f"logs/disposal/{args.fiscal_period.replace(' ', '_')}.pdf")
+        render_disposal_form_pdf(
+            entries,
+            library_name=args.library,
+            fiscal_period=args.fiscal_period,
+            director=args.director or "",
+            output_path=pdf_out,
+        )
+        print(f"✓ 제적·폐기 결재서식: {pdf_out}")
+    if args.format in ("xlsx", "both"):
+        xlsx_out = Path(args.output_xlsx or f"logs/disposal/{args.fiscal_period.replace(' ', '_')}.xlsx")
+        write_disposal_xlsx(entries, xlsx_out)
+        print(f"✓ 폐기목록 엑셀: {xlsx_out}")
+    return 0
+
+
 def cmd_wishlist(args: argparse.Namespace) -> int:
     """비치희망도서 분석 — 자관 중복 + KDC 균형 + 예상 비용."""
     import json as _json
@@ -936,6 +972,24 @@ def build_parser() -> argparse.ArgumentParser:
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")
     p_info.set_defaults(func=cmd_info)
+
+    # dispose — 제적·폐기
+    p_dis = sub.add_parser(
+        "dispose",
+        help="제적·폐기 결재서식 PDF + 폐기목록 엑셀 (도서관법 §22)",
+    )
+    p_dis.add_argument("--input", required=True, help="DisposalEntry JSON 파일")
+    p_dis.add_argument("--library", required=True, help="도서관명")
+    p_dis.add_argument(
+        "--fiscal-period", required=True, help="심의 기간 (예: '2026 1분기')"
+    )
+    p_dis.add_argument("--director", default=None, help="결재자(관장명)")
+    p_dis.add_argument(
+        "--format", choices=["pdf", "xlsx", "both"], default="both"
+    )
+    p_dis.add_argument("--output-pdf", default=None)
+    p_dis.add_argument("--output-xlsx", default=None)
+    p_dis.set_defaults(func=cmd_dispose)
 
     # wishlist — 비치희망도서 수서 분석
     p_w = sub.add_parser(
