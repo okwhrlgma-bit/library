@@ -168,6 +168,25 @@ def assert_ops_scripts_present() -> bool:
     return all((ROOT / r).exists() for r in required)
 
 
+def assert_irreversible_guard_present() -> bool:
+    """PreToolUse 정규식 가드 hook 존재 (PO 가이드 §8.10)."""
+    p = ROOT / ".claude" / "hooks" / "irreversible-guard.sh"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    # 핵심 패턴 7개 모두 검사
+    required = [
+        "rm",
+        "mkfs",
+        "push.*--force",
+        "filter-branch",
+        "DROP",
+        "FLUSHALL",
+        "KORMARC_EAST_ASIAN_ACTIVATED",
+    ]
+    return all(p in text for p in required)
+
+
 def assert_rules_present() -> bool:
     """`.claude/rules/` 도메인·자율 게이트 룰 파일 존재 (Phase 2)."""
     rules_dir = ROOT / ".claude" / "rules"
@@ -270,6 +289,7 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("§33 미국 모듈 inactive 유지", assert_us_module_inactive),
     (".claude/rules/ 룰 파일 존재", assert_rules_present),
     ("에이전트 memory:project 모두 적용", assert_agents_have_memory),
+    ("PreToolUse 정규식 가드 7패턴", assert_irreversible_guard_present),
 ]
 
 

@@ -111,6 +111,59 @@
 
 ---
 
+## 2026-04-26 — compass 가이드 1,586줄 전체 흡수
+
+PO 자료 폴더 `compass_artifact_*.md` 정독. 4단 위계 가이드의 모든 챕터 매핑.
+
+### 즉시 적용 (이번 commit)
+- **PreToolUse 정규식 가드** (`.claude/hooks/irreversible-guard.sh`) — 7 패턴
+  · `rm -rf /|~|$HOME|*` / `mkfs.` / `dd if=...of=/dev/`
+  · `git push --force` / `git filter-branch` / `git reset --hard origin`
+  · `DROP TABLE/DATABASE` / `TRUNCATE TABLE` / `FLUSHALL` / `db.dropDatabase`
+  · `KORMARC_EAST_ASIAN_ACTIVATED=1` (ADR 0009 보호)
+- **CLAUDE.md 한국어 정책** §6에 명시: 식별자 영어, 도메인 한국어, 단일 식별자 혼용 금지
+- **종료 마커 `<<<TASK_COMPLETE>>>`** — 이중 게이트 Stop hook 후속 도입 예정
+- **5대 멈춤 패턴 회피** CLAUDE.md §6에 인라인
+
+### 가이드 핵심 함정 (적용 안 한 것 메모)
+- `@import`는 lazy load 아님 (조직화 도구만)
+- `Opus 4.7 토크나이저 +5~46% 토큰` — batch 50% / cache 90% 활용
+- `Plan Mode에서 Bash 차단` — `--allowedTools "Read,Bash(pytest:*)"` 화이트리스트
+- `exit 1 = non-blocking, exit 2 = 차단` — irreversible-guard는 JSON deny 사용
+- `Stop hook block + stop_hook_active 미체크 = 무한 루프` — 다음 Stop hook 도입 시 가드 필수
+- `Bedrock Seoul ap-northeast-2 us.anthropic.* 강제 버그 #24875` — 우리는 직접 API라 영향 X
+
+### 다음 우선순위 (Phase 7 → 8)
+1. **이중 게이트 Stop hook** — `<<<TASK_COMPLETE>>>` 마커 + pytest + 어셔션 (PO 가이드 §8.11)
+2. **Trust Counters** (RSI Stage 1) — `.claude/metrics/trust.json`
+3. **Pattern Library** (Stage 2) — 성공 git diff → SKILL 자동 승격
+4. **Ratchet** (Stage 3) — keep-or-revert eval 비교
+
+### Phase 매핑 (compass §9 9단계)
+- ✅ Phase 1·2·3 완료 (CLAUDE.md·rules·agents·eval·golden)
+- 🟡 Phase 4 부분 (Plan Mode 미설정·skill-creator 미도입)
+- 🟡 Phase 5 부분 (PostToolUse·Stop은 있지만 PreToolUse 정규식만 방금 추가)
+- ❌ Phase 6·7·8 미적용 (RSI Trust/Pattern/Ratchet)
+- ❌ Phase 9 GEPA 미적용 (golden 100+ 후로 정책)
+
+---
+
+## 2026-04-26 — 야간 자율 5대 멈춤 시나리오 (PO 추가 가이드)
+
+권한 0회 ≠ 자율 잘함. YOLO여도 멈추거나 망가지는 5개 패턴:
+
+| # | 패턴 | 회피 (프롬프트에 미리 명시) |
+|---|---|---|
+| 1 | 모호한 결정 ("A vs B?") | "막히면 더 안전·보수적 쪽 + DECISIONS.md" |
+| 2 | 테스트 무한 실패 | "동일 테스트 3회 실패 → SKIPPED.md + 다음" |
+| 3 | 자가 디버그 무한루프 | 작업당 max-iterations (예: 30) |
+| 4 | 컨텍스트 + auto-compaction | 중요 규칙은 CLAUDE.md (매 세션 자동 로드) |
+| 5 | 외부 의존성 실패 (네트워크) | 의존성 추가 금지 + offline 우선 |
+
+**핵심**: "막혔을 때 어떻게 할지"를 미리 다 정의 = 야간 성공의 80%. 첫 모호한 지점에서 멈추거나 엉뚱한 방향으로 가는 게 가장 흔한 실패. 우리 `docs/plans/NIGHT_RUN_PROTOCOL.md`에 표준 양식 보존.
+
+---
+
 ## 2026-04-26 — 야간 자율 운영 권한 모드 (PO 가이드 흡수)
 
 ### 권한 모드 우선순위
