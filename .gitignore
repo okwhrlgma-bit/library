@@ -3,6 +3,11 @@
 .env.local
 .env.*.local
 
+# Streamlit secrets (ADR 0011·DECISIONS 6dim+7 — Part G Step 2·4)
+.streamlit/auth_config.yaml
+.streamlit/secrets.toml
+.streamlit/secrets.toml.bak
+
 # Python
 __pycache__/
 *.py[cod]

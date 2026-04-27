@@ -1265,6 +1265,11 @@ def main() -> None:
     setup_logging()
     _setup_page()
 
+    # Part G Step 2·8 (DECISIONS 6dim+7) — 인증 가드 (st.set_page_config 직후, 본 콘텐츠 직전)
+    from kormarc_auto.ui.auth import require_login
+
+    require_login()
+
     st.title("📚 kormarc-auto")
     st.caption(f"한국 도서관용 KORMARC 자동 생성 · v{__version__}")
 

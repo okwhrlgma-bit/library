@@ -1,0 +1,33 @@
+# .streamlit/auth_config.yaml.example
+#
+# 실제 .streamlit/auth_config.yaml은 .gitignore (절대 commit 금지).
+# 1회 셋업 절차:
+#   1. 이 파일을 .streamlit/auth_config.yaml로 복사
+#   2. `python scripts/auth_setup.py` 실행 → 비밀번호 + cookie key 자동 생성
+#   3. scripts/auth_setup.py는 실 비밀번호 평문을 보존하지 않음 (bcrypt 해시만 yaml에 기록)
+#
+# 90일 회전:
+#   - bcrypt 해시 + cookie key는 90일마다 재생성 (PO 마스터 §G.5)
+#   - cookie key 회전 시 모든 세션 강제 로그아웃 (정상)
+
+credentials:
+  usernames:
+    okwhrlgma:
+      email: okwhrlgma@gmail.com
+      name: PO
+      password: $2b$12$REPLACE_WITH_BCRYPT_HASH_FROM_auth_setup_py
+      logged_in: false
+      first_name: ""
+      last_name: ""
+      roles:
+        - admin
+      failed_login_attempts: 0
+
+cookie:
+  name: kormarc_auth
+  key: REPLACE_WITH_secrets_token_urlsafe_32
+  expiry_days: 7
+
+pre-authorized:
+  emails:
+    - okwhrlgma@gmail.com
