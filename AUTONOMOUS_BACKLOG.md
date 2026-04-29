@@ -12,7 +12,7 @@
 
 - [x] **CLAUDE.md 323줄 → 206줄** ★ (Step 1~5 완료·Anthropic 권장 거의 도달·9d08904·a0fe201·ebcd5f6·35f88ef·05c5549)
 - [ ] `/ultrareview` `/ultraplan` 슬래시 명령 활용 검토 (v2.1.111+ 신규)
-- [ ] Routines Pro 5건/일 한도 모니터링 어셔션 추가 (1h routine 24/일 fire vs 5건)
+- [x] Routines Pro 5건/일 한도 모니터링 (`docs/cloud-routine-monitoring-guide.md` §7 추가·1h routine 4h 변경 권장)
 - [x] stop-double-gate.py `stop_hook_active` 체크 확인 (line 39 정합 검증·이미 정합)
 
 ### 코드 (각 1~2시간)

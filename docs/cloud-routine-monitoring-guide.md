@@ -140,6 +140,44 @@ routine 삭제는 Web UI로만 가능 (API 미지원):
 
 ---
 
+## 7. Routines 일일 한도 (★ 중요)
+
+Anthropic Cloud routine 일일 한도 (구독과 별개):
+
+| 플랜 | 일일 routine 한도 |
+|---|---:|
+| Pro | **5건** |
+| Max 5x | 15건 |
+| Team / Enterprise | 25건 |
+
+우리 등록 routine 3개 일일 fire 시도 vs 한도:
+
+| Routine | 일일 fire 시도 | Pro 한도 충돌 |
+|---|---:|---|
+| 1h sync | 24건/일 | ★ 19건 누락 가능 |
+| 주간 (월 09) | 1건/주 = 약 0.14건/일 | OK |
+| 월간 (1일 09) | 1건/월 = 약 0.03건/일 | OK |
+| **합계** | 약 24.2건/일 | **Pro 5건 한도 초과** |
+
+### Pro 플랜 사용 시 권장 조치
+
+1. **1h routine cron 변경** (`*/4 * * * *` → 4시간마다 = 일 6건)
+   - claude.ai/code/routines/`trig_01THW9GZG6G4sorCtwgJaR77` 편집
+2. **또는 Max 5x 업그레이드** (15건/일 → 1h routine 24건 중 일부 fire)
+3. **또는 GitHub Actions autonomous-6h.yml 활성** (사용자 ANTHROPIC_API_KEY 등록·구독 한도 X·종량제)
+
+### 모니터링
+
+```powershell
+# routine 일일 fire 누적 확인 (claude.ai/code/routines 각 routine "Last run" 시각)
+# 1h routine이 매시간 정상 fire 중인지 확인 (예: 09:00·10:00·11:00...)
+```
+
+→ 일주일 점검 시 1h routine fire 횟수 < 30 (= 일 5건 × 7일)이면 Pro 한도 도달 중.
+→ 해결: 위 1·2·3 중 선택.
+
+---
+
 ## Sources
 
 - `AUTONOMOUS_BACKLOG.md` (cloud agent 자율 작업 큐)
