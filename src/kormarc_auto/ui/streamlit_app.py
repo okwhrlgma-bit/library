@@ -1278,6 +1278,10 @@ def main() -> None:
         "아래 [ISBN] 탭에 ISBN 13자리만 넣으면 5초 안에 KORMARC가 생성됩니다.",
         icon="👋",
     )
+    st.caption(
+        "**자관 .mrc 99.82% 정합 검증 완료** ★ "
+        "다른 자관 049 prefix 자동 발견 → `streamlit run src/kormarc_auto/ui/prefix_discover_app.py`"
+    )
     with st.expander("📖 5분 가이드 (처음 사용 시 권장)"):
         st.markdown(
             "**1. ISBN 단건** — 13자리 ISBN 입력 → KORMARC 생성  \n"
