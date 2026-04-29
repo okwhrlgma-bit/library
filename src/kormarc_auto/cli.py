@@ -14,12 +14,19 @@
 from __future__ import annotations
 
 import argparse
+import contextlib
 import os
 import sys
 from pathlib import Path
 from typing import Any
 
-from dotenv import load_dotenv
+# Windows cp949 환경에서 한국어 stdout 깨짐 회피
+os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+with contextlib.suppress(AttributeError, OSError):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+from dotenv import load_dotenv  # noqa: E402
 
 from kormarc_auto import __version__
 from kormarc_auto.logging_config import get_logger, setup_logging
@@ -771,6 +778,37 @@ def cmd_registration(args: argparse.Namespace) -> int:
     return 2
 
 
+def cmd_prefix_discover(args: argparse.Namespace) -> int:
+    """자관 .mrc 049 ▾l prefix 자동 발견 — 다른 자관 PILOT 1주차 도입 (5분).
+
+    영업: PILOT 사서가 본인 .mrc 디렉토리만 지정 → config.yaml snippet 출력 →
+    바로 적용 가능. 자관 「내를건너서 숲으로 도서관」 4-29 발견 = WQ →
+    99.82% 정합 도달.
+    """
+    from kormarc_auto.librarian_helpers.prefix_discovery import PrefixDiscoverer
+
+    directory = Path(args.directory)
+    if not directory.exists():
+        print(f"❌ 디렉토리 없음: {directory}")
+        return 2
+
+    discoverer = PrefixDiscoverer(threshold_pct=args.threshold)
+    print(f"분석 중: {directory}")
+    summary = discoverer.scan(directory)
+
+    print(f"\n총 레코드: {summary.total_records}건")
+    print("\n049 prefix 분포:")
+    for prefix, count in sorted(summary.prefix_counts.items(), key=lambda x: -x[1]):
+        pct = count / summary.total_records * 100 if summary.total_records else 0.0
+        marker = "  [권장]" if prefix in summary.recommended_prefixes else ""
+        print(f"  {prefix}: {count:>5}건 ({pct:5.1f}%){marker}")
+
+    print(f"\n권장 (>= {summary.threshold_pct}% 적용):")
+    print(f"  {summary.recommended_prefixes}")
+    print(f"\nconfig.yaml snippet:\n{summary.to_yaml_snippet()}")
+    return 0
+
+
 def cmd_account(args: argparse.Namespace) -> int:
     """본인 데이터 다운로드/삭제 — 개인정보보호법 §35-3·§36."""
     import json
@@ -1004,6 +1042,23 @@ def build_parser() -> argparse.ArgumentParser:
         help="외부 API 미사용 (자관 인덱스만 조회)",
     )
     p_w.set_defaults(func=cmd_wishlist)
+
+    # prefix-discover — 자관 049 prefix 자동 발견 (PILOT 1주차 도입 ★)
+    p_pd = sub.add_parser(
+        "prefix-discover",
+        help="자관 .mrc → 049 prefix 자동 발견 + config snippet (PILOT 5분 도입)",
+    )
+    p_pd.add_argument(
+        "directory",
+        help="자관 .mrc 디렉토리 (재귀 검색)",
+    )
+    p_pd.add_argument(
+        "--threshold",
+        type=float,
+        default=1.0,
+        help="권장 임계값 % (default 1.0)",
+    )
+    p_pd.set_defaults(func=cmd_prefix_discover)
 
     # interlibrary — 상호대차 양식 어댑터
     p_il = sub.add_parser(
