@@ -37,7 +37,7 @@
 
 - [x] Cloud routine 3개 모니터링 가이드 ✅ 0a29e07·09ca181 (Pro 한도 §7)
 - [x] GitHub Releases 발행 자동화 ✅ .github/workflows/release.yml (git tag v*.*.* push → 자동)
-- [ ] Self-host 가이드 (Render·Fly.io·Docker)
+- [x] Self-host 가이드 ✅ docs/self-host-guide.md (Render·Fly.io·Docker·1관→1,000관 시뮬)
 
 ---
 
