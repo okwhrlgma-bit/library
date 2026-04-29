@@ -35,7 +35,28 @@ def build_stats() -> dict[str, Any]:
         "revenue_estimate_30d_krw": _usage_in_window(30 * 24 * 3600).get("ok_count", 0)
         * PRICE_PER_RECORD_KRW,
         "price_per_record_krw": PRICE_PER_RECORD_KRW,
+        "sales_funnel": _sales_funnel_summary(),
     }
+
+
+def _sales_funnel_summary() -> dict[str, Any]:
+    """영업 funnel (가입→활성→한도→결제) 통합 — scripts/sales_funnel 활용."""
+    import sys
+    root = Path(__file__).resolve().parent.parent.parent.parent
+    scripts_dir = root / "scripts"
+    if str(scripts_dir) not in sys.path:
+        sys.path.insert(0, str(scripts_dir))
+    try:
+        import sales_funnel  # type: ignore[import-not-found]
+    except ImportError:
+        return {"error": "sales_funnel module not available"}
+
+    signups_path = root / "logs" / "signups.jsonl"
+    usage_path = root / "logs" / "usage.jsonl"
+    signups = sales_funnel._load_jsonl(signups_path)
+    usage = sales_funnel._load_jsonl(usage_path)
+    metrics = sales_funnel.compute_funnel(signups, usage)
+    return metrics.to_dict()
 
 
 def _user_summary() -> dict[str, Any]:
