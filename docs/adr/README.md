@@ -35,3 +35,4 @@
 | 0012 | always-night-mode | accepted |
 | 0013 | claude-md-slim-200lines | accepted |
 | 0014 | five-layer-automation | accepted |
+| 0015 | cli-pilot-funnel-integration | accepted |
