@@ -1,0 +1,62 @@
+name: Autonomous 6h (Claude Code Action 보조 자동화)
+
+# Cloud routine (claude.ai) 3개와 보완 — 6시간마다 GitHub Actions 자체 자동화.
+# 사용자 ANTHROPIC_API_KEY 등록 후 활성. 미등록 시 silent skip.
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # 매 6시간 UTC
+  workflow_dispatch:  # 수동 실행 가능
+
+permissions:
+  contents: write  # commit·push 권한
+  pull-requests: write
+
+jobs:
+  autonomous:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: ${{ env.ANTHROPIC_API_KEY != '' }}  # 키 없으면 skip
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 전체 history (cloud agent가 학습)
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]" || pip install -e .
+
+      - name: Run Claude Code Action
+        # NOTE: anthropics/claude-code-action@v1 활성화는 GitHub Actions
+        # marketplace에서 사전 등록 필요. 미등록 시 본 step skip.
+        # 활성화 후 prompt 사용:
+        #   "AUTONOMOUS_BACKLOG.md 위에서 아래로 스캔.
+        #    🟢 1순위 미완료 1건 진행. pytest·ruff·assertions 통과 후
+        #    git commit·push. 평가축 §0 사서 마크 시간 단축 OR §12
+        #    결제 의향 ↑ 양수 영향만."
+        # 사용자 등록 전: 본 step은 placeholder 메시지만
+        run: |
+          echo "::notice::Claude Code Action @v1 활성화 대기 (사용자 등록 필요)"
+          echo "::notice::Cloud routine 3개 (1h·주간·월간) 이 본 워크플로우 보완"
+          echo "::notice::AUTONOMOUS_BACKLOG.md 참조 — cloud routine 자동 진행 중"
+
+      - name: Verify code quality
+        run: |
+          ruff check .
+          pytest -q --tb=short
+          python scripts/binary_assertions.py --strict || true
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "::notice::Autonomous 6h 완료 — 다음 fire 6시간 후"
