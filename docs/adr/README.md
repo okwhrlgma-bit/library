@@ -32,3 +32,6 @@
 | 0009 | us-east-asian-activation-trigger | accepted |
 | 0010 | night-autonomous-setup | accepted |
 | 0011 | managed-stack-cashcow | accepted |
+| 0012 | always-night-mode | accepted |
+| 0013 | claude-md-slim-200lines | accepted |
+| 0014 | five-layer-automation | accepted |
