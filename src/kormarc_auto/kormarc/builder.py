@@ -17,6 +17,7 @@ def build_kormarc_record(
     *,
     cataloging_agency: str = "OURLIB",
     cataloging_lang: str = "kor",
+    auto_validate: bool = True,
 ) -> Record:
     """BookData dict를 pymarc Record로 변환.
 
@@ -24,6 +25,8 @@ def build_kormarc_record(
         book_data: aggregator.aggregate_by_isbn() 결과
         cataloging_agency: 040 ▾a 우리 도서관 부호 (기관 설정)
         cataloging_lang: 040 ▾b 사용 언어
+        auto_validate: True면 빌드 직후 validate_record_full 호출 + logger.warning
+                       (default True). False면 검증 생략 (테스트·골든 데이터셋 빌드 시).
 
     Returns:
         pymarc.Record (UTF-8, KORMARC 통합서지용 호환)
@@ -309,6 +312,21 @@ def build_kormarc_record(
                 subfields=[Subfield(code="b", value=f"₩{book_data['price']}")],
             )
         )
+
+    # 빌드 직후 KORMARC 2023.12 + M/A/O 자동 검증 (logger.warning, raise X)
+    if auto_validate:
+        # 순환 import 회피 — 함수 내부 import
+        from kormarc_auto.kormarc.validator import validate_record_full
+
+        issues = validate_record_full(record, book_data)
+        if issues:
+            logger.warning(
+                "KORMARC 빌드 검증 위반 %d건 (ISBN=%s): %s%s",
+                len(issues),
+                book_data.get("isbn", "?"),
+                issues[:3],
+                "..." if len(issues) > 3 else "",
+            )
 
     return record
 
