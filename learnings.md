@@ -711,6 +711,74 @@ claude --enable-auto-mode "scoped task with checkpoint commits + CHANGELOG_NIGHT
 
 ---
 
+## 2026-04-29 저녁 — 28 commit 시리즈 2부 (포트원 webhook·CLI·README SEO)
+
+### 포트원 v2 webhook 표준
+
+**사실** (출처: src/kormarc_auto/server/portone_webhook.py·테스트):
+
+- 포트원 v2 webhook 표준 = HMAC-SHA256 서명 (헤더 `webhook-signature`).
+- 이벤트 타입 4종: Transaction.Paid·Transaction.Cancelled·BillingKey.Issued·BillingKey.Deleted.
+- payload 구조: `{type, data: {transactionId, billingKey, amount: {total}, customerKey}}`.
+- 검증: `hmac.compare_digest(expected, signature_header.lower())` 필수 (timing attack 회피).
+- ADR 0007 트리거 (사업자 등록·통신판매 신고·포트원 가맹) 충족 후 `/webhook/portone` 엔드포인트 활성.
+
+### Windows cp949 출력 문제 — Python CLI 표준 패턴
+
+**사실** (출처: src/kormarc_auto/cli.py:14-22):
+
+- Windows PowerShell 기본 stdout = cp949. Python `print("한국어")`도 cp949로 변환되어 깨짐.
+- 해결: 모듈 시작 시점에 즉시:
+```python
+os.environ.setdefault("PYTHONIOENCODING", "utf-8")
+with contextlib.suppress(AttributeError, OSError):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+```
+- 이모지 사용 X — `os.environ` 설정 후에도 cp949 환경에서 fail (예: 📂·★·⭐).
+- 대안: `[권장]`·`>=`·텍스트 마커 사용.
+
+### builder.py 자동 검증 통합 — backward compat 패턴
+
+**사실** (출처: src/kormarc_auto/kormarc/builder.py·tests/test_builder_auto_validate.py):
+
+- 기존 함수 시그니처에 `auto_validate: bool = True` keyword arg 추가 = backward compat.
+- 검증 호출은 함수 내부 import (순환 import 회피): `from kormarc_auto.kormarc.validator import validate_record_full`.
+- logger.warning만 (raise X) → 호출자 흐름 깨지지 않음. 골든 데이터셋·테스트 빌드 시 `auto_validate=False`로 disable.
+- 기존 244+ 테스트 모두 통과 (backward compat 검증 끝).
+
+### README SEO — 한국 사서 검색 키워드 12종
+
+**사실** (출처: README.md):
+
+- 네이버는 한국 사서 1순위 검색 채널. README 헤더에 검색 키워드 명시 = SEO 강화.
+- 핵심 키워드 (각각 사서가 검색할 패턴):
+  · "KORMARC 자동"·"MARC 자동 생성"·"도서관 사서 마크 자동화"
+  · "ISBN MARC 변환"·"KOLAS 반입"·"1인 사서 자동화"
+  · "작은도서관 마크"·"학교도서관 KORMARC"·"880 한자 병기 자동"
+  · "KDC 자동 분류"·"책단비 hwp 자동"·"책나래 책바다 양식"
+- GitHub topics 16종 = 영문 SEO (개발자·기술 사서).
+- 영업 정량 (★ 99.82% 정합)을 헤더에 → 발견 즉시 신뢰 형성.
+
+### 4-Part 매뉴얼 Agent 병렬 launch 패턴
+
+**사실** (출처: 이번 세션 4 background agent 시리즈):
+
+- 4 general-purpose Agent를 동시 background launch 가능 (run_in_background=true).
+- 각 Agent: 외부 웹 조사 + 파일 작성 + 200자 요약 보고.
+- 시간 단축: 단일 sequential 16시간 추정 → 병렬 약 10분 (실측).
+- 토큰 사용량: Agent당 75K~125K (총 약 400K) — 큰 작업이지만 PO 정점 정책 (토큰 X) 정합.
+- 결과 파일 timestamp로 완료 감지 가능 (notification 늦어도 commit 진행 OK).
+
+### 매출 영향: HIGH ★
+
+- 포트원 webhook stub = 사업자 등록 후 즉시 결제 자동화 → §12 직접
+- prefix CLI = 다른 자관 PILOT 1줄 도입 → 영업 가속
+- README SEO = 외부 발견 (네이버·GitHub) → 신규 가입 가속
+- builder 자동 검증 = 사서 수동 확인 시간 ↓ → §0 직접
+
+---
+
 ## 추가 양식 (다음 학습 추가 시 그대로 사용)
 
 ```
