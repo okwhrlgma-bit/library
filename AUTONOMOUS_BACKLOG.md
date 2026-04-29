@@ -11,7 +11,7 @@
 ### Part 6 가이드 격차 4건 (4-30 인계·즉시 적용 가능)
 
 - [x] **CLAUDE.md 323줄 → 206줄** ★ (Step 1~5 완료·Anthropic 권장 거의 도달·9d08904·a0fe201·ebcd5f6·35f88ef·05c5549)
-- [ ] `/ultrareview` `/ultraplan` 슬래시 명령 활용 검토 (v2.1.111+ 신규)
+- [x] `/ultrareview` `/ultraplan` 활용 시점 (Part 6 §12 갱신·PILOT 4주차 5/29 발표 직전 활용)
 - [x] Routines Pro 5건/일 한도 모니터링 (`docs/cloud-routine-monitoring-guide.md` §7 추가·1h routine 4h 변경 권장)
 - [x] stop-double-gate.py `stop_hook_active` 체크 확인 (line 39 정합 검증·이미 정합)
 

@@ -236,14 +236,14 @@ done
 
 ---
 
-## 12. 즉시 적용 격차 4건 ★
+## 12. 즉시 적용 격차 4건 ★ (4-30 진행 결과)
 
 | # | 격차 | 적용 |
 |---|---|---|
-| 1 | CLAUDE.md 323줄 → 200줄 이하 slim | 다음 PR — 핵심 헌법만 유지·나머지 docs/conventions·domain-glossary 분리 |
-| 2 | `/ultrareview`·`/ultraplan` (v2.1.111+) | 신규 슬래시 명령으로 활용 가능 |
-| 3 | Routines 일일 한도 (Pro 5건) | 1h routine 24/일 fire 시도 vs 5건 한도 → 일부 누락 모니터링 필수 |
-| 4 | Stop hook 무한루프 안전장치 | 우리 stop-double-gate.py 점검 — `stop_hook_active` 체크 확인 |
+| 1 | ✅ CLAUDE.md 323→206줄 slim | 5 step 완료 (ADR-0013) |
+| 2 | 🟡 `/ultrareview`·`/ultraplan` (v2.1.111+) | 활용 시점: PILOT 4주차 (5/29) 발표 직전 슬라이드 종합 검토. cloud 멀티에이전트 무료 플랜 한도 내 작동. 권장: `/ultrareview` 정기적으로 main 브랜치 회귀 검토 |
+| 3 | ✅ Routines Pro 5건/일 한도 | `docs/cloud-routine-monitoring-guide.md §7` 추가·1h routine cron 4h 변경 권장 |
+| 4 | ✅ Stop hook 안전장치 | `stop-double-gate.py:39` `stop_hook_active` 체크 정합 검증 |
 
 ---
 
