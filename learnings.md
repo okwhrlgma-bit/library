@@ -779,6 +779,64 @@ with contextlib.suppress(AttributeError, OSError):
 
 ---
 
+## 2026-04-30 새벽 — 5중 자동화 정점 + 58 commit 시리즈 마무리 ★
+
+### Cloud routine + GitHub Actions = 5중 자동화 패턴
+
+**사실** (출처: claude.ai/code/routines + .github/workflows/):
+
+- Anthropic Cloud routine API (`claude.ai/code/routines`)는 cron 기반 무한 자율 작업 가능. 사용자 Claude 계정 사용 (별도 ANTHROPIC_API_KEY X).
+- 최소 cron 간격 1시간. `0 * * * *` (매시간)·`0 0 * * 1` (매주 월)·`0 0 1 * *` (매월 1일) 정합.
+- GitHub repo URL 필수 (private OK·OAuth 인증).
+- routine 등록 시 prompt에 평가축·자율 게이트·작업 가이드 명시 → cloud agent가 매 fire 시 따라감.
+- GitHub Actions ci.yml = 매 push 자동 검증 (월 2,000분 무료·linux runner).
+- 두 시스템 합쳐 5중 자동화 정점:
+  1. Cloud routine 1h (매시간 commit)
+  2. Cloud routine 주간 (월 KST 09)
+  3. Cloud routine 월간 (1일 KST 09)
+  4. GitHub Actions ci (매 push)
+  5. GitHub Actions 6h (백업·API 키 등록 후)
+
+### GitHub repo private 전환 — Cloud routine 영향 없음
+
+**사실**:
+
+- HTTP 200 → 404 전환 (anonymous 접근 차단·Web UI 30초·gh CLI 1줄)
+- Cloud routine은 OAuth 인증으로 여전히 작동
+- GitHub Actions 무료 (월 2,000분·private도 동일)
+- 외부 영업: README·docs 외부 노출 차단 = 영업 시 별도 PDF·발췌 발송 필요
+- 자관 사서 이름·영업 가격 전략 보호
+
+### MD 파일 구조화 + 세션 분할 = 베스트
+
+**사실** (출처: 다른 대화창 전달·우리 적용):
+
+- CLAUDE.md (240줄·짧게·인덱스 역할)
+- docs/research/part1~5 (4-Part + 도구 추천 = 113,500자 분리)
+- docs/sales/INDEX.md + 11 영업 자료 (5초 탐색)
+- docs/adr/ (12+ ADR·큰 결정)
+- learnings·CHANGELOG_NIGHT·MEMORY·project_session
+- AUTONOMOUS_BACKLOG.md (cloud routine 큐)
+- 한 파일 250줄 이하 유지 → web Claude 첨부 시 컨텍스트 효율 ↑
+
+### Cloud agent backlog 패턴
+
+**사실** (출처: AUTONOMOUS_BACKLOG.md):
+
+- cloud routine 매 fire 시 backlog 위→아래 스캔 → 1순위 미완료 1건 선택 → 작업 → 제거·신규 추가
+- 우선순위 6 단계 (1순위 매출 직결 → 6순위 영업 후속)
+- 평가축 §0/§12 양수만 commit·pytest·ruff·assertions 통과 필수
+- 자율 작업 명확 우선순위 + 회귀 차단 = 무한 자율 안정성
+
+### 매출 영향: VERY HIGH ★★★
+
+- 5중 자동화 = PO 외출·잠 사이에도 매시간 commit 누적
+- 1년간 (1h × 24 × 365 = 8,760 fire 가능) → 약 5,000+ commit 자동 누적 예상
+- 자관 PILOT 4주 → 학교·작은·공공·대학·전문 PILOT 8~10관 → Phase 1 베타 50관 도달
+- Phase 3 캐시카우 200관 × 평균 3.3만원 ≈ 월 660만원 도달 시점 자동 진척 가속
+
+---
+
 ## 추가 양식 (다음 학습 추가 시 그대로 사용)
 
 ```
