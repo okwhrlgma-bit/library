@@ -47,8 +47,8 @@ def _sales_funnel_summary() -> dict[str, Any]:
     if str(scripts_dir) not in sys.path:
         sys.path.insert(0, str(scripts_dir))
     try:
-        import sales_funnel  # type: ignore[import-not-found]
         import aggregate_interviews  # type: ignore[import-not-found]
+        import sales_funnel  # type: ignore[import-not-found]
     except ImportError:
         return {"error": "sales_funnel module not available"}
 
