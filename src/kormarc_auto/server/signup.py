@@ -29,6 +29,34 @@ logger = logging.getLogger(__name__)
 
 _lock = Lock()
 
+
+def detect_persona(email: str, library_name: str | None) -> str:
+    """도서관명·이메일 도메인 패턴 → 4 페르소나 자동 분류.
+
+    Returns:
+        "macro" | "acquisition" | "general" | "video" | "unknown"
+
+    분류 규칙 (docs/saseo-personas-2026-04-28.md 정합).
+    """
+    name_low = (library_name or "").lower()
+    email_low = email.lower()
+
+    if "video" in name_low or "영상" in name_low or "방송" in name_low:
+        return "video"
+    if any(k in name_low for k in ("대학", "university")) or \
+       any(d in email_low for d in (".ac.kr", ".edu")):
+        return "acquisition"
+    if any(k in name_low for k in ("전문", "법무", "의학", "병원", "연구원")):
+        return "acquisition"
+    if any(k in name_low for k in ("작은", "마을", "동네")):
+        return "general"
+    if any(k in name_low for k in ("학교", "초등", "중학교", "고등학교")):
+        return "general"
+    if email_low.endswith(".go.kr") or "공공" in name_low:
+        return "general"
+    return "unknown"
+
+
 # 분당 가입 시도 윈도우 (이메일/IP별)
 _SIGNUP_WINDOW_SECONDS = 60
 _SIGNUP_MAX_PER_WINDOW = 5
@@ -113,12 +141,14 @@ def issue_free_trial_key(
 
     get_usage(api_key)
 
+    persona = detect_persona(email, library_name)
     entry = {
         "ts": int(time.time()),
         "email": email,
         "library_name": library_name,
         "api_key_preview": api_key[:12] + "...",
         "quota": FREE_QUOTA_DEFAULT,
+        "persona": persona,
     }
     _append_signup_log(entry)
 
