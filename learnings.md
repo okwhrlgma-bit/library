@@ -877,6 +877,60 @@ with contextlib.suppress(AttributeError, OSError):
 
 ---
 
+## 2026-04-30 11:00 KST — ★ 100 commit 마일스톤 정점 (11시간 자율)
+
+### 100 commit 시리즈 핵심 패턴
+
+**사실** (출처: git log 3440d34..f0f1c6f):
+
+- 단일 세션에서 100 commit 자율 진행 가능 (약 11시간·평균 6.6분/commit)
+- 매 commit = 평가축 §0 사서 시간 단축 OR §12 결제 의향 ↑ 양수 영향만
+- 작은 commit (5~150 lines) + 명확한 commit message + 평가축 1줄 명시
+- 매 commit 직후 pytest·ruff·assertions 통과 + git push (cloud routine 다음 fire 즉시 sync)
+
+### 5중 자동화 정점 패턴
+
+**사실**:
+
+- Cloud routine 3개 (1h·주간·월간) + GitHub Actions 2개 (ci·autonomous-6h)
+- 매 push 자동 검증 (ci.yml) + 매시간 자율 commit (1h cloud routine)
+- 일간 fire 한도 (Pro 5건/일) → 1h cron이 24/일 fire 시 일부 누락
+- 회피: cron 4h 변경·Max 업그레이드·GitHub Actions 6h 백업
+
+### Anthropic 권장 200줄 도달 패턴
+
+**사실** (CLAUDE.md slim Step 1~5):
+
+- 323 → 206줄 (5 step·각 commit ~10~50줄 archive)
+- 핵심 헌법 (§0 정체성·§1 의심·§4 코딩 규칙·§5 KORMARC·§6 자율성·§7 체크리스트) 유지
+- 중복 (§8·§9·§10·§11·§12·§13)은 docs/index.md·docs/sales/INDEX.md 포인터로
+
+### 영업 자료 16건 매트릭스 패턴
+
+**사실**:
+
+- 매 페르소나 (4종) × 매 채널 (KLA·메일·카카오·블로그·강의·기고) × 매 시기 (5월·6월·7월·9월·11~12월)
+- 단일 진실: ★ 자관 .mrc 99.82% 정합 (모든 영업 자료에 인용)
+- 정량 5종 (99.82%·일 39h·8분→2분·5년 1,328건·049 prefix EQ·CQ·WQ)
+
+### ADR 12 → 16 결정 기록 패턴
+
+**사실**:
+
+- 0013 CLAUDE slim·0014 5중 자동화·0015 CLI 통합·0016 signup persona
+- 각 ADR = Status·Context·Decision·Consequences·Sources 5 섹션
+- 6개월 후 "왜 이렇게 했나?" 답변 가능
+- 변경 시 새 ADR + supersedes (기존 보존)
+
+### 매출 영향 — VERY HIGH ★★★
+
+- 100 commit = PO 외출·잠 사이 자동 commit 누적 가능 증명
+- 자관 PILOT 4주 → 학교·작은·공공·대학·전문 8~10관 (6월 중)
+- Phase 1 베타 50관 (12개월) → Phase 3 캐시카우 200관 (24~36개월·월 660만원)
+- 5중 자동화 + BACKLOG 큐 = PO 시간 0 운영 검증 완료
+
+---
+
 ## 추가 양식 (다음 학습 추가 시 그대로 사용)
 
 ```
