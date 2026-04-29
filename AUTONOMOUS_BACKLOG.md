@@ -12,10 +12,10 @@
 
 KST 07:40 token 회복 후 재실행 또는 cloud routine 위임:
 
-- [ ] **Part 11 자관 보편성 검증** (Agent 5 token 한도) — 자관 정량 6종 다관 cross-validation·일반화 가능 vs 자관 특수 분리
-- [ ] **Part 12 사서 페인 학술 심층** (Agent 6 token 한도) — kfilss·OAK Korea·RISS 학술 인용 7 카테고리
-- [ ] **Part 13 한국 도서관 시장 TAM/SAM/SOM** (Agent 7 token 한도) — 22,330관·12,000관·1,500관 5년 사업 계획
-- [ ] **Part 14 국제 도서관 자동화** (Agent 8 token 한도) — LC BIBFRAME·BL·NDL·UNIMARC·Alma·Koha·MarcEdit·§33 미국 진출
+- [x] **Part 11 자관 보편성 검증** ✅ bfdfbb8 (직접 작성·Agent 5 token 한도 대체)
+- [x] **Part 12 사서 페인 학술 심층** ✅ 5a83116 (직접 작성·14 학술 출처)
+- [x] **Part 13 한국 도서관 시장 TAM/SAM/SOM** ✅ f635c1c (직접 작성·5년 누적 20~23억)
+- [x] **Part 14 국제 도서관 자동화** ✅ ae6d80f (직접 작성·미국 동아시아 11관·605,000권)
 
 ### 4-30 PO 명령 후속 (적용)
 
