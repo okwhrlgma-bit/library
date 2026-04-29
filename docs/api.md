@@ -90,6 +90,36 @@ multipart 폼:
 
 응답: 레코드별 검증 오류 리스트
 
+### `POST /webhook/portone` (ADR 0007 트리거 후 활성)
+
+포트원 PG → 우리 서버 결제 알림 webhook. 인증 X (HMAC-SHA256 서명 검증).
+
+헤더:
+- `webhook-signature`: HMAC-SHA256 (env `KORMARC_PORTONE_WEBHOOK_SECRET` 키)
+
+요청 (포트원 v2):
+```json
+{
+  "type": "Transaction.Paid",
+  "data": {
+    "transactionId": "tx_...",
+    "amount": {"total": 50000},
+    "customerKey": "user_..."
+  }
+}
+```
+
+응답:
+```json
+{"ok": true, "received": "Transaction.Paid", "transaction_id": "tx_..."}
+```
+
+에러:
+- 401: 서명 무효 (HMAC mismatch)
+- 400: JSON 파싱 실패
+
+이벤트 4종: `Transaction.Paid`·`Transaction.Cancelled`·`BillingKey.Issued`·`BillingKey.Deleted`
+
 ---
 
 ## 에러 코드
