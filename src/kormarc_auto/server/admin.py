@@ -40,7 +40,7 @@ def build_stats() -> dict[str, Any]:
 
 
 def _sales_funnel_summary() -> dict[str, Any]:
-    """영업 funnel (가입→활성→한도→결제) 통합 — scripts/sales_funnel 활용."""
+    """영업 funnel (가입→활성→한도→결제) + 페르소나별 분리 (KLA 슬라이드 데이터 ★)."""
     import sys
     root = Path(__file__).resolve().parent.parent.parent.parent
     scripts_dir = root / "scripts"
@@ -48,6 +48,7 @@ def _sales_funnel_summary() -> dict[str, Any]:
         sys.path.insert(0, str(scripts_dir))
     try:
         import sales_funnel  # type: ignore[import-not-found]
+        import aggregate_interviews  # type: ignore[import-not-found]
     except ImportError:
         return {"error": "sales_funnel module not available"}
 
@@ -56,7 +57,15 @@ def _sales_funnel_summary() -> dict[str, Any]:
     signups = sales_funnel._load_jsonl(signups_path)
     usage = sales_funnel._load_jsonl(usage_path)
     metrics = sales_funnel.compute_funnel(signups, usage)
-    return metrics.to_dict()
+
+    # 페르소나별 funnel 분리 (PILOT 인터뷰 결과 활용)
+    interviews = aggregate_interviews.load_interviews()
+    by_persona = sales_funnel.funnel_by_persona(signups, usage, interviews)
+
+    return {
+        "overall": metrics.to_dict(),
+        "by_persona": {p: m.to_dict() for p, m in by_persona.items()},
+    }
 
 
 def _user_summary() -> dict[str, Any]:
