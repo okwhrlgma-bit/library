@@ -166,6 +166,8 @@
 - [ ] ISBN-13 체크섬 검증 통과하는가
 - [ ] 한자 있는 데이터에 880 페어가 생성되는가
 - [ ] 알라딘 데이터 사용 시 출처 표시가 어딘가에 있는가
+- [ ] M/A/O 적용 수준 검증 (`validator.validate_record_full`) 통과하는가
+- [ ] 자관 .mrc 99.82% 정합 회귀 X (`scripts/validate_real_mrc.py`)
 - [ ] `pytest`와 `ruff check` 통과하는가
 
 ---
@@ -223,7 +225,8 @@
 
 ## 11. 변경 이력
 
-- **2026-04-28 v0.4.36 — §2 도메인 용어 정정 (KORMARC KS X 6006-0:2023.12 + 9 자료유형 + M/A/O 적용 수준 + MODS XML + KLMS + 5 상호대차 + 알파스·KERIS DLS 정밀 정의)**. 야간 자율 28 task / 26 신규 docs / 84 ADR / 자료 폴더 100% + D 드라이브 100% 흡수 완료. ADR 0044 (KORMARC 2023.12 표준 정합 명문화) docs only 적용.
+- **2026-04-29 v0.4.37 — Phase 0 MVP 4단 검증 완성 + 자관 .mrc 99.82% 정합 ★**. M/A/O 적용 수준 모듈 신규 (`kormarc/application_level.py` — M_FIELDS·M_FIELD_GROUPS·A_FIELD_GROUPS) + `validator.validate_record_full` 통합 검증 + `scripts/validate_real_mrc.py` 자관 174 파일·3,383 레코드 전수 검증 (인코딩 cp949 자동 fallback). 049 prefix 정책 확장 (EQ·CQ·EM·CM·WQ — D 드라이브 실측 분포). aggregator TTL 30일→7일 (PO MVP CHAPTER 10 정합). 4-Part 종합 매뉴얼 113,500자 (`docs/research/part1~4`). binary_assertions 25→27. 262 tests. **영업 정량 ★**: 자관 .mrc 99.82% 정합 = KLA 5.31 발표·사서교육원 강의 직접 인용 가능.
+- 2026-04-28 v0.4.36 — §2 도메인 용어 정정 (KORMARC KS X 6006-0:2023.12 + 9 자료유형 + M/A/O 적용 수준 + MODS XML + KLMS + 5 상호대차 + 알파스·KERIS DLS 정밀 정의). 야간 자율 28 task / 26 신규 docs / 84 ADR / 자료 폴더 100% + D 드라이브 100% 흡수 완료. ADR 0044 (KORMARC 2023.12 표준 정합 명문화) docs only 적용.
 - 2026-04-25 v0.1 — 최초 작성. Phase 1 (ISBN→KORMARC) 구현 시작
 - 2026-04-25 v0.2 — `cli.py` + `constants.py` + `logging_config.py` + `api/_http.py` 추가. 캐싱·재시도 도입. 슬래시 명령 6종 + 에이전트 3종.
 - 2026-04-25 v0.3 — Phase 2 (Vision: Haiku→Sonnet 2단계) + Phase 3 (KDC AI) + Phase 3+ (Subject AI) 실구현. `_anthropic_client.py` 신규 (prompt caching + diskcache + tenacity). FastAPI 서버 (`server/`) + Streamlit UI (`ui/`) + 키워드 검색 (`api/search.py`) 추가. 사서 가치 모듈 3종(`librarian_helpers/call_number.py`, `kormarc/kolas_validator.py`, `api/kolisnet_compare.py`) 추가. 모바일 cloudflared/ngrok 자동 설치 + 권한 사전 등록. 수익화 인프라 (`server/usage.py` 사용량 카운터 + 결제 안내). 슬래시 명령 6종 신규 (/serve, /ui, /search, /vision-test, /kdc-test, /mobile-status). §12 수익 모델 헌법화.
