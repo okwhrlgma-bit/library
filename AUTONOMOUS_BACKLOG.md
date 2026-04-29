@@ -8,6 +8,23 @@
 
 ## 🟢 우선순위 1 — 매출 직결 + 작은 commit (즉시 진행)
 
+### 4-30 PO 명령 (보편성 + 심층) — Agent 4건 token 한도 후 재시도 ★
+
+KST 07:40 token 회복 후 재실행 또는 cloud routine 위임:
+
+- [ ] **Part 11 자관 보편성 검증** (Agent 5 token 한도) — 자관 정량 6종 다관 cross-validation·일반화 가능 vs 자관 특수 분리
+- [ ] **Part 12 사서 페인 학술 심층** (Agent 6 token 한도) — kfilss·OAK Korea·RISS 학술 인용 7 카테고리
+- [ ] **Part 13 한국 도서관 시장 TAM/SAM/SOM** (Agent 7 token 한도) — 22,330관·12,000관·1,500관 5년 사업 계획
+- [ ] **Part 14 국제 도서관 자동화** (Agent 8 token 한도) — LC BIBFRAME·BL·NDL·UNIMARC·Alma·Koha·MarcEdit·§33 미국 진출
+
+### 4-30 PO 명령 후속 (적용)
+
+- [x] Part 7 타관 KORMARC 정합 ✅ 7ce6b89 (22,152자)
+- [x] Part 8 한국 도구·경쟁사 ✅ f6a2e4b (9,500자)
+- [x] Part 9 사서 커뮤니티 ✅ 89ca09f (14,500자)
+- [x] Part 10 페인포인트 실측 ✅ 401ebf1 (560줄)
+- [x] 향후 코딩 로드맵 13 영역 ✅ c98d590
+
 ### Part 6 가이드 격차 4건 (4-30 인계·즉시 적용 가능)
 
 - [x] **CLAUDE.md 323줄 → 206줄** ★ (Step 1~5 완료·Anthropic 권장 거의 도달·9d08904·a0fe201·ebcd5f6·35f88ef·05c5549)
