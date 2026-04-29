@@ -76,3 +76,33 @@ def test_metrics_to_dict_serializable():
     serialized = json.dumps(d)
     assert "signups" in serialized
     assert "end_to_end_pct" in serialized
+
+
+def test_funnel_by_persona_groups_correctly():
+    """4 페르소나별 funnel 분리 (KLA 슬라이드 데이터)."""
+    interviews = [
+        {"persona": "macro", "api_key": "k1"},
+        {"persona": "macro", "api_key": "k2"},
+        {"persona": "acquisition", "api_key": "k3"},
+    ]
+    signups = [
+        {"api_key": "k1", "is_paid": True},
+        {"api_key": "k2", "is_paid": False},
+        {"api_key": "k3", "is_paid": False},
+    ]
+    usage = [
+        {"api_key": "k1", "records": 60},
+        {"api_key": "k2", "records": 30},
+        {"api_key": "k3", "records": 100},
+    ]
+    result = sales_funnel.funnel_by_persona(signups, usage, interviews)
+    assert "macro" in result
+    assert "acquisition" in result
+    assert result["macro"].signups == 2
+    assert result["macro"].paid == 1
+    assert result["acquisition"].signups == 1
+    assert result["acquisition"].free_quota_used == 1
+
+
+def test_funnel_by_persona_empty_interviews():
+    assert sales_funnel.funnel_by_persona([], [], []) == {}

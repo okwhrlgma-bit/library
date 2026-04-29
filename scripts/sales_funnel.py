@@ -128,6 +128,40 @@ def compute_funnel(
     )
 
 
+def funnel_by_persona(
+    signups: list[dict[str, Any]],
+    usage: list[dict[str, Any]],
+    interviews: list[dict[str, Any]],
+    *,
+    free_quota: int = 50,
+) -> dict[str, FunnelMetrics]:
+    """4 페르소나별 funnel 분리 — KLA 슬라이드 직접 데이터 ★.
+
+    interviews는 `aggregate_interviews.load_interviews()` 결과 또는 동등.
+    각 인터뷰의 `persona` + `library_name` (또는 `api_key`)를 통해 signup·usage 매칭.
+    """
+    persona_keys: dict[str, set[str]] = {}
+    for i in interviews:
+        p = str(i.get("persona") or "unknown")
+        key = i.get("api_key") or i.get("library_name") or i.get("librarian_name")
+        if key:
+            persona_keys.setdefault(p, set()).add(str(key))
+
+    result: dict[str, FunnelMetrics] = {}
+    for persona, keys in persona_keys.items():
+        s_filtered = [
+            s for s in signups
+            if s.get("api_key") in keys or s.get("library_name") in keys
+        ]
+        u_filtered = [
+            u for u in usage
+            if u.get("api_key") in keys or u.get("library_name") in keys
+        ]
+        result[persona] = compute_funnel(s_filtered, u_filtered, free_quota=free_quota)
+
+    return result
+
+
 def render_summary(metrics: FunnelMetrics) -> str:
     lines: list[str] = []
     lines.append("=== 영업 funnel ===")
