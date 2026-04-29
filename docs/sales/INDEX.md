@@ -79,8 +79,9 @@
 
 | ☐ | 액션 | 자료 |
 |---|---|---|
-| ☐ | GitHub repo push (`git push -u origin main`) | (cloud routine 활성) |
+| ☐ | GitHub Release v0.4.37 발행 (5분 · gh CLI 1줄) | [github-release-v0.4.37-guide.md](../github-release-v0.4.37-guide.md) |
 | ☐ | 카카오 채널 「kormarc-auto」 개설 (5분) | kakao-channel-content §0 |
+| ☐ | NL Korea ISBN 인증키 신청 (1~3 영업일) | nl.go.kr/seoji |
 | ☐ | KLA 5.31 발표 신청 양식 다운로드 | kla outline §15 |
 | ☐ | 자관 사서 8명 PILOT 4주 안내 회의 일정 잡기 | pilot-package §3 |
 | ☐ | 4 페르소나 메일 1차 PO 검수·맞춤 수정 | pilot-package §2 |
