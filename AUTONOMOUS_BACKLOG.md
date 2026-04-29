@@ -36,7 +36,7 @@
 ### 매뉴얼 (각 30분)
 
 - [x] Cloud routine 3개 모니터링 가이드 ✅ 0a29e07·09ca181 (Pro 한도 §7)
-- [ ] GitHub Releases 발행 자동화 (gh CLI workflow)
+- [x] GitHub Releases 발행 자동화 ✅ .github/workflows/release.yml (git tag v*.*.* push → 자동)
 - [ ] Self-host 가이드 (Render·Fly.io·Docker)
 
 ---
