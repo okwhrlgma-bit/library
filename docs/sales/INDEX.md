@@ -30,6 +30,7 @@
 | **[outreach-small-school-libraries-2026-05.md](outreach-small-school-libraries-2026-05.md)** | 5/31 ~ 6월 작은·학교·KOLAS 마이그 메일 250통 |
 | **[outreach-university-special-libraries-2026-05.md](outreach-university-special-libraries-2026-05.md)** | 6월 사립·국공립·기업·정부·의학·법률·NLK 메일 125통 |
 | **[kakao-channel-content-2026-04-29.md](kakao-channel-content-2026-04-29.md)** | 5월 첫주 카카오 채널 개설 + 발행 |
+| **[annual-calendar-2026-2027.md](annual-calendar-2026-2027.md)** | 연 12개월 영업 캘린더 (신학기·예산·KLA·PIPA·cloud routine 데이터) |
 
 ---
 
