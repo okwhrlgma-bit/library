@@ -38,7 +38,11 @@ from kormarc_auto.logging_config import setup_logging  # noqa: E402
 logger = logging.getLogger(__name__)
 
 DEFAULT_DIR = Path("D:/내를건너서 숲으로 도서관/수서")
-SELF_LIBRARY_PREFIXES = ("EQ", "CQ", "EM", "CM")  # 자관 등록번호 prefix
+# 자관 등록번호 prefix (실측 D 드라이브 .mrc 174 파일·3,383 레코드 분포):
+# EQ 2,553건 (일반)·CQ 773건 (아동)·WQ 57건 (윤동주·시문학 별치)
+# EM/CM은 향후 영업 정책 (예약). config.yaml.kolas_register.registration_prefix
+# 자관별 변형 정합 (CLAUDE.md §정책 ③).
+SELF_LIBRARY_PREFIXES = ("EQ", "CQ", "EM", "CM", "WQ")
 
 
 def _find_mrc_files(root: Path) -> list[Path]:
