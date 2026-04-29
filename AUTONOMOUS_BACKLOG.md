@@ -30,7 +30,7 @@
 - [x] PILOT 4주차 통합 매뉴얼 ✅ 289f79b (KLA 5.31 마감)
 - [x] 도서관 정보나루 활용 가이드 ✅ docs/sales/data4library-guide-2026-05.md
 - [x] KOLIS-NET 마이그레이션 영업 메일 ✅ docs/sales/outreach-kolis-net-migration-2026-05.md
-- [ ] BIBFRAME 2.0 LOD 영업 메일 (대학·디지털 컬렉션)
+- [x] BIBFRAME 2.0 LOD 영업 메일 ✅ docs/sales/outreach-bibframe-lod-2026-05.md
 - [ ] 카카오톡 오픈채팅 사서 동호회 영업 메일
 
 ### 매뉴얼 (각 30분)
