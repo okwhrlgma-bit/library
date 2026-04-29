@@ -17,6 +17,7 @@ from __future__ import annotations
 import base64
 import contextlib
 import io
+import json
 import logging
 import os
 import tempfile
@@ -304,6 +305,33 @@ def create_app() -> FastAPI:
         if api_key not in get_admin_keys():
             raise HTTPException(status_code=403, detail="관리자 키만 가능")
         return build_stats()
+
+    @app.post("/webhook/portone", tags=["payment"])
+    async def portone_webhook(request: Request) -> dict[str, Any]:
+        """포트원 v2 webhook 수신 — ADR 0007 트리거 후 결제 자동 처리.
+
+        HMAC-SHA256 서명 검증 → 이벤트 파싱 → 분기 처리.
+        현재 stub (handle_event는 logger.info만). ADR 0007 충족 후 실 통합.
+        """
+        from kormarc_auto.server.portone_webhook import (
+            handle_event,
+            parse_event,
+            verify_signature,
+        )
+
+        payload_bytes = await request.body()
+        signature = request.headers.get("webhook-signature", "")
+
+        if not verify_signature(payload_bytes, signature):
+            raise HTTPException(status_code=401, detail="Invalid webhook signature")
+
+        try:
+            payload = json.loads(payload_bytes)
+        except json.JSONDecodeError as e:
+            raise HTTPException(status_code=400, detail=f"Invalid JSON: {e}") from e
+
+        event = parse_event(payload)
+        return handle_event(event)
 
     @app.get("/usage", response_model=UsageResponse, tags=["meta"])
     def usage(api_key: str = Depends(require_api_key)) -> UsageResponse:
