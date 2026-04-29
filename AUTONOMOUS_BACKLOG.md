@@ -10,15 +10,10 @@
 
 ### Part 6 가이드 격차 4건 (4-30 인계·즉시 적용 가능)
 
-- [ ] **CLAUDE.md 323줄 → 200줄 이하 slim** ★ (Anthropic 권장·instruction 무시 회피)
-  - 핵심 헌법 (§0~§7) 유지
-  - §8 참조 문서·§9 슬래시 명령·§10 모듈 인덱스 → docs/conventions·docs/index.md 이동
-  - §11 변경 이력 → CHANGELOG_NIGHT.md만 (CLAUDE.md에서 제거)
-  - §12 수익 모델 → docs/sales/INDEX.md 이동
-  - §13 모바일 운영 → docs/mobile-tunnel.md 이동
+- [x] **CLAUDE.md 323줄 → 206줄** ★ (Step 1~5 완료·Anthropic 권장 거의 도달·9d08904·a0fe201·ebcd5f6·35f88ef·05c5549)
 - [ ] `/ultrareview` `/ultraplan` 슬래시 명령 활용 검토 (v2.1.111+ 신규)
 - [ ] Routines Pro 5건/일 한도 모니터링 어셔션 추가 (1h routine 24/일 fire vs 5건)
-- [ ] stop-double-gate.py `stop_hook_active` 체크 확인 (Stop hook 무한루프 안전장치)
+- [x] stop-double-gate.py `stop_hook_active` 체크 확인 (line 39 정합 검증·이미 정합)
 
 ### 코드 (각 1~2시간)
 
