@@ -120,6 +120,42 @@ def by_library_type(interviews: list[dict[str, Any]]) -> dict[str, dict[str, Any
     }
 
 
+def by_persona(interviews: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    """4 페르소나별 NPS·Q1·시간 절감·결제 의향 분석 (KLA 슬라이드 직접 데이터 ★).
+
+    pilot_collect.py가 저장한 'persona' 키 (macro·acquisition·general·video)
+    별로 그룹화 → 페르소나별 정량 비교.
+    """
+    by_p: dict[str, list[dict[str, Any]]] = {}
+    for i in interviews:
+        p = str(i.get("persona") or "unknown")
+        by_p.setdefault(p, []).append(i)
+
+    result: dict[str, dict[str, Any]] = {}
+    for p, group in by_p.items():
+        time_saved = [
+            float(g["time_saved_pct"]) for g in group
+            if isinstance(g.get("time_saved_pct"), (int, float))
+        ]
+        q1_counter: Counter[str] = Counter()
+        for g in group:
+            q1_counter[str(g.get("q1_payment_band") or "unknown")] += 1
+
+        kla_quotable = sum(1 for g in group if g.get("consent_kla_quote"))
+
+        result[p] = {
+            "count": len(group),
+            "label": (group[0].get("persona_label") or "?") if group else "?",
+            "nps": nps_score(group),
+            "willingness": willingness_distribution(group),
+            "q1_distribution": dict(q1_counter),
+            "avg_time_saved_pct": round(sum(time_saved) / len(time_saved), 1) if time_saved else 0.0,
+            "kla_quotable_count": kla_quotable,
+            "decision_makers": decision_maker_distribution(group),
+        }
+    return result
+
+
 def feature_request_top(interviews: list[dict[str, Any]], top: int = 5) -> list[tuple[str, int]]:
     c: Counter[str] = Counter()
     for i in interviews:
@@ -165,6 +201,20 @@ def render_summary(interviews: list[dict[str, Any]]) -> str:
     for t, info in by_t.items():
         s = info["nps"]["score"]
         lines.append(f"- {t}: n={info['count']}, NPS={s}")
+    lines.append("")
+
+    lines.append("## 4 페르소나별 (KLA 슬라이드 직접 데이터 ★)")
+    by_p = by_persona(interviews)
+    for p, info in by_p.items():
+        s = info["nps"]["score"]
+        lines.append(
+            f"- **{p}** ({info['label']}): n={info['count']}, NPS={s}, "
+            f"평균 시간 절감={info['avg_time_saved_pct']}%, "
+            f"KLA 인용 가능={info['kla_quotable_count']}건"
+        )
+        if info["q1_distribution"]:
+            q1_str = " · ".join(f"{k}={v}" for k, v in info["q1_distribution"].items())
+            lines.append(f"  · Q1 결제 의향: {q1_str}")
     lines.append("")
     lines.append("## 기능 요청 Top 5 (다음 자율 디벨롭 우선순위)")
     for f, cnt in feats:
