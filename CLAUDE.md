@@ -26,17 +26,21 @@
 
 | 용어 | 정의 |
 |---|---|
-| **KORMARC** | 한국문헌자동화목록형식 (KS X 6006-0). 한국 도서관 표준 |
+| **KORMARC** | 한국문헌자동화목록형식 (**KS X 6006-0:2023.12**, NLK 2차 개정). 한국 도서관 표준. **9 자료유형** (단행본·연속·비도서·고서·전자책·전자저널·오디오북·멀티미디어·학위논문). **3 적용 수준** M(Mandatory)·A(Mandatory if applicable)·O(Optional). MARC21 호환↑·시맨틱 웹·링크드 데이터·외부 리소스 연계. 150+ 필드 (001~005 제어번호 ~ 900~980 로컬정보) |
 | **MARC21** | 미국 의회도서관 표준 MARC. 글로벌 |
-| **KOLAS III** | 국립중앙도서관 보급, 한국 공공도서관 표준 자료관리 시스템 |
-| **독서로DLS** | 한국 학교도서관 표준 시스템 (2024년 DLS와 통합) |
+| **MODS XML** | NLK 온라인자료과 디지털 컬렉션 표준 (KORMARC + 별도 변환). 5 자료유형 (멀티미디어·오디오북·전자저널·전자책·학위논문) |
+| **KOLAS III** | 국립중앙도서관 보급, 한국 공공도서관 표준 자료관리 시스템. ver.20210322001 (자관 보유). DB 오라클·단행/연속/공통 3 모듈. 책두레 모듈 = NLK 표준 상호대차 |
+| **알파스 (ALPAS)** | (주)이씨오 SaaS 도서관 관리. 카카오클라우드 IaaS·99.5% uptime·일일 03:00 백업. KOLAS3 호환·책이음 동기화·책밴드 자체 상호대차 |
+| **독서로DLS / KERIS DLS** | 한국 학교도서관 표준 시스템 (2024년 DLS와 통합). KERIS + 17 시·도교육청. 12,200관·사서교사 13.9% 배치·86% 자원봉사 |
 | **KOLIS-NET** | 전국 2,000여 도서관 통합 목록 |
+| **KLMS** | Korea Library Management System (NLK 클라우드 책이음 통합) |
 | **KDC** | 한국십진분류법 (현재 6판) |
 | **KCR4** | 한국목록규칙 4판 |
-| **880 필드** | 대체문자 표제 — 한자/영문 병기 자동 생성 대상 |
-| **049 필드** | 자관 청구기호 — 도서관별 규칙 |
+| **880 필드** | 대체문자 표제 — 한자/영문/로마자 병기 자동 생성 대상 (NLK 「서지데이터 로마자 표기 지침(2021)」 정합) |
+| **049 필드** | 자관 청구기호 — 도서관별 규칙 (자관 prefix EQ/CQ 정합) |
 | **관제(冠題)** | 본표제 앞 수식어. KORMARC 245 지시기호2와 연동 |
-| **ISO 2709** | MARC 교환 형식 표준 (모든 MARC의 뿌리) |
+| **ISO 2709** | MARC 교환 형식 표준 (.mrc 확장자) |
+| **5 상호대차** | 책바다(NLK 5,200원·전국)·책나래(NLD 무료·장애인)·책이음(KOLAS III 통합 회원증)·책두레(KOLAS III 모듈)·책단비(은평구 한정) |
 
 ---
 
@@ -219,6 +223,7 @@
 
 ## 11. 변경 이력
 
+- **2026-04-28 v0.4.36 — §2 도메인 용어 정정 (KORMARC KS X 6006-0:2023.12 + 9 자료유형 + M/A/O 적용 수준 + MODS XML + KLMS + 5 상호대차 + 알파스·KERIS DLS 정밀 정의)**. 야간 자율 28 task / 26 신규 docs / 84 ADR / 자료 폴더 100% + D 드라이브 100% 흡수 완료. ADR 0044 (KORMARC 2023.12 표준 정합 명문화) docs only 적용.
 - 2026-04-25 v0.1 — 최초 작성. Phase 1 (ISBN→KORMARC) 구현 시작
 - 2026-04-25 v0.2 — `cli.py` + `constants.py` + `logging_config.py` + `api/_http.py` 추가. 캐싱·재시도 도입. 슬래시 명령 6종 + 에이전트 3종.
 - 2026-04-25 v0.3 — Phase 2 (Vision: Haiku→Sonnet 2단계) + Phase 3 (KDC AI) + Phase 3+ (Subject AI) 실구현. `_anthropic_client.py` 신규 (prompt caching + diskcache + tenacity). FastAPI 서버 (`server/`) + Streamlit UI (`ui/`) + 키워드 검색 (`api/search.py`) 추가. 사서 가치 모듈 3종(`librarian_helpers/call_number.py`, `kormarc/kolas_validator.py`, `api/kolisnet_compare.py`) 추가. 모바일 cloudflared/ngrok 자동 설치 + 권한 사전 등록. 수익화 인프라 (`server/usage.py` 사용량 카운터 + 결제 안내). 슬래시 명령 6종 신규 (/serve, /ui, /search, /vision-test, /kdc-test, /mobile-status). §12 수익 모델 헌법화.

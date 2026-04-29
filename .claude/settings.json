@@ -156,6 +156,30 @@
           }
         ]
       }
+    ],
+    "PostCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.claude/hooks/postcompact-reinject.py\"",
+            "timeout": 60,
+            "statusMessage": "압축 후 핵심 룰 재주입 중..."
+          }
+        ]
+      }
+    ],
+    "PermissionDenied": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.venv/Scripts/python.exe\" \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.claude/hooks/permission-denied-log.py\" 2>/dev/null || true",
+            "timeout": 5,
+            "async": true
+          }
+        ]
+      }
     ]
   }
 }

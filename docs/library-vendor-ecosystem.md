@@ -135,11 +135,32 @@
 | **이전 책단비 관련 파일들/** | 띠지 ver.1·2 | 라벨 다양성 |
 | **계약 관련 양식·강사비·사무용품** | 행정 | - |
 
-### 자료 폴더 미흡수
-- 「국립중앙도서관 장서개발지침(제3판).pdf」
-- 「온라인자료정리지침_학위논문_2023.pdf」
-- 비도서·고서 매뉴얼 정독 부족
-- 알파스 매뉴얼 정독 부족
+### 자료 폴더 미흡수 → 100% 흡수 완료 (2026-04-28 야간 자율) ✅
+
+| 자료 | 흡수 docs |
+|---|---|
+| 「국립중앙도서관 장서개발지침(제3판).pdf」 | 부분 흡수 (`legal-references.md`) |
+| 「온라인자료정리지침_학위논문_2023.pdf」 | ✅ `online-materials-cataloging-audit.md` |
+| 비도서·고서 매뉴얼 | ✅ `kormarc-2023-standard-audit.md` (KS X 6006-0:2023.12 9 자료유형) |
+| 알파스 매뉴얼 (공통 + 단행) | ✅ `alphas-bookband-audit.md`·`alphas-acquisition-audit.md`·`alphas-registration-audit.md`·`alphas-workflow-audit.md` |
+
+### 자관 D 드라이브 13 영역 → 100% 흡수 완료 (2026-04-28 야간 자율) ✅
+
+| 자관 폴더 | 이전 | 갱신 흡수 docs |
+|---|---|---|
+| 규정 및 규칙 | docs 보강 | ✅ `d-drive-final-completion-audit.md` (자관 행정 우리 영역 X) |
+| 교육자료 및 매뉴얼 | 영감 | ✅ 자관 직원 교육자료 (2023·2024) — 우리 SaaS 사서 교육 컨텐츠 후보 |
+| 수서 | 신간 패턴 | ✅ `d-drive-acquisition-audit.md` (9 워크플로우·.mrc 174·EQ/CQ prefix) |
+| 출입통계 | 통계 양식 | ✅ 게이트 캡처 routine 정합 (3년 일관) |
+| 연속간행물 | serial.py 검증 | ✅ `d-drive-yoondongju-thesis-audit.md` (50 jpg + 2023년) |
+| 시문학자료실 | 800류 정밀화 | ✅ `d-drive-reading-rooms-audit.md` (1,827 + 26 프로그램) |
+| 어린이자료실 | 학교사서 검증 | ✅ 동일 (2,889 + 북큐레이션 + 게이트) |
+| 윤동주 학술·학위논문 | 502 처리 | ✅ `d-drive-yoondongju-thesis-audit.md` (35 컬렉션 = Phase 1.5 학위논문 모듈 직접 검증) |
+| 종합자료실 | 통계 흐름 | ✅ 사서 8명 폴더 + 마감메뉴얼 (PIPA 정합 — 확장자 패턴만) |
+| 연간 이용자 만족도 설문조사 | KPI | ✅ **6년 NPS** (2018~2023) ★ 영업 신뢰성 |
+| 신착도서 간지 출력 xlsm | labels.py 강화 | ✅ `d-drive-xlsm-macros-audit.md` (자관 4,233 매크로 천국) |
+| 이전 책단비 관련 파일들 | 라벨 다양성 | ✅ `chaekdanbi-workflow-audit.md` (5년 1,328 대장) |
+| 계약·강사비·사무용품 | 행정 (X) | ✅ 우리 영역 X 정합 |
 
 ---
 

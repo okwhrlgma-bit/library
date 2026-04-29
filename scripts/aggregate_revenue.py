@@ -21,7 +21,6 @@ import json
 import os
 import sys
 import time
-from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
 from typing import Any

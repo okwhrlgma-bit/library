@@ -1,6 +1,7 @@
 # KORMARC 도메인 규칙
 
 > CLAUDE.md §2~§5 핵심을 "사실 명세" 형식으로. 매 commit 시 위반 즉시 알림.
+> **2026-04-28 갱신**: KORMARC KS X 6006-0:**2023.12** (NLK 2차 개정) 정합 + 9 자료유형 + M/A/O 적용 수준.
 
 ## 절대 규칙
 
@@ -12,14 +13,40 @@
 6. **한자 감지 시 880 페어 자동 생성** — `vernacular/field_880.py`
 7. **알라딘 데이터 사용 시 출처 표시** — "도서 DB 제공 : 알라딘 인터넷서점"
 8. **외부 API 호출에 timeout=10 명시** (CLAUDE.md §4.2 + binary_assertions §13)
+9. **KORMARC 2023.12 표준 (KS X 6006-0:2023.12) 100% 정합** — MARC21 호환·시맨틱 웹·링크드 데이터·외부 리소스 연계
+10. **3 적용 수준 분기** — M(Mandatory) / A(Mandatory if applicable) / O(Optional) — binary_assertions 분기 정확도 ↑
+11. **9 자료유형 정합** — 단행본·연속간행물·비도서·고서·전자책·전자저널·오디오북·멀티미디어·학위논문 (Phase 1.5 완료)
+12. **자관 등록번호 prefix 정책 ③** — config.yaml.kolas_register.registration_prefix 자관별 변형 (EQ 일반 / CQ 아동 등)
+13. **자관 청구기호 형식**: `{별치}{KDC분류}/{이재철 도서기호}` (예: `시문학811.7/ㅇ676ㅁ`)
+14. **로마자 표기 (NLK 「서지데이터 로마자 표기 지침(2021)」)** — 880 자동 생성, RR (Revised Romanization) 기본·MR (McCune-Reischauer) 학술
+15. **MODS XML 양방향 변환 (NLK 온라인자료과)** — 5 자료유형 (전자책·전자저널·오디오북·멀티미디어·학위논문)
 
-## 자료유형별 008 06
+## 자료유형별 008 06 (KORMARC 2023.12 9 자료유형)
 
 - `s` 단행본 단일발행
 - `m` 다권물
 - `i` 사전·연감 등 통합갱신
 - `c` 연속간행물 발간중
 - `d` 연속간행물 폐간
+- `b` 비도서·전자자료 (Phase 1.5)
+- `g` 시청각자료 (Phase 1.5)
+- `j` 녹음자료·오디오북 (Phase 1.5)
+- `e` 지도자료 (Phase 1.5)
+- `r` 3차원 입체 자료 (Phase 1.5)
+
+## 9 자료유형 모듈 정합 (Phase 1.5)
+
+| # | 자료유형 | 008 06 | 우리 모듈 |
+|---|---|---|---|
+| 1 | 단행본 | s/m/i | `kormarc/builder.py` ✅ |
+| 2 | 연속자료 | c/d | `kormarc/serial.py` ✅ |
+| 3 | 비도서 | b | `kormarc/non_book.py` ✅ |
+| 4 | 고서 | (별도) | `kormarc/rare_book.py` ✅ |
+| 5 | 전자책 | b/m | `kormarc/ebook.py` 🟡 |
+| 6 | 전자저널 | c | `kormarc/ejournal.py` 🟡 |
+| 7 | 오디오북 | j/m | `kormarc/audiobook.py` 🟡 |
+| 8 | 멀티미디어 | g/m | `kormarc/multimedia.py` 🟡 |
+| 9 | 학위논문 | (s + 502) | `kormarc/thesis.py` 🟡 |
 
 ## KDC 결정 우선순위
 

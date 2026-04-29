@@ -116,6 +116,50 @@ End Function
 
 ---
 
+## 방법 4. 자관 xlsm 매크로 호환 import (★ 자관 PILOT 전용, 2026-04-28 신규)
+
+**자관 5년+ 자작 xlsm 매크로 4,233개 정합 — 자관 PILOT 동의 후만 활성**.
+
+### 4.1 자관 xlsm 시트 데이터 import
+
+```powershell
+kormarc-auto xlsm fill-from-library 자관_매크로_xlsm.xlsm --library-id eunpyeong_naesum --output 우리_검증.xlsx
+```
+
+**작동**:
+1. xlsm 시트 데이터 read (VBA 매크로 미접근 — 자관 IP 보호)
+2. KORMARC 6 표준 필드 (등록번호·서명·청구기호·저자·출판사·발행년) 자동 매핑
+3. 우리 SaaS 4단 검증 (KORMARC KS X 6006-0:2023.12 + 9 자료유형)
+4. 결과 xlsx export (매크로 X·안전 형식)
+
+### 4.2 자관 매크로 동등 기능 (Python·VBA 미사용)
+
+자관이 5년+ 자작했던 매크로 = 우리 SaaS Python 자체 구현:
+
+| 자관 자작 매크로 | 우리 SaaS Python |
+|---|---|
+| 신착도서 간지 출력.xlsm (VBA 171KB) | `output/insert_paper.py` (신규) |
+| 상호대차 요청도서 쪽지8장 양식.xlsm (VBA 148~200KB, 조기흠) | `interlibrary/request_label_generator.py` (신규) |
+| 책단비띠지 ver.1·ver.2.xlsm (VBA 34~36KB) | `chaekdanbi/auto_label_generator.py` (ADR 0021) |
+
+→ 자관 사서가 매크로 학습 X·우리 SaaS 클릭 1번 = 사서 매주 시간 절감.
+
+### 4.3 자관 IP 보호 정책
+
+- VBA 매크로 보존 X (자관·이씨오 IP)
+- 자관 PILOT 동의서 (라이선스 게이트, ADR 0023) 후만 활성
+- 다른 도서관 = 자관 양식 노출 X (정책 ③ 자관 변형 가능 + 자관 격리)
+
+### 4.4 영업 메시지
+
+> "5년+ Excel 매크로 자작하신 사서님께 — 우리 SaaS는 매크로 학습 X·VBA 작성 X로 동일 기능을 자동화합니다.
+>
+> 자관 4,233개 xlsm 매크로 → 우리 SaaS 클릭 1번 (신착·책단비·책두레·상호대차)."
+
+→ 자세한 매트릭스: `docs/d-drive-xlsm-macros-audit.md`.
+
+---
+
 ## Claude Desktop / Claude Code MCP 연동
 
 Claude Desktop이나 Claude Code에서 Excel 파일을 직접 분석·편집하고 싶다면:

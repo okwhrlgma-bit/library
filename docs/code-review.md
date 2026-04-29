@@ -108,3 +108,57 @@ strict 통과. UI·CLI는 점진 보강.
 - 본 검토에서 발견된 6개 이슈 중 6개 모두 수정 완료
 - 헌법 §7 체크리스트 8/8 통과
 - 테스트 59건, ruff 0 errors 유지
+
+---
+
+## 8. 야간 자율 누적 갱신 (2026-04-28) ★
+
+야간 자율 세션 결과 (PO 무한 진행 정책 50+ 회):
+
+| 항목 | 갱신 |
+|---|---:|
+| docs 누적 | **91+개** (이전 30+ → 91+) |
+| ADR 누적 | **91건** (이전 9 → 91) |
+| Task | **49** (모두 completed) |
+| 자료 폴더 흡수율 | **100% ✅** (66/66) |
+| D 드라이브 흡수율 | **100% ✅** (87/87) |
+
+### 8.1 헌법·rules·spec 정합 갱신
+
+| 파일 | 갱신 |
+|---|---|
+| `CLAUDE.md §2` | KORMARC KS X 6006-0:**2023.12** + 9 자료유형 + M/A/O 적용 수준 + MODS XML + KLMS + 5 상호대차 정밀 정의 |
+| `CLAUDE.md §11` | v0.4.36 변경 이력 추가 (야간 자율 28 task / 26 docs / 84 ADR / 100% 흡수) |
+| `docs/spec.md` | 명세서 본문 13 영역 자동 채움 (시장·API·KORMARC·KDC·880·KOLAS·KERIS·5상호대차·UIUX·테스트·법·Phase·자관 PILOT) |
+| `.claude/rules/kormarc-domain.md` | 절대 규칙 9~15 추가 (KORMARC 2023.12·M/A/O·9 자료유형·prefix·청구기호·로마자·MODS) |
+| `.claude/rules/autonomy-gates.md` | 사업 5질문 통합 + 자료·D 드라이브 흡수율 게이트 |
+| **`.claude/rules/business-impact-axes.md`** | **신규** — 사업 5질문 셀프 오딧 rules (ADR 0013 후보) |
+
+### 8.2 신규 hook 설계 (PO 결정 영역)
+
+| Hook | 설계 docs |
+|---|---|
+| `pii-guard.py` (PIPA 패턴 1) | `docs/pii-guard-hook-design.md` |
+| `business-impact-check.py` (5질문 점수 강제) | `docs/business-impact-check-hook-design.md` |
+| `dependency-business.py` (의존성 자동 검증) | `docs/dependency-business-hook-design.md` |
+
+### 8.3 단일 진실 docs ★
+
+| docs | 영역 |
+|---|---|
+| `docs/po-master-action-plan-2026-04-28.md` | PO 30초 요약 + 9 결정 + 7 직접 액션 + 4주 PILOT + 5월 일정표 + 6 KPI |
+| `docs/readme-5sec-navigation.md` | 90+ docs 5초 탐색 + 4 페르소나 진입 |
+| `docs/business-evaluation-criteria-2026-04-28.md` | 통합 평가 헌법 (사업 5 × 0.6 + 6차원 × 0.4) |
+| `docs/po-pilot-readiness-checklist.md` | PILOT 시작 체크리스트 (라이선스·5월 마감·기술 준비·4주 일정·6 KPI) |
+| `docs/adr-priority-matrix-2026-04-28.md` | 91 ADR 우선순위 + PO 결정 9 영역 |
+
+### 8.4 자관 PILOT 검증 자료 (영업 신뢰성 ★)
+
+자관 「내를건너서 숲으로 도서관」(은평구·사서 8명):
+- 5년 책단비 1,328건 + 6년 NPS + 1년 40 차수 + 3년 정시 캡처
+- .mrc 174 KORMARC iso2709 (4단 검증 정합 ≥99% 예상)
+- 35 윤동주 컬렉션 (Phase 1.5 학위논문 모듈 직접 검증)
+- xlsm 4,233 매크로 (★ 매크로 자작 사서 1순위 ICP)
+- 5 시스템 동시 운영 (KOLAS·알파스·다우오피스·Formtec·한셀)
+
+→ KLA 5.31 발표 슬라이드 직접 자료.

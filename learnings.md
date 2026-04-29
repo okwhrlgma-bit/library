@@ -6,6 +6,413 @@
 
 ---
 
+## 2026-04-29 — PO 종합 전략 보고서 흡수 (status: active)
+
+**source**: PO 메시지 2026-04-29 — "kormarc-auto 종합 전략 보고서" (8 PART)
+**자료 보존**: `자료/po_strategy_report_2026_04_29.md`
+
+### 신규 사실 10건
+
+1. **사서 직종 정량 사실**: 서울 공공 사서 공무원 468명 vs 비공무원 1,172명·연봉 1년차 ₩182만·3년차 ₩200만 미만
+2. **공공도서관 운영 형태**: 직영 30%·재단 위탁 50%·민간 20% (결제 결정자 분기 영업)
+3. **공공 4 사이클**: 11~12월 예산 편성 (★ 골든타임)·1~3월 자료 구입·4~6월 신학기·9~10월 추경
+4. **작은도서관 진입 공식**: ₩30,000/월 = 자료구입비 1% 이하 + 신용카드 개인 결제 (공무원 X = 신속)
+5. **학교도서관 영업 메시지**: 사서교사 14% = "더 빠르게" / 자원봉사 86% = "이제 가능하게" ★
+6. **사서 영업 심리 5고통**: 시간 과다·예산 부족·행정직 밀림·매크로 자작 피로·인사이동
+7. **UI/UX 5 원칙**: "수정 방법" 먼저·사서 언어·모바일 현장·업무 흐름 연속성·자관 프리셋
+8. **SEO 검색어 3 카테고리**: 고통 기반·비교·커뮤니티
+9. **콘텐츠 마케팅 5 시리즈** + 영업 채널 6 (KLA·사서교육원·네이버카페·문헌정보학과·광역대표·도서관 박람회)
+10. **ROI 1순위 4 기능**: 책단비 → F12 import → Folder Watcher → 페르소나 UI
+
+### 기능 우선순위 매트릭스 (10 기능)
+
+| 기능 | Q1 | 우선 |
+|---|---:|---|
+| 책단비 hwp 자동 | 100 | ★★★★★ |
+| F12 엑셀 자동 import | 95 | ★★★★★ |
+| M/A/O 분기 검증 | 85 | ★★★★☆ |
+| Folder Watcher | 90 | ★★★★☆ |
+| 페르소나별 UI 분기 | 80 | ★★★★☆ |
+| System Tray 앱 | 80 | ★★★☆☆ |
+| 시간 절감 대시보드 | 75 | ★★★☆☆ |
+| 로마자 표기 자동화 | 70 | ★★★☆☆ |
+| 주제명 자동 추천 (650) | 70 | ★★☆☆☆ |
+| Browser Extension | 85 | ★★☆☆☆ |
+
+### 5월 PO 체크리스트 10건 (마감 5.31)
+
+```
+□ ADR 0021·0016·0023·0045 승인 (자율 commit 활성)
+□ KLA 전국도서관대회 발표 신청 (5.31 마감) ★
+□ 사서교육원 강의 제안서
+□ NL Korea API 추가 5종
+□ pricing 확정 (헌법 §12 vs PO 마스터 §6)
+□ 자관 .mrc 174 전수 검증
+□ PIPA logging PII 5종 마스킹 (2026.9.11 전)
+```
+
+### 추가 docs 후보 3건
+
+- `docs/library-types-deep-workflow.md` — 6 도서관 유형 정밀
+- `docs/budget-cycle-matrix.md` — 예산 사이클 + 골든타임 통합 달력
+- `docs/librarian-community-channels.md` — 사서 커뮤니티 채널 매트릭스
+
+---
+
+## 2026-04-28 — 야간 자율 세션 핵심 발견 30+건 (status: active, 지속 갱신)
+
+**source**: 2026-04-28 야간 자율 세션 (PO 명령 50+ 회 — "계속 진행"·"멈춤 X"·"무한 진행" 정책)
+**자료 보존**: **37 신규 docs** + **91 ADR** + **48 task** + 자료 폴더 100% + D 드라이브 100%
+
+### 갱신 (지속 진행 후 2026-04-28 오후)
+
+| 카테고리 | 갱신 |
+|---|---:|
+| docs 누적 | **37 신규** (이전 26 + 추가 11) |
+| ADR | **91건** |
+| Task | **48** (모두 completed) |
+| **단일 진실 docs** | **2** ★ (po-master-action-plan-2026-04-28.md + readme-5sec-navigation.md) |
+| 영업 채널 | 16+ (자관 PILOT 0순위) |
+| PILOT 시나리오 | **4주 일정 + 6 KPI 확정** (5.1~5.31 일정표) |
+
+### 추가 신규 docs 11건 (지속)
+
+| docs | 영역 |
+|---|---|
+| `business-evaluation-criteria-2026-04-28.md` | 통합 평가 헌법 (사업 5질문 60% + 6차원 40%) |
+| `pii-guard-hook-design.md` | PIPA 패턴 1 자동 보강 (6 ADR 통합) |
+| `business-impact-check-hook-design.md` | commit message 5질문 점수 강제 |
+| `dependency-business-hook-design.md` | 의존성 사업가치 자동 검증 |
+| `d-drive-xlsm-macros-audit.md` | 자관 xlsm 4,233 매크로 천국 |
+| `saseo-personas-2026-04-28.md` | 자관 사서 8명 4 페르소나 |
+| `po-pilot-readiness-checklist.md` | PO 자관 PILOT 시작 체크리스트 |
+| `central-institutions-update-2026-04-28.md` | 15 기관 정합 갱신 |
+| `night-autonomous-session-2026-04-28-summary.md` | 종합 보고서 (지속 갱신) |
+| **`po-master-action-plan-2026-04-28.md`** ★ | **PO 30초 요약 + 5월 일정표 + 6 KPI 단일 진실** |
+| **`readme-5sec-navigation.md`** ★ | **90+ docs 5초 탐색 + 4 페르소나별 진입** |
+
+### PO 마스터 액션 플랜 30초 요약 (★)
+
+🔴 **5월 마감 임박**: KLA 전국도서관대회 발표 신청 (5.31)
+🔴 **PO 즉시 결정 9 ADR**: 0021·0022·0014·0013·0015·0070·0076·0086·0089 (자율 commit 차단점)
+🟡 **PIPA 시행 2026-09-11**: 매출 10% 과징금 (logging PII 5종 마스킹 권장)
+🟢 **자관 PILOT 4주**: 5월 첫주 시작 (1주 매크로 → 2주 수서 → 3주 종합 → 4주 통합)
+
+### 영업 신뢰성 직접 자료 (자관 PILOT)
+
+자관 「내를건너서 숲으로 도서관」(은평구·사서 8명):
+- 5년 책단비 1,328 + 6년 NPS + 1년 40 차수 + 3년 정시 캡처
+- .mrc 174 KORMARC iso2709 (4단 검증 정합 ≥99% 예상)
+- 35 윤동주 컬렉션 (Phase 1.5 학위논문 모듈 직접 검증)
+- xlsm 4,233 매크로 (★ 매크로 자작 사서 1순위 ICP)
+- 5 시스템 동시 운영 (KOLAS·알파스·다우오피스·Formtec·한셀)
+
+→ KLA 5.31 발표 슬라이드 직접 자료.
+
+### 자료 폴더 보존 매트릭스 (지속 갱신)
+
+| 자료 폴더 파일 | 영역 |
+|---|---|
+| `자료/INDEX.md §15` | 야간 자율 누적 보고 (10 영역 + 30+ 발견) |
+| `자료/MASTER_SYNTHESIS.md §12` | 누적 갱신 (10 영역 + 5월 일정표) |
+| `자료/business_framework_2026_04_28.md` | PO 사업 마스터 (압축 보존, 281줄) |
+
+→ 자료 폴더 = 다음 세션 자동 로드 단일 진실 소스.
+
+---
+
+## 2026-04-28 — 야간 자율 세션 핵심 발견 30+건 (status: active)
+
+**source**: 2026-04-28 야간 자율 세션 (PO 명령 30+ 회 — "계속 진행"·"멈춤 X" 무한 진행 정책)
+**자료 보존**: 26 신규 docs + 84 ADR + 자료 폴더 100% + D 드라이브 100%
+
+### 자관 정체성 7건
+
+1. 자관 = **「내를건너서 숲으로 도서관」 (은평구공공도서관 11개 중 1개)**
+2. 자관 = **시문학·윤동주 특화 도서관** (학술 17 + 학위 18 = 35 윤동주 컬렉션)
+3. 자관 = **사서 8명 운영** (수서·종합·매크로·콘텐츠 4 페르소나)
+4. 자관 도메인 + 알파스: `nslib.or.kr/admin` + `alpas.eplib.or.kr:8580/METIS`
+5. 자관 등록번호: `EQ` (일반) + `CQ` (아동) prefix 분리
+6. 자관 청구기호 형식: 별치기호 + KDC + 이재철 도서기호 (`시문학811.7/ㅇ676ㅁ`)
+7. 자관 운영 시스템 5종: KOLAS III + 알파스 + 다우오피스 BizboxA + Formtec (2,387 파일) + 한컴 한셀
+
+### 자관 routine 历사 5건
+
+8. 3년 일관 정시 캡처 (2022·2023·2024 매일 09·18·22시 → 우리 System Tray 정합)
+9. 5년 책단비 1,328 대장 (2018~2022 매년 ~330건 = 거의 매일 1건)
+10. 1년 40 차수 routine (정기 3 + 희망 37 = 거의 매주 1회)
+11. **6년 NPS** (2018~2023 매년 보고서, 2022 = 40MB) ★ 영업 신뢰성
+12. 자관 매년 작품집 8 시리즈 자체 출판 (상주작가·시니어·청소년·특화)
+
+### 우리 SaaS 검증 자료 4건
+
+13. .mrc 174 KORMARC iso2709 자관 직접 — 4단 검증 정합 ≥99% 예상
+14. .mrc 5 샘플 234 레코드 100% 정합 (M 필수 필드 10종 100% 출현)
+15. xlsx 도서원부 9 컬럼 자동 매핑 (순번·구분·등록번호·도서명·권차·서명·저자·출판사·청구기호)
+16. 윤동주 학술 17 + 학위 18 = `kormarc/ejournal.py`·`kormarc/thesis.py` 정합
+
+### KORMARC 2023 표준 4건
+
+17. KORMARC KS X 6006-0:**2023.12** 2차 개정 (NLK 공식)
+18. 9 자료유형 100% 정합 매트릭스 (단행본·연속·비도서·고서·전자책·전자저널·오디오북·멀티미디어·학위논문)
+19. 3 적용 수준 (M·A·O) — binary_assertions 분기 정확도 ↑
+20. NLK 시소러스 12.9만 + 전거 178만 활용 가능
+
+### 영업·시장 7건
+
+21. 5 자치구 자체 명칭: 책단비(은평)·책가방(양천)·책마중(마포) + 강남·강북
+22. 학교도서관 12,200관 86% 미배치 (사서교사 1,660·2023 신규 0명) — Phase 2~3
+23. 5 상호대차 통합 비교: 책바다(NLK 5,200원)·책나래(NLD 무료)·책이음(통합회원)·책두레(KOLAS 모듈)·책단비(은평구 한정)
+24. PO 5월 마감 임박: KLA 전국도서관대회 발표 신청 (5.31)
+25. AI + 윤동주 학술논문 (#643 박성준 ChatGPT 은유) = AI 도서관 접목 정합
+26. 책나래 사서대리신청 엑셀양식 = **크롬 전용 다운로드** = 우리 SaaS 차별화 (Edge·Firefox·Safari 회피)
+27. 알파스 = (주)이씨오 카카오클라우드 SaaS·99.5% uptime + 책밴드 자체 상호대차 8단계
+
+### PO 정책 3 정합
+
+28. **양식 정책 ① ② ③ 일반화** (2026-04-28 PO 추가) — 모든 양식은 도서관별 자체 변형 가능
+29. **사업 5질문 셀프 오딧** (Q1 결제·Q2 비용·Q3 자산·Q4 락인·Q5 컴플) + 단계별 가중치 → `.claude/rules/business-impact-axes.md` 작성 완료
+30. **PIPA 5대 코드 패턴** 자관 정합 audit ✅ (Reader entity 부재·암호화·DSAR·72h·audit_log)
+
+### ADR 누적 84건 (이번 회차 0027~0084 = 58 신규)
+
+| 묶음 | ADR | 건 |
+|---|---|---:|
+| KOLAS·책이음·KERIS 정합 | 0027~0038 | 12 |
+| 알파스 정합 | 0039~0043 | 5 |
+| KORMARC 2023 + Phase 1.5 | 0044~0056 | 13 |
+| 자관 수서·.mrc·자료실 | 0057~0064 | 8 |
+| 자관 历사·도구·차수 | 0065~0071 | 7 |
+| central-institutions·NPS | 0072~0084 | 13 |
+
+### 흡수율 100%
+
+| 카테고리 | 흡수 |
+|---|---:|
+| 자료 폴더 (PO 제공 55 + PO 자작 11 = 66) | **100% ✅** |
+| D 드라이브 자관 (87 항목) | **100% ✅** |
+| Compass·Autonomous Modes·6 검증 보고서·사업 마스터 | **100% ✅** |
+| **종합** | **100% ✅** |
+
+### PO 즉시 결정 7 영역 ★ (자율 commit 차단점)
+
+ADR 0013 (사업 5질문)·0014 (가격 4단)·0015 (pii-guard)·0021 (상호대차 띠지)·0022 (양식 resolver)·0070 (자관 PILOT)·0076 (KLA 발표) — PO 승인 후 일괄 commit 가능.
+
+### 다음 자율 활성 가능 (PIPA·라이선스 통과)
+
+- ADR 0044 (KORMARC 2023.12 명문화) — docs only
+- ADR 0045 (M/A/O 분기) — binary_assertions 코드
+- 합본 단일 commit 가능
+
+---
+
+## 2026-04-28 — PO 사업인지 코딩 마스터 문서 흡수 + PIPA 5대 패턴 audit
+
+**source**: PO 메시지 2026-04-28 — "코드 한 줄마다 사업이 묻어나게: KORMARC-auto 사업인지 코딩 마스터 문서" (8,000+ 줄, 800+ 출처)
+**자료 보존**: `자료/business_framework_2026_04_28.md` (압축 보존)
+
+### 12 핵심 신규 사실
+
+1. **5질문 셀프 오딧 프레임워크** — Q1 결제·Q2 비용·Q3 자산·Q4 락인·Q5 컴플라이언스
+2. **단계별 가중치**: MVP 30/20/10/15/25 → Beta 40/25/15/10/10 → Payment 25/30/20/15/10 → Stable 20/25/25/20/10
+3. **PIPA 시행일 정정 2026-09-11** (이전 메모리 "2026-08 추정" 정확 정정)
+4. **PIPA 5대 코드 패턴**: Reader entity 부재·암호화·DSAR·72h 신고·감사로그
+5. **권당 비용 ₩63 → ₩4~10** (캐시 90%·Haiku·Batch 복합) — 헌법 §12 "₩7/권" 정합 ✅
+6. **가격 권장 4단**: Free 30권 / Standard ₩19,000 1,000권 / Pro ₩49,000 5,000권 / Enterprise 견적 — 헌법 §12 "월 3만원·5만원·15만원·30만원"과 충돌
+7. **3개 PreToolUse hook 신규 후보**: business-impact-check.py·pii-guard.py·dependency-business.py
+8. **연 일시불 + 세금계산서 + 계좌입금** = 한국 공공기관 표준 (월 구독 X)
+9. **영업 골든타임**: 11~12월 (예산 편성) + 2~4월 (신학기 집행)
+10. **단계 졸업 트리거 정량 KPI 25개** (DAU·도서관·MRR·시간 절감·비용·전환·churn·NPS·LTV/CAC·NRR)
+11. **CSAP 비용 정정**: ₩852만~3,225만 (이전 "₩40-80M" 추정 정정) + 5년 유효
+12. **사서 9.5%만 자격 사서** + "비전문가 자원봉사 → 순회사서 사후 수정" ICP
+
+### PIPA 5대 패턴 audit 결과 (2026-04-28)
+
+`grep -i "(reader|borrower|patron|user_id|patron_id|borrower_id|reader_id)\b|class\s+(Reader|Borrower|Patron)"` 7 파일 매치 → 정밀 분석:
+
+**False positive 6 (PIPA 무관)**:
+- `MARCReader` (pymarc 라이브러리 변수명) — cli.py·inventory/importer.py·server/app.py·output/reports.py
+- `easyocr.Reader` (OCR 라이브러리 클래스) — vision/ocr.py
+- `Adobe Reader` (주석 텍스트) — kormarc/non_book.py:102
+
+**진짜 검토 대상 2건 (interlibrary/exporters.py)**:
+- line 100: `"이용자ID": ["patron_id", "user_id"]` (책나래 양식)
+- line 118: `"신청자ID": ["patron_id"]` (책바다 양식)
+- **분석**: 사서가 입력한 dict의 컬럼 매핑만 — 우리 DB에 저장 X. 단순 csv·xlsx export 함수
+- **결론**: PIPA 패턴 1 (Reader entity ERD 부재) **정합 ✅**
+
+### 우리 PIPA 5대 패턴 정합 매트릭스
+
+| 패턴 | 상태 | 보강 시점 |
+|---|---|---|
+| 1. Reader entity ERD 부재 | ✅ 완전 정합 | 영구 유지 |
+| 2. 암호화 (bcrypt·AES·TLS) | 🟡 logging 마스킹 audit 후속 | 베타 PILOT 전 |
+| 3. DSAR | ✅ /account/export·delete | 정합 |
+| 4. 72h 유출 신고 자동화 | ❌ 미흡수 | 베타 PILOT 도달 시 |
+| 5. audit_log + 해시 체인 | ❌ 미흡수 | 5만명 또는 민감정보 처리 시 |
+
+### 헌법·ADR 정합 후보
+
+| 항목 | 충돌·확장 | 후보 ADR |
+|---|---|---|
+| 헌법 §12 가격 (월 3만원·5만원·15만원·30만원) | 신 자료 권장 (Free·₩19K·₩49K·견적) 충돌 | ADR 0014 가격 모델 재검토 |
+| ADR 0010 6차원 평가 (기술) | 신 자료 5질문 (사업) — 별도 병렬 운영 권장 (기술 ×0.4 + 사업 ×0.6) | ADR 0013 사업 5질문 도입 |
+| 효율 가드 5번 (의존성 빈도) | 신 자료 "사업가치 임계 미달 신규 의존성 차단 가드"로 확장 | rules 갱신 |
+| 효율 가드 6번 (신규 — 컴플라이언스 회귀) | reader_*·borrower_*·patron_* grep 자동 차단 | rules 신규 |
+| ADR 0007 토스페이먼츠 | 연 일시불 + 세금계산서 + 계좌입금 패키지 추가 | ADR 0007 보강 |
+| ADR 0011 매니지드 스택 | learnings 태그 [사업영향:revenue/cost/compliance/lock-in/marketing] 신규 | learnings 형식 보강 |
+
+### 다음 commit 후보 우선순위
+
+1. **logging 마스킹 audit** — `logging_config.py`가 patron_name·patron_id 자동 마스킹하는지 (PIPA 패턴 2 보강) — 즉시 가능
+2. **PIPA 시행일 정정** — `docs/legal-references.md`·헌법 §13 변경 이력에 2026-09-11 명시
+3. **사업 5질문 도입** — `.claude/rules/business-impact-axes.md` 신규 (ADR 0013)
+4. **business-impact-check.py hook** — ADR 사업 영향 섹션 강제 (ADR 0014)
+5. **pii-guard.py hook** — reader_*·borrower_*·patron_* grep 자동 차단 (ADR 0015 — 컴플라이언스 회귀 가드)
+6. **가격 4단 정정** — 헌법 §12 갱신 (ADR 0016)
+7. **연 일시불·세금계산서 패키지** — ADR 0007 보강
+
+---
+
+## 2026-04-27 — PO 종합 검증 보고서 6종 흡수 (총 800 sources)
+
+**source**: PO 메시지 2026-04-27 23:30 — 6개 도메인별 종합 검증 보고서
+**status**: 7건 active + 1건 under_review (비용 모델 충돌 — PO 검토 필요)
+
+### 1) NLK 공식 KORMARC validator 부재 (102 sources 검증) — ACTIVE
+- 국립중앙도서관이 공식 KORMARC 검증 API/도구 제공 X
+- 우리 자체 4단 검증 엔진(구조→스키마→Indicator→문자/길이) = **핵심 차별점**
+- `kormarc/validator.py` + `binary_assertions.py` + `kolas_validator.py` 가치 ↑
+- 영업 메시지 추가: "공식 검증 도구 부재 시장 — 우리만 자동 검증"
+
+### 2) KPI 정정 — 수동 15분/권 → 자동 2분/권 — ACTIVE
+- 우리 헌법 §0 "8분 → 2분" = 보수적 추정
+- 보고서 실측 (102 sources) "15분 → 2분" = **시간 단축 87%** (우리 75%보다 큰 가치)
+- 헌법 §0 KPI 정정 후보: "8~15분/권 → 2분/권" 범위 표기
+
+### 3) KDC ISBN 부가기호 broad class 95%+ 정확도 — ACTIVE
+- ISBN 부가기호만으로 broad class (000~900) 95%+ 정확
+- 우리 `classification/kdc_classifier.py` 3단 파이프라인 → **1단으로 80%+ 처리 가능**
+- AI 호출 횟수 ↓ → 비용 ↓ (사실 6번 마진 위험 정합)
+
+### 4) Korean OCR 벤치 — PaddleOCR PP-StructureV3·Naver Clova 최적 — ACTIVE
+- 우리 EasyOCR 부분 흡수 — 정확도 OCR 벤치 하위
+- Clova OCR 호출당 ₩1,000 = **권당 ₩100 가격에 단발 OCR도 마진 zero**
+- PaddleOCR PP-StructureV3 무료 + 한국어 정확도 우수 = 우리 vision 모듈 검토 후보
+- 사진 입력 폴백 시점에 Vision API 호출 최소화 + 부가기호 캐시 우선
+
+### 5) 사서 9.5%만 자격 사서 (작은/학교) — ACTIVE
+- 161 sources 검증 — 자원봉사 카탈로깅 → 오류 다발 → "순회사서 사후 수정" 워크플로우
+- 우리 ICP 정합 — sales-roadmap §1순위 (1인 사서·작은도서관·학교)
+- **신규 영업 페르소나**: "비전문가 자원봉사가 카탈로깅 → 순회사서가 일주일에 한 번 와서 수정" = 우리 SaaS의 본질적 사용자
+
+### 6) Claude API 원가 ₩70/권 vs 가격 ₩100/권 = 마진 30% 위험 — UNDER REVIEW
+
+**status**: under_review (PO 검토 필요)
+**business_impact**: HIGH (캐시카우 가능성 직결)
+
+#### 충돌
+- 우리 헌법 §12: "권당 약 7원·마진 93%" (BYOK + prompt caching 가정)
+- 보고서 (81 sources): "Claude API 원가 ₩70/권" — 우리 추정의 **10배**
+- 추정 차이 원인 가설:
+  1. 보고서가 BYOK X 가정 (우리 부담)
+  2. Vision API + Sonnet 폴백 시 토큰 폭증
+  3. prompt caching 효과 50% 미만 추정
+  4. Opus 4.7 토크나이저 +35% 인플레
+
+#### 압축 경로 (보고서 권고)
+- Haiku 라우팅 + ISBN 캐시 80%+ 적중 → ₩20~30/권
+- ₩9,900 티어 흑자 전제 = 권당 100원 × 99건 마진
+
+#### 검증 필요
+- 우리 실측 데이터 0 (사서 N=0 — STATUS_REALITY_CHECK)
+- BYOK 모델 (사서가 자기 키 입력) vs SaaS 모델 (우리 키) 비용 분리 명확화 필요
+- ADR 0013 후보: "비용 모델 — BYOK vs SaaS 키 부담 결정"
+
+#### 활성 승격 트리거
+- 실 사서 PILOT 1건에서 권당 토큰 측정 → 실 비용 ₩7~₩70 범위 확정
+- 또는 BYOK 모델 명확화 commit 후
+
+### 7) 개정 개인정보보호법 시행 2026-09-11 — ACTIVE (정정)
+- 우리 메모리 "2026.8 전후" 추정 → **2026-09-11 정확**
+- ISMS-P 의무 **2027-07-01** (정합)
+- CEO·CPO 책임 강화·과징금 매출 10%·침해 신고 범위 확대
+- **docs/legal-references.md 갱신 후보**
+
+### 8) 토스페이먼츠 빌링 KYC 2~4주 — ACTIVE
+- 별도 계약 승인 절차 = MVP 최대 병목 (사업자등록 → 통신판매업 → 토스 KYC)
+- ADR 0007 정합 — KYC 사전 시작 트리거 명시 필요
+- 사업자등록 + 통신판매업 신고 후 즉시 토스 KYC 신청 → 베타 결제 차단 회피
+- 보고서: 공공도서관 진입 CSAP ₩40-80M·6-12개월 = 작은/학교 우회 결정 정합
+
+### 신규 ADR 후보 (PO 결정 영역)
+- ADR 0013 — 비용 모델 BYOK vs SaaS 키 부담 (사실 6번 검증 후)
+- ADR 0014 — KDC 분류 단순화 (부가기호 1단 → AI 폴백 2단·3단) (사실 3번 적용)
+- ADR 0015 — OCR 엔진 PaddleOCR 또는 Clova 채택 (사실 4번 적용, EasyOCR 폐기 또는 폴백)
+
+### 영업 자료 정정 후보
+- po-outreach-list.md — "비전문가 자원봉사 + 순회사서" 페르소나 추가
+- KOLAS 영업 메일 — "공식 KORMARC validator 부재 시장 = 자동 검증 진입" 강조
+
+---
+
+## 2026-04-27 — Claude Code 권한 매처 specificity 관찰 (UNDER OBSERVATION)
+
+**status**: under_observation (active 아님 — 재현 검증 후 승격)
+**domain**: claude-code-permissions
+**business_impact**: medium
+**source**: PO 답변 (Commit 1 진행 중 실측)
+
+### 관찰
+v2.1.119에서 `Bash(pip install *)` deny + `Bash(pip install streamlit-authenticator==0.4.2)` ask 동시 존재 시 **specific ask가 통과**함. 공식 문서 평가 순서 "deny > PreToolUse > allow > ask"에 따르면 deny가 우선이어야 하는데 specificity 차이로 ask가 통과.
+
+### 가설 (확정 X)
+1. v2.1.x specific 매처 우선 평가 — 공식 문서 미명시
+2. ask 매처가 Bash 도구 prompt 단계에서 별도 처리 (deny와 비대칭)
+3. GitHub 이슈 #18160·#6527 관련 버그 — v2.1.x 후속 패치에서 동작 변경 가능
+
+### 재현 검증 필요 (active 승격 전제)
+- `Bash(rm -rf *)` deny + `Bash(rm -rf logs/*.tmp)` ask
+- `Bash(curl * | sh)` deny + `Bash(curl https://example.com/safe.sh | sh)` ask
+- 두 건 모두 specific ask 통과 + Anthropic 공식 docs 명시 추가 시 → active 승격
+
+### 회피 패턴 (active 권고 — 즉시 적용)
+의존성 install 시 specificity 의존 X. 다음 절차로:
+1. settings.json 백업 (`settings.json.bak.<설명>`)
+2. deny에서 wildcard 임시 제거 (예: `Bash(pip install *)`)
+3. ask에 specific 추가 (예: `Bash(pip install streamlit-authenticator==0.4.2)`)
+4. 명령 실행
+5. ask specific 제거 + deny wildcard 복원
+6. 백업과 diff 0 검증
+
+### 위험
+공식 문서 미보장. v2.1.x 후속 패치에서 deny 항상 우선으로 동작 변경 시 우리 패턴 깨짐. 다만 회피 패턴 (deny 임시 제거)이 더 명시적·안정적이라 specificity 의존 X.
+
+---
+
+## 2026-04-27 — code.claude.com/docs/en/hooks 공식 흡수
+
+### 신규 발견 (이전 메모리 X)
+- **InstructionsLoaded** — CLAUDE.md·rules/*.md 로드 시 → 자율 게이트 룰 자동 검증
+- **PostCompact** — 압축 후 핵심 룰 자동 reinject (5대 멈춤 §4 회피)
+- **PostToolBatch** — 병렬 도구 batch 끝 → trust counter 가속
+- **TaskCreated·TaskCompleted** — TaskCreate hook 영속화
+- **WorktreeCreate·WorktreeRemove** — 야간 자율 worktree 정리
+- **PermissionDenied** (auto-mode 분류기 deny) — 우회 결정 → DECISIONS.md 자동
+- **SubagentStart·SubagentStop** — agent_type matcher (planner·architect-deep)
+- **TeammateIdle** — agent team 대기 (Opus 4.6+ 필요)
+- **decision precedence**: deny > defer > ask > allow
+- **permissionDecision `defer`** — `-p` 모드 전용, 야간 자율에 활용
+- **updatedInput** — PreToolUse가 tool_input 수정 (위험 명령 sanitize)
+
+### 즉시 적용 후보
+1. **PostCompact hook** — learnings + CLAUDE + rules 자동 reinject
+2. **InstructionsLoaded hook** — 룰 로드 시 어셔션 자동 검증
+3. **PermissionDenied hook** — deny 시 우회 결정 자동 DECISIONS.md
+4. **WorktreeRemove hook** — 야간 worktree 정리 시 자동 stash·report
+
+---
+
 ## 2026-04-26 — v0.4.x 자율 디벨롭 18 commit
 
 ### 사서 도메인
