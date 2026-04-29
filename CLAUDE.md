@@ -185,41 +185,9 @@
 
 ---
 
-## 9. 슬래시 명령 + 서브에이전트
+## 9. 슬래시 명령 + 서브에이전트 + 모듈 인덱스
 
-`.claude/commands/`:
-- `/test` — pytest + ruff + mypy 일괄
-- `/lint-fix` — ruff 자동 수정
-- `/add-isbn <ISBN>` — 단일 변환
-- `/batch-isbns <file>` — 일괄 변환
-- `/quality-check` — 품질 5축 종합
-- `/daily` — 매일 시작 루틴
-
-`.claude/agents/`:
-- `researcher` — 코드베이스 탐색 (별도 컨텍스트)
-- `librarian-reviewer` — KORMARC 표준 + 사서 실무 관점 검토
-- `kormarc-expert` — 필드 매핑·880·KORMARC vs MARC21 차이 자문
-
-자동 호출 규칙:
-- 새 KORMARC 필드 처리 추가 시 → `kormarc-expert` 자문
-- 빌더 결과를 PO에게 보여주기 전 → `librarian-reviewer` 검토
-- 코드 30곳 이상 grep 필요 → `researcher` 호출
-
----
-
-## 10. 핵심 모듈 인덱스
-
-| 모듈 | 책임 |
-|---|---|
-| `cli.py` | argparse 진입점 (isbn/batch/photo/validate/info) |
-| `constants.py` | URL·타임아웃·신뢰도·기본값 단일 소스 |
-| `logging_config.py` | 시크릿 마스킹 로거 |
-| `api/_http.py` | 공유 requests Session + 재시도 + 30일 디스크 캐시 |
-| `api/aggregator.py` | 다중 소스 폴백 + 신뢰도 가중 통합 |
-| `kormarc/builder.py` | dict → pymarc.Record |
-| `kormarc/validator.py` | ISBN-13 체크섬 + 008 길이 + 필수 필드 |
-| `vernacular/field_880.py` | 한자 감지 → 880 페어 자동 |
-| `output/kolas_writer.py` | ISBN.mrc (KOLAS 자동 반입 형식) |
+상세 → `docs/index.md` (`.claude/commands/`·`.claude/agents/` 자동 호출 룰·핵심 모듈 9종 책임 매트릭스).
 
 ---
 
