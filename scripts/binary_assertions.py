@@ -422,6 +422,30 @@ def assert_librarian_5min_cheatsheet() -> bool:
     return "kormarc-auto isbn" in text and "99.82" in text
 
 
+def assert_claude_md_slim() -> bool:
+    """CLAUDE.md 250줄 이하 유지 (Anthropic 200 권장·여유 50줄·ADR-0013)."""
+    p = ROOT / "CLAUDE.md"
+    if not p.exists():
+        return False
+    line_count = sum(1 for _ in p.open(encoding="utf-8"))
+    return line_count <= 250
+
+
+def assert_cli_pilot_funnel_commands() -> bool:
+    """CLI 3 명령 (prefix-discover·pilot-collect·sales-funnel) 통합."""
+    p = ROOT / "src" / "kormarc_auto" / "cli.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return all(cmd in text for cmd in ('"prefix-discover"', '"pilot-collect"', '"sales-funnel"'))
+
+
+def assert_pilot_week_manuals() -> bool:
+    """PILOT 4주차 액션 매뉴얼 시리즈 (week1·2·3·4 모두)."""
+    base = ROOT / "docs" / "sales"
+    return all((base / f"pilot-week{n}-action-manual.md").exists() for n in range(1, 5))
+
+
 # ── 실행 ───────────────────────────────────────────────────────────
 
 
@@ -460,6 +484,9 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("영업 funnel tracker (페르소나별 결제 전환률)", assert_sales_funnel_module),
     ("aggregate_interviews.by_persona (KLA 데이터)", assert_aggregate_by_persona_function),
     ("사서 5분 cheat sheet (PILOT 친화)", assert_librarian_5min_cheatsheet),
+    ("CLAUDE.md 250줄 이하 (Anthropic 200 권장·ADR-0013)", assert_claude_md_slim),
+    ("CLI 3 명령 (prefix·pilot·funnel) 통합", assert_cli_pilot_funnel_commands),
+    ("PILOT 4주차 매뉴얼 시리즈 (week1~4)", assert_pilot_week_manuals),
 ]
 
 
