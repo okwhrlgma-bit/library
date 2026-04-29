@@ -328,6 +328,29 @@ def assert_streamlit_tabs_count() -> bool:
     return sum(1 for t in tabs if t in text) >= 14
 
 
+def assert_application_level_module() -> bool:
+    """KORMARC 2023.12 M/A/O 적용 수준 모듈 + validate_record_full 존재."""
+    rc, _, _ = _run([
+        str(PYTHON), "-c",
+        "import sys; sys.path.insert(0, 'src'); "
+        "from kormarc_auto.kormarc.application_level import "
+        "M_FIELDS, M_FIELD_GROUPS, A_FIELD_GROUPS, "
+        "determine_application_level, validate_application_level; "
+        "from kormarc_auto.kormarc.validator import validate_record_full; "
+        "assert len(M_FIELDS) >= 5 and len(M_FIELD_GROUPS) >= 3",
+    ])
+    return rc == 0
+
+
+def assert_real_mrc_validator_present() -> bool:
+    """자관 .mrc 174 전수 검증 스크립트 + 인코딩 fallback 정합 (영업 정량 ★)."""
+    p = ROOT / "scripts" / "validate_real_mrc.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return "validate_application_level" in text and "_parse_mrc_any_encoding" in text
+
+
 # ── 실행 ───────────────────────────────────────────────────────────
 
 
@@ -357,6 +380,8 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("Pattern Library 누적 ≥10", assert_pattern_library_exists),
     ("PG 어댑터 stub (ADR 0007·0011)", assert_payment_adapter_present),
     ("billing.py PG 통합", assert_billing_pg_integrated),
+    ("M/A/O 적용 수준 모듈 (KORMARC 2023.12)", assert_application_level_module),
+    ("자관 .mrc 174 검증 스크립트", assert_real_mrc_validator_present),
 ]
 
 
