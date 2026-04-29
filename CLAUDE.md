@@ -174,14 +174,7 @@
 
 ## 8. 참조 문서
 
-| 문서 | 언제 |
-|---|---|
-| `docs/spec.md` | 도메인·기능 상세 의문 시 |
-| `docs/test_results.md` | 정확도·회귀 추적 |
-| `tests/samples/golden/` | 변환 기준 정답 |
-| `pymarc` 공식 문서 | `https://pymarc.readthedocs.io` |
-| LC MARC 21 Bibliographic | `https://www.loc.gov/marc/bibliographic/` |
-| 국립중앙도서관 KORMARC | `https://www.nl.go.kr` |
+상세 → `docs/index.md` (`docs/spec.md`·`docs/test_results.md`·`tests/samples/golden/`·pymarc·LC MARC21·NLK KORMARC 외부 링크).
 
 ---
 
