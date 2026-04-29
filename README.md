@@ -66,8 +66,17 @@
 kormarc-auto isbn 9788936434120
 kormarc-auto search "한강 작별"
 kormarc-auto photo cover.jpg
+kormarc-auto prefix-discover "D:\<자관>\수서"   # 049 prefix 자동 발견 (다른 자관 PILOT 5분)
 kormarc-auto info
 ```
+
+### 5-1. 사서 GUI (PowerShell·CLI 미숙해도 5분)
+
+```powershell
+streamlit run src/kormarc_auto/ui/prefix_discover_app.py
+```
+
+→ 브라우저에서 자관 .mrc 디렉토리 입력 → 049 prefix 자동 발견 + config snippet 즉시 복사. 자관 사례 EQ·CQ·WQ → 99.82% 정합 도달.
 
 ### 6. 테스트·검증
 
