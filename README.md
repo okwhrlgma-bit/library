@@ -4,7 +4,7 @@
 > ISBN 1번 입력 → KORMARC `.mrc` 5초 → **KOLAS III·독서로DLS·알파스 즉시 반입**.
 > **자관 .mrc 174 파일·3,383 레코드 → 99.82% 정합 검증 완료** (2026-04-29).
 
-[![tests](https://img.shields.io/badge/tests-269%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary_assertions-27%2F27-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![Korean](https://img.shields.io/badge/Korean-KOLAS실무%20정합-blue)]()
+[![tests](https://img.shields.io/badge/tests-293%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary_assertions-34%2F34-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![Korean](https://img.shields.io/badge/Korean-KOLAS실무%20정합-blue)]() [![자관 정합](https://img.shields.io/badge/자관_.mrc-99.82%25-brightgreen)]() [![Cloud routine](https://img.shields.io/badge/Cloud_routine-3개_24%2F7-blue)]()
 
 **한국 도서관 사서**가 매일 부딪히는 KORMARC 마크 작업을 권당 8분 → 2분으로 단축. 사서 출신 1인 개발자가 자관 「내를건너서 숲으로 도서관」 PILOT을 거쳐 만든 SaaS.
 
