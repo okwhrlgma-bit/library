@@ -8,6 +8,18 @@
 
 ## 🟢 우선순위 1 — 매출 직결 + 작은 commit (즉시 진행)
 
+### Part 6 가이드 격차 4건 (4-30 인계·즉시 적용 가능)
+
+- [ ] **CLAUDE.md 323줄 → 200줄 이하 slim** ★ (Anthropic 권장·instruction 무시 회피)
+  - 핵심 헌법 (§0~§7) 유지
+  - §8 참조 문서·§9 슬래시 명령·§10 모듈 인덱스 → docs/conventions·docs/index.md 이동
+  - §11 변경 이력 → CHANGELOG_NIGHT.md만 (CLAUDE.md에서 제거)
+  - §12 수익 모델 → docs/sales/INDEX.md 이동
+  - §13 모바일 운영 → docs/mobile-tunnel.md 이동
+- [ ] `/ultrareview` `/ultraplan` 슬래시 명령 활용 검토 (v2.1.111+ 신규)
+- [ ] Routines Pro 5건/일 한도 모니터링 어셔션 추가 (1h routine 24/일 fire vs 5건)
+- [ ] stop-double-gate.py `stop_hook_active` 체크 확인 (Stop hook 무한루프 안전장치)
+
 ### 코드 (각 1~2시간)
 
 - [ ] streamlit_app.py에 prefix-discover 탭 통합 (별도 standalone 외 14탭 → 15탭) — STATUS_REALITY_CHECK 권고 신중
