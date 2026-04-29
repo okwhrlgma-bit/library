@@ -288,21 +288,4 @@
 
 ## 13. 모바일 운영 (Phase 5)
 
-### 인프라
-
-| 도구 | 용도 | 셋업 |
-|---|---|---|
-| FastAPI (`kormarc-server`) | REST API | `kormarc-server` |
-| Streamlit (`kormarc-ui`) | 사서 GUI (모바일 반응형) | `kormarc-ui` |
-| Cloudflare Tunnel | 외부 접속 (영구·무료) | `cloudflared tunnel ...` (`docs/mobile-tunnel.md`) |
-| ngrok | 단발 접속 (백업) | `ngrok http 8000` |
-
-### 보안
-
-- 모든 API는 `X-API-Key` 필수 (`KORMARC_USER_KEYS`)
-- 외부 노출은 터널만 (직접 0.0.0.0 바인딩 deny)
-- `.env` 시크릿은 `logging_config`가 자동 마스킹
-
-### 모바일 Claude Code 권한
-
-`.claude/settings.json` (전역·프로젝트) 둘 다 `streamlit`/`uvicorn`/`cloudflared`/`kormarc-*` 사전 허용 — 모바일에서 권한 묻지 않고 실행.
+상세 → `docs/mobile-tunnel.md` (Cloudflare Tunnel·ngrok 셋업·X-API-Key 보안·모바일 Claude Code 권한 사전 허용).
