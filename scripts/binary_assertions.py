@@ -395,6 +395,33 @@ def assert_changelog_v0_4_37() -> bool:
     return "v0.4.37" in text and "99.82" in text
 
 
+def assert_sales_funnel_module() -> bool:
+    """영업 funnel tracker (가입→활성→한도→결제) + 페르소나별 분석."""
+    p = ROOT / "scripts" / "sales_funnel.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return all(name in text for name in ("compute_funnel", "FunnelMetrics", "funnel_by_persona"))
+
+
+def assert_aggregate_by_persona_function() -> bool:
+    """aggregate_interviews.by_persona — 4 페르소나별 NPS·시간 절감 분석."""
+    p = ROOT / "scripts" / "aggregate_interviews.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return "def by_persona" in text and "kla_quotable_count" in text
+
+
+def assert_librarian_5min_cheatsheet() -> bool:
+    """사서 5분 cheat sheet (PILOT 1주차 사서 친화 종이 한 장)."""
+    p = ROOT / "docs" / "sales" / "librarian-5min-cheatsheet.md"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return "kormarc-auto isbn" in text and "99.82" in text
+
+
 # ── 실행 ───────────────────────────────────────────────────────────
 
 
@@ -430,6 +457,9 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("포트원 v2 webhook 처리 모듈", assert_portone_webhook_module),
     ("PILOT 시연 수집 스크립트 (4 페르소나)", assert_pilot_collect_script),
     ("CHANGELOG_NIGHT v0.4.37 갱신", assert_changelog_v0_4_37),
+    ("영업 funnel tracker (페르소나별 결제 전환률)", assert_sales_funnel_module),
+    ("aggregate_interviews.by_persona (KLA 데이터)", assert_aggregate_by_persona_function),
+    ("사서 5분 cheat sheet (PILOT 친화)", assert_librarian_5min_cheatsheet),
 ]
 
 
