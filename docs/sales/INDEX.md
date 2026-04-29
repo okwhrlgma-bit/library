@@ -101,11 +101,25 @@
 
 ---
 
+## 추가 영업 자료 (4-30 신규)
+
+| 자료 | 사용 시점 |
+|---|---|
+| [data4library-guide-2026-05.md](data4library-guide-2026-05.md) | 정보나루 활용 (수서 사서) |
+| [outreach-kolis-net-migration-2026-05.md](outreach-kolis-net-migration-2026-05.md) | KOLIS-NET 작은 6,830관 (6~12월·200통) |
+| [outreach-bibframe-lod-2026-05.md](outreach-bibframe-lod-2026-05.md) | KSLA 대학·NLK 디지털 (월 15~30만원) |
+| [outreach-kakao-openchat-2026-05.md](outreach-kakao-openchat-2026-05.md) | 카카오톡 오픈채팅 (5,000명+ 노출) |
+
+→ 영업 자료 12 → **16건**.
+
 ## Sources
 
 - 자관 「내를건너서 숲으로 도서관」 4주 PILOT (5월 진행)
-- `docs/research/part3-librarian-workflows.md` (4 페르소나 일일 시간 분포)
-- `docs/research/part4-uiux-seo-marketing-deployment.md` (영업 채널·SEO·배포)
-- `docs/research/part5-tools-and-automation.md` (외부 도구 12종)
-- `CLAUDE.md §0 + §12` (헌법 평가축)
+- `docs/research/part1~6` (6-Part 매뉴얼 113,500자)
+- `docs/research/korean-library-systems-comparison-2026.md` (시스템 7종 비교)
+- `CLAUDE.md §0 + §12` (헌법 평가축·206줄 slim)
 - `.claude/rules/business-impact-axes.md` (사업 5질문 셀프 오딧)
+- `AUTONOMOUS_BACKLOG.md` (cloud agent 자율 큐)
+- `docs/cloud-routine-monitoring-guide.md` (PO 매주 5분 점검)
+- `docs/self-host-guide.md` (Render·Fly.io·Docker·Phase 비용)
+- `docs/github-release-v0.4.37-guide.md` (Release 발행 5분)
