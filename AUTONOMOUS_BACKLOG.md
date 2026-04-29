@@ -18,17 +18,16 @@
 ### 코드 (각 1~2시간)
 
 - [ ] streamlit_app.py에 prefix-discover 탭 통합 (별도 standalone 외 14탭 → 15탭) — STATUS_REALITY_CHECK 권고 신중
-- [ ] /admin/stats에 페르소나별 funnel 추가 (sales_funnel.funnel_by_persona 통합)
 - [ ] /signup endpoint에 페르소나 자동 분류 (도서관명·이메일 도메인 패턴)
-- [ ] /webhook/portone POST endpoint 신규 (server/portone_webhook.handle_event 연결·ADR 0007 트리거 후 활성)
-- [ ] CLI `kormarc-auto pilot-collect` 추가 (scripts/pilot_collect 통합)
-- [ ] CLI `kormarc-auto sales-funnel` 추가 (scripts/sales_funnel 통합)
+- [x] /admin/stats에 페르소나별 funnel ✅ a1b07af·8fac5dc
+- [x] /webhook/portone POST endpoint ✅ b06f60e + 3 tests f73b4fd
+- [x] CLI pilot-collect·sales-funnel ✅ 69f2ec9
 
 ### 영업 자료 (각 30분)
 
-- [ ] 자관 PILOT 2주차 액션 매뉴얼 (박지수 수서 사서·60분)
-- [ ] 자관 PILOT 3주차 액션 매뉴얼 (종합 사서 4명·60분)
-- [ ] 자관 PILOT 4주차 통합 액션 매뉴얼 (4 페르소나 NPS 통합·90분)
+- [x] PILOT 2주차 매뉴얼 ✅ 56e79a4 (박지수 수서 60분)
+- [x] PILOT 3주차 매뉴얼 ✅ cf325fd (종합 4명 90분)
+- [x] PILOT 4주차 통합 매뉴얼 ✅ 289f79b (KLA 5.31 마감)
 - [ ] 도서관 정보나루 활용 가이드 (수서 사서 영업)
 - [ ] KOLIS-NET 마이그레이션 영업 메일 (작은도서관 6,830관)
 - [ ] BIBFRAME 2.0 LOD 영업 메일 (대학·디지털 컬렉션)
@@ -36,7 +35,7 @@
 
 ### 매뉴얼 (각 30분)
 
-- [ ] Cloud routine 3개 모니터링 가이드 (PO 매주 1회 점검·문제 시 재등록)
+- [x] Cloud routine 3개 모니터링 가이드 ✅ 0a29e07·09ca181 (Pro 한도 §7)
 - [ ] GitHub Releases 발행 자동화 (gh CLI workflow)
 - [ ] Self-host 가이드 (Render·Fly.io·Docker)
 
