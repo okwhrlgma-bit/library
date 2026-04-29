@@ -1,0 +1,29 @@
+{
+  "_comment": "PILOT 2주차 — 수서 사서 (2순위 ICP). 정보나루·KDC 균형·자관 중복 알리미.",
+  "date": "2026-05-XX",
+  "library_name": "내를건너서 숲으로 도서관",
+  "library_type": "public",
+  "librarian_name": "박지수",
+  "persona": "acquisition",
+  "persona_label": "수서 사서",
+  "pilot_week": 2,
+  "pre_marc_minutes": 30,
+  "post_marc_minutes": 5,
+  "time_saved_pct": 83.3,
+  "biggest_painpoints": [
+    "정보나루 수동 검색",
+    "자관 중복 확인",
+    "KDC 균형 산정"
+  ],
+  "demo_impressive": [
+    "정보나루 인기 대출 자동 import",
+    "libBookExist API 자관 중복 알리미",
+    "KDC 균형 자동 추천"
+  ],
+  "nps": 0,
+  "q1_payment_band": "MID",
+  "willingness_to_pay_monthly_krw_band": "30000-150000",
+  "payment_decision_maker": "self",
+  "free_comment": "",
+  "consent_kla_quote": true
+}

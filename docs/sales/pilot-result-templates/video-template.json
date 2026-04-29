@@ -1,0 +1,23 @@
+{
+  "_comment": "PILOT 4주차 통합 시 명시 제외 — 영상 편집 사서 (우리 영역 X).",
+  "date": "2026-05-XX",
+  "library_name": "내를건너서 숲으로 도서관",
+  "library_type": "public",
+  "librarian_name": "김신학",
+  "persona": "video",
+  "persona_label": "영상 편집 사서 (영업 X)",
+  "pilot_week": 4,
+  "pre_marc_minutes": 0,
+  "post_marc_minutes": 0,
+  "time_saved_pct": 0.0,
+  "biggest_painpoints": [
+    "우리 영역 X (mp4·prproj 편집은 별도 도구)"
+  ],
+  "demo_impressive": [],
+  "nps": 0,
+  "q1_payment_band": "0",
+  "willingness_to_pay_monthly_krw_band": "0",
+  "payment_decision_maker": "none",
+  "free_comment": "영상 편집은 우리 영역 외. 명시 제외 (정직 영업).",
+  "consent_kla_quote": false
+}

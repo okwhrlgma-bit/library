@@ -1,0 +1,28 @@
+{
+  "_comment": "PILOT 1주차 — Excel 매크로 자작 사서 (★ 1순위 ICP). PO 시연 직후 채워넣기.",
+  "date": "2026-05-XX",
+  "library_name": "내를건너서 숲으로 도서관",
+  "library_type": "public",
+  "librarian_name": "조기흠",
+  "persona": "macro",
+  "persona_label": "Excel 매크로 자작 사서",
+  "pilot_week": 1,
+  "pre_marc_minutes": 8,
+  "post_marc_minutes": 2,
+  "time_saved_pct": 75.0,
+  "biggest_painpoints": [
+    "xlsm 매크로 유지보수",
+    "책단비 hwp 수동 출력",
+    "매크로 학습 곡선"
+  ],
+  "demo_impressive": [
+    "ISBN 1번 → 5초 .mrc",
+    "KOLAS 자동 반입 폴더 인식"
+  ],
+  "nps": 0,
+  "q1_payment_band": "MID",
+  "willingness_to_pay_monthly_krw_band": "30000-50000",
+  "payment_decision_maker": "self",
+  "free_comment": "",
+  "consent_kla_quote": true
+}
