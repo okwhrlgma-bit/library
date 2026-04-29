@@ -67,6 +67,8 @@ kormarc-auto isbn 9788936434120
 kormarc-auto search "한강 작별"
 kormarc-auto photo cover.jpg
 kormarc-auto prefix-discover "D:\<자관>\수서"   # 049 prefix 자동 발견 (다른 자관 PILOT 5분)
+kormarc-auto pilot-collect --persona macro      # PILOT 시연 결과 1줄 수집 (4 페르소나)
+kormarc-auto sales-funnel                       # 영업 funnel (가입→활성→한도→결제·by_persona)
 kormarc-auto info
 ```
 
