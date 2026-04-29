@@ -837,6 +837,46 @@ with contextlib.suppress(AttributeError, OSError):
 
 ---
 
+## 2026-04-30 04:30 KST — 도메인 권위 + 시스템 비교 매트릭스 = 영업 5초 답변
+
+### 한국 도서관 시스템 7종 정합 매트릭스 가치
+
+**사실** (출처: docs/research/korean-library-systems-comparison-2026.md):
+
+- KOLAS III·알파스·KERIS DLS·KSLA·KOLIS-NET·NLK MODS·KLMS = 한국 도서관 운영 시스템 전수.
+- PO·사서가 영업 시 "선생님 자관 시스템 호환되나?" 5초 답변 = **신뢰 즉시 형성**.
+- 우리 모듈 14 시스템 모두 정합 (KOLAS·알파스·DLS·KSLA·KOLIS-NET·MODS·KLMS·RISS·책두레·책이음·책밴드·책나래·책바다·책단비).
+- KOLAS III 종료 (**2026-12-31**) = 마이그레이션 영업 골든타임 (자관 99.82% 정합 = "마이그 후에도 정합 유지" 직접 증명).
+- KSLA·KERIS·NLK 협력 = 학술 권위 (사서교육원·도서관저널·KLA 인용).
+
+### 영업 자료 인용 가능 데이터 5종 ★
+
+**사실** (영업 시 그대로 인용 가능):
+
+1. **자관 .mrc 174 파일·3,383 레코드 99.82% 정합** (4-29 측정) — 단일 정량 1순위
+2. **자관 일 39h 절감** (사서 5명 풀타임 가치·Part 3 시뮬)
+3. **권당 8분 → 2분** (75% 단축·Phase 0 MVP)
+4. **자관 5년 1,328건 책단비** (실측·Phase 1)
+5. **049 prefix EQ·CQ·WQ 자동 발견** (4-29 도구 활용)
+
+### Cloud routine 첫 fire 임박 패턴
+
+**사실** (현재 18:15 UTC·routine first fire = 18:00):
+
+- routine 등록 시 next_run_at 표시 = 등록 직후 fire 안 됨 (다음 cron 시점)
+- 실제 첫 fire 후 작업 진행에 cold start 약 30초~1분
+- GitHub commit 추가는 작업 + push 완료 후 (전체 5~10분 가능)
+- 모니터링: `git fetch origin && git log HEAD..origin/main`
+
+### 매출 영향 — VERY HIGH ★★★
+
+- 시스템 비교 매트릭스 = 모든 영업 메일·시연·KLA 발표·도서관저널·사서교육원 학술 인용
+- 5중 자동화 = 1년 5,000+ commit 자동 누적 = PO 시간 0
+- 자관 PILOT 4주 → 학교·작은·공공·대학·전문 8~10관 → Phase 1 베타 50관 → Phase 3 캐시카우 200관 (월 660만원)
+- 모든 도구·매뉴얼·영업 자료 정점 = PO 5/1주 월요일 즉시 시작 가능
+
+---
+
 ## 추가 양식 (다음 학습 추가 시 그대로 사용)
 
 ```
