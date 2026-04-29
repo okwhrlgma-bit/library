@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from pymarc import Record
+
+from kormarc_auto.kormarc.application_level import validate_application_level
+from kormarc_auto.kormarc.material_type import detect_material_type
 
 
 def validate_isbn13(isbn: str) -> bool:
@@ -58,5 +63,36 @@ def validate_record(record: Record) -> list[str]:
             isbn_clean = "".join(c for c in sf_value.split()[0] if c.isdigit())
             if len(isbn_clean) == 13 and not validate_isbn13(isbn_clean):
                 errors.append(f"020 ISBN 체크섬 오류: {sf_value}")
+
+    return errors
+
+
+def validate_record_full(
+    record: Record,
+    book_data: dict[str, Any] | None = None,
+    material_type: str | None = None,
+) -> list[str]:
+    """KORMARC + 2023.12 M/A/O 적용 수준 종합 검증.
+
+    `validate_record`의 기본 검증 + `application_level.validate_application_level`
+    추가. material_type 미지정 시 book_data로 자동 감지.
+
+    Args:
+        record: pymarc Record.
+        book_data: 외부 API 통합 dict. 없으면 빈 dict.
+        material_type: 자료유형 키. 미지정 시 자동 감지.
+
+    Returns:
+        에러·위반 메시지 리스트 (비어있으면 정합).
+    """
+    errors = validate_record(record)
+    book_data = book_data or {}
+    material_type = material_type or detect_material_type(book_data)
+
+    present_tags = {f.tag for f in record.get_fields()}
+    for tag, level, reason in validate_application_level(
+        present_tags, book_data, material_type,
+    ):
+        errors.append(f"[{level}] {tag}: {reason}")
 
     return errors
