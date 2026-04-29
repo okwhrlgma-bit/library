@@ -446,6 +446,24 @@ def assert_pilot_week_manuals() -> bool:
     return all((base / f"pilot-week{n}-action-manual.md").exists() for n in range(1, 5))
 
 
+def assert_research_14_part_manuals() -> bool:
+    """14-Part 종합 매뉴얼 (research/part1~14) 모두 존재 ★."""
+    base = ROOT / "docs" / "research"
+    part_files = list(base.glob("part*.md"))
+    # part1~6 + part7~14 = 14건 이상
+    part_numbers = set()
+    for p in part_files:
+        # 파일명 'part14-...' 같은 패턴에서 숫자 추출
+        name = p.stem
+        if name.startswith("part") and "-" in name:
+            try:
+                num = int(name.split("-")[0][4:])
+                part_numbers.add(num)
+            except ValueError:
+                pass
+    return len(part_numbers) >= 14 and 14 in part_numbers
+
+
 # ── 실행 ───────────────────────────────────────────────────────────
 
 
@@ -487,6 +505,7 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("CLAUDE.md 250줄 이하 (Anthropic 200 권장·ADR-0013)", assert_claude_md_slim),
     ("CLI 3 명령 (prefix·pilot·funnel) 통합", assert_cli_pilot_funnel_commands),
     ("PILOT 4주차 매뉴얼 시리즈 (week1~4)", assert_pilot_week_manuals),
+    ("14-Part 종합 매뉴얼 (research/part1~14)", assert_research_14_part_manuals),
 ]
 
 
