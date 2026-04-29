@@ -26,7 +26,7 @@ with contextlib.suppress(AttributeError, OSError):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-from dotenv import load_dotenv  # noqa: E402
+from dotenv import load_dotenv
 
 from kormarc_auto import __version__
 from kormarc_auto.logging_config import get_logger, setup_logging
