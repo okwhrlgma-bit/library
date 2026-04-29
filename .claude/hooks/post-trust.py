@@ -42,9 +42,7 @@ def _is_ok(tool_response: dict) -> bool:
         return True  # 응답 형식 모르면 일단 성공으로
     if "exit_code" in tool_response:
         return tool_response.get("exit_code") == 0
-    if tool_response.get("error"):
-        return False
-    return True
+    return not tool_response.get("error")
 
 
 def main() -> int:
