@@ -116,7 +116,12 @@
 
 - 자관 「내를건너서 숲으로 도서관」 4주 PILOT (5월 진행)
 - `docs/research/part1~6` (6-Part 매뉴얼 113,500자)
+- `docs/research/part7-other-libraries-mrc-cases-2026.md` (타관 KORMARC 정합·22,152자·★ 자관 99.82% +40~64%p 우위·KOLAS 종료 골든 윈도우)
+- `docs/research/part8-competitor-library-tools-2026.md` (한국 도구 40+종·9,500자·차별화 5종·협력 5종)
+- `docs/research/part9-librarian-communities-content-2026.md` (사서 커뮤니티 14,500자·전국학교도서관모임 29,160명·페인 Top 10·인플루언서 Top 7)
+- `docs/research/part10-librarian-painpoints-real-data-2026.md` (사서 페인포인트 실측 8 영역·560줄·자관 외 일반 사서·블로그·카페·뉴스 인용)
 - `docs/research/korean-library-systems-comparison-2026.md` (시스템 7종 비교)
+- `docs/research/future-codebase-roadmap-2026.md` (향후 13 영역 로드맵)
 - `CLAUDE.md §0 + §12` (헌법 평가축·206줄 slim)
 - `.claude/rules/business-impact-axes.md` (사업 5질문 셀프 오딧)
 - `AUTONOMOUS_BACKLOG.md` (cloud agent 자율 큐)
