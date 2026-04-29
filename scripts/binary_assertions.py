@@ -351,6 +351,50 @@ def assert_real_mrc_validator_present() -> bool:
     return "validate_application_level" in text and "_parse_mrc_any_encoding" in text
 
 
+def assert_prefix_discovery_module() -> bool:
+    """049 prefix 자동 발견 모듈 (다른 자관 PILOT 즉시 정합 ★)."""
+    rc, _, _ = _run([
+        str(PYTHON), "-c",
+        "import sys; sys.path.insert(0, 'src'); "
+        "from kormarc_auto.librarian_helpers.prefix_discovery import "
+        "PrefixDiscoverer, PrefixSummary; "
+        "summary = PrefixSummary(0, {}, (), 1.0); "
+        "assert 'registration_prefix' in summary.to_yaml_snippet()",
+    ])
+    return rc == 0
+
+
+def assert_portone_webhook_module() -> bool:
+    """포트원 v2 webhook 처리 모듈 (ADR 0007 트리거 후 활성)."""
+    rc, _, _ = _run([
+        str(PYTHON), "-c",
+        "import sys; sys.path.insert(0, 'src'); "
+        "from kormarc_auto.server.portone_webhook import "
+        "WebhookEvent, parse_event, verify_signature, handle_event; "
+        "import inspect; "
+        "assert callable(verify_signature)",
+    ])
+    return rc == 0
+
+
+def assert_pilot_collect_script() -> bool:
+    """PILOT 시연 결과 수집 스크립트 (4 페르소나 정합)."""
+    p = ROOT / "scripts" / "pilot_collect.py"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return all(persona in text for persona in ("macro", "acquisition", "general", "video"))
+
+
+def assert_changelog_v0_4_37() -> bool:
+    """CHANGELOG_NIGHT v0.4.37 갱신 (33+ commit 시리즈 통합)."""
+    p = ROOT / "CHANGELOG_NIGHT.md"
+    if not p.exists():
+        return False
+    text = p.read_text(encoding="utf-8")
+    return "v0.4.37" in text and "99.82" in text
+
+
 # ── 실행 ───────────────────────────────────────────────────────────
 
 
@@ -382,6 +426,10 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("billing.py PG 통합", assert_billing_pg_integrated),
     ("M/A/O 적용 수준 모듈 (KORMARC 2023.12)", assert_application_level_module),
     ("자관 .mrc 174 검증 스크립트", assert_real_mrc_validator_present),
+    ("049 prefix 자동 발견 모듈", assert_prefix_discovery_module),
+    ("포트원 v2 webhook 처리 모듈", assert_portone_webhook_module),
+    ("PILOT 시연 수집 스크립트 (4 페르소나)", assert_pilot_collect_script),
+    ("CHANGELOG_NIGHT v0.4.37 갱신", assert_changelog_v0_4_37),
 ]
 
 
