@@ -11,9 +11,14 @@
 
 | 자료 | 사용 시점 | 분량 |
 |---|---|---|
-| **[pilot-week1-action-manual.md](pilot-week1-action-manual.md)** | 5/1주 월요일 18:00 (조기흠 30분 시연) | 165 lines |
-| **[pilot-package-2026-04-29.md](pilot-package-2026-04-29.md)** | 자관 4주 시나리오 + 4 페르소나 메일 + Q&A 10건 | 257 lines |
-| **[librarian-5min-cheatsheet.md](librarian-5min-cheatsheet.md)** | PILOT 시연 후 사서에게 인쇄 (A4 1장) | 110 lines |
+| **[pilot-week1-action-manual.md](pilot-week1-action-manual.md)** | 5/1주 월 18:00 (조기흠 매크로·30분) |
+| **[pilot-week2-action-manual.md](pilot-week2-action-manual.md)** | 5/2주 (박지수 수서·60분) |
+| **[pilot-week3-action-manual.md](pilot-week3-action-manual.md)** | 5/3주 (종합 4명·90분) |
+| **[pilot-week4-action-manual.md](pilot-week4-action-manual.md)** | 5/4~5주 통합 + KLA 5.31 마감 ★★ |
+| **[pilot-package-2026-04-29.md](pilot-package-2026-04-29.md)** | 자관 4주 시나리오 + 4 페르소나 메일 + Q&A 10건 |
+| **[pilot-pre-flight-checklist-2026-05.md](pilot-pre-flight-checklist-2026-05.md)** | 5/1주 월 09:00 직전 5분 체크 |
+| **[librarian-5min-cheatsheet.md](librarian-5min-cheatsheet.md)** | PILOT 시연 후 사서 인쇄 A4 1장 |
+| **[pilot-result-templates/](pilot-result-templates/)** | 4 페르소나 빈 JSON 양식 (PO 채워넣기) |
 
 ### ★★★ 2순위 — KLA 5.31 발표 (마감 임박 ★)
 
