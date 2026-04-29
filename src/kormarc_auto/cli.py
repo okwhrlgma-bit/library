@@ -778,6 +778,25 @@ def cmd_registration(args: argparse.Namespace) -> int:
     return 2
 
 
+def cmd_pilot_collect(args: argparse.Namespace) -> int:
+    """PILOT 시연 결과 1줄 수집 — scripts/pilot_collect 통합."""
+    import subprocess
+
+    cmd = [str(Path(sys.executable)), "scripts/pilot_collect.py",
+           "--persona", args.persona, "--library", args.library]
+    return subprocess.call(cmd)
+
+
+def cmd_sales_funnel(args: argparse.Namespace) -> int:
+    """영업 funnel — scripts/sales_funnel 통합."""
+    import subprocess
+
+    cmd = [str(Path(sys.executable)), "scripts/sales_funnel.py"]
+    if args.json:
+        cmd.extend(["--json", str(args.json)])
+    return subprocess.call(cmd)
+
+
 def cmd_prefix_discover(args: argparse.Namespace) -> int:
     """자관 .mrc 049 ▾l prefix 자동 발견 — 다른 자관 PILOT 1주차 도입 (5분).
 
@@ -1042,6 +1061,24 @@ def build_parser() -> argparse.ArgumentParser:
         help="외부 API 미사용 (자관 인덱스만 조회)",
     )
     p_w.set_defaults(func=cmd_wishlist)
+
+    # pilot-collect — PILOT 시연 결과 1줄 수집 (4 페르소나)
+    p_pc = sub.add_parser(
+        "pilot-collect",
+        help="PILOT 시연 직후 결과 인터랙티브 수집 + JSON 자동 저장",
+    )
+    p_pc.add_argument("--persona", default="macro",
+                      choices=["macro", "acquisition", "general", "video"])
+    p_pc.add_argument("--library", default="내를건너서 숲으로 도서관")
+    p_pc.set_defaults(func=cmd_pilot_collect)
+
+    # sales-funnel — 영업 funnel (가입→활성→한도→결제)
+    p_sf = sub.add_parser(
+        "sales-funnel",
+        help="영업 funnel + 페르소나별 결제 전환률 (KLA 슬라이드 데이터)",
+    )
+    p_sf.add_argument("--json", type=Path, default=None, help="JSON 보고서 경로")
+    p_sf.set_defaults(func=cmd_sales_funnel)
 
     # prefix-discover — 자관 049 prefix 자동 발견 (PILOT 1주차 도입 ★)
     p_pd = sub.add_parser(
