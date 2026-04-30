@@ -3,9 +3,20 @@
 > NIGHT_RUN_PROTOCOL.md 표준 양식 따라 매 commit 변경 사유 기록.
 > 종료 게이트: pytest 통과 + binary_assertions 38/38 + commit.
 
-## v0.4.38 — 2026-04-30 새벽 (보류 3 해제 + Phase 1.5 완성)
+## v0.4.38 — 2026-04-30 새벽 (보류 3 해제 + Phase 1.5 완성 + builder 통합 + sanity-check)
 
-PO 4-30 "모두 보류 해제" 명령 — 4 commit 누적.
+PO 4-30 "모두 보류 해제" + 자율 진행 명령 — **8 commit** 누적.
+
+### 후속 자율 진행 (보류 해제 직후)
+
+- **d3b668f** Phase 1.5 builder 통합 게이트 — `build_kormarc_record()`에서
+  자료유형 자동 감지 + 5 모듈 `build_*_fields()` 자동 호출. 사서가
+  자료유형 입력 X. 진짜 9/9 builder 통합. (+10 tests)
+- **afda446** `kormarc-auto sanity-check` CLI ★ — PILOT 1주차 첫 30분
+  도구. prefix 분포 + 정합률 + 위반 유형 Top 5 한 번에. JSON 출력
+  옵션으로 KLA 슬라이드 데이터. (+5 tests, librarian_helpers/sanity_check.py)
+- **0b86066** PILOT week1 + 9 자료유형 영업 자료에 위 2종 노출.
+  "사서 첫 30초 신뢰 형성" PO 발화 스크립트 추가.
 
 ### 핵심 ★
 
@@ -31,9 +42,10 @@ PO 4-30 "모두 보류 해제" 명령 — 4 commit 누적.
 
 ### 검증
 
-- 269 → **333 tests** (+64 신규: ebook/ejournal/audiobook 14 + chaekdanbi 8 + multimedia/thesis 18 + 기타 24)
+- 269 → **348 tests** (+79 신규: ebook/ejournal/audiobook 14 + chaekdanbi 8 + multimedia/thesis 18 + builder 통합 10 + sanity-check 5 + 기타 24)
 - binary_assertions 27 → **38/38 (100%)**
 - ruff 0 errors
+- 자관 .mrc 99.82% 정합 회귀 X
 
 ### 영업 정량
 
