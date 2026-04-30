@@ -313,6 +313,11 @@ def build_kormarc_record(
             )
         )
 
+    # ── Phase 1.5 자료유형 분기: ebook·ejournal·audiobook·multimedia·thesis
+    # detect_material_type() + book_data에 자료유형 특유 키가 있을 때만 분기.
+    # 단행본 기본 케이스는 영향 X (모든 추가 필드는 옵션).
+    _apply_phase15_fields(record, book_data)
+
     # 빌드 직후 KORMARC 2023.12 + M/A/O 자동 검증 (logger.warning, raise X)
     if auto_validate:
         # 순환 import 회피 — 함수 내부 import
@@ -329,6 +334,59 @@ def build_kormarc_record(
             )
 
     return record
+
+
+def _apply_phase15_fields(record: Record, book_data: dict[str, Any]) -> None:
+    """Phase 1.5 자료유형 모듈 자동 통합 (ebook·ejournal·audiobook·multimedia·thesis).
+
+    detect_material_type()로 감지 + book_data에 자료유형 특유 키 (url·issn·narrator·
+    runtime·degree)가 있으면 해당 모듈의 build_*_fields() 결과를 record에 append.
+
+    중복 회피: builder가 이미 추가한 필드 태그(856 등)는 자료유형 모듈이 책임.
+    단순화 위해 Phase 1.5 분기에 진입하면 사전에 추가된 동일 태그 제거.
+    """
+    from kormarc_auto.kormarc.material_type import detect_material_type
+
+    material_type = book_data.get("material_type") or detect_material_type(book_data)
+    extra_fields: list[Field] = []
+
+    if material_type == "ebook" or book_data.get("format") in ("PDF", "EPUB", "HWP"):
+        from kormarc_auto.kormarc.ebook import build_ebook_fields
+
+        extra_fields.extend(build_ebook_fields(book_data))
+    elif material_type == "audiobook" or book_data.get("narrator"):
+        from kormarc_auto.kormarc.audiobook import build_audiobook_fields
+
+        extra_fields.extend(build_audiobook_fields(book_data))
+    elif material_type in ("dvd", "multimedia") or book_data.get("runtime"):
+        from kormarc_auto.kormarc.multimedia import build_multimedia_fields
+
+        extra_fields.extend(build_multimedia_fields(book_data))
+    elif material_type in ("serial_current", "serial_ceased", "ejournal") or book_data.get("issn"):
+        from kormarc_auto.kormarc.ejournal import build_ejournal_fields
+
+        extra_fields.extend(build_ejournal_fields(book_data))
+    elif material_type == "thesis" or book_data.get("degree"):
+        from kormarc_auto.kormarc.thesis import build_thesis_fields
+
+        extra_fields.extend(build_thesis_fields(book_data))
+
+    if not extra_fields:
+        return
+
+    # 중복 태그 정리: 자료유형 모듈이 채우는 태그는 사전 856·538·022·300 등.
+    # 핵심 식별 (008·020·245·100·700·056·082·040·950)은 보존, 자료유형 책임 태그만 제거.
+    type_owned_tags = {f.tag for f in extra_fields}
+    keep_tags_priority = {"008", "020", "040", "056", "082", "100", "245", "264", "490", "700", "950"}
+    drop_targets = type_owned_tags - keep_tags_priority
+
+    if drop_targets:
+        for tag in drop_targets:
+            for existing in list(record.get_fields(tag)):
+                record.remove_field(existing)
+
+    for f in extra_fields:
+        record.add_field(f)
 
 
 def _split_first_author(author_field: str) -> str:

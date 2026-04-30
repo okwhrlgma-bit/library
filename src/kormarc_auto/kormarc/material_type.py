@@ -55,13 +55,17 @@ MATERIAL_TYPES: dict[str, MaterialTypeCodes] = {
     "serial_current": MaterialTypeCodes("a", "s", "c", "연속간행물 (현행)"),
     "serial_ceased": MaterialTypeCodes("a", "s", "d", "연속간행물 (종간)"),
     "ebook": MaterialTypeCodes("m", "m", "s", "전자책"),
+    "ejournal": MaterialTypeCodes("a", "s", "c", "전자저널 (Phase 1.5)"),  # 008 23=o
     "audiobook": MaterialTypeCodes("i", "m", "s", "오디오북"),
     "dvd": MaterialTypeCodes("g", "m", "s", "DVD·영상자료"),
+    "multimedia": MaterialTypeCodes("g", "m", "s", "멀티미디어 (Phase 1.5)"),
     "music_cd": MaterialTypeCodes("j", "m", "s", "음반 CD"),
     "map": MaterialTypeCodes("e", "m", "s", "지도자료"),
     "kit": MaterialTypeCodes("o", "m", "s", "키트 (교구·자료 묶음)"),
     "braille": MaterialTypeCodes("a", "m", "s", "점자도서"),  # 008 24 별도 부호화
     "thesis": MaterialTypeCodes("a", "m", "s", "학위논문"),  # 008 24=m + 502 필드
+    "non_book": MaterialTypeCodes("a", "m", "s", "비도서 (Phase 1.5)"),  # 비매체 자료
+    "rare_book": MaterialTypeCodes("a", "m", "s", "고서 (Phase 1.5)"),  # 한자 880 자동
 }
 
 
@@ -90,6 +94,14 @@ def detect_material_type(book_data: dict[str, Any]) -> str:
         return "braille"
     if "학위논문" in title or "박사학위" in title or "석사학위" in title or "thesis" in summary:
         return "thesis"
+    if "전자저널" in title or "e-journal" in title or book_data.get("issn"):
+        return "ejournal"
+    if book_data.get("runtime") or "스트리밍" in category:
+        return "multimedia"
+    if "고서" in title or "고서" in category or "한적" in title:
+        return "rare_book"
+    if "비도서" in category:
+        return "non_book"
 
     # ISBN 부가기호 힌트 (5자리)
     # 첫 자리가 9면 기타·전문, 4면 청소년, 7면 아동
