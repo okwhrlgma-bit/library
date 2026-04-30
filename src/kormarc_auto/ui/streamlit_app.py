@@ -1245,6 +1245,83 @@ def _tab_tools() -> None:
                 st.error(f"생성 실패: {e}")
 
 
+def _tab_prefix_discover() -> None:
+    """049 ▾l 등록번호 prefix 자동 발견 탭.
+
+    PILOT 첫 주: 사서가 자관 .mrc 디렉토리를 지정하면 prefix 분포를 자동 분석해
+    config.yaml에 붙여넣을 snippet을 출력. 자관 「내를건너서 숲으로 도서관」
+    실측 = 99.82% 정합 (4-29).
+    """
+    st.subheader("049 prefix 자동 발견")
+    st.caption(
+        "자관 .mrc 디렉토리를 지정하면 049 ▾l 등록번호 prefix 분포를 분석합니다. "
+        "PILOT 1주차 사서가 직접 한번 돌리면 config.yaml `kolas_register.registration_prefix` "
+        "권장값이 자동으로 출력됩니다."
+    )
+
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        root_text = st.text_input(
+            ".mrc 디렉토리 경로",
+            key="prefix_root",
+            placeholder=r"D:\자관\수서  또는  /Users/me/library/mrc",
+        )
+    with col2:
+        threshold = st.slider(
+            "임계값 (%)", min_value=0.1, max_value=10.0, value=1.0, step=0.1, key="prefix_threshold",
+        )
+
+    if st.button("스캔 실행", key="prefix_scan_btn"):
+        if not root_text.strip():
+            st.warning("디렉토리 경로를 입력해 주세요.")
+            return
+        root = Path(root_text.strip())
+        if not root.exists():
+            st.error(f"경로가 존재하지 않습니다: {root}")
+            return
+        try:
+            from kormarc_auto.librarian_helpers.prefix_discovery import PrefixDiscoverer
+
+            discoverer = PrefixDiscoverer(threshold_pct=threshold)
+            with st.spinner(f"{root} 재귀 스캔 중..."):
+                summary = discoverer.scan(root)
+        except Exception as e:
+            st.error(f"스캔 실패: {e}")
+            return
+
+        if summary.total_records == 0:
+            st.warning("`.mrc` 파일이 없거나 049 필드를 추출하지 못했습니다.")
+            return
+
+        col_a, col_b, col_c = st.columns(3)
+        col_a.metric("총 레코드", f"{summary.total_records:,}")
+        col_b.metric("발견 prefix", len(summary.prefix_counts))
+        col_c.metric("권장 prefix", len(summary.recommended_prefixes))
+
+        st.markdown("**전체 prefix 분포**")
+        rows = sorted(summary.prefix_counts.items(), key=lambda x: -x[1])
+        dist_data = [
+            {
+                "prefix": p,
+                "count": c,
+                "percent": f"{c / summary.total_records * 100:.2f}%",
+                "recommended": "✅" if p in summary.recommended_prefixes else "",
+            }
+            for p, c in rows
+        ]
+        st.dataframe(dist_data, use_container_width=True, hide_index=True)
+
+        st.markdown("**config.yaml snippet**")
+        snippet = summary.to_yaml_snippet()
+        st.code(snippet, language="yaml")
+        st.download_button(
+            "📥 snippet 다운로드",
+            data=snippet.encode("utf-8"),
+            file_name="kolas_register_prefix.yaml",
+            mime="text/yaml",
+        )
+
+
 def _rows_to_csv(rows: list[dict]) -> bytes:
     import csv
 
@@ -1392,7 +1469,7 @@ def main() -> None:
         st.markdown("---")
         st.caption("MVP 베타 — 사서 피드백 환영")
 
-    tabs = st.tabs(["ISBN", "검색", "사진", "일괄", "🛠 도구"])
+    tabs = st.tabs(["ISBN", "검색", "사진", "일괄", "🛠 도구", "049 prefix"])
     with tabs[0]:
         _tab_isbn(agency)
     with tabs[1]:
@@ -1403,6 +1480,8 @@ def main() -> None:
         _tab_batch(agency)
     with tabs[4]:
         _tab_tools()
+    with tabs[5]:
+        _tab_prefix_discover()
 
 
 def run() -> None:

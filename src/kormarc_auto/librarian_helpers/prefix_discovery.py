@@ -6,7 +6,7 @@ config 갱신 권장값 출력.
 사용 예 (다른 자관 PILOT 1주차):
     discoverer = PrefixDiscoverer(threshold_pct=1.0)
     summary = discoverer.scan(Path("D:/자관/수서"))
-    print(summary.recommended_prefixes)  # ('AB', 'CD', ...)
+    # summary.recommended_prefixes == ('AB', 'CD', ...)
 
 영업 가치: 다른 자관 PILOT 즉시 99%+ 정합 도달 (자관 「내를건너서 숲으로
 도서관」 4-29 실측 = WQ 1.7% 발견 → 99.82% 정합).
