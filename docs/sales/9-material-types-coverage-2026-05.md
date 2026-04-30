@@ -72,6 +72,42 @@
 
 ---
 
+## ISBN 한 줄 → 자료유형 자동 분기 (v0.4.38+ builder 통합)
+
+사서가 자료유형을 입력하지 않아도 `build_kormarc_record()`가 데이터 키로 자동 분기. 9 자료유형 모듈이 builder에 통합되어 있습니다.
+
+| 입력 dict | 자동 분기 | 추가되는 필드 |
+|---|---|---|
+| `{"format": "PDF", "url": "..."}` | ebook | 856 URL · 538 형식 |
+| `{"narrator": "김연아", "format": "MP3"}` | audiobook | 511 낭독자 · 538 매체 · 007 음향 |
+| `{"runtime": 120, "format": "DVD"}` | multimedia | 306 020000 · 007 vd · 300 형태 |
+| `{"issn": "2234-5678", "frequency": "월간"}` | ejournal | 022 ISSN · 310 발행빈도 · 362 권차 |
+| `{"degree": "박사", "institution": "서울대학교"}` | thesis | 502 학위논문 · 700 지도교수 |
+| 그 외 | book_single | 표준 단행본 (영향 X) |
+
+→ **사서가 자료 종류 분기 X. ISBN·dict만으로 9 자료유형 정합 KORMARC 자동 생성.**
+
+---
+
+## sanity-check — PILOT 1주차 첫 30분 도구 (★ NEW v0.4.38+)
+
+영업 첫 만남에서 즉시 자관 데이터 정합률 보고:
+
+```bash
+kormarc-auto sanity-check D:/자관/수서 --json reports/sanity.json
+```
+
+출력:
+```
+정합률     : 99.82%
+049 prefix : EQ 75.5%·CQ 22.8%·WQ 1.7% [모두 권장]
+위반 유형  : 한자 880 페어 누락 6건
+```
+
+→ **사서 첫 30초에 신뢰 형성**. JSON 출력 옵션 = KLA 슬라이드·영업 자료 직접 활용.
+
+---
+
 ## PILOT 4주 자료 활용
 
 ### Week 1 (매크로) — 단행본·비도서·오디오북·전자책
