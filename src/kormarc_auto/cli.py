@@ -828,6 +828,46 @@ def cmd_prefix_discover(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_sanity_check(args: argparse.Namespace) -> int:
+    """자관 .mrc 디렉토리 진단 — PILOT 1주차 첫 30분 도구.
+
+    prefix 분포 + 정합률 + 위반 유형 Top 5 한 번에 출력. 사서가 자관 데이터
+    건강 진단 즉시 확인 → 신뢰 형성. JSON 출력 옵션 (--json) = KLA 슬라이드 데이터.
+    """
+    import json
+
+    from kormarc_auto.librarian_helpers.sanity_check import run_sanity_check
+
+    directory = Path(args.directory)
+    if not directory.exists():
+        print(f"❌ 디렉토리 없음: {directory}")
+        return 2
+
+    report = run_sanity_check(directory, prefix_threshold=args.threshold)
+    print(report.to_text())
+
+    if args.json:
+        out = Path(args.json)
+        out.parent.mkdir(parents=True, exist_ok=True)
+        payload = {
+            "directory": report.directory,
+            "file_count": report.file_count,
+            "record_count": report.record_count,
+            "valid_count": report.valid_count,
+            "issue_count": report.issue_count,
+            "integrity_pct": round(report.integrity_pct, 2),
+            "prefix_counts": report.prefix_summary.prefix_counts,
+            "recommended_prefixes": list(report.prefix_summary.recommended_prefixes),
+            "issues_by_type": report.issues_by_type,
+            "sample_issues": report.sample_issues,
+        }
+        out.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
+        )
+        print(f"\n✓ JSON 저장: {out}")
+    return 0
+
+
 def cmd_account(args: argparse.Namespace) -> int:
     """본인 데이터 다운로드/삭제 — 개인정보보호법 §35-3·§36."""
     import json
@@ -1096,6 +1136,28 @@ def build_parser() -> argparse.ArgumentParser:
         help="권장 임계값 % (default 1.0)",
     )
     p_pd.set_defaults(func=cmd_prefix_discover)
+
+    # sanity-check — 자관 .mrc 진단 (PILOT 1주차 첫 30분 ★)
+    p_sc = sub.add_parser(
+        "sanity-check",
+        help="자관 .mrc 디렉토리 진단 (prefix + 정합률 + 위반 Top 5) — 사서 첫 만남 5분",
+    )
+    p_sc.add_argument(
+        "directory",
+        help="자관 .mrc 디렉토리 (재귀 검색)",
+    )
+    p_sc.add_argument(
+        "--threshold",
+        type=float,
+        default=1.0,
+        help="prefix 권장 임계값 % (default 1.0)",
+    )
+    p_sc.add_argument(
+        "--json",
+        default=None,
+        help="JSON 보고서 저장 경로 (KLA 슬라이드·영업 자료)",
+    )
+    p_sc.set_defaults(func=cmd_sanity_check)
 
     # interlibrary — 상호대차 양식 어댑터
     p_il = sub.add_parser(
