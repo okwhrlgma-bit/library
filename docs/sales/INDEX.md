@@ -109,8 +109,9 @@
 | [outreach-kolis-net-migration-2026-05.md](outreach-kolis-net-migration-2026-05.md) | KOLIS-NET 작은 6,830관 (6~12월·200통) |
 | [outreach-bibframe-lod-2026-05.md](outreach-bibframe-lod-2026-05.md) | KSLA 대학·NLK 디지털 (월 15~30만원) |
 | [outreach-kakao-openchat-2026-05.md](outreach-kakao-openchat-2026-05.md) | 카카오톡 오픈채팅 (5,000명+ 노출) |
+| [9-material-types-coverage-2026-05.md](9-material-types-coverage-2026-05.md) | 9 자료유형 100% 커버 차별화 (Phase 1.5 완성·KLA·대학·연구) |
 
-→ 영업 자료 12 → **16건**.
+→ 영업 자료 12 → **17건**.
 
 ## Sources
 

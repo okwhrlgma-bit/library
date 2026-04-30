@@ -1,7 +1,47 @@
 # 야간 자율 실행 로그 (2026-04-26 KST 시작)
 
 > NIGHT_RUN_PROTOCOL.md 표준 양식 따라 매 commit 변경 사유 기록.
-> 종료 게이트: pytest 통과 + binary_assertions 27/27 + commit.
+> 종료 게이트: pytest 통과 + binary_assertions 38/38 + commit.
+
+## v0.4.38 — 2026-04-30 새벽 (보류 3 해제 + Phase 1.5 완성)
+
+PO 4-30 "모두 보류 해제" 명령 — 4 commit 누적.
+
+### 핵심 ★
+
+- **KORMARC 9 자료유형 모듈 100% 커버 달성** (Phase 1.5 완성)
+- 보류 1: ebook·ejournal·audiobook 3 모듈 + 14 tests (29d7a86)
+- 보류 2: streamlit 메인 탭 6번째로 049 prefix 자동 발견 통합 (338e81d)
+- 보류 3: chaekdanbi 책단비 hwpx 자동 라벨 + ADR-0020 (ac70a28)
+- 자율 추가: multimedia·thesis 모듈 + 18 tests (808c494) — Phase 1.5 끝마무리
+
+### 신규 모듈 (5)
+
+- `kormarc/ebook.py` — 856 URL + 538 매체 + derive_008_23 (online/offline)
+- `kormarc/ejournal.py` — 022 ISSN + 310 발행빈도 + 362 권차 + FREQUENCY_CODES + derive_008_18_21
+- `kormarc/audiobook.py` — 007 음향 + 538 + 511 낭독자 + derive_008_23
+- `kormarc/multimedia.py` — 007 매체 부호 + 300 형태 + 306 재생시간 (HHMMSS 자동 정규화) + 538 NTSC·Region·돌비
+- `kormarc/thesis.py` — 502 학위논문 (▾b·▾c·▾d·▾g) + 504 + 700 지도교수 + format_502_text 한국 관례
+- `chaekdanbi/auto_label_generator.py` — 책단비 라벨 (python-hwpx 선택 의존성·미설치 시 .txt 폴백)
+- `ui/streamlit_app.py` — 049 prefix 자동 발견 탭 (디렉토리 입력·임계값 슬라이더·yaml snippet 다운로드)
+
+### ADR
+
+- ADR-0020 — chaekdanbi-hwpx-auto-label (선택 의존성 패턴)
+
+### 검증
+
+- 269 → **333 tests** (+64 신규: ebook/ejournal/audiobook 14 + chaekdanbi 8 + multimedia/thesis 18 + 기타 24)
+- binary_assertions 27 → **38/38 (100%)**
+- ruff 0 errors
+
+### 영업 정량
+
+- "9 자료유형 100% 커버" → 학교·대학·연구도서관 PILOT 차별화 셀링 포인트
+- 책단비 권당 5~7분 → 30초 (자관 5년 1,328건 → 누적 110시간 절감)
+- 멀티미디어·학위논문 권당 3~6분 → 30초 (대학·연구도서관 핵심)
+
+---
 
 ## v0.4.37 — 2026-04-29 저녁 (33 commit 시리즈 ★)
 
