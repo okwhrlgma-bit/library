@@ -42,11 +42,11 @@
 | 2 | 연속자료 | c/d | `kormarc/serial.py` ✅ |
 | 3 | 비도서 | b | `kormarc/non_book.py` ✅ |
 | 4 | 고서 | (별도) | `kormarc/rare_book.py` ✅ |
-| 5 | 전자책 | b/m | `kormarc/ebook.py` 🟡 |
-| 6 | 전자저널 | c | `kormarc/ejournal.py` 🟡 |
-| 7 | 오디오북 | j/m | `kormarc/audiobook.py` 🟡 |
-| 8 | 멀티미디어 | g/m | `kormarc/multimedia.py` 🟡 |
-| 9 | 학위논문 | (s + 502) | `kormarc/thesis.py` 🟡 |
+| 5 | 전자책 | b/m | `kormarc/ebook.py` ✅ |
+| 6 | 전자저널 | c | `kormarc/ejournal.py` ✅ |
+| 7 | 오디오북 | j/m | `kormarc/audiobook.py` ✅ |
+| 8 | 멀티미디어 | g/m | `kormarc/multimedia.py` ✅ |
+| 9 | 학위논문 | (s + 502) | `kormarc/thesis.py` ✅ |
 
 ## KDC 결정 우선순위
 

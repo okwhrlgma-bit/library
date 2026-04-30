@@ -34,7 +34,7 @@ KST 07:40 token 회복 후 재실행 또는 cloud routine 위임:
 
 ### 코드 (각 1~2시간)
 
-- [ ] streamlit_app.py에 prefix-discover 탭 통합 (별도 standalone 외 14탭 → 15탭) — STATUS_REALITY_CHECK 권고 신중
+- [x] streamlit_app.py에 prefix-discover 탭 통합 ✅ 338e81d (5 → 6 메인 탭)
 - [ ] /signup endpoint에 페르소나 자동 분류 (도서관명·이메일 도메인 패턴)
 - [x] /admin/stats에 페르소나별 funnel ✅ a1b07af·8fac5dc
 - [x] /webhook/portone POST endpoint ✅ b06f60e + 3 tests f73b4fd
@@ -60,7 +60,7 @@ KST 07:40 token 회복 후 재실행 또는 cloud routine 위임:
 
 ## 🟡 우선순위 2 — Phase 1+ 작업 (PO 결정 후)
 
-- [ ] **ADR 0021 PO 결정 후**: chaekdanbi/auto_label_generator.py (python-hwpx·KOLAS F12 엑셀 read·4 양식 hwp 자동) — Phase 1·5/2주차
+- [x] **ADR 0020**: chaekdanbi/auto_label_generator.py 선택 의존성 패턴 ✅ ac70a28 (8 tests·python-hwpx 미설치 시 .txt 폴백)
 - [ ] **ADR 0021 후**: inventory/kolas_f12_importer.py (xlsx 9 컬럼·EQ/CQ prefix·rapidfuzz fuzzy) — Phase 2·5/3주차
 - [ ] **ADR 0007 후**: 포트원 PG 실 SDK 통합 (charge·subscribe·tax invoice 실 구현)
 - [ ] **ADR 0013 후**: business-impact-axes.md hooks active (Q1·Q2·Q3·Q4·Q5 자동 측정)
@@ -71,11 +71,13 @@ KST 07:40 token 회복 후 재실행 또는 cloud routine 위임:
 
 PO MVP CHAPTER 9 명령상 단행본 우선. 본 항목은 단행본 정점 후:
 
-- [ ] kormarc/ebook.py (008 23 + 856 URL + 538 매체 자동)
-- [ ] kormarc/ejournal.py (022 ISSN + 310 발행빈도 + 362 권차 자동)
-- [ ] kormarc/audiobook.py (008 06=j + 007 + 538 음향 매체)
-- [ ] kormarc/multimedia.py (g 시청각자료)
-- [ ] kormarc/thesis.py 보강 (502 학위논문·학과·지도교수 자동)
+- [x] kormarc/ebook.py ✅ 29d7a86 (008 23 + 856 + 538)
+- [x] kormarc/ejournal.py ✅ 29d7a86 (022 + 310 + 362 + FREQUENCY_CODES)
+- [x] kormarc/audiobook.py ✅ 29d7a86 (007 + 538 + 511 낭독자)
+- [x] kormarc/multimedia.py ✅ (008 33 + 007 + 300 + 306 + 538) — Phase 1.5 완성
+- [x] kormarc/thesis.py ✅ (502 + 504 + 700 지도교수 + format_502_text) — Phase 1.5 완성
+
+→ **9 자료유형 모듈 100% 커버 달성** (KORMARC 2023.12 정합)
 
 ---
 
