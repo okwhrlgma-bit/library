@@ -4,7 +4,7 @@
 > ISBN 1번 입력 → KORMARC `.mrc` 5초 → **KOLAS III·독서로DLS·알파스 즉시 반입**.
 > **자관 .mrc 174 파일·3,383 레코드 → 99.82% 정합 검증 완료** (2026-04-29).
 
-[![tests](https://img.shields.io/badge/tests-303%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary_assertions-38%2F38-brightgreen)]() [![ADR](https://img.shields.io/badge/ADR-16건-blue)]() [![매뉴얼](https://img.shields.io/badge/매뉴얼-14_Part-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![자관 정합](https://img.shields.io/badge/자관_.mrc-99.82%25-brightgreen)]() [![5중 자동화](https://img.shields.io/badge/5중_자동화-Cloud%2BActions-blue)]() [![CLAUDE.md](https://img.shields.io/badge/CLAUDE.md-206줄_slim-blue)]()
+[![release](https://img.shields.io/badge/release-v0.5.0-blue)]() [![tests](https://img.shields.io/badge/tests-462%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary_assertions-38%2F38-brightgreen)]() [![매뉴얼](https://img.shields.io/badge/연구-Part_86-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![자관 정합](https://img.shields.io/badge/자관_.mrc-99.82%25-brightgreen)]() [![페르소나](https://img.shields.io/badge/페르소나-122명_11_subagent-blue)]() [![PMF](https://img.shields.io/badge/PMF-Sean_Ellis_62.5%25-brightgreen)]()
 
 **한국 도서관 사서**가 매일 부딪히는 KORMARC 마크 작업을 권당 8분 → 2분으로 단축. 사서 출신 1인 개발자가 자관 「내를건너서 숲으로 도서관」 PILOT을 거쳐 만든 SaaS.
 
@@ -153,13 +153,14 @@ kormarc-auto/
 
 ---
 
-## Phase별 진척 (v0.4.37 / 2026-04-29)
+## Phase별 진척 (v0.5.0 / 2026-05-03)
 
 - ✅ Phase 1 — ISBN → KORMARC + KOLAS 자동 반입
 - ✅ Phase 2 — Vision 2단계 (Haiku ISBN → Sonnet 종합) + prompt caching
 - ✅ Phase 3 — KDC AI 추천 + 880 한자 병기 자동
 - ✅ Phase 4 — Streamlit 14탭 + 모바일 반응형 + Pretendard 사서 친화 테마
 - ✅ Phase 5 — FastAPI REST + X-API-Key + 사용량 카운터 + B2B + 결제 안내
+- ✅ **Phase 6 (v0.5.0)** — 야간 사이클 (Part 76~86) + 사서 친화 + 자관 특이성 + 122 페르소나 11 subagent
 
 ### v0.4.x 자율 흡수 (PO 자료 기반)
 
@@ -187,19 +188,33 @@ kormarc-auto/
 - `DELETE /account/delete` — 본인 데이터 영구 삭제 (§36)
 - `POST /legal/deposit-form` — 납본 별지 제3호서식 PDF
 
-테스트 **269건 통과**, binary_assertions **27/27**, ruff 0 errors. 자세한 내용은 `CLAUDE.md §11 변경 이력`.
+테스트 **462건 통과**, binary_assertions **38/38**, ruff 0 errors. 자세한 내용은 `CLAUDE.md §11 변경 이력`.
 
-### 4-Part 종합 매뉴얼 (113,500자)
+### v0.5.0 신규 모듈 43+ (사서 페인 → 코드)
 
-- `docs/research/part1-vibe-coding-and-claude-code.md` — 바이브 코딩 + Claude Code 깊이
-- `docs/research/part2-kormarc-implementation.md` — KORMARC/KOLAS/DLS 구현 디테일 + 명령서 풀세트
-- `docs/research/part3-librarian-workflows.md` — 사서 실무 워크플로우 (페르소나별)
-- `docs/research/part4-uiux-seo-marketing-deployment.md` — UI/UX + SEO + 마케팅·배포
+- **kormarc/**: authority_control · subject_heading · contents_summary · series_uniform_title · responsibility_statement · accessibility_books · withdrawn_processor · title_245_validator
+- **intelligence/**: library_knowledge_base · librarian_agent · pain_discovery · pmf_validator · new_librarian_onboarding · digitization_helper
+- **safety/**: incident_logger · abuse_response_manual · night_safety_protocol · disaster_response
+- **output/**: dls_exporter · label_printer · event_poster_template · library_evaluation_report · libsta_statistics · sns_marketing_helper · nontact_service_helper · handover_manual · school_budget_form
+- **acquisition/**: decision_helper · donation_processor · book_curation_engine · personalized_recommender · collection_balance_analyzer
+- **ui/**: librarian_satisfaction_tracker (NPS/CSAT/CES) · personal_stats_dashboard · school_librarian_dashboard · librarian_competency_tracker · persona_vocabulary
+- **interlibrary/**: interlibrary_5systems (책바다·책나래·책이음·책두레·책단비) · consortium_helper · library_hierarchy
+- **librarian_helpers/**: call_number_validator · **library_specificity** (지역별 정책 + builder 통합)
 
-### 영업 자료
+### 14-Part 종합 매뉴얼 + 86-Part 연구 (Part 1~86)
 
-- `docs/sales/pilot-package-2026-04-29.md` — 자관 PILOT 4주 + 4 페르소나 메일 + Q&A 10건
-- `docs/sales/kla-2026-presentation-outline.md` — KLA 5.31 발표 outline 1차 (15 슬라이드)
+- `docs/research/part1~4-*` — 바이브 코딩 + KORMARC/KOLAS/DLS + 사서 워크플로우 + UI/UX/SEO/마케팅 (113,500자)
+- `docs/research/part15~85-*` — 60+ 야간 사이클 연구 (감정노동·KOLAS·임금·자치구·경쟁·페르소나)
+- `docs/research/part86-similar-automation-papers-2026-05.md` — **유사 자동화·논문 조사** (MarcAI·OCLC·Annif·BIBFRAME·MDPI 4-Agent·PCC LC + 국내 KORMARC SaaS 학술 공백 검증)
+
+### 영업 자료 (40+ 문서)
+
+- `docs/sales/pilot-package-2026-04-29.md` — 자관 PILOT 4주 + 4 페르소나
+- `docs/sales/kla-2026-presentation-outline.md` — KLA 5.31 발표 (15 슬라이드)
+- `docs/sales/27~40-*` — 알파스 마이그·학교 S2B·Alma·자치구 조달·KLA·AI 바우처·디딤돌·LR1 권위자·콜드메일 50·생애주기 10·자치구 25관·상표
+- `docs/legal/dpa-data-processing-agreement-2026-05.md` — PIPA 정합 DPA
+- `docs/legal/sla-service-level-agreement-2026-05.md` — 99.5/99.9/99.95% tier
+- `docs/legal/refund-policy-2026-05.md` — 1주 100% 환불
 
 ---
 
