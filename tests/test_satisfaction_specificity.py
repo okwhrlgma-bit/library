@@ -5,10 +5,10 @@ from __future__ import annotations
 def test_librarian_satisfaction_basic():
     from kormarc_auto.ui.librarian_satisfaction_tracker import (
         SatisfactionResponse,
-        calculate_nps,
-        calculate_csat,
-        calculate_ces,
         analyze_by_persona,
+        calculate_ces,
+        calculate_csat,
+        calculate_nps,
     )
 
     # NPS = 60 (Promoter 7·Passive 2·Detractor 1)
@@ -47,11 +47,11 @@ def test_librarian_satisfaction_basic():
 
 def test_library_specificity_basic():
     from kormarc_auto.librarian_helpers.library_specificity import (
+        REGIONAL_POLICIES,
         LibrarySpecificity,
-        get_regional_policy,
         auto_apply_specificity,
         detect_library_pattern,
-        REGIONAL_POLICIES,
+        get_regional_policy,
     )
 
     # 지역별 정책 (5+)

@@ -16,9 +16,9 @@
 ## 2. 강사 약력
 
 - 사서 출신 1인 개발자 [PO 이름]
-- 자관 「내를건너서 숲으로 도서관」 (시문학·윤동주 특화·은평구공공도서관 11개 중 1개·8명 운영) 사서
+- 자관 「○○도서관」 (시문학·윤동주 특화·공공도서관 1개·8명 운영) 사서
 - 5 시스템 운영자 (KOLAS III + 알파스 + 다우오피스 + Formtec + 한컴 한셀)
-- xlsm 매크로 자작 200KB+ (조기흠 사서 패턴)
+- xlsm 매크로 자작 200KB+ (사서 E 사서 패턴)
 - kormarc-auto SaaS 개발자 (자관 PILOT 4주 검증 후 KLA 5.31 발표)
 - 메일: okwhrlgma@gmail.com · GitHub: [okwhrlgma-bit/library](https://github.com/okwhrlgma-bit/library)
 
@@ -43,7 +43,7 @@
 #### 도입 (5분) — 사서 공감대
 - 한국 도서관 사서 KORMARC 마크 작업 비효율 (권당 8분·1일 8~13시간)
 - 1인 사서 학교도서관·자원봉사 사서 86%·작은도서관 1,800곳 도구 부재
-- 자관 「내를건너서 숲으로 도서관」 사례 (xlsm 4,233개·5년 책단비 1,328건·6년 NPS)
+- 자관 「○○도서관」 사례 (xlsm 4,233개·5년 책단비 1,328건·6년 NPS)
 
 #### 표준 정합 (10분) — KORMARC 2023.12
 - KS X 6006-0:2023.12 (NLK 2차 개정) 9 자료유형
@@ -140,7 +140,7 @@
 
 ## Sources
 
-- 자관 「내를건너서 숲으로 도서관」 4주 PILOT (5월 진행)
+- 자관 「○○도서관」 4주 PILOT (5월 진행)
 - `docs/sales/pilot-package-2026-04-29.md` (4 페르소나 영업 메일)
 - `docs/sales/kla-2026-presentation-outline.md` (KLA 슬라이드)
 - `docs/research/part2-kormarc-implementation.md` (KORMARC 구현 디테일)

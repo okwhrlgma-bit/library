@@ -1249,7 +1249,7 @@ def _tab_prefix_discover() -> None:
     """049 ▾l 등록번호 prefix 자동 발견 탭.
 
     PILOT 첫 주: 사서가 자관 .mrc 디렉토리를 지정하면 prefix 분포를 자동 분석해
-    config.yaml에 붙여넣을 snippet을 출력. 자관 「내를건너서 숲으로 도서관」
+    config.yaml에 붙여넣을 snippet을 출력. 자관 「○○도서관」
     실측 = 99.82% 정합 (4-29).
     """
     st.subheader("049 prefix 자동 발견")

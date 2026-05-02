@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from datetime import date
-from pathlib import Path
 
 from kormarc_auto.output.handover_manual import (
     HandoverManualData,

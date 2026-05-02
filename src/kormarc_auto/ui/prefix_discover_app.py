@@ -38,7 +38,7 @@ def main() -> None:
 
     directory = st.text_input(
         "자관 .mrc 디렉토리 경로",
-        value="D:/내를건너서 숲으로 도서관/수서",
+        value="D:/○○도서관/수서",
         help="KOLAS·알파스 출력 .mrc 파일이 있는 폴더. 재귀 검색.",
     )
 

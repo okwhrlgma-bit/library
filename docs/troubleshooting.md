@@ -119,8 +119,8 @@
 **해결**:
 ```bash
 # 자관 PILOT 사전 검증
-python -m kormarc_auto.cli validate D:/내를건너서\ 숲으로\ 도서관/수서/2024/2024_마크파일/정기1차/*.mrc \
-  --library-id eunpyeong_naesum \
+python -m kormarc_auto.cli validate "D:/PILOT_자관/수서/2024/2024_마크파일/정기1차/*.mrc" \
+  --library-id pilot_lib \
   --encoding-auto-detect
 ```
 

@@ -73,7 +73,7 @@ def normalize_size(value: str) -> str | None:
     value = value.strip().lower()
 
     # WxH 또는 W*H → 세로(=두 번째) 사용
-    m = re.search(r"(\d+)[x*×](\d+)", value.replace(" ", ""))  # noqa: RUF001
+    m = re.search(r"(\d+)[x*×](\d+)", value.replace(" ", ""))
     if m:
         h_mm = int(m.group(2))
         h_cm = round(h_mm / 10) if h_mm > 50 else h_mm  # >50이면 mm로 가정

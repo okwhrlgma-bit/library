@@ -11,8 +11,8 @@
 
 | 자료 | 사용 시점 | 분량 |
 |---|---|---|
-| **[pilot-week1-action-manual.md](pilot-week1-action-manual.md)** | 5/1주 월 18:00 (조기흠 매크로·30분) |
-| **[pilot-week2-action-manual.md](pilot-week2-action-manual.md)** | 5/2주 (박지수 수서·60분) |
+| **[pilot-week1-action-manual.md](pilot-week1-action-manual.md)** | 5/1주 월 18:00 (사서 E 매크로·30분) |
+| **[pilot-week2-action-manual.md](pilot-week2-action-manual.md)** | 5/2주 (사서 A 수서·60분) |
 | **[pilot-week3-action-manual.md](pilot-week3-action-manual.md)** | 5/3주 (종합 4명·90분) |
 | **[pilot-week4-action-manual.md](pilot-week4-action-manual.md)** | 5/4~5주 통합 + KLA 5.31 마감 ★★ |
 | **[pilot-package-2026-04-29.md](pilot-package-2026-04-29.md)** | 자관 4주 시나리오 + 4 페르소나 메일 + Q&A 10건 |
@@ -55,8 +55,8 @@
 
 | 페르소나 | 비중 | 권장 플랜 | 영업 자료 |
 |---|---|---|---|
-| ★ Excel 매크로 사서 (조기흠) | 1순위·전국 1,500~2,500명 | 월 5만원 | pilot-week1·pilot-package §2.1 |
-| 수서 사서 (박지수) | 2순위·KOLAS 1,271관 | 월 3~15만원 | pilot-package §2.2 |
+| ★ Excel 매크로 사서 (사서 E) | 1순위·전국 1,500~2,500명 | 월 5만원 | pilot-week1·pilot-package §2.1 |
+| 수서 사서 (사서 A) | 2순위·KOLAS 1,271관 | 월 3~15만원 | pilot-package §2.2 |
 | 종합 사서 (4명) | 3순위·학교 12,200관 86% 자원봉사 | 월 3~5만원 | pilot-package §2.3·outreach-small-school §2 |
 | 영상 편집 사서 | 영업 X | - | pilot-package §2.4 |
 
@@ -67,9 +67,9 @@
 | 주차 | 날짜 | 액션 | 자료 |
 |---|---|---|---|
 | 5/1주 | 5/4 ~ 5/10 | Phase 0 MVP 안정화 + 자관 사서 8명 PILOT 4주 회의 | pilot-week1 |
-| 5/2주 | 5/11 ~ 5/17 | PILOT 1주 (조기흠 매크로 사서·30분 시연) | pilot-week1·cheatsheet |
+| 5/2주 | 5/11 ~ 5/17 | PILOT 1주 (사서 E 매크로 사서·30분 시연) | pilot-week1·cheatsheet |
 | 5/3주 | 5/18 ~ 5/24 | PILOT 2주 (책단비 hwp 자동 60분) | pilot-package §1.2 |
-| 5/4주 | 5/25 ~ 5/30 | PILOT 3주 (수서 박지수 60분) + KLA 슬라이드 채움 + 도서관저널 메일 | kla outline·library-journal |
+| 5/4주 | 5/25 ~ 5/30 | PILOT 3주 (수서 사서 A 60분) + KLA 슬라이드 채움 + 도서관저널 메일 | kla outline·library-journal |
 | 5/5주 | 5/31 | ★ KLA 전국도서관대회 발표 신청 마감 + 부스 PILOT 모집 | kla outline |
 | 6/1주 | 6/1 ~ 6/7 | 학교·작은·공공 PILOT 5관 모집 메일 250통 | outreach-small-school |
 
@@ -115,7 +115,7 @@
 
 ## Sources
 
-- 자관 「내를건너서 숲으로 도서관」 4주 PILOT (5월 진행)
+- 자관 「○○도서관」 4주 PILOT (5월 진행)
 - `docs/research/part1~6` (6-Part 매뉴얼 113,500자)
 - `docs/research/part7-other-libraries-mrc-cases-2026.md` (타관 KORMARC 정합·22,152자·★ 자관 99.82% +40~64%p 우위·KOLAS 종료 골든 윈도우)
 - `docs/research/part8-competitor-library-tools-2026.md` (한국 도구 40+종·9,500자·차별화 5종·협력 5종)

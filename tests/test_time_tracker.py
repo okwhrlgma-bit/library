@@ -3,7 +3,6 @@ from __future__ import annotations
 
 import json
 import time
-from pathlib import Path
 
 import pytest
 
@@ -12,7 +11,6 @@ from kormarc_auto.ui.time_tracker import (
     ProcessingEvent,
     UserStats,
     get_user_stats,
-    track_processing,
 )
 
 
@@ -51,9 +49,8 @@ def test_track_processing_marks_failure_on_exception(tmp_path, monkeypatch) -> N
 
     user_id = "test_user_fail"
 
-    with pytest.raises(ValueError):
-        with tt.track_processing(user_id=user_id, isbn="123", method="single"):
-            raise ValueError("test failure")
+    with pytest.raises(ValueError), tt.track_processing(user_id=user_id, isbn="123", method="single"):
+        raise ValueError("test failure")
 
     user_file = tmp_path / f"{user_id}.jsonl"
     with user_file.open("r", encoding="utf-8") as f:

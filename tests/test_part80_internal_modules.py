@@ -5,11 +5,10 @@ import json
 from datetime import date, datetime
 from pathlib import Path
 
-import pytest
-
 
 def test_authority_control_basic():
     from pymarc import Record
+
     from kormarc_auto.kormarc.authority_control import add_authority_fields, detect_homonym
 
     record = Record()
@@ -34,6 +33,7 @@ def test_authority_control_basic():
 
 def test_subject_heading_basic():
     from pymarc import Record
+
     from kormarc_auto.kormarc.subject_heading import add_subject_headings
 
     record = Record()
@@ -45,6 +45,7 @@ def test_subject_heading_basic():
 
 def test_contents_summary_basic():
     from pymarc import Record
+
     from kormarc_auto.kormarc.contents_summary import add_contents_summary
 
     record = Record()
@@ -60,6 +61,7 @@ def test_contents_summary_basic():
 
 def test_series_uniform_title_basic():
     from pymarc import Record
+
     from kormarc_auto.kormarc.series_uniform_title import add_series_fields
 
     record = Record()
@@ -71,7 +73,10 @@ def test_series_uniform_title_basic():
 
 
 def test_responsibility_statement_basic():
-    from kormarc_auto.kormarc.responsibility_statement import build_responsibility_statement, is_translation
+    from kormarc_auto.kormarc.responsibility_statement import (
+        build_responsibility_statement,
+        is_translation,
+    )
 
     rs = build_responsibility_statement(
         {"author": "홍길동", "translator": "김철수", "illustrator": "이영희"}
@@ -222,9 +227,9 @@ def test_accessibility_books_basic():
 
 def test_export_formats_basic():
     from kormarc_auto.output.export_formats import (
+        export_jsonld,
         export_marcxml,
         export_mods,
-        export_jsonld,
         export_oai_pmh,
     )
 
@@ -255,9 +260,9 @@ def test_export_formats_basic():
 
 def test_label_printer_basic():
     from kormarc_auto.output.label_printer import (
-        render_label_html,
-        render_label_batch_html,
         LABEL_DIMENSIONS_MM,
+        render_label_batch_html,
+        render_label_html,
     )
 
     html = render_label_html(

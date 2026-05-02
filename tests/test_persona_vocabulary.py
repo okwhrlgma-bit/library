@@ -45,7 +45,7 @@ def test_non_expert_avoids_jargon() -> None:
         for jargon in jargon_terms:
             if jargon in non_expert and key not in {"system.kolas", "system.dls", "system.alpas"}:
                 # 시스템 호환 명시는 예외
-                assert False, f"비전문가 모드에 전문 용어 {jargon} 노출: {key}"
+                raise AssertionError(f"비전문가 모드에 전문 용어 {jargon} 노출: {key}")
 
 
 def test_t_function_returns_correct_mode() -> None:

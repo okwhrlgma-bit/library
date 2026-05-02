@@ -4,15 +4,13 @@ from __future__ import annotations
 from datetime import date
 from pathlib import Path
 
-import pytest
-
 
 def test_interlibrary_5systems_basic():
     from kormarc_auto.interlibrary.interlibrary_5systems import (
-        System,
         SYSTEM_DATABASE,
-        recommend_system,
+        System,
         get_info,
+        recommend_system,
     )
 
     # 5 시스템 모두 등록
@@ -81,9 +79,9 @@ def test_marc_importer_mods():
 
 def test_new_subject_learner_basic():
     from kormarc_auto.classification.new_subject_learner import (
+        NEW_SUBJECTS_KDC,
         detect_new_subject,
         is_new_subject_book,
-        NEW_SUBJECTS_KDC,
     )
 
     # AI 책
@@ -134,10 +132,8 @@ def test_library_evaluation_report_basic():
 def test_pain_discovery_system_basic(tmp_path: Path):
     from kormarc_auto.intelligence.pain_discovery import (
         Pain,
-        ICEScore,
-        calculate_ice,
-        prioritize,
         PainDiscoverySystem,
+        calculate_ice,
     )
 
     pain = Pain(

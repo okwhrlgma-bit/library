@@ -8,9 +8,8 @@ NPS·CSAT·CES 자동 측정 + 페르소나별 분석 + Mem0 학습.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import date, datetime
+from datetime import datetime
 from typing import Literal
-
 
 SatisfactionMetric = Literal["nps", "csat", "ces"]
 
@@ -132,16 +131,16 @@ def render_satisfaction_survey(librarian_persona: str = "general") -> str:
     st.markdown("### 📊 사서 만족도 설문 (1분)")
     st.caption("선생님 의견이 다음 사서들에게 큰 도움이 됩니다.")
 
-    nps = st.slider(
+    _nps = st.slider(
         "**NPS** — 동료 사서에게 추천하시겠어요? (0~10)",
         min_value=0, max_value=10, value=8,
         help="9~10 = 적극 추천 / 7~8 = 만족 / 0~6 = 개선 필요",
     )
-    csat = st.slider(
+    _csat = st.slider(
         "**만족도 (CSAT)** — kormarc-auto에 얼마나 만족하세요? (1~5)",
         min_value=1, max_value=5, value=4,
     )
-    ces = st.slider(
+    _ces = st.slider(
         "**사용 편의성 (CES)** — 사용이 얼마나 어려우신가요? (1=매우 쉬움 ~ 5=매우 어려움)",
         min_value=1, max_value=5, value=2,
     )
@@ -159,9 +158,9 @@ def render_satisfaction_survey(librarian_persona: str = "general") -> str:
 __all__ = [
     "SatisfactionMetric",
     "SatisfactionResponse",
-    "calculate_nps",
-    "calculate_csat",
-    "calculate_ces",
     "analyze_by_persona",
+    "calculate_ces",
+    "calculate_csat",
+    "calculate_nps",
     "render_satisfaction_survey",
 ]

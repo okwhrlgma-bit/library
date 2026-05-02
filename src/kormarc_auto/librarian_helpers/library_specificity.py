@@ -19,7 +19,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Literal
 
-
 RegionalGovernment = Literal[
     "seoul_gangnam", "seoul_songpa", "seoul_seocho", "seoul_nowon", "seoul_eunpyeong",
     "seoul_other", "gyeonggi", "incheon", "busan", "daegu", "gwangju", "daejeon",
@@ -173,11 +172,11 @@ def detect_library_pattern(history: list[dict]) -> dict:
 
 
 __all__ = [
-    "LibrarySpecificity",
-    "RegionalGovernment",
     "REGIONAL_POLICIES",
     "SHELF_KEYWORD_MAP",
-    "get_regional_policy",
+    "LibrarySpecificity",
+    "RegionalGovernment",
     "auto_apply_specificity",
     "detect_library_pattern",
+    "get_regional_policy",
 ]

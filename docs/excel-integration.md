@@ -139,7 +139,7 @@ kormarc-auto xlsm fill-from-library 자관_매크로_xlsm.xlsm --library-id eunp
 | 자관 자작 매크로 | 우리 SaaS Python |
 |---|---|
 | 신착도서 간지 출력.xlsm (VBA 171KB) | `output/insert_paper.py` (신규) |
-| 상호대차 요청도서 쪽지8장 양식.xlsm (VBA 148~200KB, 조기흠) | `interlibrary/request_label_generator.py` (신규) |
+| 상호대차 요청도서 쪽지8장 양식.xlsm (VBA 148~200KB, 사서 E) | `interlibrary/request_label_generator.py` (신규) |
 | 책단비띠지 ver.1·ver.2.xlsm (VBA 34~36KB) | `chaekdanbi/auto_label_generator.py` (ADR 0021) |
 
 → 자관 사서가 매크로 학습 X·우리 SaaS 클릭 1번 = 사서 매주 시간 절감.

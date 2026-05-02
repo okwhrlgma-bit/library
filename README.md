@@ -6,7 +6,7 @@
 
 [![release](https://img.shields.io/badge/release-v0.5.0-blue)]() [![tests](https://img.shields.io/badge/tests-462%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary_assertions-38%2F38-brightgreen)]() [![매뉴얼](https://img.shields.io/badge/연구-Part_86-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![자관 정합](https://img.shields.io/badge/자관_.mrc-99.82%25-brightgreen)]() [![페르소나](https://img.shields.io/badge/페르소나-122명_11_subagent-blue)]() [![PMF](https://img.shields.io/badge/PMF-Sean_Ellis_62.5%25-brightgreen)]()
 
-**한국 도서관 사서**가 매일 부딪히는 KORMARC 마크 작업을 권당 8분 → 2분으로 단축. 사서 출신 1인 개발자가 자관 「내를건너서 숲으로 도서관」 PILOT을 거쳐 만든 SaaS.
+**한국 도서관 사서**가 매일 부딪히는 KORMARC 마크 작업을 권당 8분 → 2분으로 단축. 사서 출신 1인 개발자가 자관 「○○도서관」 PILOT을 거쳐 만든 SaaS.
 
 > **검색 키워드**: KORMARC 자동, MARC 자동 생성, 도서관 사서 마크 자동화, ISBN MARC 변환, KOLAS 반입, 1인 사서 자동화, 작은도서관 마크, 학교도서관 KORMARC, 880 한자 병기 자동, KDC 자동 분류, 책단비 hwp 자동, 책나래 책바다 양식
 
@@ -145,11 +145,11 @@ kormarc-auto/
 
 | 페르소나 | 비중 | 우리 모듈 | 권장 플랜 |
 |---|---|---|---|
-| **★ Excel 매크로 자작 사서** (조기흠) | 1순위 ICP·전국 1,500~2,500명 | 책단비 4 양식 hwp 자동 | 월 5만원 |
-| **수서 사서** (박지수) | 2순위·KOLAS 1,271관 | 정보나루 인기 대출 + 자관 중복 알리미 | 월 3~15만원 |
-| **종합 사서** (김기수·박세진·신은미) | 3순위·학교 12,200관 86% 자원봉사 | 장서점검·월간 보고·연체 통계 | 월 3~5만원 |
+| **★ Excel 매크로 자작 사서** (사서 E) | 1순위 ICP·전국 1,500~2,500명 | 책단비 4 양식 hwp 자동 | 월 5만원 |
+| **수서 사서** (사서 A) | 2순위·KOLAS 1,271관 | 정보나루 인기 대출 + 자관 중복 알리미 | 월 3~15만원 |
+| **종합 사서** (사서 B·사서 C·사서 D) | 3순위·학교 12,200관 86% 자원봉사 | 장서점검·월간 보고·연체 통계 | 월 3~5만원 |
 
-자관 「내를건너서 숲으로 도서관」 8명 사서 = 4 페르소나 직접 검증. 자세한 시나리오는 `docs/research/part3-librarian-workflows.md`.
+자관 「○○도서관」 8명 사서 = 4 페르소나 직접 검증. 자세한 시나리오는 `docs/research/part3-librarian-workflows.md`.
 
 ---
 
@@ -272,7 +272,7 @@ KOLAS3 호환 + 책이음 동기화 + 책밴드 자체 상호대차. `.mrc` impo
 
 ## 사용처
 
-- ★ 자관 「내를건너서 숲으로 도서관」 (시문학·윤동주 특화·은평구공공도서관 11개 중 1개·8명 사서·4 페르소나)
+- ★ 자관 「○○도서관」 (시문학·윤동주 특화·공공도서관 1개·8명 사서·4 페르소나)
 - 5월 PILOT 모집 자관 (학교·작은·일반 공공·기증도서·자가출판 5관 예정)
 
 GitHub topics: `library`, `marc`, `kormarc`, `kolas`, `korean-library`, `cataloging`, `book-classification`, `kdc`, `880-field`, `bibframe`, `mods`, `librarian-tool`, `saas`, `streamlit`, `fastapi`, `claude-code`

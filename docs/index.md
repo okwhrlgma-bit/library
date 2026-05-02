@@ -238,7 +238,7 @@ ADR 0013 (사업 5질문) · 0014 (가격 4단) · 0015 (pii-guard) · 0021 (상
 | [pii-guard-hook-design.md](pii-guard-hook-design.md) | ADR 0015·0023·0032·0036·0064·0084 (6 통합) — Reader entity·PII 5종·자관 PII 영역 자동 차단 |
 | [business-impact-check-hook-design.md](business-impact-check-hook-design.md) | ADR 0014 — commit message 5질문 점수 강제·종합 ≥ 75 자동 검증 |
 | [dependency-business-hook-design.md](dependency-business-hook-design.md) | ADR 0085 신규 — 의존성 사업가치·라이선스·메타 자동 검증 |
-| [d-drive-xlsm-macros-audit.md](d-drive-xlsm-macros-audit.md) | 자관 xlsm 4,233 매크로 천국 + 조기흠 사서 자작 + 동등 기능 Python 구현 |
+| [d-drive-xlsm-macros-audit.md](d-drive-xlsm-macros-audit.md) | 자관 xlsm 4,233 매크로 천국 + 사서 E 사서 자작 + 동등 기능 Python 구현 |
 | [saseo-personas-2026-04-28.md](saseo-personas-2026-04-28.md) | **자관 사서 8명 → 4 페르소나 매트릭스** (★ 매크로·수서·종합·영상 X) + ICP 영업 우선순위 |
 | [po-pilot-readiness-checklist.md](po-pilot-readiness-checklist.md) | **PO 자관 PILOT 시작 체크리스트** — 9 ADR 결정·라이선스·5월 마감·기술 7 액션·4주 일정·6 KPI |
 | [central-institutions-update-2026-04-28.md](central-institutions-update-2026-04-28.md) | 15 기관 정합 갱신 + 5 정정·5 신규 발견 |

@@ -6,9 +6,9 @@ from datetime import date
 
 def test_decision_helper_basic():
     from kormarc_auto.acquisition.decision_helper import (
-        recommend_books,
-        evaluate_neutrality,
         calculate_decision_score,
+        evaluate_neutrality,
+        recommend_books,
     )
 
     candidates = [
@@ -78,9 +78,8 @@ def test_withdrawn_processor_basic():
 
 def test_event_poster_template_basic():
     from kormarc_auto.output.event_poster_template import (
-        render_event_poster,
         THEME_COLORS,
-        EventType,
+        render_event_poster,
     )
 
     poster = render_event_poster(
@@ -105,10 +104,9 @@ def test_event_poster_template_basic():
 
 def test_abuse_response_manual_basic():
     from kormarc_auto.safety.abuse_response_manual import (
-        get_response,
-        determine_escalation_level,
         RESPONSE_TEMPLATES,
-        ResponseLevel,
+        determine_escalation_level,
+        get_response,
     )
 
     # 4 사고 유형 모두 매뉴얼

@@ -4,9 +4,9 @@ from __future__ import annotations
 
 def test_consortium_helper_basic():
     from kormarc_auto.interlibrary.consortium_helper import (
-        recommend_consortium_join,
-        get_consortium_info,
         CONSORTIUM_DATABASE,
+        get_consortium_info,
+        recommend_consortium_join,
     )
 
     # 6 컨소시엄 모두 등록
@@ -34,8 +34,8 @@ def test_librarian_competency_tracker_basic():
         COMPETENCY_AREAS,
         CompetencyScore,
         calculate_overall_competency,
-        kormarc_auto_boost,
         generate_competency_report,
+        kormarc_auto_boost,
     )
 
     # 10 영역

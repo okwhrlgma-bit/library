@@ -129,7 +129,7 @@ if __name__ == "__main__":
     )
 
     print("=== Prompt Cache 절감 시뮬레이션 ===")
-    print(f"월간 입력: 10M tokens / 출력: 2M tokens / 캐시 히트율: 85%")
+    print("월간 입력: 10M tokens / 출력: 2M tokens / 캐시 히트율: 85%")
     print(f"캐시 X 비용: ${sim['no_cache_cost_usd']}/월")
     print(f"캐시 적용 비용: ${sim['with_cache_cost_usd']}/월")
     print(f"절감액: ${sim['savings_usd']}/월 ({sim['savings_pct']}%)")

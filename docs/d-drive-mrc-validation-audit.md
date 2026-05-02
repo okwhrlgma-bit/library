@@ -93,7 +93,7 @@ kolas_register:
 # tests/integration/d_drive_mrc_validation.py
 def test_d_drive_mrc_full_validation():
     """자관 .mrc 174 파일 전체 4단 검증 → 정합률 측정."""
-    D = Path(r'D:\내를건너서 숲으로 도서관')
+    D = Path(r'D:\○○도서관')
     mrc_files = list((D / '수서').rglob('*.mrc'))
     
     total_records = 0
@@ -127,7 +127,7 @@ def test_d_drive_mrc_full_validation():
 
 ## 5. 영업 메시지 — PILOT 직접 검증
 
-> "자관(내를건너서 숲으로 도서관)이 2024년 한 해 동안 작성한 KORMARC iso2709 .mrc 174 파일 (약 8,700 레코드)을 우리 SaaS 4단 검증으로 통과시킨 결과:
+> "자관(○○도서관)이 2024년 한 해 동안 작성한 KORMARC iso2709 .mrc 174 파일 (약 8,700 레코드)을 우리 SaaS 4단 검증으로 통과시킨 결과:
 >
 > - **정합률 ≥ 99%** (무작위 5 샘플 234 레코드 100% 통과)
 > - M 필수 필드 10종 (005·007·008·020·049·056·090·245·260·300) 모두 100% 출현
@@ -159,6 +159,6 @@ def test_d_drive_mrc_full_validation():
 
 ## 8. Sources
 
-- D 드라이브: `D:\내를건너서 숲으로 도서관\수서\2024\2024_마크파일\` (40 차수 / 174 .mrc)
+- D 드라이브: `D:\○○도서관\수서\2024\2024_마크파일\` (40 차수 / 174 .mrc)
 - pymarc 라이브러리: https://github.com/edsu/pymarc
 - KORMARC 통합서지용 KS X 6006-0:2023 (NLK 공식)

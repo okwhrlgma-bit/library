@@ -1,6 +1,6 @@
-# PILOT 2주차 액션 매뉴얼 — 박지수 수서 사서 60분 시연
+# PILOT 2주차 액션 매뉴얼 — 사서 A 수서 사서 60분 시연
 
-> **대상**: 자관 「내를건너서 숲으로 도서관」 박지수 사서 (수서·2순위 ICP)
+> **대상**: 자관 「○○도서관」 사서 A 사서 (수서·2순위 ICP)
 > **시간**: 5월 둘째주 협의 시간 60분 (자관 폐관 직후 권장)
 > **목표**: 수서 9 워크플로우 자동화 검증 + Q1 결제 의향 2차 측정 + NPS 2차
 
@@ -13,10 +13,10 @@
 | ☐ | 노트북 + Wi-Fi (mobile hotspot 백업) |
 | ☐ | `cd kormarc-auto && .\.venv\Scripts\Activate.ps1 && kormarc-auto info` |
 | ☐ | 정보나루 인기 대출 API 키 확인 (DATA4LIBRARY_AUTH_KEY) |
-| ☐ | 박지수 사서 최근 수서 후보 30권 ISBN 메모 |
+| ☐ | 사서 A 사서 최근 수서 후보 30권 ISBN 메모 |
 | ☐ | 자관 KOLAS 마크 반입 폴더 + 알파스 책밴드 폴더 경로 확인 |
 | ☐ | 카카오톡 음성 녹음 ON |
-| ☐ | 본 매뉴얼 + week1 결과 (`logs/interviews/2026-05-XX_조기흠.json`) 폰에 |
+| ☐ | 본 매뉴얼 + week1 결과 (`logs/interviews/2026-05-XX_사서 E.json`) 폰에 |
 
 ---
 
@@ -24,7 +24,7 @@
 
 ### 1-1. 인사 + 1주차 결과 공유 (5분)
 
-> "박지수 사서님. 1주차 매크로 사서 시연 NPS [점수], 결제 의향 [HIGH/MID]가 나왔습니다. 오늘은 사서님 본업인 수서 9 워크플로우 자동화를 60분 동안 검증하겠습니다."
+> "사서 A 사서님. 1주차 매크로 사서 시연 NPS [점수], 결제 의향 [HIGH/MID]가 나왔습니다. 오늘은 사서님 본업인 수서 9 워크플로우 자동화를 60분 동안 검증하겠습니다."
 
 ### 1-2. 정보나루 인기 대출 자동 import (15분)
 
@@ -33,7 +33,7 @@ kormarc-auto wishlist --input pilot_2week.txt --output reports/wishlist_2week.js
 ```
 
 - 자관 중복·KDC 균형·예상 비용 자동 출력
-- 박지수 사서 화면 함께 검토
+- 사서 A 사서 화면 함께 검토
 
 **측정**:
 - 시간: 수동 30분 → 자동 ___ 분 (목표 < 5분)
@@ -54,7 +54,7 @@ kormarc-auto wishlist --input pilot_wishlist_2week.txt --offline
 
 - 자관 신착 5권을 KOLIS-NET 검색
 - 다른 도서관 분류 (KDC) 비교
-- 박지수 결정 보조
+- 사서 A 결정 보조
 
 ### 1-5. Q1 결제 의향 + Q3 자산 (10분)
 
@@ -84,9 +84,9 @@ kormarc-auto wishlist --input pilot_wishlist_2week.txt --offline
 |---|---|
 | ☐ | `kormarc-auto pilot-collect --persona acquisition` 실행 → JSON |
 | ☐ | KLA outline `docs/sales/kla-2026-presentation-outline.md` S7 채워넣기 |
-| ☐ | 박지수 코멘트 5건 (시연 직후 신선) |
+| ☐ | 사서 A 코멘트 5건 (시연 직후 신선) |
 | ☐ | DECISIONS.md 1줄: Q1 결과 기준 다음 액션 |
-| ☐ | 박지수 카카오톡 감사 + 3주차 일정 확정 |
+| ☐ | 사서 A 카카오톡 감사 + 3주차 일정 확정 |
 
 ---
 
@@ -96,7 +96,7 @@ kormarc-auto wishlist --input pilot_wishlist_2week.txt --offline
 |---|---|
 | 정보나루 API 응답 느림 | 캐시 (7일 TTL) 활용·다음날 재시도 |
 | 자관 중복 알리미 정확도 ↓ | 수동 검토 보조 명시 (사서 결정 책임) |
-| 박지수 시간 부족 | 60분 → 30분 단축 (1-2 + 1-5만) |
+| 사서 A 시간 부족 | 60분 → 30분 단축 (1-2 + 1-5만) |
 | 부정 반응 | 솔직히 받기·"어떤 부분이 안 맞으신지" |
 
 ---
@@ -110,6 +110,6 @@ kormarc-auto wishlist --input pilot_wishlist_2week.txt --offline
 
 ## Sources
 
-- `docs/sales/pilot-week1-action-manual.md` (조기흠 30분·동일 패턴)
+- `docs/sales/pilot-week1-action-manual.md` (사서 E 30분·동일 패턴)
 - `docs/sales/pilot-package-2026-04-29.md` §1.3 (수서 사서 60분 시나리오)
 - `scripts/pilot_collect.py` (인터랙티브 수집)

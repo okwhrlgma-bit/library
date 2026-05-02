@@ -801,7 +801,7 @@ def cmd_prefix_discover(args: argparse.Namespace) -> int:
     """자관 .mrc 049 ▾l prefix 자동 발견 — 다른 자관 PILOT 1주차 도입 (5분).
 
     영업: PILOT 사서가 본인 .mrc 디렉토리만 지정 → config.yaml snippet 출력 →
-    바로 적용 가능. 자관 「내를건너서 숲으로 도서관」 4-29 발견 = WQ →
+    바로 적용 가능. 자관 「○○도서관」 4-29 발견 = WQ →
     99.82% 정합 도달.
     """
     from kormarc_auto.librarian_helpers.prefix_discovery import PrefixDiscoverer
@@ -1109,7 +1109,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p_pc.add_argument("--persona", default="macro",
                       choices=["macro", "acquisition", "general", "video"])
-    p_pc.add_argument("--library", default="내를건너서 숲으로 도서관")
+    p_pc.add_argument("--library", default="○○도서관")
     p_pc.set_defaults(func=cmd_pilot_collect)
 
     # sales-funnel — 영업 funnel (가입→활성→한도→결제)

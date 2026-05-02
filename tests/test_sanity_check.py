@@ -41,7 +41,7 @@ def test_sanity_report_threshold_passed_through(tmp_path: Path):
 
 def test_sanity_report_real_mrc_directory_if_exists():
     """자관 D 드라이브가 마운트된 환경에서만 실행."""
-    real_dir = Path("D:/내를건너서 숲으로 도서관/수서")
+    real_dir = Path("D:/○○도서관/수서")
     if not real_dir.exists():
         return  # 자관 외 환경에서는 skip
     report = run_sanity_check(real_dir)

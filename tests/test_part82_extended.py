@@ -43,8 +43,8 @@ def test_donation_processor_basic():
 
 def test_call_number_validator_basic():
     from kormarc_auto.librarian_helpers.call_number_validator import (
-        validate_call_number,
         suggest_call_number,
+        validate_call_number,
     )
 
     # 정상 = 적은 issue

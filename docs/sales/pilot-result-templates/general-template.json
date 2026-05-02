@@ -1,9 +1,9 @@
 {
   "_comment": "PILOT 3주차 — 종합 사서 (3순위 ICP). 장서점검·월간 보고·연체 통계.",
   "date": "2026-05-XX",
-  "library_name": "내를건너서 숲으로 도서관",
+  "library_name": "○○도서관",
   "library_type": "public",
-  "librarian_name": "김기수",
+  "librarian_name": "사서 B",
   "persona": "general",
   "persona_label": "종합 사서",
   "pilot_week": 3,

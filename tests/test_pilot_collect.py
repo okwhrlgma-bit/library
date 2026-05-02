@@ -33,14 +33,14 @@ def test_save_creates_file_with_correct_name(tmp_path, monkeypatch):
     monkeypatch.setattr(pilot_collect, "LOGS_DIR", tmp_path)
     record = {
         "date": "2026-05-12",
-        "library_name": "내를건너서 숲으로 도서관",
-        "librarian_name": "조기흠",
+        "library_name": "○○도서관",
+        "librarian_name": "사서 E",
         "nps": 9,
     }
     path = pilot_collect.save(record)
     assert path.exists()
     assert "2026-05-12" in path.name
-    assert "조기흠" in path.name
+    assert "사서" in path.name and "E" in path.name
     loaded = json.loads(path.read_text(encoding="utf-8"))
     assert loaded["nps"] == 9
 

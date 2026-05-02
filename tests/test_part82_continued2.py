@@ -6,12 +6,12 @@ from datetime import date
 
 def test_book_curation_engine_basic():
     from kormarc_auto.acquisition.book_curation_engine import (
+        AGE_GROUPS,
+        CURATION_THEMES,
         CurationCriteria,
         auto_select_theme,
         curate_books,
         generate_curation_markdown,
-        CURATION_THEMES,
-        AGE_GROUPS,
     )
 
     # 자동 테마
@@ -44,10 +44,9 @@ def test_book_curation_engine_basic():
 def test_night_safety_protocol_basic():
     from kormarc_auto.safety.night_safety_protocol import (
         SafetyCheck,
-        NIGHT_CHECKLIST,
+        emergency_contact_info,
         get_checklist,
         render_safety_log,
-        emergency_contact_info,
     )
 
     # 4 체크 유형 모두 매뉴얼
@@ -75,10 +74,10 @@ def test_night_safety_protocol_basic():
 
 def test_multilingual_helper_basic():
     from kormarc_auto.classification.multilingual_helper import (
+        LANGUAGE_CODES,
+        build_041_field,
         detect_language,
         is_translation,
-        build_041_field,
-        LANGUAGE_CODES,
     )
 
     # 한국어

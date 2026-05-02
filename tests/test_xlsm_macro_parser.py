@@ -1,8 +1,6 @@
 """xlsm_macro_parser 테스트 (Part 51 ADR-0070, P1 매크로 사서)."""
 from __future__ import annotations
 
-from pathlib import Path
-
 import pytest
 
 from kormarc_auto.ingest.xlsm_macro_parser import (

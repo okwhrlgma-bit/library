@@ -1,14 +1,14 @@
 """Part 82 신규 모듈 테스트 (libsta·신입 사서 적응)."""
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import date
 
 
 def test_libsta_statistics_basic():
     from kormarc_auto.output.libsta_statistics import (
         LibstaStatistic,
-        export_to_libsta_csv,
         calculate_kpi_summary,
+        export_to_libsta_csv,
     )
 
     stat = LibstaStatistic(

@@ -28,7 +28,7 @@ Accepted (2026-04-30)
 | 이메일 ".go.kr" or "공공" | general | 정부·공공 |
 | (default) | unknown | PO 수동 분류 |
 
-매크로 (조기흠 페르소나)는 도서관명·이메일로 자동 판단 어려움 → unknown 후 PO 수동 또는 PILOT 시연 시 분류.
+매크로 (사서 E 페르소나)는 도서관명·이메일로 자동 판단 어려움 → unknown 후 PO 수동 또는 PILOT 시연 시 분류.
 
 ## Consequences
 

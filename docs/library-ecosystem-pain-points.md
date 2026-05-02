@@ -1,6 +1,6 @@
 # 한국 도서관 프로그램 생태계 심화 분석 — '내를 건너서 숲으로' 사례 기반 확장
 
-> 사서 출신 1인 비개발자 PO가 근무한 "내를건너서 숲으로 작은도서관"의 KOLAS III + ECO RFID + 알파스 + 책바다·책나래·책이음·책단비 환경을 출발점으로, 전국 도서관 유형별 프로그램·페인포인트·연동 가능성을 종합 정리.
+> 사서 출신 1인 비개발자 PO가 근무한 "PILOT 자관 작은도서관"의 KOLAS III + ECO RFID + 알파스 + 책바다·책나래·책이음·책단비 환경을 출발점으로, 전국 도서관 유형별 프로그램·페인포인트·연동 가능성을 종합 정리.
 >
 > 선행 문서: `docs/po-library-integration-analysis.md`, `docs/real-library-d-drive-index.md`, `docs/kolas-modules-index.md`, `docs/librarian-domain.md`.
 

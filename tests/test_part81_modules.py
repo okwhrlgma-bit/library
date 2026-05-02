@@ -5,7 +5,6 @@ from __future__ import annotations
 def test_title_245_validator_basic():
     from kormarc_auto.kormarc.title_245_validator import (
         validate_245,
-        auto_fix_suggestions,
     )
 
     # 정상 245
@@ -40,7 +39,7 @@ def test_title_245_validator_basic():
                 "ind2": "0",
                 "subfields": [
                     {"code": "a", "value": "공동 저서"},
-                    {"code": "c", "value": "홍길동, 김철수, 이영희, 박지수 지음"},
+                    {"code": "c", "value": "홍길동, 김철수, 이영희, 사서 A 지음"},
                 ],
             }
         ]

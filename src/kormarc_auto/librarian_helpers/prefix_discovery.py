@@ -8,7 +8,7 @@ config 갱신 권장값 출력.
     summary = discoverer.scan(Path("D:/자관/수서"))
     # summary.recommended_prefixes == ('AB', 'CD', ...)
 
-영업 가치: 다른 자관 PILOT 즉시 99%+ 정합 도달 (자관 「내를건너서 숲으로
+영업 가치: 다른 자관 PILOT 즉시 99%+ 정합 도달 (자관 「PILOT 자관
 도서관」 4-29 실측 = WQ 1.7% 발견 → 99.82% 정합).
 """
 

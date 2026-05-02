@@ -2,7 +2,7 @@
 
 실행:
     python scripts/validate_real_mrc.py
-    python scripts/validate_real_mrc.py --dir "D:/내를건너서 숲으로 도서관/수서"
+    python scripts/validate_real_mrc.py --dir "D:/○○도서관/수서"
     python scripts/validate_real_mrc.py --json reports/real_mrc_2026-04-29.json
 
 영업 가치: 자관 PILOT 인용 자료 ★ — "우리 검증 모듈이 자관 .mrc 174건
@@ -37,7 +37,7 @@ from kormarc_auto.logging_config import setup_logging  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-DEFAULT_DIR = Path("D:/내를건너서 숲으로 도서관/수서")
+DEFAULT_DIR = Path("D:/○○도서관/수서")
 # 자관 등록번호 prefix (실측 D 드라이브 .mrc 174 파일·3,383 레코드 분포):
 # EQ 2,553건 (일반)·CQ 773건 (아동)·WQ 57건 (윤동주·시문학 별치)
 # EM/CM은 향후 영업 정책 (예약). config.yaml.kolas_register.registration_prefix

@@ -1,18 +1,18 @@
 """Part 82+ 추가 모듈 테스트 (SNS·비대면)."""
 from __future__ import annotations
 
-from datetime import date, datetime
+from datetime import date
 
 
 def test_sns_marketing_helper_basic():
     from kormarc_auto.output.sns_marketing_helper import (
-        generate_new_book_post,
+        LIBRARY_HASHTAGS,
         generate_curation_post,
         generate_event_post,
+        generate_new_book_post,
         generate_weekly_post_plan,
-        to_instagram_format,
         to_blog_format,
-        LIBRARY_HASHTAGS,
+        to_instagram_format,
     )
 
     # 신간
@@ -58,8 +58,8 @@ def test_sns_marketing_helper_basic():
 
 def test_nontact_service_helper_basic():
     from kormarc_auto.output.nontact_service_helper import (
-        NontactRequest,
         SERVICE_DESCRIPTIONS,
+        NontactRequest,
         estimate_service_time,
         generate_user_notification,
     )

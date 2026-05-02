@@ -47,7 +47,7 @@ STATUS_REALITY_CHECK 권고 (5페이지 분리)와 충돌 → 신중. 옵션:
 - [ ] python-hwpx 의존성 추가 (PO ADR 결정)
 - [ ] `chaekdanbi/auto_label_generator.py` (KOLAS F12 엑셀 read·4 양식 hwp)
 - [ ] 자관 책단비 5년 1,328건 자동 검증
-- [ ] 박지수 사서 PILOT 2주차 시연 정합
+- [ ] 사서 A 사서 PILOT 2주차 시연 정합
 
 ### 2-2. KOLAS F12 엑셀 일괄 importer (Phase 2)
 

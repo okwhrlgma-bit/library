@@ -16,7 +16,7 @@ jobs:
   autonomous:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ env.ANTHROPIC_API_KEY != '' }}  # 키 없으면 skip
+    # ANTHROPIC_API_KEY 시크릿 없으면 step 내부에서 silent skip (env-in-if 미지원)
     env:
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
 
@@ -36,7 +36,14 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]" || pip install -e .
 
+      - name: Skip if no API key
+        if: ${{ env.ANTHROPIC_API_KEY == '' }}
+        run: |
+          echo "::notice::ANTHROPIC_API_KEY 시크릿 미설정 — silent skip"
+          echo "Repository Settings → Secrets → Actions → ANTHROPIC_API_KEY 등록 시 활성"
+
       - name: Run Claude Code Action
+        if: ${{ env.ANTHROPIC_API_KEY != '' }}
         # NOTE: anthropics/claude-code-action@v1 활성화는 GitHub Actions
         # marketplace에서 사전 등록 필요. 미등록 시 본 step skip.
         # 활성화 후 prompt 사용:
@@ -44,7 +51,6 @@ jobs:
         #    🟢 1순위 미완료 1건 진행. pytest·ruff·assertions 통과 후
         #    git commit·push. 평가축 §0 사서 마크 시간 단축 OR §12
         #    결제 의향 ↑ 양수 영향만."
-        # 사용자 등록 전: 본 step은 placeholder 메시지만
         run: |
           echo "::notice::Claude Code Action @v1 활성화 대기 (사용자 등록 필요)"
           echo "::notice::Cloud routine 3개 (1h·주간·월간) 이 본 워크플로우 보완"

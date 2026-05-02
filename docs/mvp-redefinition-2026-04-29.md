@@ -110,7 +110,7 @@ ISBN → KORMARC .mrc 단건 처리
 
 ```
 □ chaekdanbi/auto_label_generator.py 구현 (python-hwpx)
-□ 자관 PILOT 1주 (★ 매크로 사서 = 조기흠 페르소나)
+□ 자관 PILOT 1주 (★ 매크로 사서 = 사서 E 페르소나)
    - 책단비 hwp 4 양식 자동
    - 자관 .mrc → 실제 KOLAS 반입 검증 ★
    - Q1 결제 의향 측정
@@ -120,7 +120,7 @@ ISBN → KORMARC .mrc 단건 처리
 
 ```
 □ inventory/kolas_f12_importer.py 구현 (9 컬럼)
-□ 자관 PILOT 2주 (수서 사서 = 박지수 수서)
+□ 자관 PILOT 2주 (수서 사서 = 사서 A 수서)
 □ KLA 발표 슬라이드 1차 초안
 ```
 
@@ -158,7 +158,7 @@ ISBN → KORMARC .mrc 단건 처리
 |---|---|
 | 1 | 사업자 등록 (홈택스·5분·무료) |
 | 2 | KLA 전국도서관대회 발표 신청 (5.31 마감) |
-| 3 | 자관 (내를건너서 숲으로 도서관) 연락 → PILOT 제안 |
+| 3 | 자관 (○○도서관) 연락 → PILOT 제안 |
 | 4 | 북이즈·제이넷 체험판 가입 (경쟁사 직접 사용) |
 
 ---

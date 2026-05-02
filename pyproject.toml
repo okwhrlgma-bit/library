@@ -63,7 +63,9 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
-ignore = ["E501"]
+# RUF001/002/003 = ambiguous unicode (한국어 코드베이스 = × · α · ℹ 등 정상 사용)
+# RUF009 = dataclass field default_factory 권장이나 date.today() 의도적 사용
+ignore = ["E501", "RUF001", "RUF002", "RUF003", "RUF009"]
 
 [tool.mypy]
 python_version = "3.12"

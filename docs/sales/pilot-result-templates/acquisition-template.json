@@ -1,9 +1,9 @@
 {
   "_comment": "PILOT 2주차 — 수서 사서 (2순위 ICP). 정보나루·KDC 균형·자관 중복 알리미.",
   "date": "2026-05-XX",
-  "library_name": "내를건너서 숲으로 도서관",
+  "library_name": "○○도서관",
   "library_type": "public",
-  "librarian_name": "박지수",
+  "librarian_name": "사서 A",
   "persona": "acquisition",
   "persona_label": "수서 사서",
   "pilot_week": 2,

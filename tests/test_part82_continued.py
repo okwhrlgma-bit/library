@@ -6,7 +6,6 @@ def test_opac_search_enhancer_basic():
     from kormarc_auto.classification.opac_search_enhancer import (
         expand_query,
         suggest_alternative_search,
-        SYNONYM_MAP,
     )
 
     # 동의어 확장
@@ -30,9 +29,9 @@ def test_opac_search_enhancer_basic():
 
 def test_collection_balance_analyzer_basic():
     from kormarc_auto.acquisition.collection_balance_analyzer import (
+        KDC_MAJOR_CLASSES,
         analyze_collection,
         generate_balance_summary,
-        KDC_MAJOR_CLASSES,
     )
 
     # 불균형 자관 (문학 80%·총류 5%·나머지 X)

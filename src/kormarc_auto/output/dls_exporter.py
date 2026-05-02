@@ -85,4 +85,4 @@ def generate_dls_import_guide(school_name: str) -> str:
 """
 
 
-__all__ = ["DlsRecord", "export_to_dls_csv", "kormarc_to_dls", "generate_dls_import_guide"]
+__all__ = ["DlsRecord", "export_to_dls_csv", "generate_dls_import_guide", "kormarc_to_dls"]

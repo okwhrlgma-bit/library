@@ -293,7 +293,7 @@ PO 4-29 무한 자율 모드 명령 — 5시간 누적 산출. 자세한 진행:
 - assert_billing_pg_integrated (charge_monthly_via_pg + payment_adapter)
 
 ### D 드라이브 권한 흡수
-- `D:\내를건너서 숲으로 도서관` 추가 흡수 권한 (PO 실 도서관 근무 자료)
+- `D:\○○도서관` 추가 흡수 권한 (PO 실 도서관 근무 자료)
 - 책나래·책바다·책이음·KOLAS·알파스 매뉴얼 신규 발견 → 다음 야간 흡수 후보
 
 평가축:

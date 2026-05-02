@@ -144,7 +144,7 @@ class MissedAcquisitionRecovery:
 
 ## 7. 영업 메시지 추가
 
-> "자관(내를건너서 숲으로 도서관)이 3년간 (2022~2024) 매일 09·18·22시 정시 자동 캡처 routine을 운영하며, Formtec 라벨 시스템으로 2,387개 라벨 작업을 직접 진행하고, 비치처리 누락도서를 매년 xlsx로 모음 작업을 합니다.
+> "자관(○○도서관)이 3년간 (2022~2024) 매일 09·18·22시 정시 자동 캡처 routine을 운영하며, Formtec 라벨 시스템으로 2,387개 라벨 작업을 직접 진행하고, 비치처리 누락도서를 매년 xlsx로 모음 작업을 합니다.
 >
 > 우리 SaaS는 이 자관 routine을 자동화합니다:
 > - System Tray 정시 toast (09·18·22시) — 자관 routine 정합
@@ -167,7 +167,7 @@ class MissedAcquisitionRecovery:
 
 ## 9. Sources
 
-- D 드라이브: `D:\내를건너서 숲으로 도서관\2022년\`·`2023년\`·`BizboxA\`·`Documents\`
+- D 드라이브: `D:\○○도서관\2022년\`·`2023년\`·`BizboxA\`·`Documents\`
 - 다우오피스 BizboxA 공식: https://www.daouoffice.com/
 - Formtec 공식: https://www.formtec.co.kr/
 - 한컴 한셀 공식: https://www.hancom.com/

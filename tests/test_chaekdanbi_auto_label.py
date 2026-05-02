@@ -38,7 +38,7 @@ def test_label_text_contains_core_fields():
 
 def test_label_text_includes_source_library_default():
     text = generate_label_text(_sample_label())
-    assert "내를건너서 숲으로 도서관" in text
+    assert "○○도서관" in text
 
 
 def test_label_text_includes_note_when_present():

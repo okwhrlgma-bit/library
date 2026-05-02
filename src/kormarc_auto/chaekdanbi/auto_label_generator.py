@@ -52,7 +52,7 @@ class ChaekdanbiLabel:
     request_date: str
     return_date: str = ""
     note: str = ""
-    source_library: str = "내를건너서 숲으로 도서관"
+    source_library: str = "○○도서관"
     extra: dict[str, str] = field(default_factory=dict)
 
 

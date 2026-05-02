@@ -9,9 +9,9 @@
 
 | 파일 | 페르소나 | 자관 사서 | 사용 시점 |
 |---|---|---|---|
-| [macro-template.json](macro-template.json) | ★ Excel 매크로 자작 | 조기흠 | PILOT 1주 (5/2주) |
-| [acquisition-template.json](acquisition-template.json) | 수서 | 박지수 | PILOT 2주 (5/3주) |
-| [general-template.json](general-template.json) | 종합 | 김기수·박세진·신은미 | PILOT 3주 (5/4주) |
+| [macro-template.json](macro-template.json) | ★ Excel 매크로 자작 | 사서 E | PILOT 1주 (5/2주) |
+| [acquisition-template.json](acquisition-template.json) | 수서 | 사서 A | PILOT 2주 (5/3주) |
+| [general-template.json](general-template.json) | 종합 | 사서 B·사서 C·사서 D | PILOT 3주 (5/4주) |
 | [video-template.json](video-template.json) | 영상 편집 (영업 X) | 김신학 | PILOT 4주 통합 시 명시 제외 |
 
 ---

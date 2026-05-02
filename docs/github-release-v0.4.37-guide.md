@@ -37,7 +37,7 @@ gh release create v0.4.37 --title "v0.4.37 — Phase 0 MVP 완성 + 자관 99.82
 
 ## 핵심 ★
 
-- **자관 「내를건너서 숲으로 도서관」 .mrc 174 파일·3,383 레코드 → 99.82% 정합 검증** (KORMARC 2023.12 한국 KOLAS 실무 정합)
+- **자관 「○○도서관」 .mrc 174 파일·3,383 레코드 → 99.82% 정합 검증** (KORMARC 2023.12 한국 KOLAS 실무 정합)
 - 4-Part 종합 매뉴얼 113,500자 + Part 5 외부 도구 추천 (`docs/research/`)
 - 영업 자료 9건 (`docs/sales/INDEX.md`)
 - 사서 5분 cheat sheet (A4 1장·`docs/sales/librarian-5min-cheatsheet.md`)

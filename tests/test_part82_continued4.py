@@ -5,8 +5,8 @@ from __future__ import annotations
 def test_personalized_recommender_basic():
     from kormarc_auto.acquisition.personalized_recommender import (
         analyze_user_preference,
-        recommend_for_user,
         collaborative_filter,
+        recommend_for_user,
     )
 
     # 대출 이력 분석
@@ -50,10 +50,10 @@ def test_personalized_recommender_basic():
 
 def test_disaster_response_basic():
     from kormarc_auto.safety.disaster_response import (
-        get_protocol,
-        render_response_card,
         RESPONSE_PROTOCOL,
         DisasterChecklist,
+        get_protocol,
+        render_response_card,
     )
 
     # 6 재난 유형 모두 매뉴얼

@@ -1,6 +1,6 @@
 # PO 실 도서관 근무 자료 분석 (2026-04-26 추가)
 
-> **PO가 실제 도서관 근무 시 사용한 1차 자료** — `D:\내를건너서 숲으로 도서관`에서 이동.
+> **PO가 실제 도서관 근무 시 사용한 1차 자료** — `D:\○○도서관`에서 이동.
 > 한국 도서관계 공식 매뉴얼·법률·실 KOLASIII 소스 디렉토리.
 > **2026-04-28 갱신**: 야간 자율 D 드라이브 87 항목 100% 흡수 + 자관 5 시스템 + 사서 8명 4 페르소나 + 5년 책단비 1,328 + 6년 NPS + .mrc 174 + 35 윤동주 + 4,233 xlsm 매크로 정합.
 
@@ -17,7 +17,7 @@
 | `docs/d-drive-history-tools-audit.md` | 정시 캡처·Formtec·다우오피스·한셀·코로나 历사 |
 | `docs/d-drive-yoondongju-thesis-audit.md` | 윤동주 학술 17 + 학위 18 = Phase 1.5 정합 |
 | `docs/d-drive-final-completion-audit.md` | 6년 NPS + 자관 자체 매뉴얼 + NPKI 7 인증기관 |
-| `docs/d-drive-xlsm-macros-audit.md` | xlsm 4,233개 + 조기흠 사서 자작 매크로 200KB+ |
+| `docs/d-drive-xlsm-macros-audit.md` | xlsm 4,233개 + 사서 E 사서 자작 매크로 200KB+ |
 
 ---
 

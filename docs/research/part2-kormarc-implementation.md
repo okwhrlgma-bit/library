@@ -1289,7 +1289,7 @@ def visual_regression_check() -> bool:
 ```python
 def validate_jagwan_174() -> dict:
     """자관 .mrc 174 전수 검증 — 영업 신뢰성 핵심."""
-    jagwan_dir = Path("D:/내를건너서 숲으로 도서관/.mrc/")
+    jagwan_dir = Path("D:/○○도서관/.mrc/")
     files = list(jagwan_dir.glob("*.mrc"))
     assert len(files) == 174, f"자관 .mrc {len(files)}개 (174 기대)"
 

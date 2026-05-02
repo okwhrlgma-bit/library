@@ -289,7 +289,7 @@ resend.Emails.send({
 
 ### 왜 필요한가
 
-- PILOT 4주 KPI 누적 (조기흠 1주·박지수 2주·종합 3주·통합 4주)
+- PILOT 4주 KPI 누적 (사서 E 1주·사서 A 2주·종합 3주·통합 4주)
 - 사서 인터뷰 누적 → `aggregate_interviews.py` import
 - 영업 funnel (메일 발송·시연·결제) 시각화
 

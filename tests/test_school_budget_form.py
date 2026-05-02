@@ -1,8 +1,6 @@
 """school_budget_form 학교운영위 결재 양식 테스트 (Part 51, P2 사서교사)."""
 from __future__ import annotations
 
-from datetime import date
-
 from kormarc_auto.output.school_budget_form import (
     REGIONAL_NOTES,
     SchoolBudgetFormData,

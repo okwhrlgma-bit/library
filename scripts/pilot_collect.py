@@ -1,14 +1,14 @@
 """자관 PILOT 시연 결과 1줄 수집 + JSON 자동 저장 + aggregate.
 
 PO 시연 직후 30초 안에 결과 입력 가능. 4 페르소나 templated 인터랙티브:
-- 매크로 사서 (조기흠)·수서 사서 (박지수)·종합 사서 (4명)·영상 사서 (X)
+- 매크로 사서 (사서 E)·수서 사서 (사서 A)·종합 사서 (4명)·영상 사서 (X)
 
 저장: `logs/interviews/<YYYY-MM-DD>_<도서관>_<사서>.json`
 이후: `scripts/aggregate_interviews.py`로 자동 집계 → KLA 슬라이드 데이터.
 
 사용:
     python scripts/pilot_collect.py
-    python scripts/pilot_collect.py --persona macro --library "내를건너서 숲으로 도서관"
+    python scripts/pilot_collect.py --persona macro --library "○○도서관"
 """
 
 from __future__ import annotations
@@ -32,19 +32,19 @@ LOGS_DIR = ROOT / "logs" / "interviews"
 PERSONAS = {
     "macro": {
         "name": "Excel 매크로 자작 사서",
-        "example": "조기흠",
+        "example": "사서 E",
         "default_payment_band": "30000-50000",
         "key_painpoints": ["xlsm 매크로 유지보수", "책단비 hwp 수동", "매크로 학습 곡선"],
     },
     "acquisition": {
         "name": "수서 사서",
-        "example": "박지수",
+        "example": "사서 A",
         "default_payment_band": "30000-150000",
         "key_painpoints": ["정보나루 수동 검색", "자관 중복 확인", "KDC 균형 산정"],
     },
     "general": {
         "name": "종합 사서",
-        "example": "김기수·박세진·신은미",
+        "example": "사서 B·사서 C·사서 D",
         "default_payment_band": "30000-50000",
         "key_painpoints": ["연체 통계 수동", "월간 보고서 PDF", "장서점검 시간"],
     },
@@ -155,7 +155,7 @@ def main() -> int:
         help="PILOT 사서 페르소나",
     )
     parser.add_argument(
-        "--library", default="내를건너서 숲으로 도서관",
+        "--library", default="○○도서관",
         help="도서관명",
     )
     args = parser.parse_args()

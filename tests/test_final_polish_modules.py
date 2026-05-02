@@ -6,8 +6,8 @@ def test_dls_exporter_basic():
     from kormarc_auto.output.dls_exporter import (
         DlsRecord,
         export_to_dls_csv,
-        kormarc_to_dls,
         generate_dls_import_guide,
+        kormarc_to_dls,
     )
 
     rec = DlsRecord(
@@ -82,10 +82,10 @@ def test_pmf_validator_basic():
 
 def test_library_hierarchy_basic():
     from kormarc_auto.interlibrary.library_hierarchy import (
-        LibraryClassification,
-        recommend_strategy,
         HIERARCHY_INFO,
         REGIONAL_INFO,
+        LibraryClassification,
+        recommend_strategy,
     )
 
     # 5 위계 모두 등록

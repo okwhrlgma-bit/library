@@ -1,6 +1,6 @@
 # 도서관 정보나루 활용 가이드 — 수서 사서 영업 (2026-05)
 
-> **대상**: 수서 사서 (박지수 페르소나 + 외부 도서관 수서 담당)
+> **대상**: 수서 사서 (사서 A 페르소나 + 외부 도서관 수서 담당)
 > **단일 진실**: 정보나루 = 한국도서관협회·문체부 운영·작은도서관·공공도서관 통합 데이터 보고
 > **우리 정합**: `kormarc-auto wishlist` + `api/data4library.py` 키워드·인기 대출 통합
 
@@ -31,7 +31,7 @@
 
 ## 2. 수서 사서 영업 시나리오
 
-### 2-1. 박지수 사서 PILOT 2주차 (5/3주)
+### 2-1. 사서 A 사서 PILOT 2주차 (5/3주)
 
 ```powershell
 kormarc-auto wishlist --input pilot_2week.txt --output reports/wishlist_2week.json
@@ -51,7 +51,7 @@ kormarc-auto wishlist --input pilot_2week.txt --output reports/wishlist_2week.js
 산정 → 결재 → 발주 → 입수 → 등록 → 신착 안내) 모두 SaaS 1개로 자동화
 가능합니다.
 
-★ 자관 박지수 사서 9 워크플로우 100% 검증 완료 (PILOT 2주차)
+★ 자관 사서 A 사서 9 워크플로우 100% 검증 완료 (PILOT 2주차)
 ★ 자관 .mrc 99.82% 정합 (한국 KOLAS 실무 정합)
 
 [제안]
@@ -64,7 +64,7 @@ okwhrlgma@gmail.com
 
 ---
 
-## 3. 자관 활용 사례 (박지수 사서 PILOT 2주차)
+## 3. 자관 활용 사례 (사서 A 사서 PILOT 2주차)
 
 | 단계 | 수동 | 자동 (kormarc-auto wishlist) |
 |---|---|---|
@@ -74,7 +74,7 @@ okwhrlgma@gmail.com
 | 예상 비용 합계 | 3분 | 즉시 (정가 합계) |
 | **합계** | **33분** | **약 3분** (90% 단축) |
 
-→ 박지수 사서 NPS·Q1 결제 의향 측정 (PILOT 2주차 매뉴얼)
+→ 사서 A 사서 NPS·Q1 결제 의향 측정 (PILOT 2주차 매뉴얼)
 
 ---
 
@@ -102,7 +102,7 @@ kormarc-auto wishlist --input my_library.txt
 - `src/kormarc_auto/api/data4library.py` (키워드·인기대출 호출)
 - `src/kormarc_auto/acquisition/wishlist.py` (자관 중복·KDC 균형·예상 비용 통합)
 - `kormarc-auto wishlist` CLI (사서 1줄 호출)
-- `docs/sales/pilot-week2-action-manual.md` (박지수 60분 시연 매뉴얼)
+- `docs/sales/pilot-week2-action-manual.md` (사서 A 60분 시연 매뉴얼)
 
 ---
 
@@ -110,5 +110,5 @@ kormarc-auto wishlist --input my_library.txt
 
 - 도서관 정보나루 (https://data4library.kr)
 - `src/kormarc_auto/api/data4library.py`
-- `docs/sales/pilot-week2-action-manual.md` (박지수 PILOT 2주차)
-- `docs/research/part3-librarian-workflows.md` (박지수 페르소나)
+- `docs/sales/pilot-week2-action-manual.md` (사서 A PILOT 2주차)
+- `docs/research/part3-librarian-workflows.md` (사서 A 페르소나)
