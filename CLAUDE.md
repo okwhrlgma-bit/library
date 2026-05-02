@@ -186,7 +186,7 @@
 
 ## 11. 변경 이력
 
-전체 이력 → `CHANGELOG_NIGHT.md` (현재 v0.4.37·자관 .mrc 99.82% 정합·Phase 0 MVP 4단 검증 완성).
+전체 이력 → `CHANGELOG_NIGHT.md` (현재 **v0.5.0**·자관 .mrc 99.82% 정합·462 tests·38/38·43+ 신규 모듈·Part 1~86·122 페르소나·PMF Sean Ellis 62.5%).
 
 ---
 
