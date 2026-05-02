@@ -96,3 +96,41 @@ def test_library_specificity_basic():
     assert pattern["detected_prefix"] == "EQ"
     assert "시문학" in pattern["detected_shelves"]
     assert pattern["confidence"] > 0
+
+
+def test_builder_with_library_spec():
+    """builder.build_kormarc_record가 library_spec 자동 적용."""
+    from kormarc_auto.kormarc.builder import build_kormarc_record
+    from kormarc_auto.librarian_helpers.library_specificity import LibrarySpecificity
+
+    library = LibrarySpecificity(
+        library_id="EQLIB001",
+        library_name="은평구립도서관",
+        library_type="public",
+        hierarchy="branch_main",
+        region="seoul_eunpyeong",
+        sasagwan_prefix="EQ",
+        call_number_format="{KDC}/{이재철}",
+        shelf_categories=["시문학", "아동"],
+    )
+
+    book_data = {
+        "isbn": "9788937437076",
+        "title": "윤동주 시집",
+        "author": "윤동주",
+        "publisher": "민음사",
+        "publication_year": "2026",
+        "kdc": "811.7",
+    }
+    record = build_kormarc_record(book_data, library_spec=library, auto_validate=False)
+
+    # 040 ▾a override
+    f040 = record.get_fields("040")
+    assert f040 and any("EQLIB001" in str(f) for f in f040)
+
+    # 049 ▾l prefix + ▾f 별치 자동
+    f049 = record.get_fields("049")
+    assert f049, "049 필드가 자동 생성되어야 함"
+    f049_str = str(f049[0])
+    assert "EQ-AUTO" in f049_str
+    assert "시문학" in f049_str

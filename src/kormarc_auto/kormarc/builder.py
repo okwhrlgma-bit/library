@@ -3,11 +3,14 @@
 from __future__ import annotations
 
 import logging
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pymarc import Field, Indicators, Record, Subfield
 
 from kormarc_auto.kormarc.mapping import build_008, normalize_isbn, parse_publication_place
+
+if TYPE_CHECKING:
+    from kormarc_auto.librarian_helpers.library_specificity import LibrarySpecificity
 
 logger = logging.getLogger(__name__)
 
@@ -18,19 +21,29 @@ def build_kormarc_record(
     cataloging_agency: str = "OURLIB",
     cataloging_lang: str = "kor",
     auto_validate: bool = True,
+    library_spec: LibrarySpecificity | None = None,
 ) -> Record:
     """BookData dict를 pymarc Record로 변환.
 
     Args:
         book_data: aggregator.aggregate_by_isbn() 결과
-        cataloging_agency: 040 ▾a 우리 도서관 부호 (기관 설정)
+        cataloging_agency: 040 ▾a 우리 도서관 부호 (기관 설정).
+                           library_spec 제공 시 library_spec.library_id가 우선.
         cataloging_lang: 040 ▾b 사용 언어
         auto_validate: True면 빌드 직후 validate_record_full 호출 + logger.warning
                        (default True). False면 검증 생략 (테스트·골든 데이터셋 빌드 시).
+        library_spec: 자관 특이성 (sasagwan_prefix·shelf_categories·region 등).
+                      제공 시 049 ▾l prefix·049 ▾f 별치 자동 + 040 ▾a override.
 
     Returns:
         pymarc.Record (UTF-8, KORMARC 통합서지용 호환)
     """
+    if library_spec is not None:
+        from kormarc_auto.librarian_helpers.library_specificity import auto_apply_specificity
+
+        book_data = auto_apply_specificity(book_data, library_spec)
+        cataloging_agency = library_spec.library_id
+
     record = Record(force_utf8=True, leader="00000nam a2200000   4500")
 
     # 008 — 부호화 정보 (40자리)
@@ -302,6 +315,20 @@ def build_kormarc_record(
                 subfields=[Subfield(code="a", value=add_author)],
             )
         )
+
+    # 049 — 자관 등록정보 (library_spec 제공 시 prefix + 별치 자동)
+    if book_data.get("registration_no_prefix") or book_data.get("shelf_category"):
+        subfields_049: list[Subfield] = []
+        prefix = book_data.get("registration_no_prefix")
+        if prefix:
+            subfields_049.append(Subfield(code="l", value=f"{prefix}-AUTO"))
+        shelf = book_data.get("shelf_category")
+        if shelf:
+            subfields_049.append(Subfield(code="f", value=shelf))
+        if subfields_049:
+            record.add_field(
+                Field(tag="049", indicators=Indicators("0", " "), subfields=subfields_049)
+            )
 
     # 950 — 가격 (한국 특수 필드)
     if book_data.get("price"):

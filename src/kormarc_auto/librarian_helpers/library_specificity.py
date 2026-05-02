@@ -93,6 +93,30 @@ def get_regional_policy(region: RegionalGovernment) -> dict:
     return REGIONAL_POLICIES.get(region, REGIONAL_POLICIES.get("seoul_other", {}))
 
 
+# 별치 시소러스 (사서 일과 사이클 어휘 정합)
+SHELF_KEYWORD_MAP: dict[str, tuple[str, ...]] = {
+    "시문학": ("시", "시집", "시선집", "운문", "시인", "노래시"),
+    "아동": ("어린이", "동화", "유아", "그림책", "초등", "유년", "키즈"),
+    "청소년": ("청소년", "YA", "10대", "중학", "고교"),
+    "향토": ("지역", "고향", "향토사", "지방사"),
+    "고서": ("고서", "한적", "조선", "조선왕조"),
+    "참고": ("사전", "백과", "연감", "편람", "핸드북"),
+    "외국어": ("english", "japanese", "原書", "원서"),
+    "정기간행물": ("저널", "잡지", "월간", "주간", "계간"),
+}
+
+
+def _match_shelf_category(title: str, category: str, subject_keywords: list[str]) -> bool:
+    """별치 매칭 — 직접 + 시소러스 양방향."""
+    title_lc = title.lower()
+    if category in title or category in subject_keywords:
+        return True
+    for keyword in SHELF_KEYWORD_MAP.get(category, ()):
+        if keyword in title_lc or keyword in title:
+            return True
+    return False
+
+
 def auto_apply_specificity(
     book_data: dict,
     library: LibrarySpecificity,
@@ -108,24 +132,19 @@ def auto_apply_specificity(
     """
     enriched = dict(book_data)
 
-    # 1. 자관 등록번호 prefix 자동
     if library.sasagwan_prefix:
         enriched["registration_no_prefix"] = library.sasagwan_prefix
 
-    # 2. 청구기호 형식 자동
     enriched["call_number_format"] = library.call_number_format
 
-    # 3. 별치 자동 추천
-    title = str(book_data.get("title", "")).lower()
+    title = str(book_data.get("title", ""))
+    subject_keywords = book_data.get("subject_keywords") or []
     for category in library.shelf_categories:
-        if category in title or category in book_data.get("subject_keywords", []):
+        if _match_shelf_category(title, category, subject_keywords):
             enriched["shelf_category"] = category
             break
 
-    # 4. 040 ▾a 우리 도서관 부호
     enriched["cataloging_agency"] = library.library_id
-
-    # 5. 지역 정책 메타
     enriched["regional_policy"] = get_regional_policy(library.region)
 
     return enriched
@@ -157,6 +176,7 @@ __all__ = [
     "LibrarySpecificity",
     "RegionalGovernment",
     "REGIONAL_POLICIES",
+    "SHELF_KEYWORD_MAP",
     "get_regional_policy",
     "auto_apply_specificity",
     "detect_library_pattern",
