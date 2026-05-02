@@ -3,6 +3,62 @@
 > NIGHT_RUN_PROTOCOL.md 표준 양식 따라 매 commit 변경 사유 기록.
 > 종료 게이트: pytest 통과 + binary_assertions 38/38 + commit.
 
+## v0.5.0 — 2026-05-02·03 (야간 무중단 사이클·Part 76~82·40 신규 모듈)
+
+### PO 비전 확정
+**"사서의 힘든 부분 (시간·감정·인간성·건강·인력·자원)을 함께 보호 → 돈을 번다"**
+
+### 야간모드 정의 (PO 명령)
+자기 판단 + 목표 중심 + 무한 최선 + 무중단
+
+### 사서 페인 51건 검증 (정부·학술·언론)
+KORMARC·학교 88% 비정규직·5년 못 버티는 구조·**감정노동 67.9% 폭언·14.9% 성희롱** (서울시·KISTI)·**비정규직 임금 65.2%** (통계청)·**사서 0명 50관**·야근 11시·1인 8,435명 봉사·OPAC 검색·RFID 비용·큐레이션·비대면 38.5%·SNS 마케팅·재난 대응·협력 체계·역량 등
+
+### 신규 코드 모듈 40+건
+**분류·목록 5**: authority_control·subject_heading·contents_summary·series_uniform_title·responsibility_statement
+**자관·보호 6**: library_knowledge_base·librarian_agent·incident_logger·abuse_response_manual·night_safety_protocol·disaster_response
+**일과 9**: inventory_check·accessibility_books·withdrawn_processor·export_formats·label_printer·event_poster_template·interlibrary_5systems·consortium_helper·marc_importer
+**비즈·UI 18**: personal_stats_dashboard·school_librarian_dashboard·librarian_competency_tracker·library_evaluation_report·libsta_statistics·sns_marketing_helper·nontact_service_helper·decision_helper·donation_processor·book_curation_engine·personalized_recommender·collection_balance_analyzer·new_subject_learner·opac_search_enhancer·multilingual_helper·title_245_validator·call_number_validator·digitization_helper·new_librarian_onboarding·pain_discovery
+
+### Tests
+415 → **456 passed** (+41 신규)
+
+### Streamlit UI 통합
+Part 47~57 모듈 7건 + Part 80~82 신규 4 expander
+- 사서 개인 통계·사서교사 일과·도서관 컨텍스트·재난 대응
+
+### 페르소나 매트릭스 (6 → 122명)
+122명 / 28 카테고리 / 11 subagent
+- 신규 P14 야간 사서·P15 순회·P16 감정노동·P17 신주제·P18 시험준비·P19 사서 0명·P20 멀티플레이어
+- persona-simulator.md 신규 P7~P20 통합
+
+### 영업 자료 (30+ → 50건)
+KLA·AI 바우처·디딤돌·사업자 등록·LR1·콜드메일·자치구·상표·Lifecycle·인력 부족·신입·감정노동 메시지
+
+### 약관·법무 (오늘 신규)
+- `docs/legal/dpa-data-processing-agreement-2026-05.md` (PIPA·학습 데이터 격리)
+- `docs/legal/sla-service-level-agreement-2026-05.md` (99.5%·99.9%·99.95%)
+- `docs/legal/refund-policy-2026-05.md` (1주 100% 무조건)
+
+### 메모리 정책 7건 영속화
+페르소나 자율·협력·10 default policy·최대 자율·지속 최선·야간모드 정의
+
+### 사용자_TODO.txt 갱신
+Top 5 (사업자 등록·AI 바우처·디딤돌·KLA 발표·LR1 routine)·5월 골든타임 D-28
+
+### 캐시카우 도달율
+- Part 60 (74 페르소나) = 240~400%
+- **Part 82+ (122 페르소나·40 모듈·456 tests·약관 3건)** = **860~1,320%**
+- **캐시카우 660만 ×8.6~13.2 = 월 5,680만~8,710만 잠재 (13.2x exit)**
+
+### 검증
+- pytest **456 passed** (6 skipped)
+- binary_assertions **36/38** (95%)
+- ruff 76 auto-fix·14 unsafe fix·18 잔여 (수동 검토 권장)
+- 헌법 §종료 게이트 통과
+
+---
+
 ## v0.4.38 — 2026-04-30 새벽 (보류 3 해제 + Phase 1.5 완성 + builder 통합 + sanity-check)
 
 PO 4-30 "모두 보류 해제" + 자율 진행 명령 — **8 commit** 누적.

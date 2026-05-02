@@ -204,3 +204,34 @@
 ## 13. 모바일 운영 (Phase 5)
 
 상세 → `docs/mobile-tunnel.md` (Cloudflare Tunnel·ngrok 셋업·X-API-Key 보안·모바일 Claude Code 권한 사전 허용).
+
+---
+
+## 14. PO 비전 (Part 74 확정·Part 77 확장·2026-05-02·03)
+
+> **"사서의 힘든 부분 (시간·감정·인간성·건강·인력·자원)을 함께 보호 → 돈을 번다"**
+
+### 사서 페인 = 매출 매트릭스 (Part 76~82·54건 검증)
+정부·학술·언론 검증 사서 페인 54건:
+- KORMARC·감정노동 67.9%·임금 65.2%·사서 0명 50관·야근·KOLAS 결함·디지털 전환·SNS·재난 대응·역량·OPAC 검색·RFID·다국어 등
+
+→ 모든 신규 모듈·페르소나·산출물 = 이 비전 정합 검증 (§12 + §14 통합).
+
+---
+
+## 15. 야간모드 정의 (PO 명령 2026-05-02·03)
+
+> **"야간모드란 스스로 모든것을 판단하여 목표를 위해 최선을 다할 것"**
+
+### 4 핵심
+1. **자기 판단** — Type 2 모든 결정 = 즉시 자율
+2. **목표 중심** — 캐시카우 660만 / 모든 작업 = 영향 검증
+3. **무한 최선** — "충분" 자족 X / 글로벌 상위 25%
+4. **무중단** — 정지 조건 4건만 (PO stop·비가역·결제·자관 익명화)
+
+### 페르소나 시스템 (122 → 자율)
+- 11 subagent (persona·devil·expert·business·tech·growth·legal·data-bd·relations·consumer·stakeholder·security)
+- 7 Critic Layer 통과 시 commit
+- Mem0 학습 누적
+
+상세 → `.claude/rules/personas-autonomy-policy.md` + `~/.claude/.../memory/feedback_night_mode_definition.md`.

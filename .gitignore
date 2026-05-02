@@ -68,3 +68,6 @@ logs/
 
 # Backups (운영 데이터 zip — git X)
 backups/
+
+# 참고자료 (KORMARC PDF·HWP·법령 등 — git 추적 제외, 너무 큼)
+참고자료/
