@@ -1,4 +1,5 @@
 """Part 80 확장 모듈 테스트 (5 신규)."""
+
 from __future__ import annotations
 
 from datetime import date
@@ -38,7 +39,7 @@ def test_interlibrary_5systems_basic():
 def test_marc_importer_marcxml():
     from kormarc_auto.ingest.marc_importer import import_marcxml
 
-    xml = '''<?xml version="1.0"?>
+    xml = """<?xml version="1.0"?>
 <collection xmlns="http://www.loc.gov/MARC21/slim">
   <record>
     <leader>00000nam a2200000   4500</leader>
@@ -47,7 +48,7 @@ def test_marc_importer_marcxml():
       <subfield code="a">어린왕자</subfield>
     </datafield>
   </record>
-</collection>'''
+</collection>"""
 
     records = import_marcxml(xml)
     assert len(records) == 1
@@ -58,7 +59,7 @@ def test_marc_importer_marcxml():
 def test_marc_importer_mods():
     from kormarc_auto.ingest.marc_importer import import_mods
 
-    mods_xml = '''<?xml version="1.0"?>
+    mods_xml = """<?xml version="1.0"?>
 <modsCollection xmlns="http://www.loc.gov/mods/v3">
   <mods>
     <titleInfo><title>어린왕자</title></titleInfo>
@@ -69,7 +70,7 @@ def test_marc_importer_mods():
     </originInfo>
     <identifier type="isbn">9788937437076</identifier>
   </mods>
-</modsCollection>'''
+</modsCollection>"""
 
     records = import_mods(mods_xml)
     assert len(records) >= 1

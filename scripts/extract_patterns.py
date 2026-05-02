@@ -117,14 +117,10 @@ def extract_recent(*, n_commits: int = 20) -> list[dict]:
                 f"files: {files[:10]}\n"
                 f"---\n\n"
                 f"## 변경 요약\n{subject}\n\n"
-                f"## 파일 ({len(files)}건)\n"
-                + "\n".join(f"- `{f}`" for f in files[:20])
-                + "\n"
+                f"## 파일 ({len(files)}건)\n" + "\n".join(f"- `{f}`" for f in files[:20]) + "\n"
             )
             out.write_text(content, encoding="utf-8")
-            extracted.append(
-                {"pattern": ptype, "commit": sha_short, "files_count": len(files)}
-            )
+            extracted.append({"pattern": ptype, "commit": sha_short, "files_count": len(files)})
 
     return extracted
 

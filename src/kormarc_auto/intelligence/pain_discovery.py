@@ -5,6 +5,7 @@ PO 비전: "사서 페인 = 매출 = 페인 발견 = 매출 발견"
 12 채널 monitoring + ICE Score + 솔루션 매핑 + Mem0 학습.
 Phase 1 = 수집·점수·매핑 (외부 API 통합 X·Phase 2).
 """
+
 from __future__ import annotations
 
 import json
@@ -14,30 +15,30 @@ from pathlib import Path
 from typing import Literal
 
 PainCategory = Literal[
-    "acquisition",       # 수서
-    "cataloging",        # 정리
-    "processing",        # 장비·배가
-    "circulation",       # 대출·반납
-    "reference",         # 참고봉사
-    "preservation",      # 보존·관리
-    "programs",          # 행사
-    "administration",    # 행정
-    "system_it",         # 시스템·IT
-    "facility",          # 시설
-    "emotional_labor",   # 감정노동 (Part 77)
-    "career",            # 경력·번아웃 (Part 76·78)
+    "acquisition",  # 수서
+    "cataloging",  # 정리
+    "processing",  # 장비·배가
+    "circulation",  # 대출·반납
+    "reference",  # 참고봉사
+    "preservation",  # 보존·관리
+    "programs",  # 행사
+    "administration",  # 행정
+    "system_it",  # 시스템·IT
+    "facility",  # 시설
+    "emotional_labor",  # 감정노동 (Part 77)
+    "career",  # 경력·번아웃 (Part 76·78)
     "other",
 ]
 
 PainChannel = Literal[
-    "interview",         # T5 인터뷰
-    "social",            # G5 소셜 (네이버 카페·디스코드)
-    "academic",          # E7 학술
-    "policy",            # D3·D4 정책 보고서
-    "data",              # DT1 사용자 데이터
-    "competitor",        # AD1 경쟁사
-    "national",          # 국회·국제
-    "media",             # M1 미디어
+    "interview",  # T5 인터뷰
+    "social",  # G5 소셜 (네이버 카페·디스코드)
+    "academic",  # E7 학술
+    "policy",  # D3·D4 정책 보고서
+    "data",  # DT1 사용자 데이터
+    "competitor",  # AD1 경쟁사
+    "national",  # 국회·국제
+    "media",  # M1 미디어
 ]
 
 

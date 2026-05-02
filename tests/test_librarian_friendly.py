@@ -1,4 +1,5 @@
 """librarian_friendly 사서 깊이 친화 테스트 (Part 49)."""
+
 from __future__ import annotations
 
 from datetime import datetime

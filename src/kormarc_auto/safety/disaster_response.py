@@ -7,18 +7,19 @@
 
 해결: 6 재난 유형별 표준 매뉴얼 + 자동 체크리스트.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Literal
 
 DisasterType = Literal[
-    "earthquake",   # 지진
-    "flood",        # 침수
-    "fire",         # 화재
-    "power_outage", # 정전
-    "pandemic",     # 팬데믹
-    "typhoon",      # 태풍·강풍
+    "earthquake",  # 지진
+    "flood",  # 침수
+    "fire",  # 화재
+    "power_outage",  # 정전
+    "pandemic",  # 팬데믹
+    "typhoon",  # 태풍·강풍
 ]
 
 

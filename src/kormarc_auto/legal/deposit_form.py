@@ -142,8 +142,7 @@ def render_deposit_form_pdf(
     from kormarc_auto.output.reports import _korean_font
 
     out = Path(
-        output_path
-        or f"logs/deposit_forms/deposit_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
+        output_path or f"logs/deposit_forms/deposit_{datetime.now().strftime('%Y%m%d_%H%M%S')}.pdf"
     )
     out.parent.mkdir(parents=True, exist_ok=True)
 

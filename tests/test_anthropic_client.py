@@ -35,7 +35,10 @@ def test_ensure_cache_control_on_string():
 
 def test_ensure_cache_control_on_blocks():
     out = ac._ensure_cache_control_on_system(
-        [{"type": "text", "text": "a"}, {"type": "text", "text": "b", "cache_control": {"type": "ephemeral"}}]
+        [
+            {"type": "text", "text": "a"},
+            {"type": "text", "text": "b", "cache_control": {"type": "ephemeral"}},
+        ]
     )
     assert len(out) == 2
     assert all("cache_control" in b for b in out)

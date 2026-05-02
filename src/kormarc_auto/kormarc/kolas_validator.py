@@ -109,9 +109,7 @@ def kolas_strict_validate(record: Record) -> dict[str, Any]:
         if not (record.get("100") or record.get("110") or record.get("111")):
             ind1 = field_245.indicators[0] if field_245.indicators else " "
             if ind1 != "0":
-                warnings.append(
-                    f"245 1지시기호={ind1!r} — 1차 표목 없으면 '0' 권장"
-                )
+                warnings.append(f"245 1지시기호={ind1!r} — 1차 표목 없으면 '0' 권장")
 
     # 056 KDC
     for f56 in record.get_fields("056"):

@@ -34,9 +34,7 @@ def main() -> int:
     tool_name = data.get("tool_name", "?")
     tool_input = data.get("tool_input") or {}
     deny_reason = (
-        data.get("deny_reason")
-        or data.get("permissionDecisionReason")
-        or "auto-mode 분류기 거부"
+        data.get("deny_reason") or data.get("permissionDecisionReason") or "auto-mode 분류기 거부"
     )
 
     # 입력 요약 (50자)

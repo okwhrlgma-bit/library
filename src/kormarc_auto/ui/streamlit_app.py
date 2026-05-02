@@ -499,9 +499,33 @@ def _tab_batch(agency: str) -> None:
                     )
                     zf.writestr(f"{isbn}.mrc", result["mrc_bytes"])
                 else:
-                    rows.append({"isbn": isbn, "ok": "N", "title": "", "author": "", "publisher": "", "year": "", "confidence": "", "fields": "", "errors": ""})
+                    rows.append(
+                        {
+                            "isbn": isbn,
+                            "ok": "N",
+                            "title": "",
+                            "author": "",
+                            "publisher": "",
+                            "year": "",
+                            "confidence": "",
+                            "fields": "",
+                            "errors": "",
+                        }
+                    )
             except Exception as e:
-                rows.append({"isbn": isbn, "ok": "N", "title": str(e)[:40], "author": "", "publisher": "", "year": "", "confidence": "", "fields": "", "errors": ""})
+                rows.append(
+                    {
+                        "isbn": isbn,
+                        "ok": "N",
+                        "title": str(e)[:40],
+                        "author": "",
+                        "publisher": "",
+                        "year": "",
+                        "confidence": "",
+                        "fields": "",
+                        "errors": "",
+                    }
+                )
 
     progress.empty()
     st.dataframe(rows, use_container_width=True)
@@ -552,7 +576,9 @@ def _tab_tools() -> None:
                 hangul_to_rr,
             )
 
-            st.code(f"RR (정부 표준):  {hangul_to_rr(text)}\nALA-LC (학술): {hangul_to_alalc(text)}")
+            st.code(
+                f"RR (정부 표준):  {hangul_to_rr(text)}\nALA-LC (학술): {hangul_to_alalc(text)}"
+            )
 
     with sub_tabs[1]:
         st.markdown("**A4 라벨 PDF 생성** (Avery L7160 21장 / L7159 24장)")
@@ -681,9 +707,7 @@ def _tab_tools() -> None:
                 p = tmp_dir / (u.name or "shelf.jpg")
                 p.write_bytes(u.read())
                 paths.append(p)
-            kdc_pair = (
-                (kdc_start.strip(), kdc_end.strip()) if kdc_start and kdc_end else None
-            )
+            kdc_pair = (kdc_start.strip(), kdc_end.strip()) if kdc_start and kdc_end else None
             with st.spinner("OCR + 대조 진행 중..."):
                 try:
                     result = inspect_shelf_images(paths, expected_kdc_range=kdc_pair)
@@ -738,7 +762,9 @@ def _tab_tools() -> None:
 
                 items = search_local(query="", limit=int(n))
                 if not items:
-                    st.warning("자관 인덱스가 비었습니다 — 먼저 ISBN/사진 탭에서 .mrc를 생성하세요.")
+                    st.warning(
+                        "자관 인덱스가 비었습니다 — 먼저 ISBN/사진 탭에서 .mrc를 생성하세요."
+                    )
                 else:
                     out_path = Path(".cache/kormarc-auto/reports/announcement.pdf")
                     out_path.parent.mkdir(parents=True, exist_ok=True)
@@ -998,8 +1024,7 @@ def _tab_tools() -> None:
                     st.warning(f"누락번호 {len(gaps)}개 발견")
                     st.code(
                         "\n".join(
-                            f"{reg_kind}{int(reg_turn):02d}{int(reg_year):02d}{g:05d}"
-                            for g in gaps
+                            f"{reg_kind}{int(reg_turn):02d}{int(reg_year):02d}{g:05d}" for g in gaps
                         )
                     )
                 else:
@@ -1060,7 +1085,9 @@ def _tab_tools() -> None:
                         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     )
                     held = sum(1 for b in books if b.get("holding_status") == "보유")
-                    st.success(f"✓ {len(books)}건 ({held}건 자관 보유 / {len(books)-held}건 미보유)")
+                    st.success(
+                        f"✓ {len(books)}건 ({held}건 자관 보유 / {len(books) - held}건 미보유)"
+                    )
                 except Exception as e:
                     st.error(f"생성 실패: {e}")
 
@@ -1075,15 +1102,13 @@ def _tab_tools() -> None:
             height=140,
             key="ws_isbns",
         )
-        ws_offline = st.checkbox(
-            "오프라인 (자관 인덱스만)", value=False, key="ws_offline"
-        )
+        ws_offline = st.checkbox("오프라인 (자관 인덱스만)", value=False, key="ws_offline")
         if st.button("분석", key="ws_btn"):
             isbns = [x.strip() for x in ws_isbns.splitlines() if x.strip()]
             if not isbns:
                 st.warning("ISBN 1개 이상")
             else:
-                with st.spinner(f"수서 분석 중 (약 {len(isbns)*2}초)..."):
+                with st.spinner(f"수서 분석 중 (약 {len(isbns) * 2}초)..."):
                     items = analyze_wishlist(isbns, use_external=not ws_offline)
                 summary = summarize(items)
                 col_a, col_b, col_c = st.columns(3)
@@ -1118,16 +1143,11 @@ def _tab_tools() -> None:
         dis_director = st.text_input("결재자(관장)", "", key="dis_dir")
         dis_csv = st.text_area(
             "제적 자료 (한 줄: 등록번호,표제,사유코드,점검자)",
-            placeholder=(
-                "EM012600101,노후도서1,WORN,○○사서\n"
-                "EM012600102,복본도서,DUPL,○○사서"
-            ),
+            placeholder=("EM012600101,노후도서1,WORN,○○사서\nEM012600102,복본도서,DUPL,○○사서"),
             height=140,
             key="dis_csv",
         )
-        st.caption(
-            "사유코드: " + " / ".join(f"{k}={v}" for k, v in DISPOSAL_REASONS.items())
-        )
+        st.caption("사유코드: " + " / ".join(f"{k}={v}" for k, v in DISPOSAL_REASONS.items()))
 
         if st.button("결재서식 PDF + 폐기목록 XLSX 생성", key="dis_btn"):
             entries: list[DisposalEntry] = []
@@ -1174,9 +1194,7 @@ def _tab_tools() -> None:
 
     # ── 13. 연간 KOLIS-NET 통계 ─────────────────────────
     with sub_tabs[13]:
-        st.markdown(
-            "**연간 통계** — KOLIS-NET 제출 + RISS 학교도서관 양식 (자관 인덱스 자동 집계)"
-        )
+        st.markdown("**연간 통계** — KOLIS-NET 제출 + RISS 학교도서관 양식 (자관 인덱스 자동 집계)")
         from datetime import datetime as _dt
 
         from kormarc_auto.output.annual_statistics import (
@@ -1186,14 +1204,10 @@ def _tab_tools() -> None:
         )
 
         stats_lib = st.text_input("도서관명", "○○도서관", key="stats_lib")
-        stats_code = st.text_input(
-            "KOLIS-NET 도서관 코드 (옵션)", "", key="stats_code"
-        )
+        stats_code = st.text_input("KOLIS-NET 도서관 코드 (옵션)", "", key="stats_code")
         col_y, col_t = st.columns(2)
         with col_y:
-            stats_year = st.number_input(
-                "통계연도", 2020, 2100, _dt.now().year, key="stats_year"
-            )
+            stats_year = st.number_input("통계연도", 2020, 2100, _dt.now().year, key="stats_year")
         with col_t:
             stats_target = st.selectbox(
                 "양식", ["KOLIS-NET (공공)", "RISS (학교도서관)"], key="stats_target"
@@ -1223,14 +1237,10 @@ def _tab_tools() -> None:
             out_dir.mkdir(parents=True, exist_ok=True)
             try:
                 if stats_target.startswith("KOLIS"):
-                    xlsx = write_kolisnet_xlsx(
-                        s, out_dir / f"kolisnet_{int(stats_year)}.xlsx"
-                    )
+                    xlsx = write_kolisnet_xlsx(s, out_dir / f"kolisnet_{int(stats_year)}.xlsx")
                     fname = f"kolisnet_{int(stats_year)}.xlsx"
                 else:
-                    xlsx = export_to_riss_for_school(
-                        s, out_dir / f"riss_{int(stats_year)}.xlsx"
-                    )
+                    xlsx = export_to_riss_for_school(s, out_dir / f"riss_{int(stats_year)}.xlsx")
                     fname = f"riss_{int(stats_year)}.xlsx"
                 st.download_button(
                     "📥 통계 XLSX 다운로드",
@@ -1238,9 +1248,7 @@ def _tab_tools() -> None:
                     file_name=fname,
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                 )
-                st.success(
-                    f"총 장서 {s.holdings_total}권 · KDC 분포 {s.holdings_by_kdc}"
-                )
+                st.success(f"총 장서 {s.holdings_total}권 · KDC 분포 {s.holdings_by_kdc}")
             except Exception as e:
                 st.error(f"생성 실패: {e}")
 
@@ -1268,7 +1276,12 @@ def _tab_prefix_discover() -> None:
         )
     with col2:
         threshold = st.slider(
-            "임계값 (%)", min_value=0.1, max_value=10.0, value=1.0, step=0.1, key="prefix_threshold",
+            "임계값 (%)",
+            min_value=0.1,
+            max_value=10.0,
+            value=1.0,
+            step=0.1,
+            key="prefix_threshold",
         )
 
     if st.button("스캔 실행", key="prefix_scan_btn"):
@@ -1405,6 +1418,7 @@ def main() -> None:
             LibrarianStats,
             render_personal_dashboard,
         )
+
         _today = _date_today.today()
         _demo_stats = LibrarianStats(
             librarian_name=st.session_state.get("librarian_name", "선생님"),
@@ -1418,16 +1432,19 @@ def main() -> None:
 
     with st.expander("👨‍🏫 사서교사 일과 대시보드 (P2 정합·Part 81)"):
         from kormarc_auto.ui.school_librarian_dashboard import render_school_librarian_dashboard
+
         render_school_librarian_dashboard(
             librarian_name=st.session_state.get("librarian_name", "선생님")
         )
 
     with st.expander("📚 도서관 일과 컨텍스트·일과 사이클 (Part 49)"):
         from kormarc_auto.ui.librarian_friendly import render_librarian_dashboard_widget
+
         render_librarian_dashboard_widget()
 
     with st.expander("⚠ 응급 상황·안전 매뉴얼 (Part 77·82)"):
         from kormarc_auto.safety.disaster_response import render_response_card
+
         _disaster_select = st.selectbox(
             "재난 유형 선택",
             ["earthquake", "flood", "fire", "power_outage", "pandemic", "typhoon"],
@@ -1471,7 +1488,9 @@ def main() -> None:
         )
         st.markdown("---")
         st.markdown("### AI 추천 보조 (선택)")
-        st.caption("⚙ KDC·주제명 AI 자동 추천을 쓰려면 입력. 안 입력해도 ISBN 기능은 100% 작동합니다.")
+        st.caption(
+            "⚙ KDC·주제명 AI 자동 추천을 쓰려면 입력. 안 입력해도 ISBN 기능은 100% 작동합니다."
+        )
         ai_key = st.text_input(
             "AI 추천 보조 키 (선택)",
             type="password",
@@ -1531,9 +1550,7 @@ def main() -> None:
         st.markdown(f"- [가격 페이지]({PAYMENT_INFO_URL})")
         st.markdown("---")
         st.markdown("### 약관·개인정보")
-        _docs_base = (
-            "https://github.com/okwhr/kormarc-auto/blob/main/docs"
-        )
+        _docs_base = "https://github.com/okwhr/kormarc-auto/blob/main/docs"
         st.markdown(f"- [이용약관]({_docs_base}/terms-of-service.md)")
         st.markdown(f"- [개인정보 처리방침]({_docs_base}/privacy-policy.md)")
         st.caption("개인정보보호법 §35-3·§36에 따라 본인 데이터 다운로드/삭제 권리가 있습니다.")

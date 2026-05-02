@@ -8,6 +8,7 @@
 해결: 5 builder 통합 = 장애인 도서 KORMARC 자동.
 KOLAS·KLMS·책나래 호환.
 """
+
 from __future__ import annotations
 
 from typing import Any, Literal
@@ -15,10 +16,10 @@ from typing import Any, Literal
 from pymarc import Field, Subfield
 
 AccessibilityType = Literal[
-    "braille",        # 점자
-    "large_print",    # 큰 글자
-    "tactile",        # 촉감 자료
-    "daisy",          # DAISY 녹음 도서
+    "braille",  # 점자
+    "large_print",  # 큰 글자
+    "tactile",  # 촉감 자료
+    "daisy",  # DAISY 녹음 도서
     "sign_language",  # 수화 영상
 ]
 

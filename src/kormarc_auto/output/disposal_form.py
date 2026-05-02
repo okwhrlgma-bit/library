@@ -193,9 +193,7 @@ def render_disposal_form_pdf(
 
     # 푸터
     c.setFont(font, 8)
-    c.drawString(
-        margin, margin, f"발행: kormarc-auto · {datetime.now():%Y-%m-%d %H:%M}"
-    )
+    c.drawString(margin, margin, f"발행: kormarc-auto · {datetime.now():%Y-%m-%d %H:%M}")
     c.save()
     logger.info("제적·폐기 PDF 저장: %s (%d건)", out, len(entries_list))
     return out

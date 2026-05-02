@@ -6,6 +6,7 @@
 
 해결: 008·583 자동·history 누적.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,12 +16,12 @@ from typing import Literal
 from pymarc import Field, Subfield
 
 WithdrawalReason = Literal[
-    "lost",          # 분실
-    "damaged",       # 파손
-    "duplicate",     # 중복
-    "outdated",      # 노후
-    "donated_out",   # 외부 기증
-    "policy",        # 정책 폐기
+    "lost",  # 분실
+    "damaged",  # 파손
+    "duplicate",  # 중복
+    "outdated",  # 노후
+    "donated_out",  # 외부 기증
+    "policy",  # 정책 폐기
 ]
 
 

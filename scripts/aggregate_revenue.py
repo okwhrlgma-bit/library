@@ -104,9 +104,8 @@ def evaluate_us_trigger() -> dict[str, Any]:
     """ADR 0009 3개 트리거 평가."""
     revenues = kr_monthly_revenues(months_back=6)
     last3 = revenues[-3:] if len(revenues) >= 3 else revenues
-    consecutive_ok = (
-        len(last3) >= KR_REVENUE_CONSECUTIVE_MONTHS
-        and all(r["revenue_krw"] >= KR_REVENUE_MONTHLY_KRW_MIN for r in last3)
+    consecutive_ok = len(last3) >= KR_REVENUE_CONSECUTIVE_MONTHS and all(
+        r["revenue_krw"] >= KR_REVENUE_MONTHLY_KRW_MIN for r in last3
     )
 
     librarians = beta_librarian_count()
@@ -134,9 +133,7 @@ def evaluate_us_trigger() -> dict[str, Any]:
 
 def evaluate_sqlite_trigger() -> dict[str, Any]:
     """ADR 0004 SQLite 마이그레이션 트리거 (동시 활성 20명+ 또는 usage.jsonl 100MB+)."""
-    usage_log = Path(
-        os.getenv("KORMARC_USAGE_LOG", ROOT / "logs" / "usage.jsonl")
-    )
+    usage_log = Path(os.getenv("KORMARC_USAGE_LOG", ROOT / "logs" / "usage.jsonl"))
     log_size_mb = usage_log.stat().st_size / 1_048_576 if usage_log.exists() else 0
 
     # 최근 30일 활성 사서 (key_hash unique)
@@ -167,9 +164,15 @@ def render_summary(report: dict[str, Any]) -> str:
     lines.append(f"평가 시점: {us['evaluated_at']}")
     lines.append("")
     lines.append("## ADR 0009 미국 §33 활성화 트리거")
-    lines.append(f"- 한국 매출 3개월 연속 200만원: {us['kr_consecutive_count']}/3 — {'✓' if us['triggers']['kr_revenue_3months'] else '❌'}")
-    lines.append(f"- 베타 사서: {us['beta_librarians']}/{BETA_LIBRARIANS_MIN} — {'✓' if us['triggers']['beta_librarians_50plus'] else '❌'}")
-    lines.append(f"- 미국 LOI: {us['us_loi']}/{US_LOI_MIN} — {'✓' if us['triggers']['us_loi_1plus'] else '❌'}")
+    lines.append(
+        f"- 한국 매출 3개월 연속 200만원: {us['kr_consecutive_count']}/3 — {'✓' if us['triggers']['kr_revenue_3months'] else '❌'}"
+    )
+    lines.append(
+        f"- 베타 사서: {us['beta_librarians']}/{BETA_LIBRARIANS_MIN} — {'✓' if us['triggers']['beta_librarians_50plus'] else '❌'}"
+    )
+    lines.append(
+        f"- 미국 LOI: {us['us_loi']}/{US_LOI_MIN} — {'✓' if us['triggers']['us_loi_1plus'] else '❌'}"
+    )
     lines.append("")
     if us["all_triggers_met"]:
         lines.append("🟢 **3개 모두 충족** → ACTIVATED=True 변경 PR 작성 가능")
@@ -211,9 +214,7 @@ def main() -> int:
     if report["us_trigger"]["all_triggers_met"]:
         out = ROOT / "logs" / "triggers" / "us_activation_ready.json"
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(
-            json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        out.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     return 0
 
 

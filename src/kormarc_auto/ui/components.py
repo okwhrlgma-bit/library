@@ -9,6 +9,7 @@ Part 47·48 시급 + Part 57 도서관 환경 정합 (PO 명령 2026-05-02):
 음성 안내 (Web Speech API) = Part 57 deprecated:
 도서관 = 정숙 환경 + 이용자 응대 = 음성 출력 부적합 (E2 UX 전문가 검증).
 """
+
 from __future__ import annotations
 
 from kormarc_auto.ui.persona_vocabulary import t
@@ -64,9 +65,9 @@ def render_free_tier_badge() -> None:
             margin: 12px 0;
             box-shadow: 0 4px 6px rgba(31, 111, 235, 0.2);
         ">
-            ✨ {t('pricing.free_badge')}<br>
+            ✨ {t("pricing.free_badge")}<br>
             <span style="font-size: 14px; font-weight: 400; opacity: 0.95;">
-                {t('pricing.no_pressure')}
+                {t("pricing.no_pressure")}
             </span>
         </div>
         """,
@@ -276,10 +277,10 @@ def render_user_friendly_hero() -> None:
         f"""
         <div style="text-align: center; padding: 24px 0;">
             <h1 style="margin: 0 0 8px; font-size: 28px;">
-                {t('home.title')}
+                {t("home.title")}
             </h1>
             <p style="margin: 0; color: #6b7280; font-size: 16px;">
-                {t('home.subtitle')}
+                {t("home.subtitle")}
             </p>
         </div>
         """,

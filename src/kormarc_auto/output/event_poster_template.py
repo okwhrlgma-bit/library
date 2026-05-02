@@ -7,31 +7,32 @@
 
 해결: HTML/CSS 템플릿 자동 (브라우저 print → PDF).
 """
+
 from __future__ import annotations
 
 from datetime import date
 from typing import Literal
 
 EventType = Literal[
-    "library_week",      # 도서관 주간 (4월·9월)
-    "library_day",       # 도서관의 날 (4/12)
-    "bookstart",         # 북스타트 (영유아)
-    "author_talk",       # 저자 강연
-    "reading_club",      # 독서 동아리
-    "exhibition",        # 전시
-    "kid_event",         # 어린이 행사
+    "library_week",  # 도서관 주간 (4월·9월)
+    "library_day",  # 도서관의 날 (4/12)
+    "bookstart",  # 북스타트 (영유아)
+    "author_talk",  # 저자 강연
+    "reading_club",  # 독서 동아리
+    "exhibition",  # 전시
+    "kid_event",  # 어린이 행사
     "general",
 ]
 
 
 THEME_COLORS = {
-    "library_week": "#2C5282",      # 네이비
-    "library_day": "#ED8936",       # 살구
-    "bookstart": "#FED7D7",         # 연분홍 (영유아)
-    "author_talk": "#38A169",       # 초록
-    "reading_club": "#805AD5",      # 보라
-    "exhibition": "#D69E2E",        # 황금
-    "kid_event": "#F6AD55",         # 주황
+    "library_week": "#2C5282",  # 네이비
+    "library_day": "#ED8936",  # 살구
+    "bookstart": "#FED7D7",  # 연분홍 (영유아)
+    "author_talk": "#38A169",  # 초록
+    "reading_club": "#805AD5",  # 보라
+    "exhibition": "#D69E2E",  # 황금
+    "kid_event": "#F6AD55",  # 주황
     "general": "#2C5282",
 }
 

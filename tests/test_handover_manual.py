@@ -1,4 +1,5 @@
 """handover_manual 인계 매뉴얼 테스트 (Part 51, P4 1년 계약직 사서)."""
+
 from __future__ import annotations
 
 from datetime import date

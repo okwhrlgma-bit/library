@@ -84,9 +84,7 @@ def add_583_processing(
     if private_note:
         sf.append(Subfield(code="x", value=private_note))
 
-    record.add_field(
-        Field(tag="583", indicators=Indicators("1", " "), subfields=sf)
-    )
+    record.add_field(Field(tag="583", indicators=Indicators("1", " "), subfields=sf))
 
 
 def log_processing_event(

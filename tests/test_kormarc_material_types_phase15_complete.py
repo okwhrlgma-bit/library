@@ -62,9 +62,7 @@ def test_multimedia_306_runtime_colon_format():
 
 
 def test_multimedia_538_combines_signal_region_audio():
-    fields = build_multimedia_fields(
-        {"signal": "NTSC", "region": "3", "audio_spec": "돌비 5.1"}
-    )
+    fields = build_multimedia_fields({"signal": "NTSC", "region": "3", "audio_spec": "돌비 5.1"})
     f538 = next((f for f in fields if f.tag == "538"), None)
     assert f538 is not None
     val = f538.subfields[0].value
@@ -138,12 +136,14 @@ def test_thesis_856_url_riss():
 
 
 def test_format_502_text_full_korean():
-    txt = format_502_text({
-        "degree": "석사",
-        "institution": "서울대학교",
-        "department": "교육학과",
-        "year": 2026,
-    })
+    txt = format_502_text(
+        {
+            "degree": "석사",
+            "institution": "서울대학교",
+            "department": "교육학과",
+            "year": 2026,
+        }
+    )
     assert txt == "학위논문(석사)--서울대학교 교육학과, 2026"
 
 

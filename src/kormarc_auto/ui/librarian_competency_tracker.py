@@ -6,6 +6,7 @@
 
 해결: 직무 영역별 역량 점수 자동 + Personal Win 직결.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -63,15 +64,15 @@ def kormarc_auto_boost(area: str) -> float:
         boost 점수 (0~2)
     """
     boosts = {
-        "cataloging": 2.0,    # 메인 영역
+        "cataloging": 2.0,  # 메인 영역
         "classification": 1.5,
-        "acquisition": 1.0,   # decision_helper
-        "reference": 1.5,     # librarian_agent
+        "acquisition": 1.0,  # decision_helper
+        "reference": 1.5,  # librarian_agent
         "preservation": 1.0,  # withdrawn·inventory
-        "programs": 1.0,      # event_poster
-        "marketing": 1.0,     # sns_marketing
-        "administration": 2.0, # libsta·evaluation_report
-        "technology": 1.5,    # 일반 IT
+        "programs": 1.0,  # event_poster
+        "marketing": 1.0,  # sns_marketing
+        "administration": 2.0,  # libsta·evaluation_report
+        "technology": 1.5,  # 일반 IT
     }
     return boosts.get(area, 0.5)
 
@@ -105,13 +106,15 @@ def generate_competency_report(scores: list[CompetencyScore], librarian_name: st
         for area in summary["weaknesses"]:
             lines.append(f"- {COMPETENCY_AREAS.get(area, area)} = 학습·교육 권장")
 
-    lines.extend([
-        "",
-        "## 사서 평가 가산점·승진 활용",
-        "",
-        "본 보고서는 사서 평가·승진 자료에 직접 활용 가능합니다.",
-        "kormarc-auto 사용 = 자동 boost = 정량 평가 지표 ↑.",
-    ])
+    lines.extend(
+        [
+            "",
+            "## 사서 평가 가산점·승진 활용",
+            "",
+            "본 보고서는 사서 평가·승진 자료에 직접 활용 가능합니다.",
+            "kormarc-auto 사용 = 자동 boost = 정량 평가 지표 ↑.",
+        ]
+    )
 
     return "\n".join(lines)
 

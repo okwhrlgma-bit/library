@@ -8,6 +8,7 @@
 해결: 사건 자동 기록·해시 체인·법적 증거 + 관장·자치구 자동 보고.
 서울시 7대 지침 정합.
 """
+
 from __future__ import annotations
 
 import hashlib
@@ -18,10 +19,10 @@ from pathlib import Path
 from typing import Literal
 
 INCIDENT_TYPES = Literal[
-    "verbal_abuse",      # 폭언
-    "sexual_harassment", # 성희롱
-    "physical_threat",   # 물리적 위협
-    "complaint",         # 일반 민원
+    "verbal_abuse",  # 폭언
+    "sexual_harassment",  # 성희롱
+    "physical_threat",  # 물리적 위협
+    "complaint",  # 일반 민원
     "other",
 ]
 

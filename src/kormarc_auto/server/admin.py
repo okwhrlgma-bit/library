@@ -42,6 +42,7 @@ def build_stats() -> dict[str, Any]:
 def _sales_funnel_summary() -> dict[str, Any]:
     """영업 funnel (가입→활성→한도→결제) + 페르소나별 분리 (KLA 슬라이드 데이터 ★)."""
     import sys
+
     root = Path(__file__).resolve().parent.parent.parent.parent
     scripts_dir = root / "scripts"
     if str(scripts_dir) not in sys.path:

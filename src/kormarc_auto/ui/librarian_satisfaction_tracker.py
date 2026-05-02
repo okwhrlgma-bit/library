@@ -5,6 +5,7 @@ PO 비전: "사서가 편하고 쉽고 빠르게 사서 친화적·기존 모델
 사서 만족도 = PMF 핵심 지표.
 NPS·CSAT·CES 자동 측정 + 페르소나별 분석 + Mem0 학습.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -133,16 +134,22 @@ def render_satisfaction_survey(librarian_persona: str = "general") -> str:
 
     _nps = st.slider(
         "**NPS** — 동료 사서에게 추천하시겠어요? (0~10)",
-        min_value=0, max_value=10, value=8,
+        min_value=0,
+        max_value=10,
+        value=8,
         help="9~10 = 적극 추천 / 7~8 = 만족 / 0~6 = 개선 필요",
     )
     _csat = st.slider(
         "**만족도 (CSAT)** — kormarc-auto에 얼마나 만족하세요? (1~5)",
-        min_value=1, max_value=5, value=4,
+        min_value=1,
+        max_value=5,
+        value=4,
     )
     _ces = st.slider(
         "**사용 편의성 (CES)** — 사용이 얼마나 어려우신가요? (1=매우 쉬움 ~ 5=매우 어려움)",
-        min_value=1, max_value=5, value=2,
+        min_value=1,
+        max_value=5,
+        value=2,
     )
     feedback = st.text_area(
         "한 줄 의견 (선택)",

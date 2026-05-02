@@ -4,6 +4,7 @@
 
 해결: 협업 필터링 + KDC 기반 + 자관 history + Mem0 학습.
 """
+
 from __future__ import annotations
 
 from collections import Counter

@@ -79,7 +79,15 @@ def search_local(
                 if q:
                     haystack = " ".join(
                         str(e.get(k, "") or "")
-                        for k in ("isbn", "title", "subtitle", "author", "publisher", "registration_no", "call_number")
+                        for k in (
+                            "isbn",
+                            "title",
+                            "subtitle",
+                            "author",
+                            "publisher",
+                            "registration_no",
+                            "call_number",
+                        )
                     ).lower()
                     if q not in haystack:
                         continue

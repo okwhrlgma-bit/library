@@ -150,13 +150,9 @@ def funnel_by_persona(
     result: dict[str, FunnelMetrics] = {}
     for persona, keys in persona_keys.items():
         s_filtered = [
-            s for s in signups
-            if s.get("api_key") in keys or s.get("library_name") in keys
+            s for s in signups if s.get("api_key") in keys or s.get("library_name") in keys
         ]
-        u_filtered = [
-            u for u in usage
-            if u.get("api_key") in keys or u.get("library_name") in keys
-        ]
+        u_filtered = [u for u in usage if u.get("api_key") in keys or u.get("library_name") in keys]
         result[persona] = compute_funnel(s_filtered, u_filtered, free_quota=free_quota)
 
     return result
@@ -167,8 +163,12 @@ def render_summary(metrics: FunnelMetrics) -> str:
     lines.append("=== 영업 funnel ===")
     lines.append(f"가입 (signup):       {metrics.signups}")
     lines.append(f"활성 (1건+ 변환):    {metrics.activated} ({metrics.activation_rate_pct}%)")
-    lines.append(f"무료 한도 도달:      {metrics.free_quota_used} ({metrics.quota_exhaust_rate_pct}% of 활성)")
-    lines.append(f"결제:                {metrics.paid} ({metrics.paid_conversion_rate_pct}% of 한도 도달)")
+    lines.append(
+        f"무료 한도 도달:      {metrics.free_quota_used} ({metrics.quota_exhaust_rate_pct}% of 활성)"
+    )
+    lines.append(
+        f"결제:                {metrics.paid} ({metrics.paid_conversion_rate_pct}% of 한도 도달)"
+    )
     lines.append(f"end-to-end (가입→결제): {metrics.end_to_end_pct}%")
     lines.append("")
     lines.append("=== 영업 의사결정 ===")

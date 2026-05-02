@@ -65,7 +65,7 @@ def parse_field_line(line: str) -> dict[str, Any] | None:
     if not m:
         return None
     tag = m.group(1)
-    rest = line[m.end():].strip()
+    rest = line[m.end() :].strip()
 
     # 지시기호 (옵션, 0~2 char)
     ind1, ind2 = " ", " "
@@ -73,7 +73,7 @@ def parse_field_line(line: str) -> dict[str, Any] | None:
     if ind_match:
         ind1 = ind_match.group(1).replace("\\", " ").replace("#", " ")
         ind2 = ind_match.group(2).replace("\\", " ").replace("#", " ")
-        rest = rest[ind_match.end():]
+        rest = rest[ind_match.end() :]
 
     # 서브필드 추출
     subfields: list[tuple[str, str]] = []

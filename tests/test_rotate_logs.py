@@ -12,9 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 # scripts/rotate_logs.py 동적 로드
-_spec = importlib.util.spec_from_file_location(
-    "rotate_logs", ROOT / "scripts" / "rotate_logs.py"
-)
+_spec = importlib.util.spec_from_file_location("rotate_logs", ROOT / "scripts" / "rotate_logs.py")
 assert _spec and _spec.loader
 rotate_logs = importlib.util.module_from_spec(_spec)
 sys.modules["rotate_logs"] = rotate_logs

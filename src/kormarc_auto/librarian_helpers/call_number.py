@@ -30,15 +30,15 @@ logger = logging.getLogger(__name__)
 
 # 별치기호 (도서관 표준)
 SHELVING_CODES = {
-    "general": "",          # 일반서가
-    "reference": "R",       # 참고도서
-    "youth": "Y",           # 청소년
-    "child": "J",           # 어린이
-    "rare": "GO",           # 고서
-    "local": "K",           # 향토
-    "scholarship": "L",     # 장학자료
-    "ebook": "EB",          # 전자책
-    "audiobook": "AB",      # 오디오북
+    "general": "",  # 일반서가
+    "reference": "R",  # 참고도서
+    "youth": "Y",  # 청소년
+    "child": "J",  # 어린이
+    "rare": "GO",  # 고서
+    "local": "K",  # 향토
+    "scholarship": "L",  # 장학자료
+    "ebook": "EB",  # 전자책
+    "audiobook": "AB",  # 오디오북
 }
 
 
@@ -200,7 +200,5 @@ def add_call_number_field(
     if not subfields:
         return
 
-    record.add_field(
-        Field(tag="049", indicators=Indicators("0", " "), subfields=subfields)
-    )
+    record.add_field(Field(tag="049", indicators=Indicators("0", " "), subfields=subfields))
     logger.info("049 청구기호 추가: %s", subfields)

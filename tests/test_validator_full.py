@@ -37,14 +37,26 @@ def test_complete_book_record_passes():
     extras = [
         Field(tag="005", data="20260129000000.0"),
         Field(tag="007", data="ta"),
-        Field(tag="020", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="a", value="9788912345678")]),
-        Field(tag="260", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="b", value="민음사")]),
-        Field(tag="300", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="a", value="320 p.")]),
-        Field(tag="049", indicators=Indicators("0", " "),
-              subfields=[Subfield(code="l", value="EQ12345")]),
+        Field(
+            tag="020",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="a", value="9788912345678")],
+        ),
+        Field(
+            tag="260",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="b", value="민음사")],
+        ),
+        Field(
+            tag="300",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="a", value="320 p.")],
+        ),
+        Field(
+            tag="049",
+            indicators=Indicators("0", " "),
+            subfields=[Subfield(code="l", value="EQ12345")],
+        ),
     ]
     issues = validate_record_full(_minimal_record(extras), {}, "book_single")
     m_issues = [i for i in issues if "[M]" in i]
@@ -55,14 +67,26 @@ def test_thesis_missing_502_flagged():
     extras = [
         Field(tag="005", data="20260129000000.0"),
         Field(tag="007", data="ta"),
-        Field(tag="020", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="a", value="9788912345678")]),
-        Field(tag="260", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="b", value="서울대")]),
-        Field(tag="300", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="a", value="100 p.")]),
-        Field(tag="049", indicators=Indicators("0", " "),
-              subfields=[Subfield(code="l", value="EQ99999")]),
+        Field(
+            tag="020",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="a", value="9788912345678")],
+        ),
+        Field(
+            tag="260",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="b", value="서울대")],
+        ),
+        Field(
+            tag="300",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="a", value="100 p.")],
+        ),
+        Field(
+            tag="049",
+            indicators=Indicators("0", " "),
+            subfields=[Subfield(code="l", value="EQ99999")],
+        ),
     ]
     issues = validate_record_full(_minimal_record(extras), {}, "thesis")
     assert any("[A] 502" in i for i in issues)
@@ -72,14 +96,26 @@ def test_book_with_hanja_missing_880_flagged():
     extras = [
         Field(tag="005", data="20260129000000.0"),
         Field(tag="007", data="ta"),
-        Field(tag="020", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="a", value="9788912345678")]),
-        Field(tag="260", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="b", value="민음사")]),
-        Field(tag="300", indicators=Indicators(" ", " "),
-              subfields=[Subfield(code="a", value="320 p.")]),
-        Field(tag="049", indicators=Indicators("0", " "),
-              subfields=[Subfield(code="l", value="EQ12345")]),
+        Field(
+            tag="020",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="a", value="9788912345678")],
+        ),
+        Field(
+            tag="260",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="b", value="민음사")],
+        ),
+        Field(
+            tag="300",
+            indicators=Indicators(" ", " "),
+            subfields=[Subfield(code="a", value="320 p.")],
+        ),
+        Field(
+            tag="049",
+            indicators=Indicators("0", " "),
+            subfields=[Subfield(code="l", value="EQ12345")],
+        ),
     ]
     book = {"title": "韓國史 통론"}
     issues = validate_record_full(_minimal_record(extras), book, "book_single")

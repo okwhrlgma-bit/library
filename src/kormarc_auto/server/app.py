@@ -514,8 +514,7 @@ def create_app() -> FastAPI:
         out_dir = Path(tempfile.gettempdir()) / "kormarc_deposit_forms"
         out = render_deposit_form_pdf(
             form,
-            output_path=out_dir
-            / f"deposit_{form.title[:20].replace(' ', '_')}.pdf",
+            output_path=out_dir / f"deposit_{form.title[:20].replace(' ', '_')}.pdf",
         )
         pdf_b64 = base64.b64encode(out.read_bytes()).decode("ascii")
         with contextlib.suppress(OSError):
@@ -547,7 +546,9 @@ def create_app() -> FastAPI:
             consume(api_key, kind="isbn", ok=False, ref=isbn)
             raise HTTPException(status_code=404, detail=f"ISBN {isbn}: 모든 소스에서 미조회")
 
-        return _build_response(book_data, isbn=isbn, agency=body.agency, api_key=api_key, kind="isbn")
+        return _build_response(
+            book_data, isbn=isbn, agency=body.agency, api_key=api_key, kind="isbn"
+        )
 
     @app.post("/search", response_model=SearchResponse, tags=["kormarc"])
     def search_endpoint(

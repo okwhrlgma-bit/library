@@ -7,6 +7,7 @@
 
 해결: 자동 언어 감지 + KORMARC 008 35-37 언어부호 자동.
 """
+
 from __future__ import annotations
 
 import re

@@ -22,8 +22,7 @@ def test_empty_funnel_returns_zeros():
 def test_full_funnel_calculation():
     """5명 가입·4명 활성·2명 한도 도달·1명 결제 → end-to-end 20%."""
     signups = [
-        {"api_key": f"key_{i}", "library_name": f"lib_{i}", "is_paid": i == 0}
-        for i in range(5)
+        {"api_key": f"key_{i}", "library_name": f"lib_{i}", "is_paid": i == 0} for i in range(5)
     ]
     usage = [
         # 4명 활성 (key_0~3 모두 1건 이상 사용)
@@ -69,6 +68,7 @@ def test_render_summary_includes_decision():
 
 def test_metrics_to_dict_serializable():
     import json
+
     signups = [{"api_key": "k1", "is_paid": True}]
     usage = [{"api_key": "k1", "records": 60}]
     metrics = sales_funnel.compute_funnel(signups, usage)

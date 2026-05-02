@@ -6,6 +6,7 @@
 
 해결: KDC 대분류 10 자동 분포 분석·균형 추천.
 """
+
 from __future__ import annotations
 
 from collections import Counter

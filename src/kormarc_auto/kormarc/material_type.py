@@ -114,7 +114,9 @@ def detect_material_type(book_data: dict[str, Any]) -> str:
         return "book_multi"
 
     # 연속간행물 힌트
-    if any(kw in (title + category) for kw in ("월간", "주간", "계간", "연감", "magazine", "journal")):
+    if any(
+        kw in (title + category) for kw in ("월간", "주간", "계간", "연감", "magazine", "journal")
+    ):
         return "serial_current"
 
     return "book_single"

@@ -96,12 +96,11 @@ def assert_learnings_recent() -> bool:
 
 def assert_tests_count_min() -> bool:
     """테스트가 최소 200건 이상 (회귀 방지)."""
-    rc, out, _ = _run(
-        [str(PYTHON), "-m", "pytest", "--collect-only", "-q"], timeout=60
-    )
+    rc, out, _ = _run([str(PYTHON), "-m", "pytest", "--collect-only", "-q"], timeout=60)
     if rc != 0:
         return False
     import re
+
     # "214 tests collected" — 라인 어디든
     for line in out.splitlines()[::-1]:
         m = re.search(r"(\d+)\s+tests?\s+collected", line)
@@ -126,7 +125,11 @@ def assert_pyproject_valid() -> bool:
     if not p.exists():
         return False
     rc, _, _ = _run(
-        [str(PYTHON), "-c", "import tomllib; tomllib.loads(open('pyproject.toml', encoding='utf-8').read())"]
+        [
+            str(PYTHON),
+            "-c",
+            "import tomllib; tomllib.loads(open('pyproject.toml', encoding='utf-8').read())",
+        ]
     )
     return rc == 0
 
@@ -199,8 +202,7 @@ def assert_plan_act_agents() -> bool:
     """Explore-Plan-Act 3 에이전트 분리 (PO 가이드 §2.2·§2.4)."""
     agents_dir = ROOT / ".claude" / "agents"
     return all(
-        (agents_dir / f"{name}.md").exists()
-        for name in ("planner", "implementer", "explorer")
+        (agents_dir / f"{name}.md").exists() for name in ("planner", "implementer", "explorer")
     )
 
 
@@ -218,9 +220,7 @@ def assert_stop_double_gate_hook() -> bool:
     if not p.exists():
         return False
     text = p.read_text(encoding="utf-8")
-    return all(
-        s in text for s in ("<<<TASK_COMPLETE>>>", "stop_hook_active", "binary_assertions")
-    )
+    return all(s in text for s in ("<<<TASK_COMPLETE>>>", "stop_hook_active", "binary_assertions"))
 
 
 def assert_trust_counter_hook() -> bool:
@@ -330,15 +330,18 @@ def assert_streamlit_tabs_count() -> bool:
 
 def assert_application_level_module() -> bool:
     """KORMARC 2023.12 M/A/O 적용 수준 모듈 + validate_record_full 존재."""
-    rc, _, _ = _run([
-        str(PYTHON), "-c",
-        "import sys; sys.path.insert(0, 'src'); "
-        "from kormarc_auto.kormarc.application_level import "
-        "M_FIELDS, M_FIELD_GROUPS, A_FIELD_GROUPS, "
-        "determine_application_level, validate_application_level; "
-        "from kormarc_auto.kormarc.validator import validate_record_full; "
-        "assert len(M_FIELDS) >= 5 and len(M_FIELD_GROUPS) >= 3",
-    ])
+    rc, _, _ = _run(
+        [
+            str(PYTHON),
+            "-c",
+            "import sys; sys.path.insert(0, 'src'); "
+            "from kormarc_auto.kormarc.application_level import "
+            "M_FIELDS, M_FIELD_GROUPS, A_FIELD_GROUPS, "
+            "determine_application_level, validate_application_level; "
+            "from kormarc_auto.kormarc.validator import validate_record_full; "
+            "assert len(M_FIELDS) >= 5 and len(M_FIELD_GROUPS) >= 3",
+        ]
+    )
     return rc == 0
 
 
@@ -353,27 +356,33 @@ def assert_real_mrc_validator_present() -> bool:
 
 def assert_prefix_discovery_module() -> bool:
     """049 prefix 자동 발견 모듈 (다른 자관 PILOT 즉시 정합 ★)."""
-    rc, _, _ = _run([
-        str(PYTHON), "-c",
-        "import sys; sys.path.insert(0, 'src'); "
-        "from kormarc_auto.librarian_helpers.prefix_discovery import "
-        "PrefixDiscoverer, PrefixSummary; "
-        "summary = PrefixSummary(0, {}, (), 1.0); "
-        "assert 'registration_prefix' in summary.to_yaml_snippet()",
-    ])
+    rc, _, _ = _run(
+        [
+            str(PYTHON),
+            "-c",
+            "import sys; sys.path.insert(0, 'src'); "
+            "from kormarc_auto.librarian_helpers.prefix_discovery import "
+            "PrefixDiscoverer, PrefixSummary; "
+            "summary = PrefixSummary(0, {}, (), 1.0); "
+            "assert 'registration_prefix' in summary.to_yaml_snippet()",
+        ]
+    )
     return rc == 0
 
 
 def assert_portone_webhook_module() -> bool:
     """포트원 v2 webhook 처리 모듈 (ADR 0007 트리거 후 활성)."""
-    rc, _, _ = _run([
-        str(PYTHON), "-c",
-        "import sys; sys.path.insert(0, 'src'); "
-        "from kormarc_auto.server.portone_webhook import "
-        "WebhookEvent, parse_event, verify_signature, handle_event; "
-        "import inspect; "
-        "assert callable(verify_signature)",
-    ])
+    rc, _, _ = _run(
+        [
+            str(PYTHON),
+            "-c",
+            "import sys; sys.path.insert(0, 'src'); "
+            "from kormarc_auto.server.portone_webhook import "
+            "WebhookEvent, parse_event, verify_signature, handle_event; "
+            "import inspect; "
+            "assert callable(verify_signature)",
+        ]
+    )
     return rc == 0
 
 

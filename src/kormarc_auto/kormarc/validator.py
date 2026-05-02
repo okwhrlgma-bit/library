@@ -91,7 +91,9 @@ def validate_record_full(
 
     present_tags = {f.tag for f in record.get_fields()}
     for tag, level, reason in validate_application_level(
-        present_tags, book_data, material_type,
+        present_tags,
+        book_data,
+        material_type,
     ):
         errors.append(f"[{level}] {tag}: {reason}")
 

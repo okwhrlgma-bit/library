@@ -3,6 +3,7 @@
 Part 57 §3·§6 (PO 명령 2026-05-02): 도서관 사서 PC = 공용·이용자 응대 중 자리
 비움 → 자동 잠금. 인터럽트 후 복귀 시 작업 손실 방지 = draft autosave.
 """
+
 from __future__ import annotations
 
 import time

@@ -43,8 +43,9 @@ def detect_persona(email: str, library_name: str | None) -> str:
 
     if "video" in name_low or "영상" in name_low or "방송" in name_low:
         return "video"
-    if any(k in name_low for k in ("대학", "university")) or \
-       any(d in email_low for d in (".ac.kr", ".edu")):
+    if any(k in name_low for k in ("대학", "university")) or any(
+        d in email_low for d in (".ac.kr", ".edu")
+    ):
         return "acquisition"
     if any(k in name_low for k in ("전문", "법무", "의학", "병원", "연구원")):
         return "acquisition"
@@ -152,7 +153,9 @@ def issue_free_trial_key(
     }
     _append_signup_log(entry)
 
-    docs_base = os.getenv("KORMARC_PUBLIC_DOCS_URL", "https://github.com/okwhr/kormarc-auto/blob/main/docs")
+    docs_base = os.getenv(
+        "KORMARC_PUBLIC_DOCS_URL", "https://github.com/okwhr/kormarc-auto/blob/main/docs"
+    )
     kakao_channel = os.getenv("KORMARC_KAKAO_CHANNEL_URL", "https://pf.kakao.com/_kormarc")
     welcome = (
         f"환영합니다, {library_name or '사서 선생님'}!\n"

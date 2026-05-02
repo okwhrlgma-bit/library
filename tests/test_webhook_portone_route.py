@@ -52,14 +52,16 @@ def test_webhook_portone_no_secret_returns_401(client, monkeypatch):
 def test_webhook_portone_valid_signature_processes(client, monkeypatch):
     secret = "test-secret-key"
     monkeypatch.setenv("KORMARC_PORTONE_WEBHOOK_SECRET", secret)
-    payload = json.dumps({
-        "type": "Transaction.Paid",
-        "data": {
-            "transactionId": "tx_test_001",
-            "amount": {"total": 50000},
-            "customerKey": "user_test",
-        },
-    }).encode("utf-8")
+    payload = json.dumps(
+        {
+            "type": "Transaction.Paid",
+            "data": {
+                "transactionId": "tx_test_001",
+                "amount": {"total": 50000},
+                "customerKey": "user_test",
+            },
+        }
+    ).encode("utf-8")
     sig = hmac.new(secret.encode(), payload, hashlib.sha256).hexdigest()
     r = client.post(
         "/webhook/portone",

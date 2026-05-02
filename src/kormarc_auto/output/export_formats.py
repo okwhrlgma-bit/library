@@ -7,6 +7,7 @@
 
 해결: 4 export 형식 통합 = MARCXML·MODS·JSON-LD·OAI-PMH.
 """
+
 from __future__ import annotations
 
 import json
@@ -22,7 +23,7 @@ def export_marcxml(record_data: dict[str, Any]) -> str:
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<record xmlns="http://www.loc.gov/MARC21/slim">',
-        f'  <leader>{escape(record_data.get("leader", "00000nam a2200000   4500"))}</leader>',
+        f"  <leader>{escape(record_data.get('leader', '00000nam a2200000   4500'))}</leader>",
     ]
     for field in record_data.get("control_fields", []):
         tag = field.get("tag", "")
@@ -38,9 +39,9 @@ def export_marcxml(record_data: dict[str, Any]) -> str:
             code = sub.get("code", "")
             value = escape(sub.get("value", ""))
             lines.append(f'    <subfield code="{code}">{value}</subfield>')
-        lines.append('  </datafield>')
+        lines.append("  </datafield>")
 
-    lines.append('</record>')
+    lines.append("</record>")
     return "\n".join(lines)
 
 
@@ -55,7 +56,7 @@ def export_mods(record_data: dict[str, Any]) -> str:
     year = escape(str(record_data.get("year", "")))
     isbn = escape(record_data.get("isbn", ""))
 
-    return f'''<?xml version="1.0" encoding="UTF-8"?>
+    return f"""<?xml version="1.0" encoding="UTF-8"?>
 <mods xmlns="http://www.loc.gov/mods/v3" version="3.7">
   <titleInfo>
     <title>{title}</title>
@@ -71,7 +72,7 @@ def export_mods(record_data: dict[str, Any]) -> str:
   <identifier type="isbn">{isbn}</identifier>
   <typeOfResource>text</typeOfResource>
   <language><languageTerm type="code" authority="iso639-2b">kor</languageTerm></language>
-</mods>'''
+</mods>"""
 
 
 def export_jsonld(record_data: dict[str, Any]) -> str:
@@ -111,7 +112,7 @@ def export_oai_pmh(record_data: dict[str, Any], *, identifier: str = "") -> str:
     date = escape(str(record_data.get("year", "")))
     identifier_v = escape(identifier or record_data.get("isbn", ""))
 
-    return f'''<record>
+    return f"""<record>
   <header>
     <identifier>{identifier_v}</identifier>
     <datestamp>{date}</datestamp>
@@ -128,7 +129,7 @@ def export_oai_pmh(record_data: dict[str, Any], *, identifier: str = "") -> str:
       <dc:language>ko</dc:language>
     </oai_dc:dc>
   </metadata>
-</record>'''
+</record>"""
 
 
 __all__ = ["export_jsonld", "export_marcxml", "export_mods", "export_oai_pmh"]

@@ -7,6 +7,7 @@
 해결: 책 표지·판권지 OCR → 자동 메타데이터 추출.
 T2 AI/ML + Anthropic Vision 통합 기반.
 """
+
 from __future__ import annotations
 
 import re
@@ -46,14 +47,13 @@ def extract_metadata_from_text(raw_text: str) -> OcrExtraction:
     year = year_match.group(1) if year_match else ""
 
     # 출판사 (한글 단어 직전·"출판" 키워드)
-    pub_match = re.search(
-        r"([가-힣A-Za-z]{2,20})\s*(?:출판|출판사|발행|펴낸곳)",
-        raw_text
-    )
+    pub_match = re.search(r"([가-힣A-Za-z]{2,20})\s*(?:출판|출판사|발행|펴낸곳)", raw_text)
     publisher = pub_match.group(1).strip() if pub_match else ""
 
     # 저자 (한글 이름 + 지음·저·옮김 패턴)
-    author_match = re.search(r"([가-힣]{2,15}(?:\s*[가-힣]{2,10})?)\s*(?:지음|저|옮김|역|글)", raw_text)
+    author_match = re.search(
+        r"([가-힣]{2,15}(?:\s*[가-힣]{2,10})?)\s*(?:지음|저|옮김|역|글)", raw_text
+    )
     author = author_match.group(1).strip() if author_match else ""
 
     # 신뢰도 (필드 추출 갯수 기반)

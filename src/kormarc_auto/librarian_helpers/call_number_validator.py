@@ -5,6 +5,7 @@
 
 해결: 자동 검수 + 수정 제안.
 """
+
 from __future__ import annotations
 
 import re
@@ -157,8 +158,27 @@ def suggest_call_number(
         # 한글 자음 추출 단순 (Phase 1)
         if "가" <= first <= "힣":
             jamo_idx = (ord(first) - ord("가")) // 588
-            chosung_list = ["ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
-                            "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"]
+            chosung_list = [
+                "ㄱ",
+                "ㄲ",
+                "ㄴ",
+                "ㄷ",
+                "ㄸ",
+                "ㄹ",
+                "ㅁ",
+                "ㅂ",
+                "ㅃ",
+                "ㅅ",
+                "ㅆ",
+                "ㅇ",
+                "ㅈ",
+                "ㅉ",
+                "ㅊ",
+                "ㅋ",
+                "ㅌ",
+                "ㅍ",
+                "ㅎ",
+            ]
             chosung = chosung_list[jamo_idx]
         else:
             chosung = first

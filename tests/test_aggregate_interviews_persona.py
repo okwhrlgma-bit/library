@@ -11,8 +11,14 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import aggregate_interviews  # noqa: E402
 
 
-def _make(persona: str, nps: int, time_saved: float = 75.0, q1: str = "HIGH",
-          quote: bool = True, label: str = "?") -> dict:
+def _make(
+    persona: str,
+    nps: int,
+    time_saved: float = 75.0,
+    q1: str = "HIGH",
+    quote: bool = True,
+    label: str = "?",
+) -> dict:
     return {
         "persona": persona,
         "persona_label": label,

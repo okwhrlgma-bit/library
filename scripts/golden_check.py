@@ -62,9 +62,7 @@ def _resolve_field(book: dict[str, Any], field: str) -> Any:
 
 def run_case(case_dir: Path, *, offline: bool = False) -> dict[str, Any]:
     inp = json.loads((case_dir / "input.json").read_text(encoding="utf-8"))
-    asserts = json.loads(
-        (case_dir / "assertions.json").read_text(encoding="utf-8")
-    )
+    asserts = json.loads((case_dir / "assertions.json").read_text(encoding="utf-8"))
 
     # 외부 API 호출 (또는 캐시 hit)
     if offline:

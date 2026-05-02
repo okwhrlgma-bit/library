@@ -66,9 +66,7 @@ def main() -> int:
         except json.JSONDecodeError:
             db = {}
 
-    rec = db.setdefault(
-        key, {"success": 0, "fail": 0, "ratio": 0.0, "n": 0, "last_ts": 0}
-    )
+    rec = db.setdefault(key, {"success": 0, "fail": 0, "ratio": 0.0, "n": 0, "last_ts": 0})
     if ok:
         rec["success"] += 1
     else:

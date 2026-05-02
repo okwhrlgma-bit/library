@@ -3,6 +3,7 @@
 문체부 2022·2024 공공도서관 매뉴얼 정합.
 지역 분류 (도시·도농복합·농어촌) + 위계 (광역대표·지역중앙·거점·분관).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -10,16 +11,16 @@ from typing import Literal
 
 LibraryHierarchy = Literal[
     "metropolitan_main",  # 광역대표 (시도 1관)
-    "regional_central",   # 지역중앙 (시군구 1관)
-    "branch_main",        # 거점도서관
-    "branch",             # 분관
-    "small_library",      # 작은도서관
+    "regional_central",  # 지역중앙 (시군구 1관)
+    "branch_main",  # 거점도서관
+    "branch",  # 분관
+    "small_library",  # 작은도서관
 ]
 
 RegionalType = Literal[
-    "urban",              # 도시형 (인구 ↑)
+    "urban",  # 도시형 (인구 ↑)
     "urban_rural_mixed",  # 도농복합형
-    "rural_fishing",      # 농어촌형
+    "rural_fishing",  # 농어촌형
 ]
 
 

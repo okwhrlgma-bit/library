@@ -22,6 +22,7 @@ logger = logging.getLogger(__name__)
 def _ensure_reportlab() -> tuple[bool, str | None]:
     try:
         import reportlab  # noqa: F401
+
         return True, None
     except ImportError:
         return False, "reportlab 미설치 — `pip install -e .[labels]`로 설치"
@@ -153,8 +154,7 @@ def make_monthly_report(
     from kormarc_auto.inventory.library_db import stats
 
     out = Path(
-        output_path
-        or os.getenv("KORMARC_REPORT_OUT", f"./output/monthly_{year}_{month:02d}.pdf")
+        output_path or os.getenv("KORMARC_REPORT_OUT", f"./output/monthly_{year}_{month:02d}.pdf")
     )
     out.parent.mkdir(parents=True, exist_ok=True)
 
@@ -210,7 +210,9 @@ def make_monthly_report(
 
     # 푸터
     c.setFont(font, 8)
-    c.drawString(margin, margin, f"생성: kormarc-auto · {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    c.drawString(
+        margin, margin, f"생성: kormarc-auto · {datetime.now().strftime('%Y-%m-%d %H:%M')}"
+    )
 
     c.save()
     logger.info("월간 보고서 저장: %s", out)
@@ -296,7 +298,9 @@ def make_validation_report(
 
     y -= 5 * mm
     c.setFont(font, 12)
-    c.drawString(margin, y, f"종합: 파일 {len(mrc_paths)}개 · 오류 {total_errors} · 경고 {total_warnings}")
+    c.drawString(
+        margin, y, f"종합: 파일 {len(mrc_paths)}개 · 오류 {total_errors} · 경고 {total_warnings}"
+    )
 
     c.save()
     logger.info("검증 리포트 저장: %s", out)

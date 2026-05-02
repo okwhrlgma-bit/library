@@ -140,9 +140,7 @@ def write_monthly_invoice_json(
 ) -> Path:
     """월간 청구서 JSON 저장 (PO가 카카오뱅크 입금 확인용)."""
     summary = aggregate_monthly(year, month)
-    out = Path(
-        output_path or f"logs/invoices/invoice_{year}_{month:02d}.json"
-    )
+    out = Path(output_path or f"logs/invoices/invoice_{year}_{month:02d}.json")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(
         json.dumps(summary, ensure_ascii=False, indent=2),
@@ -150,7 +148,9 @@ def write_monthly_invoice_json(
     )
     logger.info(
         "월간 청구서 저장: %s (총 %d건 / %s원)",
-        out, summary["total_records"], f"{summary['total_revenue_krw']:,}",
+        out,
+        summary["total_records"],
+        f"{summary['total_revenue_krw']:,}",
     )
     return out
 
@@ -239,9 +239,15 @@ def render_invoice_pdf(
     from kormarc_auto.output.reports import _korean_font
 
     summary = aggregate_monthly(year, month)
-    key_summary = summary["by_key"].get(api_key_hash, {
-        "records": 0, "revenue_krw": 0, "by_kind": {}, "recommended_plan": ("", 0),
-    })
+    key_summary = summary["by_key"].get(
+        api_key_hash,
+        {
+            "records": 0,
+            "revenue_krw": 0,
+            "by_kind": {},
+            "recommended_plan": ("", 0),
+        },
+    )
 
     biz = business_info or {
         "name": "kormarc-auto",
@@ -250,9 +256,7 @@ def render_invoice_pdf(
         "bank": os.getenv("KORMARC_BANK_INFO", "(계좌 미등록)"),
     }
 
-    out = Path(
-        output_path or f"logs/invoices/invoice_{year}_{month:02d}_{api_key_hash}.pdf"
-    )
+    out = Path(output_path or f"logs/invoices/invoice_{year}_{month:02d}_{api_key_hash}.pdf")
     out.parent.mkdir(parents=True, exist_ok=True)
 
     c = canvas.Canvas(str(out), pagesize=A4)
@@ -270,7 +274,11 @@ def render_invoice_pdf(
     y -= 6 * mm
     c.drawString(margin, y, f"키 식별자: {api_key_hash}")
     y -= 6 * mm
-    c.drawString(margin, y, f"청구 기간: {year}-{month:02d}-01 ~ {year}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}")
+    c.drawString(
+        margin,
+        y,
+        f"청구 기간: {year}-{month:02d}-01 ~ {year}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}",
+    )
     y -= 10 * mm
 
     c.setFont(font, 14)
@@ -284,7 +292,9 @@ def render_invoice_pdf(
     y -= 4 * mm
     c.setFont(font, 13)
     total = key_summary.get("revenue_krw", 0)
-    c.drawString(margin, y, f"합계: {total:,}원 (권당 {PRICE_PER_RECORD_KRW}원 x {key_summary['records']}건)")
+    c.drawString(
+        margin, y, f"합계: {total:,}원 (권당 {PRICE_PER_RECORD_KRW}원 x {key_summary['records']}건)"
+    )
     y -= 10 * mm
 
     plan_name, plan_price = key_summary.get("recommended_plan", ("", 0))
@@ -310,7 +320,9 @@ def render_invoice_pdf(
     y -= 10 * mm
 
     c.setFont(font, 8)
-    c.drawString(margin, margin, f"발행: {datetime.now().strftime('%Y-%m-%d %H:%M')} · kormarc-auto")
+    c.drawString(
+        margin, margin, f"발행: {datetime.now().strftime('%Y-%m-%d %H:%M')} · kormarc-auto"
+    )
     c.save()
     logger.info("영수증 PDF: %s", out)
     return out

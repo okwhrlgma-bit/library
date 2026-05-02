@@ -101,7 +101,8 @@ def test_builder_integrates_thesis_when_degree_present():
     )
     f502 = next((f for f in record.get_fields("502")), None)
     f700_advisor = [
-        f for f in record.get_fields("700")
+        f
+        for f in record.get_fields("700")
         if any(sf.code == "e" and sf.value == "지도" for sf in f.subfields)
     ]
     assert f502 is not None

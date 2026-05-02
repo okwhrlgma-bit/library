@@ -181,9 +181,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Streamlit 시각 회귀")
     parser.add_argument("--baseline", action="store_true", help="기준 이미지 생성")
     parser.add_argument("--compare", action="store_true", help="비교 실행")
-    parser.add_argument(
-        "--threshold", type=float, default=0.01, help="회귀 판정 임계값 (기본 1%)"
-    )
+    parser.add_argument("--threshold", type=float, default=0.01, help="회귀 판정 임계값 (기본 1%)")
     args = parser.parse_args()
 
     if not args.baseline and not args.compare:

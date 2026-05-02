@@ -6,6 +6,7 @@
 
 해결: 비대면 서비스 6 종 자동 (북드라이브스루·우편·온라인 행사·전자도서관·QR·VR/AR).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -13,12 +14,12 @@ from datetime import date, datetime
 from typing import Literal
 
 ServiceType = Literal[
-    "drive_through",     # 북 드라이브스루
-    "postal",            # 우편 대출
-    "online_event",      # 온라인 문화행사
-    "ebook_loan",        # 전자도서관
-    "qr_pickup",         # QR 무인 픽업
-    "vr_ar",             # VR·AR 콘텐츠
+    "drive_through",  # 북 드라이브스루
+    "postal",  # 우편 대출
+    "online_event",  # 온라인 문화행사
+    "ebook_loan",  # 전자도서관
+    "qr_pickup",  # QR 무인 픽업
+    "vr_ar",  # VR·AR 콘텐츠
 ]
 
 

@@ -7,6 +7,7 @@
 
 해결: 신주제 자동 감지 + AI 응용 추천 + 자관별 결정 누적.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -21,31 +22,26 @@ NEW_SUBJECTS_KDC = {
     "생성형": "004.7",
     "ChatGPT": "004.7",
     "LLM": "004.7",
-
     # 블록체인·암호화
     "블록체인": "005.8",  # 컴퓨터 보안·암호
     "암호화폐": "327.5",  # 통화·금융
     "비트코인": "327.5",
     "NFT": "005.8",
-
     # 메타버스·VR/AR
     "메타버스": "004.79",
     "VR": "004.79",
     "AR": "004.79",
     "가상현실": "004.79",
     "증강현실": "004.79",
-
     # 데이터 과학
     "데이터 과학": "005.7",
     "빅데이터": "005.7",
     "계량정보학": "020.7",  # 도서관학·정보학 분야 (KCI 검증)
-
     # ESG·지속가능성
     "ESG": "338.9",
     "지속가능": "338.9",
     "탄소 중립": "539.91",
     "기후 변화": "539.91",
-
     # 핀테크·디지털 금융
     "핀테크": "327.5",
     "디지털 금융": "327.5",
@@ -73,8 +69,7 @@ def detect_new_subject(book_data: dict) -> list[SubjectRecommendation]:
         list[SubjectRecommendation] (정확도 ≥0.5)
     """
     text = " ".join(
-        str(book_data.get(k, ""))
-        for k in ["title", "subject_keywords", "description", "summary"]
+        str(book_data.get(k, "")) for k in ["title", "subject_keywords", "description", "summary"]
     ).lower()
 
     recommendations = []

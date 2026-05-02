@@ -248,9 +248,7 @@ def delete_account_data(api_key: str) -> dict[str, Any]:
     return {"ok": True, "deleted": deleted}
 
 
-def _read_match(
-    relpath: str, key_hash: str, *, all_matches: bool = False
-) -> Any:
+def _read_match(relpath: str, key_hash: str, *, all_matches: bool = False) -> Any:
     """logs/{relpath}에서 key_hash 일치 항목을 읽어옴."""
     path = Path(relpath)
     if not path.is_absolute():

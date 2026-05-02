@@ -10,6 +10,7 @@ KORMARC 505 (목차·서지적 권차) + 520 (요약) 자동.
 
 해결: 외부 API 데이터 자동 + 사서 수정 가능.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -43,7 +44,9 @@ def add_contents_summary(book_data: dict[str, Any], record: Record) -> Record:
             )
 
     # 520 요약·해제
-    if summary := (book_data.get("description") or book_data.get("summary") or book_data.get("intro")):
+    if summary := (
+        book_data.get("description") or book_data.get("summary") or book_data.get("intro")
+    ):
         summary_clean = summary.strip()
         if len(summary_clean) > 1000:
             summary_clean = summary_clean[:997] + "..."

@@ -179,9 +179,7 @@ def rotate(
 def main() -> int:
     parser = argparse.ArgumentParser(description="로그 회전·익명화")
     parser.add_argument("--max-age-days", type=int, default=90, help="활성 로그 보관 일수")
-    parser.add_argument(
-        "--anon-age-days", type=int, default=365, help="익명화 시작 일수"
-    )
+    parser.add_argument("--anon-age-days", type=int, default=365, help="익명화 시작 일수")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
 
@@ -195,7 +193,9 @@ def main() -> int:
         dry_run=args.dry_run,
     )
 
-    print(f"\n✓ 완료 — 아카이브 {stats['archived']}건 / 익명화 {stats['anonymized']}건 / 보존 {stats['kept']}건")
+    print(
+        f"\n✓ 완료 — 아카이브 {stats['archived']}건 / 익명화 {stats['anonymized']}건 / 보존 {stats['kept']}건"
+    )
     print("  개인정보보호법 §21 준수 — 매주 1회 실행 권장 (cron/작업 스케줄러)")
     return 0
 

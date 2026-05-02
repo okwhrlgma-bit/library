@@ -203,9 +203,7 @@ def load_from_skos(skos_jsonld_path: str | Path) -> int:
         alt = node.get("altLabel")
         if alt:
             rels["USE_FOR"] = (
-                [_extract_label(x) for x in alt]
-                if isinstance(alt, list)
-                else [_extract_label(alt)]
+                [_extract_label(x) for x in alt] if isinstance(alt, list) else [_extract_label(alt)]
             )
         rels["USE_FOR"] = [x for x in rels["USE_FOR"] if x]
         for k_skos, k_int in (("broader", "BT"), ("narrower", "NT"), ("related", "RT")):
@@ -213,8 +211,7 @@ def load_from_skos(skos_jsonld_path: str | Path) -> int:
             if v:
                 refs = v if isinstance(v, list) else [v]
                 rels[k_int] = [
-                    str(r.get("@id", r)) if isinstance(r, dict) else str(r)
-                    for r in refs
+                    str(r.get("@id", r)) if isinstance(r, dict) else str(r) for r in refs
                 ]
         NLSH_RELATIONS[pref] = rels
         count += 1

@@ -56,7 +56,9 @@ def test_validate_series_or_group_satisfied_by_440():
     """440만 있어도 490 누락은 OK (실 KOLAS .mrc 정합)."""
     present = M_FIELDS | {"260", "049", "007", "440"}
     issues = validate_application_level(
-        present, {"series_title": "민음 세계문학전집"}, "book_single",
+        present,
+        {"series_title": "민음 세계문학전집"},
+        "book_single",
     )
     a_violations = [tag for tag, level, _ in issues if level == "A"]
     assert "440/490" not in a_violations
@@ -66,7 +68,9 @@ def test_validate_series_or_group_satisfied_by_440():
 def test_validate_series_or_group_violated_when_both_missing():
     present = M_FIELDS | {"260", "049", "007"}
     issues = validate_application_level(
-        present, {"series_title": "있는 시리즈"}, "book_single",
+        present,
+        {"series_title": "있는 시리즈"},
+        "book_single",
     )
     a_or_violations = [tag for tag, level, _ in issues if level == "A" and "/" in tag]
     assert "440/490" in a_or_violations

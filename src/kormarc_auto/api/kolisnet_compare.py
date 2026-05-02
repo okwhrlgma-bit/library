@@ -65,9 +65,7 @@ def fetch_other_libraries(
     }
 
     try:
-        response = cached_get(
-            NL_KOREA_KOLISNET_URL, params=params, timeout=HTTP_TIMEOUT
-        )
+        response = cached_get(NL_KOREA_KOLISNET_URL, params=params, timeout=HTTP_TIMEOUT)
         response.raise_for_status()
     except requests.Timeout as e:
         raise KolisNetError(f"타임아웃 (isbn={isbn})") from e
@@ -136,7 +134,9 @@ def _parse_xml(text: str, *, limit: int) -> list[dict[str, Any]]:
         items.append(
             {
                 "library_name": _text(item, "libName") or _text(item, "library_name"),
-                "kdc": _text(item, "kdc") or _text(item, "callNo")[:5] if _text(item, "callNo") else None,
+                "kdc": _text(item, "kdc") or _text(item, "callNo")[:5]
+                if _text(item, "callNo")
+                else None,
                 "call_number": _text(item, "callNo") or _text(item, "call_number"),
                 "subjects": _split(_text(item, "keyword")),
             }

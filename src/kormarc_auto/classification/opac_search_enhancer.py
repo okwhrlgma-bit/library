@@ -7,6 +7,7 @@
 
 해결: 자동 키워드·주제어·동의어 확장 → OPAC 검색 정확도 ↑.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

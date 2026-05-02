@@ -56,7 +56,9 @@ TEST_ISBNS = [
 ]
 
 
-def run_one(isbn: str, *, expected_title_contains: str | None, expected_kdc_prefix: str | None) -> dict[str, Any]:
+def run_one(
+    isbn: str, *, expected_title_contains: str | None, expected_kdc_prefix: str | None
+) -> dict[str, Any]:
     """단일 ISBN 회귀 — 메타·KDC·KORMARC·검증·.mrc 모두 체크."""
     started = time.time()
     result: dict[str, Any] = {
@@ -91,7 +93,9 @@ def run_one(isbn: str, *, expected_title_contains: str | None, expected_kdc_pref
         result["kdc_source"] = top["source"]
         result["checks"]["kdc_present"] = True
         if expected_kdc_prefix:
-            result["checks"]["kdc_matches_expectation"] = top["code"].startswith(expected_kdc_prefix)
+            result["checks"]["kdc_matches_expectation"] = top["code"].startswith(
+                expected_kdc_prefix
+            )
         if not book_data.get("kdc"):
             book_data["kdc"] = top["code"]
 
@@ -174,7 +178,9 @@ def main() -> int:
 
     print("\n" + "=" * 60)
     print(f"종합: {pass_count}/{len(TEST_ISBNS)} 케이스 전체 통과")
-    print(f"체크: {passed_checks}/{total_checks} 통과 ({passed_checks/max(total_checks,1)*100:.0f}%)")
+    print(
+        f"체크: {passed_checks}/{total_checks} 통과 ({passed_checks / max(total_checks, 1) * 100:.0f}%)"
+    )
 
     if args.output:
         out_path = Path(args.output)

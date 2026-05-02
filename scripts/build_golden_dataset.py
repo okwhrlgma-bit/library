@@ -257,11 +257,22 @@ def main() -> int:
     if results:
         with index_path.open("w", encoding="utf-8-sig", newline="") as f:
             fields = [
-                "isbn", "status", "title", "author", "kdc",
-                "validation_errors", "kolas_strict_ok",
-                "kolas_strict_errors", "kolas_strict_warnings",
-                "peer_libraries", "peer_kdc_top",
-                "mrc_path", "json_path", "mrc_size_bytes", "elapsed_ms", "error",
+                "isbn",
+                "status",
+                "title",
+                "author",
+                "kdc",
+                "validation_errors",
+                "kolas_strict_ok",
+                "kolas_strict_errors",
+                "kolas_strict_warnings",
+                "peer_libraries",
+                "peer_kdc_top",
+                "mrc_path",
+                "json_path",
+                "mrc_size_bytes",
+                "elapsed_ms",
+                "error",
             ]
             writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
             writer.writeheader()

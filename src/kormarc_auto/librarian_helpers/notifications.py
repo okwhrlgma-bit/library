@@ -72,8 +72,8 @@ def overdue_notice(
     email_body = lms + "\n\n감사합니다."
 
     return {
-        "sms": sms[:SMS_MAX_KOREAN * 2],  # 안전 마진
-        "lms": lms[:LMS_MAX_KOREAN * 2],
+        "sms": sms[: SMS_MAX_KOREAN * 2],  # 안전 마진
+        "lms": lms[: LMS_MAX_KOREAN * 2],
         "email_subject": email_subject,
         "email_body": email_body,
         "overdue_days": overdue_days,
@@ -104,7 +104,7 @@ def return_reminder(
         "기한 내 반납 또는 연장(가능 시) 부탁드립니다.\n\n감사합니다."
     )
     return {
-        "sms": sms[:SMS_MAX_KOREAN * 2],
+        "sms": sms[: SMS_MAX_KOREAN * 2],
         "lms": lms,
         "email_subject": f"[{library_name}] 도서 반납 안내 — {book_title}",
         "email_body": lms,
@@ -134,7 +134,7 @@ def reservation_ready(
         "기한 내 수령하지 않으시면 다음 예약자에게 양도됩니다.\n\n감사합니다."
     )
     return {
-        "sms": sms[:SMS_MAX_KOREAN * 2],
+        "sms": sms[: SMS_MAX_KOREAN * 2],
         "lms": lms,
         "email_subject": f"[{library_name}] 예약 도서 도착 — {book_title}",
         "email_body": lms,
@@ -161,7 +161,7 @@ def closure_notice(
     if contact:
         lms += f"\n\n문의: {contact}"
     return {
-        "sms": sms[:SMS_MAX_KOREAN * 2],
+        "sms": sms[: SMS_MAX_KOREAN * 2],
         "lms": lms,
         "email_subject": f"[{library_name}] 휴관 안내",
         "email_body": lms,

@@ -22,6 +22,7 @@ def _ensure_libs() -> tuple[bool, str | None]:
     try:
         import barcode  # noqa: F401
         import reportlab  # noqa: F401
+
         return True, None
     except ImportError as e:
         return False, f"라이브러리 미설치: {e}. `pip install -e .[labels]`로 설치."

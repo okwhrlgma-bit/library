@@ -1,4 +1,5 @@
 """Part 82+ 추가 모듈 테스트 (큐레이션·야간 안전·다국어)."""
+
 from __future__ import annotations
 
 from datetime import date
@@ -26,7 +27,9 @@ def test_book_curation_engine_basic():
         {"isbn": "9791164060238", "title": "윤동주 시집", "author": "윤동주", "kdc": "811.7"},
         {"isbn": "9999", "title": "어른용", "author": "X", "kdc": "300", "age_target": "adult"},
     ]
-    criteria = CurationCriteria(theme="spring", age_group="elementary_high", kdc_focus=["8"], max_books=5)
+    criteria = CurationCriteria(
+        theme="spring", age_group="elementary_high", kdc_focus=["8"], max_books=5
+    )
     result = curate_books(candidates, criteria)
     assert len(result.selected_books) >= 2  # 어린왕자·윤동주 시집
     assert "봄" in result.poster_title or "신학기" in result.poster_title
@@ -98,11 +101,13 @@ def test_multilingual_helper_basic():
     assert is_translation({"original_language": "fre"}) is True
 
     # 041 필드 자동 (번역서)
-    field = build_041_field({
-        "translator": "김철수",
-        "language": "kor",
-        "original_language": "fre",
-    })
+    field = build_041_field(
+        {
+            "translator": "김철수",
+            "language": "kor",
+            "original_language": "fre",
+        }
+    )
     assert field is not None
     assert field["tag"] == "041"
     assert any(s["code"] == "h" and s["value"] == "fre" for s in field["subfields"])

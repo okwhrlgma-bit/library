@@ -128,11 +128,7 @@ def recommend_subjects(
 
 
 def _has_ai_signal(book_data: dict[str, Any]) -> bool:
-    return bool(
-        book_data.get("title")
-        or book_data.get("summary")
-        or book_data.get("category")
-    )
+    return bool(book_data.get("title") or book_data.get("summary") or book_data.get("category"))
 
 
 def _ai_subject_recommend(
@@ -161,8 +157,7 @@ def _ai_subject_recommend(
     )
 
     user_text = (
-        "다음 도서의 NLSH 스타일 주제명 후보를 1~5개 추천하세요.\n\n"
-        f"```json\n{payload_str}\n```"
+        f"다음 도서의 NLSH 스타일 주제명 후보를 1~5개 추천하세요.\n\n```json\n{payload_str}\n```"
     )
 
     result = cached_messages(

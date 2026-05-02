@@ -88,9 +88,12 @@ def parse_event(payload: dict[str, Any]) -> WebhookEvent:
         event_type=event_type,
         transaction_id=data.get("transactionId") or data.get("paymentId"),
         subscription_id=data.get("billingKey") or data.get("subscriptionId"),
-        amount_krw=int(data.get("amount", {}).get("total", 0)) if isinstance(
-            data.get("amount"), dict,
-        ) else int(data.get("amount", 0) or 0),
+        amount_krw=int(data.get("amount", {}).get("total", 0))
+        if isinstance(
+            data.get("amount"),
+            dict,
+        )
+        else int(data.get("amount", 0) or 0),
         customer_key=data.get("customerKey") or data.get("customerId"),
         raw=payload,
     )

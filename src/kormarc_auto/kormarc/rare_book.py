@@ -52,9 +52,7 @@ def add_rare_book_title(
     if format_type and format_type in RARE_FORMATS:
         sf_245.append(Subfield(code="h", value=RARE_FORMATS[format_type]))
 
-    record.add_field(
-        Field(tag="245", indicators=Indicators("0", "0"), subfields=sf_245)
-    )
+    record.add_field(Field(tag="245", indicators=Indicators("0", "0"), subfields=sf_245))
 
     # 246 한글 변형표제
     if title_korean:

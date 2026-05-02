@@ -8,6 +8,7 @@
 해결: 바코드·ISBN·자관 등록번호 일괄 자동 검증.
 모바일 카메라 스캔 통합 (T1 Phase 2).
 """
+
 from __future__ import annotations
 
 import csv
@@ -58,7 +59,8 @@ class InventorySession:
     def misplaced_items(self) -> list[InventoryItem]:
         """오배가 (위치 불일치)."""
         return [
-            i for i in self.items
+            i
+            for i in self.items
             if i.found and i.expected_location and i.actual_location != i.expected_location
         ]
 
@@ -111,7 +113,9 @@ def export_session_report(session: InventorySession, output_path: Path) -> Path:
         "## 미발견 도서 (확인 필요)",
     ]
     for item in session.missing_items()[:50]:  # 상위 50건
-        lines.append(f"- ISBN {item.isbn} / 등록 {item.registration_no} / 위치 {item.expected_location}")
+        lines.append(
+            f"- ISBN {item.isbn} / 등록 {item.registration_no} / 위치 {item.expected_location}"
+        )
 
     lines.append("")
     lines.append("## 오배가 도서")

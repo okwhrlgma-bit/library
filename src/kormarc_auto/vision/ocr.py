@@ -68,11 +68,7 @@ def extract_text_from_image(image_path: str | Path) -> list[str]:
         return []
 
     # results: list of (bbox, text, confidence)
-    lines = [
-        (text, conf)
-        for _bbox, text, conf in results
-        if conf >= 0.5 and text.strip()
-    ]
+    lines = [(text, conf) for _bbox, text, conf in results if conf >= 0.5 and text.strip()]
     lines.sort(key=lambda x: x[1], reverse=True)
     return [text for text, _ in lines]
 

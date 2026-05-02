@@ -7,6 +7,7 @@
 
 해결: 자동 큐레이션 (계절·테마·연령·분야).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -85,16 +86,15 @@ def curate_books(
     """
     # 1. 연령 필터
     filtered = [
-        b for b in candidates
-        if b.get("age_target", criteria.age_group) == criteria.age_group
-        or not b.get("age_target")
+        b
+        for b in candidates
+        if b.get("age_target", criteria.age_group) == criteria.age_group or not b.get("age_target")
     ]
 
     # 2. KDC 우선순위
     if criteria.kdc_focus:
         focused = [
-            b for b in filtered
-            if any(b.get("kdc", "").startswith(k) for k in criteria.kdc_focus)
+            b for b in filtered if any(b.get("kdc", "").startswith(k) for k in criteria.kdc_focus)
         ]
         # 강조 + 일반 결합
         filtered = focused + [b for b in filtered if b not in focused]
@@ -107,8 +107,7 @@ def curate_books(
 
     poster_title = f"{theme_keywords[0]} 추천 도서 {len(selected)}선"
     description = (
-        f"{age_label}을 위한 {theme_keywords[0]} 테마 큐레이션입니다. "
-        f"사서가 직접 골랐어요."
+        f"{age_label}을 위한 {theme_keywords[0]} 테마 큐레이션입니다. 사서가 직접 골랐어요."
     )
 
     return CurationResult(

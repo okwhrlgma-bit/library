@@ -10,6 +10,7 @@
 - KLA·KSLA 발표 자료 자동
 - 1주년·3주년 인증서
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

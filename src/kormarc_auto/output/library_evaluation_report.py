@@ -8,6 +8,7 @@
 해결: 분기·연간 보고서 자동 (DT2 BI Developer + Part 65 Personal Win + Part 72).
 관장·자치구·문체부 결재 양식 정합.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -40,9 +41,7 @@ def generate_evaluation_report(data: LibraryEvaluationData) -> str:
     time_saved_h = time_saved_min / 60
     equivalent_books = int(time_saved_min / baseline_min)
 
-    librarian_avg_records = (
-        data.total_records_processed // max(data.librarian_count, 1)
-    )
+    librarian_avg_records = data.total_records_processed // max(data.librarian_count, 1)
 
     return f"""# {data.library_name} 도서관 운영 평가 보고서
 
@@ -58,9 +57,9 @@ def generate_evaluation_report(data: LibraryEvaluationData) -> str:
 
 | 지표 | 값 | 평가 |
 |---|---|---|
-| 처리 권수 (분기) | **{data.total_records_processed:,}권** | {'★ 우수' if data.total_records_processed >= 1000 else '양호'} |
-| 권당 평균 시간 | **{data.avg_processing_minutes:.1f}분** | {'★ 우수' if data.avg_processing_minutes <= 2 else '양호'} (베이스라인 8분) |
-| 자동화율 | **{int(data.automation_rate * 100)}%** | {'★ 우수' if data.automation_rate >= 0.8 else '양호'} |
+| 처리 권수 (분기) | **{data.total_records_processed:,}권** | {"★ 우수" if data.total_records_processed >= 1000 else "양호"} |
+| 권당 평균 시간 | **{data.avg_processing_minutes:.1f}분** | {"★ 우수" if data.avg_processing_minutes <= 2 else "양호"} (베이스라인 8분) |
+| 자동화율 | **{int(data.automation_rate * 100)}%** | {"★ 우수" if data.automation_rate >= 0.8 else "양호"} |
 | 절감 시간 | **{time_saved_h:.1f}시간** | = 책 {equivalent_books:,}권 추가 처리 가능 |
 | 사서 1인당 처리 | {librarian_avg_records}권 | - |
 

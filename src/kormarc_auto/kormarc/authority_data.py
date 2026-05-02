@@ -76,9 +76,7 @@ def add_personal_author_field(
 
     # 1지시기호: 0=이름순(서양), 1=성,이름(한국)
     ind1 = "1" if _looks_korean_name(name) else "0"
-    record.add_field(
-        Field(tag=tag, indicators=Indicators(ind1, " "), subfields=subfields)
-    )
+    record.add_field(Field(tag=tag, indicators=Indicators(ind1, " "), subfields=subfields))
 
 
 def add_corporate_author_field(
@@ -107,9 +105,7 @@ def add_corporate_author_field(
         subfields.append(Subfield(code="d", value=location))
 
     # 1지시기호: 0=역순, 1=관할권, 2=직접
-    record.add_field(
-        Field(tag=tag, indicators=Indicators("2", " "), subfields=subfields)
-    )
+    record.add_field(Field(tag=tag, indicators=Indicators("2", " "), subfields=subfields))
 
 
 def add_meeting_author_field(
@@ -141,9 +137,7 @@ def add_meeting_author_field(
     if place:
         subfields.append(Subfield(code="c", value=place))
 
-    record.add_field(
-        Field(tag=tag, indicators=Indicators("2", " "), subfields=subfields)
-    )
+    record.add_field(Field(tag=tag, indicators=Indicators("2", " "), subfields=subfields))
 
 
 def parse_author_string_full(value: str) -> dict[str, Any]:
@@ -164,11 +158,24 @@ def parse_author_string_full(value: str) -> dict[str, Any]:
     if year_match:
         birth = year_match.group(1)
         death = year_match.group(2)
-        s = s[: year_match.start()].strip() + s[year_match.end():].strip()
+        s = s[: year_match.start()].strip() + s[year_match.end() :].strip()
 
     # 역조 추출 (조선·고려·신라·삼국·고구려·백제·발해·중국 왕조)
     dynasty = None
-    for dyn in ["조선", "고려", "신라", "삼국", "고구려", "백제", "발해", "당", "송", "원", "명", "청"]:
+    for dyn in [
+        "조선",
+        "고려",
+        "신라",
+        "삼국",
+        "고구려",
+        "백제",
+        "발해",
+        "당",
+        "송",
+        "원",
+        "명",
+        "청",
+    ]:
         if f"({dyn})" in s:
             dynasty = dyn
             s = s.replace(f"({dyn})", "").strip()

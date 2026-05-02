@@ -102,16 +102,12 @@ def analyze_wishlist(
                 item.title = item.title or book.get("title")
                 item.author = item.author or book.get("author")
                 item.publisher = book.get("publisher")
-                item.publication_year = (
-                    book.get("publication_year") or book.get("pub_year")
-                )
+                item.publication_year = book.get("publication_year") or book.get("pub_year")
                 item.kdc = item.kdc or book.get("kdc")
                 price = book.get("price") or book.get("price_krw")
                 if price:
                     with contextlib.suppress(ValueError, TypeError):
-                        item.price_krw = int(
-                            str(price).replace(",", "").replace("원", "").strip()
-                        )
+                        item.price_krw = int(str(price).replace(",", "").replace("원", "").strip())
                 item.confidence = float(book.get("confidence", 0))
                 item.sources = book.get("sources") or []
             except Exception as e:
@@ -165,9 +161,7 @@ def summarize(items: list[WishlistItem]) -> dict[str, Any]:
     in_holdings = sum(1 for it in items if it.in_holdings)
     new_purchase = len(items) - in_holdings
     total_price = sum(it.price_krw for it in items if it.price_krw and not it.in_holdings)
-    confidence_avg = (
-        sum(it.confidence for it in items) / len(items) if items else 0
-    )
+    confidence_avg = sum(it.confidence for it in items) / len(items) if items else 0
     return {
         "total": len(items),
         "in_holdings": in_holdings,

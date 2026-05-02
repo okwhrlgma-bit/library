@@ -1,4 +1,5 @@
 """Part 82+ 추가 모듈 테스트 (협력·역량)."""
+
 from __future__ import annotations
 
 

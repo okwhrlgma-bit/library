@@ -1,4 +1,5 @@
 """Part 82+ 최종 모듈 테스트."""
+
 from __future__ import annotations
 
 

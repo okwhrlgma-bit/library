@@ -56,9 +56,7 @@ def transform_field_245_to_marc21_rda(field_dict: dict[str, Any]) -> dict[str, A
     """
     out = dict(field_dict)
     if "subfields" in out:
-        out["subfields"] = [
-            sf for sf in out["subfields"] if sf.get("code") != "h"
-        ]
+        out["subfields"] = [sf for sf in out["subfields"] if sf.get("code") != "h"]
     return out
 
 

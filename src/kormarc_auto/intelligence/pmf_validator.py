@@ -8,6 +8,7 @@ PMF 검증 = 다음 단계 결정 (scale-up vs pivot).
 - CAC < LTV (LTV/CAC ≥3 권장)
 - 10단어 이내 가치 전달
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -121,11 +122,7 @@ def generate_pmf_report(
 ) -> PMFReport:
     """종합 PMF 보고 (3 기준)."""
     value_check = evaluate_value_proposition(value_message)
-    overall = (
-        sean_ellis.pmf_achieved
-        and unit_econ.healthy
-        and value_check["passes_10_word_test"]
-    )
+    overall = sean_ellis.pmf_achieved and unit_econ.healthy and value_check["passes_10_word_test"]
     return PMFReport(
         sean_ellis=sean_ellis,
         unit_econ=unit_econ,

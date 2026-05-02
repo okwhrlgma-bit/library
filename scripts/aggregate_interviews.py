@@ -134,7 +134,8 @@ def by_persona(interviews: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     result: dict[str, dict[str, Any]] = {}
     for p, group in by_p.items():
         time_saved = [
-            float(g["time_saved_pct"]) for g in group
+            float(g["time_saved_pct"])
+            for g in group
             if isinstance(g.get("time_saved_pct"), (int, float))
         ]
         q1_counter: Counter[str] = Counter()
@@ -149,7 +150,9 @@ def by_persona(interviews: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
             "nps": nps_score(group),
             "willingness": willingness_distribution(group),
             "q1_distribution": dict(q1_counter),
-            "avg_time_saved_pct": round(sum(time_saved) / len(time_saved), 1) if time_saved else 0.0,
+            "avg_time_saved_pct": round(sum(time_saved) / len(time_saved), 1)
+            if time_saved
+            else 0.0,
             "kla_quotable_count": kla_quotable,
             "decision_makers": decision_maker_distribution(group),
         }

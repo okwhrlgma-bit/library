@@ -17,9 +17,15 @@ from kormarc_auto.vernacular.hanja_converter import has_hanja
 
 # KORMARC 2023.12 + 한국 실무 (KOLAS) 정합 — 모든 자료유형 공통 필수
 # 주의: 260/264 둘 중 하나, 049/056/090 중 하나는 있어야 함 (validate에서 OR 처리)
-M_FIELDS: frozenset[str] = frozenset({
-    "005", "008", "020", "245", "300",
-})
+M_FIELDS: frozenset[str] = frozenset(
+    {
+        "005",
+        "008",
+        "020",
+        "245",
+        "300",
+    }
+)
 
 # OR 관계 필드 그룹 (그룹 내 1개 이상 있으면 정합)
 M_FIELD_GROUPS: tuple[tuple[str, ...], ...] = (
@@ -102,9 +108,7 @@ def validate_application_level(
 
     for group in M_FIELD_GROUPS:
         if not any(tag in present_tags for tag in group):
-            issues.append(
-                ("/".join(group), "M", f"OR 그룹 모두 누락 ({material_type})")
-            )
+            issues.append(("/".join(group), "M", f"OR 그룹 모두 누락 ({material_type})"))
 
     # 단일 A 후보 (OR 그룹 외)
     single_a_candidates = ("022", "041", "082", "336", "337", "338", "538", "502", "880")
@@ -118,8 +122,11 @@ def validate_application_level(
         tag in present_tags for tag in A_FIELD_GROUPS["series"]
     ):
         issues.append(
-            ("/".join(A_FIELD_GROUPS["series"]), "A",
-             f"시리즈 표시 OR 그룹 모두 누락 ({material_type})"),
+            (
+                "/".join(A_FIELD_GROUPS["series"]),
+                "A",
+                f"시리즈 표시 OR 그룹 모두 누락 ({material_type})",
+            ),
         )
 
     return issues

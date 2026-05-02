@@ -1,4 +1,5 @@
 """Part 82 신규 모듈 테스트 (libsta·신입 사서 적응)."""
+
 from __future__ import annotations
 
 from datetime import date

@@ -74,9 +74,7 @@ def render(db: dict) -> str:
     lines.append("## 전체 (n 내림차순)")
     for k, v in rows:
         mark = "✓" if v["ratio"] >= 0.95 else ("⚠" if v["ratio"] >= 0.6 else "❌")
-        lines.append(
-            f"- {mark} `{k}` — {v['ratio']:.0%} ({v['success']}/{v['n']})"
-        )
+        lines.append(f"- {mark} `{k}` — {v['ratio']:.0%} ({v['success']}/{v['n']})")
     return "\n".join(lines)
 
 

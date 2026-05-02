@@ -61,9 +61,7 @@ def add_electronic_resource_url(
     ]
     if public_note:
         subfields.append(Subfield(code="z", value=public_note))
-    record.add_field(
-        Field(tag="856", indicators=Indicators("4", "0"), subfields=subfields)
-    )
+    record.add_field(Field(tag="856", indicators=Indicators("4", "0"), subfields=subfields))
 
 
 def add_thesis_note(

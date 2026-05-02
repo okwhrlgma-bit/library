@@ -57,10 +57,7 @@ class RegistrationNumber:
         *,
         serial_digits: int = DEFAULT_SERIAL_DIGITS,
     ) -> str:
-        return (
-            f"{self.kind}{self.turn:02d}{self.year:02d}"
-            f"{self.serial:0{serial_digits}d}"
-        )
+        return f"{self.kind}{self.turn:02d}{self.year:02d}{self.serial:0{serial_digits}d}"
 
 
 def parse_registration_number(reg_no: str) -> RegistrationNumber:

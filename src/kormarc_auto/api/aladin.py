@@ -154,7 +154,9 @@ def _normalize(raw: dict[str, Any]) -> dict[str, Any]:
     pubyear = pubdate[:4] if pubdate else None
 
     price_raw = raw.get("priceStandard") or raw.get("priceSales")
-    price = int(price_raw) if isinstance(price_raw, (int, str)) and str(price_raw).isdigit() else None
+    price = (
+        int(price_raw) if isinstance(price_raw, (int, str)) and str(price_raw).isdigit() else None
+    )
 
     sub_info = raw.get("subInfo", {}) if isinstance(raw.get("subInfo"), dict) else {}
 

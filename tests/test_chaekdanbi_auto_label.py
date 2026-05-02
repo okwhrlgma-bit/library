@@ -43,8 +43,13 @@ def test_label_text_includes_source_library_default():
 
 def test_label_text_includes_note_when_present():
     label = ChaekdanbiLabel(
-        title="t", author="a", isbn="i", registration_no="r",
-        call_number="c", target_library="L", request_date="2026-05-01",
+        title="t",
+        author="a",
+        isbn="i",
+        registration_no="r",
+        call_number="c",
+        target_library="L",
+        request_date="2026-05-01",
         note="이용자 픽업 예정",
     )
     text = generate_label_text(label)
@@ -53,8 +58,13 @@ def test_label_text_includes_note_when_present():
 
 def test_label_text_includes_extra_kv():
     label = ChaekdanbiLabel(
-        title="t", author="a", isbn="i", registration_no="r",
-        call_number="c", target_library="L", request_date="2026-05-01",
+        title="t",
+        author="a",
+        isbn="i",
+        registration_no="r",
+        call_number="c",
+        target_library="L",
+        request_date="2026-05-01",
         extra={"이용자": "홍길동"},
     )
     text = generate_label_text(label)

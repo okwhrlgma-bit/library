@@ -18,7 +18,7 @@ def test_summary_to_yaml_snippet():
         threshold_pct=1.0,
     )
     snippet = summary.to_yaml_snippet()
-    assert 'registration_prefix' in snippet
+    assert "registration_prefix" in snippet
     assert '"EQ"' in snippet
     assert '"WQ"' in snippet
     assert '"CQ"' in snippet
@@ -46,6 +46,7 @@ def test_invalid_threshold_raises():
 
 def test_scan_nonexistent_dir_returns_empty():
     from pathlib import Path
+
     discoverer = PrefixDiscoverer()
     summary = discoverer.scan(Path("/nonexistent/path/that/does/not/exist"))
     assert summary.total_records == 0
@@ -65,6 +66,7 @@ def test_extract_049_prefix_normalizes_uppercase():
     class FakeRecord:
         def __init__(self, field):
             self._field = field
+
         def get(self, tag):
             return self._field if tag == "049" else None
 

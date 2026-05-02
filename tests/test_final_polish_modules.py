@@ -1,4 +1,5 @@
 """최종 보완 모듈 테스트 (DLS·PMF·도서관 위계)."""
+
 from __future__ import annotations
 
 
@@ -25,7 +26,14 @@ def test_dls_exporter_basic():
     assert "학교명" in csv_text  # 헤더
 
     # KORMARC → DLS
-    book_data = {"isbn": "9999", "title": "테스트", "author": "X", "publisher": "Y", "year": 2026, "kdc": "100"}
+    book_data = {
+        "isbn": "9999",
+        "title": "테스트",
+        "author": "X",
+        "publisher": "Y",
+        "year": 2026,
+        "kdc": "100",
+    }
     dls = kormarc_to_dls(book_data)
     assert dls.isbn == "9999"
     assert dls.year == "2026"
@@ -72,7 +80,9 @@ def test_pmf_validator_basic():
     short = evaluate_value_proposition("권당 8분 → 1분 KORMARC 자동 생성")
     assert short["passes_10_word_test"] is True
 
-    long = evaluate_value_proposition("이 도구는 한국 도서관 사서가 사용하는 KORMARC 메타데이터를 ISBN 입력만으로 자동 생성하는 SaaS 서비스입니다")
+    long = evaluate_value_proposition(
+        "이 도구는 한국 도서관 사서가 사용하는 KORMARC 메타데이터를 ISBN 입력만으로 자동 생성하는 SaaS 서비스입니다"
+    )
     assert long["passes_10_word_test"] is False
 
     # 종합 PMF

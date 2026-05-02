@@ -180,7 +180,9 @@ def cached_messages(
 
     tool_input = _extract_tool_input(response, tool_name) if tool_name else None
     text_blocks = [
-        getattr(b, "text", "") for b in getattr(response, "content", []) if getattr(b, "type", None) == "text"
+        getattr(b, "text", "")
+        for b in getattr(response, "content", [])
+        if getattr(b, "type", None) == "text"
     ]
     text = "".join(text_blocks) if text_blocks else None
 
@@ -192,7 +194,9 @@ def cached_messages(
     }
 
     if cache is not None:
-        cache.set(cache_key, {k: v for k, v in result.items() if k != "raw"}, expire=CACHE_TTL_SECONDS)
+        cache.set(
+            cache_key, {k: v for k, v in result.items() if k != "raw"}, expire=CACHE_TTL_SECONDS
+        )
 
     return result
 

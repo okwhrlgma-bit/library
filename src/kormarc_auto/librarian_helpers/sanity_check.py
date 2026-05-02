@@ -49,13 +49,12 @@ class SanityReport:
             "-" * 50,
             "049 prefix 분포 (상위 5):",
         ]
-        rows = sorted(
-            self.prefix_summary.prefix_counts.items(), key=lambda x: -x[1]
-        )[:5]
+        rows = sorted(self.prefix_summary.prefix_counts.items(), key=lambda x: -x[1])[:5]
         for prefix, count in rows:
             pct = (
                 count / self.prefix_summary.total_records * 100
-                if self.prefix_summary.total_records else 0.0
+                if self.prefix_summary.total_records
+                else 0.0
             )
             mark = " [권장]" if prefix in self.prefix_summary.recommended_prefixes else ""
             lines.append(f"  {prefix}: {count:>5}건 ({pct:5.1f}%){mark}")

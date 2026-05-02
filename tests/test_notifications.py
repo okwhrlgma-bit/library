@@ -72,17 +72,11 @@ def test_closure_notice():
 
 
 def test_calculate_overdue_days():
-    assert (
-        notifications.calculate_overdue_days(date(2026, 4, 1), today=date(2026, 4, 25)) == 24
-    )
+    assert notifications.calculate_overdue_days(date(2026, 4, 1), today=date(2026, 4, 25)) == 24
     # 만기 전: 0
-    assert (
-        notifications.calculate_overdue_days(date(2026, 5, 1), today=date(2026, 4, 25)) == 0
-    )
+    assert notifications.calculate_overdue_days(date(2026, 5, 1), today=date(2026, 4, 25)) == 0
     # 문자열 입력
-    assert (
-        notifications.calculate_overdue_days("2026-04-01", today=date(2026, 4, 10)) == 9
-    )
+    assert notifications.calculate_overdue_days("2026-04-01", today=date(2026, 4, 10)) == 9
 
 
 def test_calculate_fine():

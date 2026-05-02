@@ -9,6 +9,7 @@ KORMARC 4XX (시리즈사항) + 8XX (시리즈 부출표목) 자동.
 
 해결: 자동 4XX + 8XX·권차 자동 추출.
 """
+
 from __future__ import annotations
 
 import re
@@ -43,17 +44,13 @@ def add_series_fields(book_data: dict[str, Any], record: Record) -> Record:
     series_subfields = [Subfield(code="a", value=series)]
     if vol_str:
         series_subfields.append(Subfield(code="v", value=vol_str))
-    record.add_field(
-        Field(tag="490", indicators=["0", " "], subfields=series_subfields)
-    )
+    record.add_field(Field(tag="490", indicators=["0", " "], subfields=series_subfields))
 
     # 830 시리즈 부출표목 (검색 가능 통일표제)
     uniform_subfields = [Subfield(code="a", value=series)]
     if vol_str:
         uniform_subfields.append(Subfield(code="v", value=vol_str))
-    record.add_field(
-        Field(tag="830", indicators=[" ", "0"], subfields=uniform_subfields)
-    )
+    record.add_field(Field(tag="830", indicators=[" ", "0"], subfields=uniform_subfields))
 
     return record
 

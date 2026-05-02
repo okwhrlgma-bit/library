@@ -69,9 +69,7 @@ def test_recommend_plan_high_use():
 
 def test_invoice_json_writes(tmp_path, monkeypatch):
     monkeypatch.setenv("KORMARC_USAGE_LOG", str(tmp_path / "usage.jsonl"))
-    out = billing.write_monthly_invoice_json(
-        2026, 4, output_path=tmp_path / "inv.json"
-    )
+    out = billing.write_monthly_invoice_json(2026, 4, output_path=tmp_path / "inv.json")
     assert out.exists()
     data = json.loads(out.read_text(encoding="utf-8"))
     assert data["year"] == 2026
@@ -92,7 +90,8 @@ def test_render_invoice_pdf(tmp_path, monkeypatch):
     )
 
     out = billing.render_invoice_pdf(
-        2026, 4,
+        2026,
+        4,
         library_name="테스트도서관",
         api_key_hash="demo",
         output_path=tmp_path / "rcpt.pdf",

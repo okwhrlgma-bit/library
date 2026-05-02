@@ -17,6 +17,7 @@ Usage:
     st.metric("권당 평균", f"{stats.avg_seconds_per_record:.1f}초")
     st.metric("기존 대비 절감", f"{stats.savings_pct:.0%}")
 """
+
 from __future__ import annotations
 
 import json
@@ -228,7 +229,4 @@ def render_time_dashboard(user_id: str) -> None:
             f"({stats.successful_records}권 처리, 기존 방식 대비)"
         )
     elif saved_minutes > 0:
-        st.success(
-            f"누적 **{saved_minutes:.0f}분** 절약. "
-            f"({stats.successful_records}권 처리)"
-        )
+        st.success(f"누적 **{saved_minutes:.0f}분** 절약. ({stats.successful_records}권 처리)")

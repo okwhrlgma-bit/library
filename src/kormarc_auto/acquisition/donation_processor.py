@@ -6,6 +6,7 @@
 
 해결: 기증 처리 흐름 자동·기증증서 자동 생성.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

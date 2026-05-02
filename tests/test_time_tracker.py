@@ -1,4 +1,5 @@
 """time_tracker 권당 시간 측정 테스트 (Part 47·51)."""
+
 from __future__ import annotations
 
 import json
@@ -22,6 +23,7 @@ def test_baseline_constant_matches_constitution() -> None:
 def test_track_processing_records_duration(tmp_path, monkeypatch) -> None:
     """track_processing 컨텍스트 매니저 = duration 자동 측정."""
     from kormarc_auto.ui import time_tracker as tt
+
     monkeypatch.setattr(tt, "STATS_DIR", tmp_path)
 
     user_id = "test_user_001"
@@ -45,11 +47,15 @@ def test_track_processing_records_duration(tmp_path, monkeypatch) -> None:
 def test_track_processing_marks_failure_on_exception(tmp_path, monkeypatch) -> None:
     """예외 발생 시 success=False 기록."""
     from kormarc_auto.ui import time_tracker as tt
+
     monkeypatch.setattr(tt, "STATS_DIR", tmp_path)
 
     user_id = "test_user_fail"
 
-    with pytest.raises(ValueError), tt.track_processing(user_id=user_id, isbn="123", method="single"):
+    with (
+        pytest.raises(ValueError),
+        tt.track_processing(user_id=user_id, isbn="123", method="single"),
+    ):
         raise ValueError("test failure")
 
     user_file = tmp_path / f"{user_id}.jsonl"
@@ -89,6 +95,7 @@ def test_user_stats_handles_empty_events() -> None:
 def test_get_user_stats_no_file_returns_empty(tmp_path, monkeypatch) -> None:
     """파일 없는 사용자 = 기본 UserStats."""
     from kormarc_auto.ui import time_tracker as tt
+
     monkeypatch.setattr(tt, "STATS_DIR", tmp_path)
 
     stats = get_user_stats(user_id="never_existed")
@@ -99,10 +106,18 @@ def test_user_stats_method_breakdown() -> None:
     """method별 처리 분포 집계."""
     now = time.time()
     events = [
-        ProcessingEvent(user_id="u", isbn="1", duration_seconds=60, timestamp=now, method="single", success=True),
-        ProcessingEvent(user_id="u", isbn="2", duration_seconds=60, timestamp=now, method="single", success=True),
-        ProcessingEvent(user_id="u", isbn="3", duration_seconds=60, timestamp=now, method="batch", success=True),
-        ProcessingEvent(user_id="u", isbn="4", duration_seconds=60, timestamp=now, method="photo", success=True),
+        ProcessingEvent(
+            user_id="u", isbn="1", duration_seconds=60, timestamp=now, method="single", success=True
+        ),
+        ProcessingEvent(
+            user_id="u", isbn="2", duration_seconds=60, timestamp=now, method="single", success=True
+        ),
+        ProcessingEvent(
+            user_id="u", isbn="3", duration_seconds=60, timestamp=now, method="batch", success=True
+        ),
+        ProcessingEvent(
+            user_id="u", isbn="4", duration_seconds=60, timestamp=now, method="photo", success=True
+        ),
     ]
     stats = UserStats.from_events(user_id="u", events=events)
     assert stats.method_breakdown == {"single": 2, "batch": 1, "photo": 1}

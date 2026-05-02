@@ -7,6 +7,7 @@
 
 해결: 4 형식 import 자동.
 """
+
 from __future__ import annotations
 
 import io
@@ -61,9 +62,7 @@ def import_marcxml(xml_text: str) -> list[dict[str, Any]]:
             elif tag_local == "datafield":
                 subfields = []
                 for sub in field:
-                    subfields.append(
-                        {"code": sub.get("code", ""), "value": sub.text or ""}
-                    )
+                    subfields.append({"code": sub.get("code", ""), "value": sub.text or ""})
                 record_data["data_fields"].append(
                     {
                         "tag": field.get("tag", ""),
@@ -148,9 +147,7 @@ def _record_to_dict(record: Any) -> dict[str, Any]:
                     "tag": field.tag,
                     "ind1": ind1,
                     "ind2": ind2,
-                    "subfields": [
-                        {"code": s.code, "value": s.value} for s in field.subfields
-                    ],
+                    "subfields": [{"code": s.code, "value": s.value} for s in field.subfields],
                 }
             )
     return data

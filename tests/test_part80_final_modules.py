@@ -1,4 +1,5 @@
 """Part 80 최종 모듈 4 신규 테스트."""
+
 from __future__ import annotations
 
 from datetime import date
@@ -98,7 +99,16 @@ def test_event_poster_template_basic():
     assert THEME_COLORS["library_week"] in poster
 
     # 7 EventType 모두 색 정의
-    for et in ["library_week", "library_day", "bookstart", "author_talk", "reading_club", "exhibition", "kid_event", "general"]:
+    for et in [
+        "library_week",
+        "library_day",
+        "bookstart",
+        "author_talk",
+        "reading_club",
+        "exhibition",
+        "kid_event",
+        "general",
+    ]:
         assert et in THEME_COLORS
 
 
@@ -117,9 +127,17 @@ def test_abuse_response_manual_basic():
             assert len(resp) > 10
 
     # Escalation
-    assert determine_escalation_level(repeat_count=1, severity=1, abuse_type="verbal_abuse") == "calm"
-    assert determine_escalation_level(repeat_count=2, severity=3, abuse_type="verbal_abuse") == "warning"
-    assert determine_escalation_level(repeat_count=3, severity=4, abuse_type="verbal_abuse") == "escalate"
+    assert (
+        determine_escalation_level(repeat_count=1, severity=1, abuse_type="verbal_abuse") == "calm"
+    )
+    assert (
+        determine_escalation_level(repeat_count=2, severity=3, abuse_type="verbal_abuse")
+        == "warning"
+    )
+    assert (
+        determine_escalation_level(repeat_count=3, severity=4, abuse_type="verbal_abuse")
+        == "escalate"
+    )
 
     # 성희롱·물리적 = 즉시 incident
     assert determine_escalation_level(abuse_type="sexual_harassment") == "incident"

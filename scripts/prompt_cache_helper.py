@@ -7,6 +7,7 @@
 
 적용: kormarc-auto의 모든 Anthropic API 호출에 ephemeral cache_control 자동 주입.
 """
+
 from __future__ import annotations
 
 import logging
@@ -57,11 +58,13 @@ def load_cached_blocks(*, project_root: Path | None = None) -> list[dict]:
             continue
 
         text = path.read_text(encoding="utf-8")
-        blocks.append({
-            "type": "text",
-            "text": f"# {description}\n\n{text}",
-            "cache_control": {"type": "ephemeral"},
-        })
+        blocks.append(
+            {
+                "type": "text",
+                "text": f"# {description}\n\n{text}",
+                "cache_control": {"type": "ephemeral"},
+            }
+        )
 
     return blocks
 

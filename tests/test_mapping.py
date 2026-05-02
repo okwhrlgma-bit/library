@@ -31,8 +31,7 @@ def test_korean_metro_distinct_codes():
     assert lookup_publication_country("울산") == "usk"
     # 모두 다른 값이어야 함
     codes = {
-        lookup_publication_country(p)
-        for p in ["부산", "대구", "인천", "광주", "대전", "울산"]
+        lookup_publication_country(p) for p in ["부산", "대구", "인천", "광주", "대전", "울산"]
     }
     assert len(codes) == 6
 

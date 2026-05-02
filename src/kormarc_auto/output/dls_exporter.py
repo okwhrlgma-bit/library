@@ -3,6 +3,7 @@
 학교도서관 = DLS 강제 = 우리 도구 = DLS export 필수.
 KERIS DLS 표준 형식 정합.
 """
+
 from __future__ import annotations
 
 import csv
@@ -32,15 +33,35 @@ def export_to_dls_csv(records: list[DlsRecord], school_name: str = "") -> str:
     """
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow([
-        "학교명", "ISBN", "도서명", "저자", "출판사", "출판년도",
-        "KDC", "청구기호", "복본수", "배치 위치",
-    ])
+    writer.writerow(
+        [
+            "학교명",
+            "ISBN",
+            "도서명",
+            "저자",
+            "출판사",
+            "출판년도",
+            "KDC",
+            "청구기호",
+            "복본수",
+            "배치 위치",
+        ]
+    )
     for r in records:
-        writer.writerow([
-            school_name, r.isbn, r.title, r.author, r.publisher, r.year,
-            r.kdc, r.school_call_number, r.copies, r.location,
-        ])
+        writer.writerow(
+            [
+                school_name,
+                r.isbn,
+                r.title,
+                r.author,
+                r.publisher,
+                r.year,
+                r.kdc,
+                r.school_call_number,
+                r.copies,
+                r.location,
+            ]
+        )
     return buf.getvalue()
 
 

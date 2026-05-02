@@ -196,7 +196,13 @@ def main() -> int:
         for key, fr in r["fields"].items():
             label = key.split("_", 1)[1]
             field_match_counter[(label, fr["match"])] += 1
-            mark = {"exact": "✓", "partial": "≈", "mismatch": "✗", "both_empty": "·", "one_empty": "○"}[fr["match"]]
+            mark = {
+                "exact": "✓",
+                "partial": "≈",
+                "mismatch": "✗",
+                "both_empty": "·",
+                "one_empty": "○",
+            }[fr["match"]]
             line_summary.append(f"{label}{mark}")
         print(" ".join(line_summary))
 
@@ -204,7 +210,9 @@ def main() -> int:
     print("\n" + "=" * 75)
     print(f"📊 필드별 일치율 (총 {len(isbns)}건)")
     print("-" * 75)
-    print(f"{'필드':<14} {'exact':>7} {'partial':>9} {'mismatch':>9} {'one_empty':>11} {'both_empty':>11}")
+    print(
+        f"{'필드':<14} {'exact':>7} {'partial':>9} {'mismatch':>9} {'one_empty':>11} {'both_empty':>11}"
+    )
     for _tag, _code, label in COMPARE_FIELDS:
         exact = field_match_counter.get((label, "exact"), 0)
         partial = field_match_counter.get((label, "partial"), 0)
@@ -215,7 +223,7 @@ def main() -> int:
         accuracy = (exact + partial * 0.5) / total_compared if total_compared else 0
         print(
             f"{label:<14} {exact:>7} {partial:>9} {mismatch:>9} {one_empty:>11} {both_empty:>11}"
-            f"   ({accuracy*100:.0f}%)"
+            f"   ({accuracy * 100:.0f}%)"
         )
 
     if args.output:

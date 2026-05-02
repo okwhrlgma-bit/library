@@ -70,7 +70,9 @@ VISION_IMAGE_MAX_LONGEST_SIDE: Final = 1568
 # ─── 캐시 ──────────────────────────────────────────────────────
 CACHE_DIR: Final = ".cache/kormarc-auto"
 ANTHROPIC_CACHE_SUBDIR: Final = "anthropic"
-CACHE_TTL_SECONDS: Final = 60 * 60 * 24 * 7  # 7일 (PO mvp-redefinition CHAPTER 10 정합 — 가격·표지·재판본 fresh)
+CACHE_TTL_SECONDS: Final = (
+    60 * 60 * 24 * 7
+)  # 7일 (PO mvp-redefinition CHAPTER 10 정합 — 가격·표지·재판본 fresh)
 
 # ─── 수익화 (MVP) ──────────────────────────────────────────────
 FREE_QUOTA_DEFAULT: Final = 50  # 신규 키 1개당 무료 생성 건수

@@ -9,6 +9,7 @@
 
 해결: 역할별 자동 분기 + 245 ▾c 포맷.
 """
+
 from __future__ import annotations
 
 from typing import Any

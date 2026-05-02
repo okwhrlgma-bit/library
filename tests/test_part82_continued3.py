@@ -1,4 +1,5 @@
 """Part 82+ 추가 모듈 테스트 (SNS·비대면)."""
+
 from __future__ import annotations
 
 from datetime import date
@@ -42,9 +43,7 @@ def test_sns_marketing_helper_basic():
         "○○도서관",
         new_books=[book],
         curation_theme="봄",
-        upcoming_events=[
-            {"title": "강연", "date": date(2026, 5, 20), "location": "강당"}
-        ],
+        upcoming_events=[{"title": "강연", "date": date(2026, 5, 20), "location": "강당"}],
     )
     assert len(plan) == 3  # 신간·큐레이션·행사
 

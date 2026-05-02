@@ -116,9 +116,7 @@ def write_kolasys_csv(
         writer.writeheader()
         for bd in book_data_list:
             authors = (bd.get("author") or "").strip()
-            primary, additional = (
-                authors.split(";", 1) if ";" in authors else (authors, "")
-            )
+            primary, additional = authors.split(";", 1) if ";" in authors else (authors, "")
             row = {
                 "ISBN": bd.get("isbn") or "",
                 "표제": bd.get("title") or "",
@@ -143,4 +141,3 @@ def write_kolasys_csv(
 
     logger.info("KOLASYS CSV 저장: %s (%d rows)", out, len(book_data_list))
     return out
-

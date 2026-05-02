@@ -5,6 +5,7 @@ ADR-0070.
 
 검증된 라이브러리: openpyxl (xlsm 지원, 매크로는 무시·셀 데이터만 추출).
 """
+
 from __future__ import annotations
 
 import logging
@@ -30,7 +31,9 @@ class XlsmExtractionResult:
     warnings: list[str]
 
 
-def extract_isbns_from_xlsm(file_path: str | Path, *, max_isbns: int = 1000) -> XlsmExtractionResult:
+def extract_isbns_from_xlsm(
+    file_path: str | Path, *, max_isbns: int = 1000
+) -> XlsmExtractionResult:
     """xlsm 파일에서 ISBN 자동 추출 (매크로 무시·데이터만).
 
     P1 매크로 사서 워크플로:
@@ -95,7 +98,9 @@ def extract_isbns_from_xlsm(file_path: str | Path, *, max_isbns: int = 1000) -> 
         header_isbn_cols: list[int] = []
         for header_row in (1, 2):
             try:
-                row_cells = next(ws.iter_rows(min_row=header_row, max_row=header_row, values_only=True))
+                row_cells = next(
+                    ws.iter_rows(min_row=header_row, max_row=header_row, values_only=True)
+                )
             except StopIteration:
                 continue
 
@@ -103,7 +108,9 @@ def extract_isbns_from_xlsm(file_path: str | Path, *, max_isbns: int = 1000) -> 
                 if cell is None:
                     continue
                 cell_str = str(cell).lower()
-                if any(keyword in cell_str for keyword in ("isbn", "도서번호", "도서 번호", "도서코드")):
+                if any(
+                    keyword in cell_str for keyword in ("isbn", "도서번호", "도서 번호", "도서코드")
+                ):
                     header_isbn_cols.append(col_idx)
                     detected_columns.add(f"{sheet_name}!{cell}")
 

@@ -84,7 +84,13 @@ def test_isbn_success_flow(mock_agg, client):
 @patch("kormarc_auto.server.app.search_by_query")
 def test_search_returns_candidates(mock_search, client):
     mock_search.return_value = [
-        {"isbn": "9788936434120", "title": "T", "author": "A", "source": "nl_korea", "confidence": 0.9}
+        {
+            "isbn": "9788936434120",
+            "title": "T",
+            "author": "A",
+            "source": "nl_korea",
+            "confidence": 0.9,
+        }
     ]
     r = client.post(
         "/search",
@@ -106,7 +112,9 @@ def test_usage_endpoint(client):
 
 def test_signup_endpoint_issues_key(client):
     """무료 체험 자동 발급 — 인증 없이 누구나."""
-    r = client.post("/signup", json={"email": "librarian@example.com", "library_name": "테스트도서관"})
+    r = client.post(
+        "/signup", json={"email": "librarian@example.com", "library_name": "테스트도서관"}
+    )
     assert r.status_code == 200
     body = r.json()
     assert body["api_key"].startswith("kma_")

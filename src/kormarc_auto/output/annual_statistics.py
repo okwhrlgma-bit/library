@@ -78,11 +78,7 @@ def compute_holdings_from_index(
 
     records = search_local("", limit=1000000)
     if year is not None:
-        records = [
-            r
-            for r in records
-            if str(r.get("publication_year", "")).startswith(str(year))
-        ]
+        records = [r for r in records if str(r.get("publication_year", "")).startswith(str(year))]
 
     kdc_dist: Counter[str] = Counter()
     mat_dist: Counter[str] = Counter()

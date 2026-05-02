@@ -134,9 +134,7 @@ def build_kormarc_record(
         title_subfields.append(Subfield(code="c", value=f"/ {author}"))
     # 1지시기호: 1=주표목 있음(100), 0=없음
     ind1 = "1" if primary_author else "0"
-    record.add_field(
-        Field(tag="245", indicators=Indicators(ind1, ind2), subfields=title_subfields)
-    )
+    record.add_field(Field(tag="245", indicators=Indicators(ind1, ind2), subfields=title_subfields))
 
     # 090 청구기호 (대학도서관용, 옵션)
     if book_data.get("call_number_090"):
@@ -161,9 +159,7 @@ def build_kormarc_record(
     if book_data.get("publication_year"):
         pub_subfields.append(Subfield(code="c", value=str(book_data["publication_year"])))
     if pub_subfields:
-        record.add_field(
-            Field(tag="264", indicators=Indicators(" ", "1"), subfields=pub_subfields)
-        )
+        record.add_field(Field(tag="264", indicators=Indicators(" ", "1"), subfields=pub_subfields))
 
     # 300 — 형태사항
     extent_subfields = []
@@ -194,7 +190,10 @@ def build_kormarc_record(
         Field(
             tag="337",
             indicators=Indicators(" ", " "),
-            subfields=[Subfield(code="a", value="unmediated"), Subfield(code="2", value="rdamedia")],
+            subfields=[
+                Subfield(code="a", value="unmediated"),
+                Subfield(code="2", value="rdamedia"),
+            ],
         )
     )
     record.add_field(
@@ -301,9 +300,7 @@ def build_kormarc_record(
     keywords = book_data.get("keywords", [])
     if keywords:
         kw_subfields = [Subfield(code="a", value=k) for k in keywords[:10]]
-        record.add_field(
-            Field(tag="653", indicators=Indicators(" ", " "), subfields=kw_subfields)
-        )
+        record.add_field(Field(tag="653", indicators=Indicators(" ", " "), subfields=kw_subfields))
 
     # 700 — 부출표목 (역자, 공동저자) — author 문자열에 ';' 또는 ',' 다수면 분리
     additional_authors = _split_additional_authors(author or "")
@@ -404,7 +401,19 @@ def _apply_phase15_fields(record: Record, book_data: dict[str, Any]) -> None:
     # 중복 태그 정리: 자료유형 모듈이 채우는 태그는 사전 856·538·022·300 등.
     # 핵심 식별 (008·020·245·100·700·056·082·040·950)은 보존, 자료유형 책임 태그만 제거.
     type_owned_tags = {f.tag for f in extra_fields}
-    keep_tags_priority = {"008", "020", "040", "056", "082", "100", "245", "264", "490", "700", "950"}
+    keep_tags_priority = {
+        "008",
+        "020",
+        "040",
+        "056",
+        "082",
+        "100",
+        "245",
+        "264",
+        "490",
+        "700",
+        "950",
+    }
     drop_targets = type_owned_tags - keep_tags_priority
 
     if drop_targets:

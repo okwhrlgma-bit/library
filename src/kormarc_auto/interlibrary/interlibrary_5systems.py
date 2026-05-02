@@ -13,6 +13,7 @@
 
 해결: 통합 라우팅·우선순위·자동 신청.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -22,11 +23,11 @@ from enum import StrEnum
 class System(StrEnum):
     """5 상호대차 시스템."""
 
-    CHAEK_BADA = "chaek_bada"     # 책바다·NLK·5,200원·전국
-    CHAEK_NARAE = "chaek_narae"   # 책나래·NLD·무료·장애인
-    CHAEK_IEUM = "chaek_ieum"     # 책이음·KOLAS·통합 회원증
-    CHAEK_DURE = "chaek_dure"     # 책두레·KOLAS 모듈
-    CHAEK_DANBI = "chaek_danbi"   # 책단비·은평구·자관
+    CHAEK_BADA = "chaek_bada"  # 책바다·NLK·5,200원·전국
+    CHAEK_NARAE = "chaek_narae"  # 책나래·NLD·무료·장애인
+    CHAEK_IEUM = "chaek_ieum"  # 책이음·KOLAS·통합 회원증
+    CHAEK_DURE = "chaek_dure"  # 책두레·KOLAS 모듈
+    CHAEK_DANBI = "chaek_danbi"  # 책단비·은평구·자관
 
 
 @dataclass(frozen=True)

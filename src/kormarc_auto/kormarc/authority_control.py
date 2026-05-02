@@ -10,6 +10,7 @@ NLK 전거 DB·KOLISNET 전거 검색 → 7XX 추가·동명이인 분기.
 
 해결: 자동 7XX 추가 + 880 페어 (한자·로마자 분기).
 """
+
 from __future__ import annotations
 
 from typing import Any

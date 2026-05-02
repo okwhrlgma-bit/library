@@ -7,6 +7,7 @@
 
 해결: kormarc-auto 처리 데이터 = libsta 형식 자동 변환·export.
 """
+
 from __future__ import annotations
 
 import csv
@@ -42,21 +43,43 @@ def export_to_libsta_csv(stats: list[LibstaStatistic]) -> str:
     """
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow([
-        "도서관코드", "도서관명", "년", "월",
-        "신착도서", "누적장서", "신규회원", "누적회원",
-        "대출", "반납", "방문", "프로그램참여",
-        "사서수", "자동화처리권수",
-    ])
+    writer.writerow(
+        [
+            "도서관코드",
+            "도서관명",
+            "년",
+            "월",
+            "신착도서",
+            "누적장서",
+            "신규회원",
+            "누적회원",
+            "대출",
+            "반납",
+            "방문",
+            "프로그램참여",
+            "사서수",
+            "자동화처리권수",
+        ]
+    )
     for s in stats:
-        writer.writerow([
-            s.library_code, s.library_name, s.year, s.month,
-            s.new_books_count, s.total_books_count,
-            s.new_users_count, s.total_users_count,
-            s.loans_count, s.returns_count,
-            s.visits_count, s.program_participants,
-            s.librarian_count, s.automation_records,
-        ])
+        writer.writerow(
+            [
+                s.library_code,
+                s.library_name,
+                s.year,
+                s.month,
+                s.new_books_count,
+                s.total_books_count,
+                s.new_users_count,
+                s.total_users_count,
+                s.loans_count,
+                s.returns_count,
+                s.visits_count,
+                s.program_participants,
+                s.librarian_count,
+                s.automation_records,
+            ]
+        )
     return buf.getvalue()
 
 
@@ -69,8 +92,7 @@ def calculate_kpi_summary(stat: LibstaStatistic) -> dict:
     per_librarian = stat.total_users_count // max(stat.librarian_count, 1)
     # 자동화율
     automation_rate = (
-        stat.automation_records / max(stat.new_books_count, 1)
-        if stat.new_books_count else 0
+        stat.automation_records / max(stat.new_books_count, 1) if stat.new_books_count else 0
     )
     # 1인당 신착 처리 권수
     new_per_librarian = stat.new_books_count // max(stat.librarian_count, 1)
@@ -80,9 +102,7 @@ def calculate_kpi_summary(stat: LibstaStatistic) -> dict:
         "automation_rate": round(automation_rate, 2),
         "new_books_per_librarian": new_per_librarian,
         "total_visits": stat.visits_count,
-        "loan_to_visit_ratio": round(
-            stat.loans_count / max(stat.visits_count, 1), 2
-        ),
+        "loan_to_visit_ratio": round(stat.loans_count / max(stat.visits_count, 1), 2),
     }
 
 

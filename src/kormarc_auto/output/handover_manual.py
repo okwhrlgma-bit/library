@@ -4,6 +4,7 @@ Part 50 발견: 영업 자료 30건 (P4 1년 계약직 사서) ↔ 코드 불일
 
 본인 사용 패턴·자관 prefix·즐겨찾기·KOLAS 결제 갱신 일정 자동 export.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
@@ -40,19 +41,21 @@ def generate_handover_manual_markdown(data: HandoverManualData) -> str:
     """
     contract_period = (data.contract_end - data.contract_start).days
     next_start_str = (
-        f'{data.next_librarian_start.year}년 {data.next_librarian_start.month}월 {data.next_librarian_start.day}일'
+        f"{data.next_librarian_start.year}년 {data.next_librarian_start.month}월 {data.next_librarian_start.day}일"
         if data.next_librarian_start
         else "(미정)"
     )
 
     prefix_lines = "\n".join(f"- `{p}`" for p in data.self_prefix) or "- (사용 prefix 없음)"
     kdc_lines = "\n".join(f"- {k}" for k in data.favorite_kdc) or "- (자주 사용한 KDC 없음)"
-    special_lines = "\n".join(f"- `{s}`" for s in data.favorite_special_locations) or "- (별치기호 사용 X)"
+    special_lines = (
+        "\n".join(f"- `{s}`" for s in data.favorite_special_locations) or "- (별치기호 사용 X)"
+    )
 
     return f"""# kormarc-auto 인계 매뉴얼
 
 > {data.library_name} 도서관
-> 작성: {data.librarian_name} 선생님 ({date.today().strftime('%Y년 %m월 %d일')})
+> 작성: {data.librarian_name} 선생님 ({date.today().strftime("%Y년 %m월 %d일")})
 
 ---
 
@@ -69,7 +72,7 @@ def generate_handover_manual_markdown(data: HandoverManualData) -> str:
 
 | 항목 | 내용 |
 |------|------|
-| 사용 기간 | {f'{data.contract_start.year}년 {data.contract_start.month}월 {data.contract_start.day}일'} ~ {f'{data.contract_end.year}년 {data.contract_end.month}월 {data.contract_end.day}일'} ({contract_period}일) |
+| 사용 기간 | {f"{data.contract_start.year}년 {data.contract_start.month}월 {data.contract_start.day}일"} ~ {f"{data.contract_end.year}년 {data.contract_end.month}월 {data.contract_end.day}일"} ({contract_period}일) |
 | 누적 처리 권수 | {data.total_records:,}권 |
 | 월 평균 처리 | {data.monthly_records_avg:,}권 |
 | 다음 사서 시작일 | {next_start_str} |
@@ -110,7 +113,7 @@ def generate_handover_manual_markdown(data: HandoverManualData) -> str:
 
 | 항목 | 내용 |
 |------|------|
-| 다음 갱신 예정일 | {f'{data.next_renewal_date.year}년 {data.next_renewal_date.month}월 {data.next_renewal_date.day}일' if data.next_renewal_date else "(자치구 도서관사업소 확인)"} |
+| 다음 갱신 예정일 | {f"{data.next_renewal_date.year}년 {data.next_renewal_date.month}월 {data.next_renewal_date.day}일" if data.next_renewal_date else "(자치구 도서관사업소 확인)"} |
 | 결제 주체 | 자치구 도서관사업소 |
 | 결제 양식 | 자치구 표준 양식 (자동 생성 가능) |
 

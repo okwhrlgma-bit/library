@@ -7,6 +7,7 @@
 
 해결: 사서교사 일과 통합 대시보드 (P2 + P15 순회 정합).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -25,16 +26,76 @@ class SchoolLibrarianTask:
 
 # 사서교사 표준 일과 (KCI 학술 + 교육부 4차 계획 정합)
 STANDARD_TASKS = [
-    SchoolLibrarianTask(name="신간 등록·KORMARC", category="cataloging", estimated_minutes=120, is_automatable=True, priority=4),
-    SchoolLibrarianTask(name="학생 자료 검색·추천", category="collaboration", estimated_minutes=60, is_automatable=False, priority=4),
-    SchoolLibrarianTask(name="교과 협력 수업 지원", category="collaboration", estimated_minutes=180, is_automatable=False, priority=5),
-    SchoolLibrarianTask(name="독서 프로그램 운영", category="program", estimated_minutes=120, is_automatable=False, priority=4),
-    SchoolLibrarianTask(name="자원봉사 학부모 관리", category="admin", estimated_minutes=60, is_automatable=False, priority=3),
-    SchoolLibrarianTask(name="DLS 입력·관리", category="cataloging", estimated_minutes=90, is_automatable=True, priority=4),
-    SchoolLibrarianTask(name="장서점검·배가", category="admin", estimated_minutes=120, is_automatable=True, priority=3),
-    SchoolLibrarianTask(name="학교 행정·결재", category="admin", estimated_minutes=180, is_automatable=False, priority=3),
-    SchoolLibrarianTask(name="학교운영위 보고", category="admin", estimated_minutes=60, is_automatable=True, priority=3),
-    SchoolLibrarianTask(name="시도교육청 통계 보고", category="admin", estimated_minutes=120, is_automatable=True, priority=3),
+    SchoolLibrarianTask(
+        name="신간 등록·KORMARC",
+        category="cataloging",
+        estimated_minutes=120,
+        is_automatable=True,
+        priority=4,
+    ),
+    SchoolLibrarianTask(
+        name="학생 자료 검색·추천",
+        category="collaboration",
+        estimated_minutes=60,
+        is_automatable=False,
+        priority=4,
+    ),
+    SchoolLibrarianTask(
+        name="교과 협력 수업 지원",
+        category="collaboration",
+        estimated_minutes=180,
+        is_automatable=False,
+        priority=5,
+    ),
+    SchoolLibrarianTask(
+        name="독서 프로그램 운영",
+        category="program",
+        estimated_minutes=120,
+        is_automatable=False,
+        priority=4,
+    ),
+    SchoolLibrarianTask(
+        name="자원봉사 학부모 관리",
+        category="admin",
+        estimated_minutes=60,
+        is_automatable=False,
+        priority=3,
+    ),
+    SchoolLibrarianTask(
+        name="DLS 입력·관리",
+        category="cataloging",
+        estimated_minutes=90,
+        is_automatable=True,
+        priority=4,
+    ),
+    SchoolLibrarianTask(
+        name="장서점검·배가",
+        category="admin",
+        estimated_minutes=120,
+        is_automatable=True,
+        priority=3,
+    ),
+    SchoolLibrarianTask(
+        name="학교 행정·결재",
+        category="admin",
+        estimated_minutes=180,
+        is_automatable=False,
+        priority=3,
+    ),
+    SchoolLibrarianTask(
+        name="학교운영위 보고",
+        category="admin",
+        estimated_minutes=60,
+        is_automatable=True,
+        priority=3,
+    ),
+    SchoolLibrarianTask(
+        name="시도교육청 통계 보고",
+        category="admin",
+        estimated_minutes=120,
+        is_automatable=True,
+        priority=3,
+    ),
 ]
 
 
@@ -80,7 +141,9 @@ def render_school_librarian_dashboard(librarian_name: str = "사서교사 선생
     col2.metric("자동화 절감", f"{savings['saved_hours']}h", f"+{savings['saved_minutes']}분")
     col3.metric("전문 일에 집중", f"{savings['remaining_focus_hours']}h")
 
-    st.progress(savings["automation_ratio"], text=f"자동화 {int(savings['automation_ratio']*100)}%")
+    st.progress(
+        savings["automation_ratio"], text=f"자동화 {int(savings['automation_ratio'] * 100)}%"
+    )
 
     st.info(
         "**사서교사 = 자료 관리 + 교과 협력 + 프로젝트 + 행정 = 다 함**\n\n"

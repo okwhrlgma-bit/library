@@ -7,18 +7,19 @@
 
 해결: 협력 통합 라우팅 + 가맹 도서관 검색·정보 자동.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Literal
 
 ConsortiumType = Literal[
-    "chaek_ieum",      # 책이음 (KOLAS III 통합 회원증)
-    "chaek_dure",      # 책두레 (KOLAS III 모듈)
-    "kolisnet",        # KOLISNET 종합목록
-    "school_public",   # 학교-공공 연계
-    "academic",        # 대학도서관 컨소시엄 (KORIBLE·CCL)
-    "regional",        # 지역 도서관 협의회 (자치구·시도)
+    "chaek_ieum",  # 책이음 (KOLAS III 통합 회원증)
+    "chaek_dure",  # 책두레 (KOLAS III 모듈)
+    "kolisnet",  # KOLISNET 종합목록
+    "school_public",  # 학교-공공 연계
+    "academic",  # 대학도서관 컨소시엄 (KORIBLE·CCL)
+    "regional",  # 지역 도서관 협의회 (자치구·시도)
 ]
 
 

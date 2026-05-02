@@ -364,9 +364,7 @@ def get_adapter(provider: str | None = None) -> PaymentAdapter:
     adapter = cls()
     if not adapter.is_available():
         if name != "local":
-            logger.warning(
-                "결제 어댑터 %s 사용 불가 (트리거 미충족) — local로 폴백", name
-            )
+            logger.warning("결제 어댑터 %s 사용 불가 (트리거 미충족) — local로 폴백", name)
         return LocalManualAdapter()
     return adapter
 

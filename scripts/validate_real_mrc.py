@@ -62,9 +62,16 @@ def _parse_mrc_any_encoding(path: Path, reader_cls: Any) -> list[Any]:
     for encoding in ("cp949", "utf-8", "euc-kr"):
         try:
             with path.open("rb") as f:
-                records = [r for r in reader_cls(
-                    f, force_utf8=False, to_unicode=True, file_encoding=encoding,
-                ) if r]
+                records = [
+                    r
+                    for r in reader_cls(
+                        f,
+                        force_utf8=False,
+                        to_unicode=True,
+                        file_encoding=encoding,
+                    )
+                    if r
+                ]
             if records:
                 return records
         except (UnicodeDecodeError, ValueError, OSError):
@@ -156,11 +163,13 @@ def main(directory: Path, json_path: Path | None) -> int:
                 for ao in result["ao_issues"]:
                     issue_counter[f"A 누락 {ao['tag']}"] += 1
 
-        file_summary.append({
-            "file": str(path.relative_to(directory)),
-            "records": records_in_file,
-            "fails": fails_in_file,
-        })
+        file_summary.append(
+            {
+                "file": str(path.relative_to(directory)),
+                "records": records_in_file,
+                "fails": fails_in_file,
+            }
+        )
 
     pass_records = total_records - fail_records
     pass_rate = (pass_records / total_records * 100) if total_records else 0.0

@@ -17,6 +17,7 @@ PO 명령 (2026-05-03): "각 이름과 도서관명 익명화 필수 / 내부도
     python scripts/anonymize_pii.py --dry-run    # 미리보기
     python scripts/anonymize_pii.py --apply       # 실제 적용
 """
+
 from __future__ import annotations
 
 import argparse
@@ -78,9 +79,26 @@ EXCLUDE_FILES = {
 
 # 텍스트 파일 확장자만 처리
 INCLUDE_EXTS = {
-    ".py", ".md", ".txt", ".yml", ".yaml", ".toml", ".json",
-    ".sh", ".bat", ".ps1", ".html", ".css", ".js", ".tsx", ".ts",
-    ".cfg", ".ini", ".env", ".gitignore", ".dockerignore",
+    ".py",
+    ".md",
+    ".txt",
+    ".yml",
+    ".yaml",
+    ".toml",
+    ".json",
+    ".sh",
+    ".bat",
+    ".ps1",
+    ".html",
+    ".css",
+    ".js",
+    ".tsx",
+    ".ts",
+    ".cfg",
+    ".ini",
+    ".env",
+    ".gitignore",
+    ".dockerignore",
 }
 
 

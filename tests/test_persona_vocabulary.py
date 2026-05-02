@@ -1,4 +1,5 @@
 """persona_vocabulary 어휘 분기 시스템 테스트 (Part 49·51 어셔션)."""
+
 from __future__ import annotations
 
 from kormarc_auto.ui.persona_vocabulary import (
@@ -63,8 +64,12 @@ def test_t_function_returns_placeholder_for_missing() -> None:
 def test_persona_to_mode_mapping_complete() -> None:
     """6 페르소나 모두 모드 매핑."""
     expected_personas = {
-        "macro_librarian", "school_librarian", "contract_librarian",
-        "university_librarian", "volunteer", "parent_volunteer",
+        "macro_librarian",
+        "school_librarian",
+        "contract_librarian",
+        "university_librarian",
+        "volunteer",
+        "parent_volunteer",
     }
     assert expected_personas.issubset(PERSONA_TO_MODE.keys())
 

@@ -38,9 +38,7 @@ def test_local_manual_cancel():
 def test_local_manual_tax_invoice_returns_none():
     """수동 발행은 URL 없음 (PO 직접 작성)."""
     a = LocalManualAdapter()
-    url = a.issue_tax_invoice(
-        "kma_xxxx", 30000, business_no="000-00-00000", period="2026-04"
-    )
+    url = a.issue_tax_invoice("kma_xxxx", 30000, business_no="000-00-00000", period="2026-04")
     assert url is None
 
 

@@ -10,6 +10,7 @@ ADR (Part 44 §12) 정합.
 4. KOLAS 반입 시뮬레이션
 5. "축하합니다! 첫 책 완성"
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

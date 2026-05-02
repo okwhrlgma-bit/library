@@ -7,6 +7,7 @@
 
 해결: 7단 적응 가이드 자동 + Mem0 자관 KB 통합.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -26,7 +27,9 @@ class OnboardingStep:
 
 # 사서 신입 표준 7단 적응 (Day 1~30)
 DEFAULT_STEPS = [
-    OnboardingStep(1, "자관 정보 학습 (KB 자동)", "자관 prefix·청구기호·정책 = Mem0 자동 검색", 30, True),
+    OnboardingStep(
+        1, "자관 정보 학습 (KB 자동)", "자관 prefix·청구기호·정책 = Mem0 자동 검색", 30, True
+    ),
     OnboardingStep(1, "kormarc-auto 5분 가이드", "ISBN 입력·KORMARC 자동·KOLAS export", 5, True),
     OnboardingStep(2, "선임 사서 인수인계 매뉴얼", "handover_manual.py 자동 생성·읽기", 60, True),
     OnboardingStep(3, "이용자 응대 매뉴얼", "NLK 표준 + AI Agent 1차 응대 학습", 60, True),
@@ -62,7 +65,9 @@ class OnboardingPlan:
         return int(completed / max(len(self.steps), 1) * 100)
 
 
-def create_default_plan(librarian_name: str, sasagwan: str, start_date: date | None = None) -> OnboardingPlan:
+def create_default_plan(
+    librarian_name: str, sasagwan: str, start_date: date | None = None
+) -> OnboardingPlan:
     """표준 적응 계획 생성 (7단 30일)."""
     return OnboardingPlan(
         librarian_name=librarian_name,

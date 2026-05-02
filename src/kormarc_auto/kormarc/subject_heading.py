@@ -10,6 +10,7 @@ NLK 주제명 thesaurus + AI 추천 → 6XX.
 
 해결: AI 추천 + NLK thesaurus = 자동.
 """
+
 from __future__ import annotations
 
 from typing import Any
@@ -67,7 +68,10 @@ def _classify_subject(term: str) -> str:
     # 단순 휴리스틱 (Phase 1)
     if any(suffix in term for suffix in ["전기", "회고록", "평전"]):
         return "600"
-    if any(region in term for region in ["국", "도", "시", "군", "구", "해", "산"]) and len(term) <= 4:
+    if (
+        any(region in term for region in ["국", "도", "시", "군", "구", "해", "산"])
+        and len(term) <= 4
+    ):
         return "651"
     if "협회" in term or "회사" in term or "재단" in term:
         return "610"

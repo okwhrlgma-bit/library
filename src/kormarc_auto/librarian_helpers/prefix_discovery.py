@@ -81,9 +81,9 @@ class PrefixDiscoverer:
                     counter[prefix] += 1
 
         threshold_count = total * (self.threshold_pct / 100)
-        recommended = tuple(sorted(
-            prefix for prefix, count in counter.items() if count >= threshold_count
-        ))
+        recommended = tuple(
+            sorted(prefix for prefix, count in counter.items() if count >= threshold_count)
+        )
 
         return PrefixSummary(
             total_records=total,
@@ -99,9 +99,14 @@ class PrefixDiscoverer:
             try:
                 with path.open("rb") as f:
                     records = [
-                        r for r in reader_cls(
-                            f, force_utf8=False, to_unicode=True, file_encoding=encoding,
-                        ) if r
+                        r
+                        for r in reader_cls(
+                            f,
+                            force_utf8=False,
+                            to_unicode=True,
+                            file_encoding=encoding,
+                        )
+                        if r
                     ]
                 if records:
                     return records

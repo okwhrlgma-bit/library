@@ -1,4 +1,5 @@
 """Part 82 확장 모듈 테스트 (기증·청구기호 검수)."""
+
 from __future__ import annotations
 
 from datetime import date
@@ -69,8 +70,6 @@ def test_call_number_validator_basic():
     assert "863.2" in cn
     assert "v.3" in cn
 
-    cn2 = suggest_call_number(
-        kdc="811.7", author_korean="윤동주", sasagwan_prefix="시문학", copy=2
-    )
+    cn2 = suggest_call_number(kdc="811.7", author_korean="윤동주", sasagwan_prefix="시문학", copy=2)
     assert cn2.startswith("시문학")
     assert "c.2" in cn2

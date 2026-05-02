@@ -8,6 +8,7 @@
 해결: 자동 게시물 생성 (신간·큐레이션·행사·통계·인용).
 인스타그램·페이스북·블로그·X 호환.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,13 +16,13 @@ from datetime import date
 from typing import Literal
 
 PostType = Literal[
-    "new_book",         # 신간 안내
-    "curation",         # 큐레이션
-    "event",            # 행사
-    "stats",            # 통계·이용자
-    "quote",            # 인용·명언
-    "tip",              # 사서 팁
-    "behind_scenes",    # 비하인드
+    "new_book",  # 신간 안내
+    "curation",  # 큐레이션
+    "event",  # 행사
+    "stats",  # 통계·이용자
+    "quote",  # 인용·명언
+    "tip",  # 사서 팁
+    "behind_scenes",  # 비하인드
 ]
 
 
@@ -38,9 +39,13 @@ class SocialPost:
 
 # 도서관 표준 해시태그
 LIBRARY_HASHTAGS = [
-    "#도서관", "#book", "#독서",
-    "#사서추천", "#독서스타그램",
-    "#책추천", "#오늘의책",
+    "#도서관",
+    "#book",
+    "#독서",
+    "#사서추천",
+    "#독서스타그램",
+    "#책추천",
+    "#오늘의책",
 ]
 
 
@@ -70,8 +75,7 @@ def generate_new_book_post(book: dict, library_name: str) -> SocialPost:
 def generate_curation_post(theme: str, books: list[dict], library_name: str) -> SocialPost:
     """큐레이션 게시물 자동 (book_curation_engine 결과 호환)."""
     book_list = "\n".join(
-        f"{i+1}. {b.get('title', '')} — {b.get('author', '')}"
-        for i, b in enumerate(books[:5])
+        f"{i + 1}. {b.get('title', '')} — {b.get('author', '')}" for i, b in enumerate(books[:5])
     )
     text = (
         f"🌟 {theme} 추천 도서 {len(books)}선\n\n"
@@ -96,9 +100,7 @@ def generate_event_post(
 ) -> SocialPost:
     """행사 안내 게시물 자동."""
     weekdays_kr = ["월", "화", "수", "목", "금", "토", "일"]
-    date_str = (
-        f"{event_date.month}/{event_date.day} ({weekdays_kr[event_date.weekday()]})"
-    )
+    date_str = f"{event_date.month}/{event_date.day} ({weekdays_kr[event_date.weekday()]})"
     text = (
         f"📅 행사 안내\n\n"
         f"🎉 {event_title}\n"
@@ -140,12 +142,14 @@ def generate_weekly_post_plan(
     # 금: 행사 또는 사서 팁
     if upcoming_events:
         evt = upcoming_events[0]
-        posts.append(generate_event_post(
-            event_title=evt.get("title", ""),
-            event_date=evt.get("date", date.today()),
-            location=evt.get("location", ""),
-            library_name=library_name,
-        ))
+        posts.append(
+            generate_event_post(
+                event_title=evt.get("title", ""),
+                event_date=evt.get("date", date.today()),
+                location=evt.get("location", ""),
+                library_name=library_name,
+            )
+        )
 
     return posts
 

@@ -6,6 +6,7 @@
 
 해결: 자동 안전 체크리스트 + 비상 연락 + 위치 공유.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field

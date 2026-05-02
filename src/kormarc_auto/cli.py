@@ -495,8 +495,12 @@ def cmd_inspect(args: argparse.Namespace) -> int:
     print("\n📊 결과:")
     print(f"  검출 청구기호: {result['detected_count']}건")
     print(f"  자관 일치:    {len(result['matched'])}건 ({result['summary']['matched_pct']:.1f}%)")
-    print(f"  오배가:       {len(result['missorted'])}건 ({result['summary']['missorted_pct']:.1f}%)")
-    print(f"  자관 미등록:  {len(result['missing_in_db'])}건 ({result['summary']['missing_pct']:.1f}%)")
+    print(
+        f"  오배가:       {len(result['missorted'])}건 ({result['summary']['missorted_pct']:.1f}%)"
+    )
+    print(
+        f"  자관 미등록:  {len(result['missing_in_db'])}건 ({result['summary']['missing_pct']:.1f}%)"
+    )
 
     if result["missorted"]:
         print("\n  [오배가 후보]")
@@ -595,7 +599,9 @@ def cmd_info(args: argparse.Namespace) -> int:
     try:
         import anthropic
 
-        print(f"anthropic: {anthropic.__version__ if hasattr(anthropic, '__version__') else '설치됨'}")
+        print(
+            f"anthropic: {anthropic.__version__ if hasattr(anthropic, '__version__') else '설치됨'}"
+        )
     except ImportError:
         print("anthropic: ❌ 미설치")
 
@@ -622,7 +628,9 @@ def cmd_dispose(args: argparse.Namespace) -> int:
     entries = [DisposalEntry(**r) for r in rows]
 
     if args.format in ("pdf", "both"):
-        pdf_out = Path(args.output_pdf or f"logs/disposal/{args.fiscal_period.replace(' ', '_')}.pdf")
+        pdf_out = Path(
+            args.output_pdf or f"logs/disposal/{args.fiscal_period.replace(' ', '_')}.pdf"
+        )
         render_disposal_form_pdf(
             entries,
             library_name=args.library,
@@ -632,7 +640,9 @@ def cmd_dispose(args: argparse.Namespace) -> int:
         )
         print(f"✓ 제적·폐기 결재서식: {pdf_out}")
     if args.format in ("xlsx", "both"):
-        xlsx_out = Path(args.output_xlsx or f"logs/disposal/{args.fiscal_period.replace(' ', '_')}.xlsx")
+        xlsx_out = Path(
+            args.output_xlsx or f"logs/disposal/{args.fiscal_period.replace(' ', '_')}.xlsx"
+        )
         write_disposal_xlsx(entries, xlsx_out)
         print(f"✓ 폐기목록 엑셀: {xlsx_out}")
     return 0
@@ -743,9 +753,7 @@ def cmd_registration(args: argparse.Namespace) -> int:
         return 0
 
     if args.action == "missing":
-        gaps = find_missing_numbers(
-            existing, kind=args.kind, turn=args.turn, year=args.year
-        )
+        gaps = find_missing_numbers(existing, kind=args.kind, turn=args.turn, year=args.year)
         if gaps:
             print(f"누락번호 {len(gaps)}개 (kind={args.kind}, turn={args.turn}, year={args.year}):")
             for g in gaps:
@@ -769,8 +777,7 @@ def cmd_registration(args: argparse.Namespace) -> int:
         print(f"✓ 다권본 {args.volumes}권 등록번호 부여:")
         for r in results:
             print(
-                f"  · {r['registration_number']} | {r['volume_label']} | "
-                f"245 ▾n {r['marc_245_n']}"
+                f"  · {r['registration_number']} | {r['volume_label']} | 245 ▾n {r['marc_245_n']}"
             )
         return 0
 
@@ -782,8 +789,14 @@ def cmd_pilot_collect(args: argparse.Namespace) -> int:
     """PILOT 시연 결과 1줄 수집 — scripts/pilot_collect 통합."""
     import subprocess
 
-    cmd = [str(Path(sys.executable)), "scripts/pilot_collect.py",
-           "--persona", args.persona, "--library", args.library]
+    cmd = [
+        str(Path(sys.executable)),
+        "scripts/pilot_collect.py",
+        "--persona",
+        args.persona,
+        "--library",
+        args.library,
+    ]
     return subprocess.call(cmd)
 
 
@@ -861,9 +874,7 @@ def cmd_sanity_check(args: argparse.Namespace) -> int:
             "issues_by_type": report.issues_by_type,
             "sample_issues": report.sample_issues,
         }
-        out.write_text(
-            json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        out.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"\n✓ JSON 저장: {out}")
     return 0
 
@@ -885,9 +896,7 @@ def cmd_account(args: argparse.Namespace) -> int:
     if args.action == "export":
         data = export_account_data(api_key)
         out = Path(args.output or "account_export.json")
-        out.write_text(
-            json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
-        )
+        out.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
         print(f"✓ 본인 데이터 다운로드: {out}")
         print(f"  사용 로그: {data['usage_log_count']}건")
         print(f"  피드백: {len(data['feedback'])}건")
@@ -987,10 +996,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_xls.set_defaults(func=cmd_xlsx)
 
     # notify
-    p_not = sub.add_parser("notify", help="이용자 알림 메시지 생성 (overdue/return/reservation/closure)")
-    p_not.add_argument(
-        "notify_type", choices=["overdue", "return", "reservation", "closure"]
+    p_not = sub.add_parser(
+        "notify", help="이용자 알림 메시지 생성 (overdue/return/reservation/closure)"
     )
+    p_not.add_argument("notify_type", choices=["overdue", "return", "reservation", "closure"])
     p_not.add_argument("--user", default="이용자", help="이용자명")
     p_not.add_argument("--book", default="", help="도서명")
     p_not.add_argument("--due", default="", help="만기/수령기한 (YYYY-MM-DD)")
@@ -1060,9 +1069,7 @@ def build_parser() -> argparse.ArgumentParser:
     p_rep.add_argument("--year", type=int, default=None, help="연도 (monthly)")
     p_rep.add_argument("--month", type=int, default=None, help="월 (monthly)")
     p_rep.add_argument("--limit", type=int, default=30, help="안내 게재 권수 (announcement)")
-    p_rep.add_argument(
-        "files", nargs="*", help="검증할 .mrc 파일 목록 (validate 전용)"
-    )
+    p_rep.add_argument("files", nargs="*", help="검증할 .mrc 파일 목록 (validate 전용)")
     p_rep.add_argument("--output", default=None, help="출력 PDF 경로")
     p_rep.set_defaults(func=cmd_report)
 
@@ -1077,13 +1084,9 @@ def build_parser() -> argparse.ArgumentParser:
     )
     p_dis.add_argument("--input", required=True, help="DisposalEntry JSON 파일")
     p_dis.add_argument("--library", required=True, help="도서관명")
-    p_dis.add_argument(
-        "--fiscal-period", required=True, help="심의 기간 (예: '2026 1분기')"
-    )
+    p_dis.add_argument("--fiscal-period", required=True, help="심의 기간 (예: '2026 1분기')")
     p_dis.add_argument("--director", default=None, help="결재자(관장명)")
-    p_dis.add_argument(
-        "--format", choices=["pdf", "xlsx", "both"], default="both"
-    )
+    p_dis.add_argument("--format", choices=["pdf", "xlsx", "both"], default="both")
     p_dis.add_argument("--output-pdf", default=None)
     p_dis.add_argument("--output-xlsx", default=None)
     p_dis.set_defaults(func=cmd_dispose)
@@ -1107,8 +1110,9 @@ def build_parser() -> argparse.ArgumentParser:
         "pilot-collect",
         help="PILOT 시연 직후 결과 인터랙티브 수집 + JSON 자동 저장",
     )
-    p_pc.add_argument("--persona", default="macro",
-                      choices=["macro", "acquisition", "general", "video"])
+    p_pc.add_argument(
+        "--persona", default="macro", choices=["macro", "acquisition", "general", "video"]
+    )
     p_pc.add_argument("--library", default="○○도서관")
     p_pc.set_defaults(func=cmd_pilot_collect)
 
@@ -1169,9 +1173,7 @@ def build_parser() -> argparse.ArgumentParser:
         choices=["chaeknarae", "chaekbada", "riss"],
         required=True,
     )
-    p_il.add_argument(
-        "--format", choices=["csv", "xlsx"], default="xlsx", help="출력 형식"
-    )
+    p_il.add_argument("--format", choices=["csv", "xlsx"], default="xlsx", help="출력 형식")
     p_il.add_argument(
         "--from-isbns",
         default=None,
@@ -1234,9 +1236,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="API 키 (또는 KORMARC_API_KEY 환경변수)",
     )
     p_acc.add_argument("--output", default=None, help="export 저장 경로")
-    p_acc.add_argument(
-        "--yes", action="store_true", help="delete 확인 (필수)"
-    )
+    p_acc.add_argument("--yes", action="store_true", help="delete 확인 (필수)")
     p_acc.set_defaults(func=cmd_account)
 
     return parser

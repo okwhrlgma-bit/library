@@ -1,4 +1,5 @@
 """Part 74·77·80 내부 모듈 통합 테스트."""
+
 from __future__ import annotations
 
 import json
@@ -99,8 +100,12 @@ def test_inventory_check_basic(tmp_path: Path):
 
     session = InventorySession(sasagwan="테스트관")
     session.items = [
-        InventoryItem(isbn="9788937437076", registration_no="EQ20260001", expected_location="811.7"),
-        InventoryItem(isbn="9791164060238", registration_no="EQ20260002", expected_location="811.6"),
+        InventoryItem(
+            isbn="9788937437076", registration_no="EQ20260001", expected_location="811.7"
+        ),
+        InventoryItem(
+            isbn="9791164060238", registration_no="EQ20260002", expected_location="811.6"
+        ),
     ]
     assert session.mark_found("9788937437076") is True
     summary = session.summary()
@@ -179,7 +184,9 @@ def test_incident_logger_basic(tmp_path: Path):
     )
     assert len(h) == 64  # SHA-256 hex
 
-    summary = logger.quarterly_summary("테스트관", datetime.now().year, ((datetime.now().month - 1) // 3) + 1)
+    summary = logger.quarterly_summary(
+        "테스트관", datetime.now().year, ((datetime.now().month - 1) // 3) + 1
+    )
     assert summary["total"] == 1
     assert summary["by_type"]["verbal_abuse"] == 1
 

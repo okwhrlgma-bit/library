@@ -60,7 +60,9 @@ def kormarc_to_marc21(record: Record, *, drop_korea_specific: bool = False) -> R
             )
         )
 
-    logger.info("KORMARC → MARC21 변환: %d 필드 → %d 필드", len(record.fields), len(new_record.fields))
+    logger.info(
+        "KORMARC → MARC21 변환: %d 필드 → %d 필드", len(record.fields), len(new_record.fields)
+    )
     return new_record
 
 
@@ -95,7 +97,9 @@ def marc21_to_kormarc(record: Record, *, drop_lc_specific: bool = False) -> Reco
             )
         )
 
-    logger.info("MARC21 → KORMARC 변환: %d 필드 → %d 필드", len(record.fields), len(new_record.fields))
+    logger.info(
+        "MARC21 → KORMARC 변환: %d 필드 → %d 필드", len(record.fields), len(new_record.fields)
+    )
     return new_record
 
 

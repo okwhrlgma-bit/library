@@ -9,6 +9,7 @@
 Phase 1 = 단순 ReportLab PDF (의존성: reportlab).
 의존성 없을 시 = HTML/CSS print preview fallback.
 """
+
 from __future__ import annotations
 
 from typing import Literal
@@ -16,8 +17,8 @@ from typing import Literal
 LabelFormat = Literal[
     "brother_ql_dk_22205",  # 62×100mm 연속
     "brother_ql_dk_11202",  # 62×29mm 주소
-    "avery_l7160",          # 21장/A4 (63.5×38.1mm)
-    "avery_l7163",          # 14장/A4 (99.1×38.1mm)
+    "avery_l7160",  # 21장/A4 (63.5×38.1mm)
+    "avery_l7163",  # 14장/A4 (99.1×38.1mm)
 ]
 
 LABEL_DIMENSIONS_MM = {
@@ -117,9 +118,9 @@ def render_label_batch_html(
         label_html.append(f"""
     <div class="label">
       <div class="library">{library_name}</div>
-      <div class="call-number">{item.get('call_number', '')}</div>
-      <div class="barcode">*{item.get('barcode_value', '')}*</div>
-      <div class="barcode-text">{item.get('barcode_value', '')}</div>
+      <div class="call-number">{item.get("call_number", "")}</div>
+      <div class="barcode">*{item.get("barcode_value", "")}*</div>
+      <div class="barcode-text">{item.get("barcode_value", "")}</div>
     </div>""")
 
     return f"""<!DOCTYPE html>

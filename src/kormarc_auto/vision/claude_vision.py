@@ -63,7 +63,10 @@ _METADATA_TOOL = {
             "isbn": {"type": ["string", "null"], "description": "13자리 ISBN"},
             "title": {"type": ["string", "null"], "description": "본표제"},
             "subtitle": {"type": ["string", "null"], "description": "부표제"},
-            "author": {"type": ["string", "null"], "description": "저자/역자 (여러 명은 ' ; '로 구분)"},
+            "author": {
+                "type": ["string", "null"],
+                "description": "저자/역자 (여러 명은 ' ; '로 구분)",
+            },
             "publisher": {"type": ["string", "null"]},
             "publication_year": {"type": ["string", "null"], "description": "YYYY"},
             "publication_place": {"type": ["string", "null"], "description": "발행지 (도시명)"},
@@ -71,7 +74,10 @@ _METADATA_TOOL = {
             "additional_code": {"type": ["string", "null"], "description": "ISBN 부가기호 5자리"},
             "kdc": {"type": ["string", "null"], "description": "표지/판권지에 인쇄된 KDC"},
             "pages": {"type": ["string", "null"], "description": "총 페이지수"},
-            "summary": {"type": ["string", "null"], "description": "표지/뒷표지 카피에서 추출한 요약"},
+            "summary": {
+                "type": ["string", "null"],
+                "description": "표지/뒷표지 카피에서 추출한 요약",
+            },
             "warnings": {
                 "type": "array",
                 "items": {"type": "string"},
@@ -123,9 +129,7 @@ def _load_image_bytes(path: str | Path) -> tuple[bytes, str]:
     try:
         from PIL import Image
     except ImportError as e:
-        raise AnthropicClientError(
-            "Pillow 미설치 — `pip install Pillow`로 설치하세요."
-        ) from e
+        raise AnthropicClientError("Pillow 미설치 — `pip install Pillow`로 설치하세요.") from e
 
     img = Image.open(str(path))
     img = img.convert("RGB") if img.mode not in ("RGB", "L") else img

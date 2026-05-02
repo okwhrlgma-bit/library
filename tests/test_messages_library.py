@@ -1,4 +1,5 @@
 """messages.py 친근 에러 라이브러리 테스트 (Part 47·51)."""
+
 from __future__ import annotations
 
 from kormarc_auto.ui.messages import (
@@ -13,8 +14,14 @@ from kormarc_auto.ui.messages import (
 def test_catalog_has_8_message_types() -> None:
     """8 에러·안내 메시지 타입 정의 (Part 44 §1)."""
     expected_keys = {
-        "isbn_invalid", "api_timeout", "api_all_failed", "network_error",
-        "kormarc_validation_warning", "permission_denied", "processing", "complete",
+        "isbn_invalid",
+        "api_timeout",
+        "api_all_failed",
+        "network_error",
+        "kormarc_validation_warning",
+        "permission_denied",
+        "processing",
+        "complete",
     }
     assert expected_keys.issubset(MESSAGE_CATALOG.keys())
 

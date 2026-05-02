@@ -11,6 +11,7 @@
 Phase 1 = 규칙 기반 + KB 검색.
 Phase 2 = Anthropic Agent SDK (Mem0 통합).
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -133,7 +134,9 @@ class LibrarianAgent:
         if "008" in q and ("자리" in q or "필드" in q):
             return "008 필드 = 정확히 40자리. 06=발행상태, 07-10=발행연도1, 35-37=언어부호."
         if "880" in q and ("한자" in q or "880" in q):
-            return "880 = 대체문자 표제 (한자·로마자). NLK 「로마자 표기 지침(2021)」 RR 기본·MR 학술."
+            return (
+                "880 = 대체문자 표제 (한자·로마자). NLK 「로마자 표기 지침(2021)」 RR 기본·MR 학술."
+            )
         if "kdc" in q or "분류" in q:
             return "KDC 6판 정합. AI 추천 = 사서 검토 후 사용. 신주제 = 자관 결정 누적 (KB)."
         if "049" in q or "청구기호" in q:

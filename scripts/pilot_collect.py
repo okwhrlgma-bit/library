@@ -94,7 +94,8 @@ def collect(persona_key: str, library: str) -> dict:
     payment_band = _ask("월 지불 의향 KRW band", persona["default_payment_band"])
 
     decision_maker = _ask(
-        "결제 결정자 (self/director/budget_committee/none)", "self",
+        "결제 결정자 (self/director/budget_committee/none)",
+        "self",
     )
 
     pre_min = _ask_int("수동 마크 시간 (권당 분)", 8, 1, 60)
@@ -151,11 +152,14 @@ def save(record: dict) -> Path:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--persona", default="macro", choices=list(PERSONAS.keys()),
+        "--persona",
+        default="macro",
+        choices=list(PERSONAS.keys()),
         help="PILOT 사서 페르소나",
     )
     parser.add_argument(
-        "--library", default="○○도서관",
+        "--library",
+        default="○○도서관",
         help="도서관명",
     )
     args = parser.parse_args()
@@ -164,8 +168,10 @@ def main() -> int:
     path = save(record)
 
     print(f"\n[저장 완료] {path}")
-    print(f"  NPS: {record['nps']}/10 | Q1: {record['q1_payment_band']} | "
-          f"시간 절감: {record['time_saved_pct']}%")
+    print(
+        f"  NPS: {record['nps']}/10 | Q1: {record['q1_payment_band']} | "
+        f"시간 절감: {record['time_saved_pct']}%"
+    )
     print("\n[다음 단계]")
     print("  python scripts/aggregate_interviews.py  # 누적 집계 + 보고서 생성")
     print("  KLA 발표 outline S6~S9에 결과 채워넣기 (consent_kla_quote=true 데이터만)")

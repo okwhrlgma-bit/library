@@ -15,6 +15,7 @@ Usage:
     show_error("isbn_invalid")
     show_info("processing", count=100)
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -4,13 +4,16 @@ Part 50 발견: P6 학부모 위원회 협업 부재 해결.
 
 5명+ 위원회 동시 작업 + 사서교사 검수 큐 통합.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Literal
 
-CommitteeRole = Literal["coordinator", "volunteer", "school_librarian", "teacher", "principal_observer"]
+CommitteeRole = Literal[
+    "coordinator", "volunteer", "school_librarian", "teacher", "principal_observer"
+]
 
 
 @dataclass
@@ -51,10 +54,11 @@ def render_committee_dashboard(session: CommitteeSession) -> None:
     st.markdown(f"### 🤝 {session.school_name} 도서관 위원회")
     weekdays_kr = ["월요일", "화요일", "수요일", "목요일", "금요일", "토요일", "일요일"]
     sd = session.session_date
-    date_str = f"{sd.year}년 {sd.month}월 {sd.day}일 ({weekdays_kr[sd.weekday()]}) {sd.strftime('%H:%M')}"
+    date_str = (
+        f"{sd.year}년 {sd.month}월 {sd.day}일 ({weekdays_kr[sd.weekday()]}) {sd.strftime('%H:%M')}"
+    )
     st.caption(
-        f"{date_str} · "
-        f"위원 {len(session.members)}명 · 오늘 처리 {session.total_records_today}권"
+        f"{date_str} · 위원 {len(session.members)}명 · 오늘 처리 {session.total_records_today}권"
     )
 
     # 위원별 작업 현황 카드 그리드

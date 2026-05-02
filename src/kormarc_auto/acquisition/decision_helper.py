@@ -8,6 +8,7 @@
 
 해결: AI 균형 추천 + 가격 비교 + 중립성 자동 검증.
 """
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -40,8 +41,7 @@ def evaluate_neutrality(book_data: dict) -> PoliticalReligiousFlag:
     AI1 윤리 검증 + 키워드 기반.
     """
     text = " ".join(
-        str(book_data.get(k, ""))
-        for k in ["title", "subject_keywords", "description"]
+        str(book_data.get(k, "")) for k in ["title", "subject_keywords", "description"]
     ).lower()
 
     political_kw = ["보수", "진보", "여당", "야당", "좌파", "우파", "이재명", "윤석열", "정당"]

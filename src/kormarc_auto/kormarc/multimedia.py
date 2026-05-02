@@ -20,12 +20,12 @@ from pymarc import Field, Indicators, Subfield
 
 # 008 33 카테고리 부호 (시청각)
 MEDIA_TYPE_CODES: dict[str, str] = {
-    "video": "v",         # 비디오 (영화·드라마)
+    "video": "v",  # 비디오 (영화·드라마)
     "motion_picture": "m",  # 영화 필름
-    "slide": "s",         # 슬라이드
-    "photo": "k",         # 정지영상·사진
-    "graphic": "i",       # 그래픽
-    "kit": "b",           # 키트 (복합)
+    "slide": "s",  # 슬라이드
+    "photo": "k",  # 정지영상·사진
+    "graphic": "i",  # 그래픽
+    "kit": "b",  # 키트 (복합)
 }
 
 

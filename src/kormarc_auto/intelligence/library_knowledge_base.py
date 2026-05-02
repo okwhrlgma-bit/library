@@ -10,6 +10,7 @@
 Phase 1 = JSON 파일 기반 (의존성 X).
 Phase 2 = Mem0 통합 (pg_vector·embedding).
 """
+
 from __future__ import annotations
 
 import json
@@ -71,7 +72,9 @@ class LibraryKnowledgeBase:
                 except json.JSONDecodeError:
                     continue
                 # 단순 매칭 (Phase 1)
-                searchable = f"{data.get('context','')} {data.get('decision','')} {data.get('reason','')}"
+                searchable = (
+                    f"{data.get('context', '')} {data.get('decision', '')} {data.get('reason', '')}"
+                )
                 if keyword.lower() in searchable.lower():
                     results.append(LibraryDecision(**data))
 

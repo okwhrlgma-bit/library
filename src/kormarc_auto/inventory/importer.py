@@ -91,6 +91,7 @@ def import_directory(directory: str | Path) -> dict[str, Any]:
 
 def _record_to_book_data(record: Any) -> dict[str, Any]:
     """pymarc.Record → BookData dict."""
+
     def _sf(tag: str, code: str) -> str | None:
         for f in record.get_fields(tag):
             for sf in f.subfields:
