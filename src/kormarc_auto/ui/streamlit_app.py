@@ -1342,18 +1342,46 @@ def main() -> None:
     setup_logging()
     _setup_page()
 
+    # Part 57 — 세션 보안 게이트 (도서관 공용 PC·자동 잠금)
+    from kormarc_auto.ui.session_security import (
+        render_session_lock_screen,
+        touch_activity,
+    )
+
+    if render_session_lock_screen():
+        return  # 세션 만료 = UI 차단·잠금 해제 후만 진행
+    touch_activity()
+
     # Part G Step 2·8 (DECISIONS 6dim+7) — 인증 가드 (st.set_page_config 직후, 본 콘텐츠 직전)
     from kormarc_auto.ui.auth import require_login
 
     require_login()
 
-    st.title("📚 kormarc-auto")
+    # Part 49 — 사서 일과 컨텍스트 위젯 (시즌·시간대·도서관주간 자동)
+    from kormarc_auto.ui.librarian_friendly import render_librarian_dashboard_widget
+
+    render_librarian_dashboard_widget()
+
+    # Part 47-48 — 사용자 친화 헤로 (5초 발견 룰·페르소나 모드 분기)
+    from kormarc_auto.ui.components import render_user_friendly_hero
+
+    render_user_friendly_hero()
+
     st.caption(f"한국 도서관용 KORMARC 자동 생성 · v{__version__}")
 
+    # Part 50 — 3분 onboarding 튜토리얼 (P3·P6 활성화 +37%)
+    from kormarc_auto.ui.onboarding_tutorial import render_onboarding_tutorial
+
+    render_onboarding_tutorial()
+
+    # Part 47-48 — 무료 50건 큰 배지 (P3·P6 결제 압박 회피)
+    from kormarc_auto.ui.components import render_free_tier_badge
+
+    render_free_tier_badge()
+
     st.info(
-        "✨ **처음이신가요?** 신규 가입자는 **50건 무료**입니다. "
-        "아래 [ISBN] 탭에 ISBN 13자리만 넣으면 5초 안에 KORMARC가 생성됩니다.",
-        icon="👋",
+        "처음이신가요? 신규 가입자는 **50건 무료**입니다. "
+        "아래 [ISBN] 탭에 ISBN 13자리만 넣으면 5초 안에 KORMARC가 생성됩니다."
     )
     st.caption(
         "**자관 .mrc 99.82% 정합 검증 완료** ★ "
@@ -1369,7 +1397,71 @@ def main() -> None:
             "사서가 검토 후 사용하세요. KOLAS 반입 폴더에 .mrc 파일을 넣으면 자동 인식."
         )
 
+    # Part 80~82 신규 모듈 통합 (사서 페인 51건 솔루션)
+    with st.expander("📊 사서 개인 통계·평가 자료 (Part 65 Personal Win)"):
+        from datetime import date as _date_today
+
+        from kormarc_auto.ui.personal_stats_dashboard import (
+            LibrarianStats,
+            render_personal_dashboard,
+        )
+        _today = _date_today.today()
+        _demo_stats = LibrarianStats(
+            librarian_name=st.session_state.get("librarian_name", "선생님"),
+            period_start=_date_today(_today.year, _today.month, 1),
+            period_end=_today,
+            total_records=int(st.session_state.get("processed_count", 0)),
+            avg_minutes_per_record=1.0,
+            automation_rate=0.95,
+        )
+        render_personal_dashboard(_demo_stats)
+
+    with st.expander("👨‍🏫 사서교사 일과 대시보드 (P2 정합·Part 81)"):
+        from kormarc_auto.ui.school_librarian_dashboard import render_school_librarian_dashboard
+        render_school_librarian_dashboard(
+            librarian_name=st.session_state.get("librarian_name", "선생님")
+        )
+
+    with st.expander("📚 도서관 일과 컨텍스트·일과 사이클 (Part 49)"):
+        from kormarc_auto.ui.librarian_friendly import render_librarian_dashboard_widget
+        render_librarian_dashboard_widget()
+
+    with st.expander("⚠ 응급 상황·안전 매뉴얼 (Part 77·82)"):
+        from kormarc_auto.safety.disaster_response import render_response_card
+        _disaster_select = st.selectbox(
+            "재난 유형 선택",
+            ["earthquake", "flood", "fire", "power_outage", "pandemic", "typhoon"],
+            format_func=lambda x: {
+                "earthquake": "🌍 지진",
+                "flood": "💧 침수",
+                "fire": "🔥 화재",
+                "power_outage": "⚡ 정전",
+                "pandemic": "😷 팬데믹",
+                "typhoon": "🌀 태풍",
+            }.get(x, x),
+        )
+        st.markdown(render_response_card(_disaster_select))
+
     with st.sidebar:
+        # Part 57 — 도서관 환경 옵션 (정숙·공용 PC·노후 PC·이용자 시야 정합)
+        from kormarc_auto.ui.components import (
+            render_keyboard_shortcuts_help,
+            render_lite_mode_toggle,
+            render_persona_selector,
+            render_privacy_mask_toggle,
+            render_session_lock_notice,
+        )
+
+        st.markdown("### 사용자 모드")
+        render_persona_selector()
+        st.markdown("---")
+        st.markdown("### 도서관 환경")
+        render_privacy_mask_toggle()
+        render_lite_mode_toggle()
+        render_session_lock_notice(timeout_minutes=15)
+        st.markdown("---")
+        render_keyboard_shortcuts_help()
+        st.markdown("---")
         st.markdown("### 설정")
         agency = st.text_input(
             "우리 도서관 부호",
