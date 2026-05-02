@@ -1,10 +1,26 @@
 """알라딘 OPEN API 클라이언트.
 
+⚠️  컴플라이언스 경고 (Part 87 / ADR 0019 / 2026-05-03)
+========================================================
+알라딘 OpenAPI 약관: "도서 판매·도서 정보 기반 영리 서비스 이용 불가"
+(blog.aladin.co.kr/openapi/5353304)
+
+→ kormarc-auto = 상용 SaaS = 자체 TTBKey로 호출 시 약관 위반 위험.
+
+**해결: 자체 키 위임 (Tenant-Owned Key) 모델**
+- kormarc-auto = 도구 제공자
+- 도서관 = 알라딘 TTBKey 자체 보유 (직접 발급·무료·1~2일)
+- 우리 서버는 도서관 키로 *위임 호출*만 수행 (kormarc-auto 자체 키 X)
+- 환경변수 ALADIN_TTBKEY_PER_TENANT 또는 도서관 config에 키 저장
+
+**Part 87 백본 폭포수**:
+SEOJI (1차·무료) → data4library (KDC 보강) → NL Open API → 알라딘 (자체 키 위임만·505/520 보강) → Naver/Kakao → 사진 OCR
+
 엔드포인트: http://www.aladin.co.kr/ttb/api/ItemLookUp.aspx
-인증: TTBKey (회원가입 + 블로그 등록 후 1~2일)
+인증: TTBKey (도서관 자체 발급 = 약관 정합)
 신뢰도: 0.80 (상용 데이터, 출처 표시 의무)
 출처 표시: "도서 DB 제공 : 알라딘 인터넷서점(www.aladin.co.kr)"
-일일 호출 한도: 5,000회
+일일 호출 한도: 5,000회 (도서관 키별)
 """
 
 from __future__ import annotations
