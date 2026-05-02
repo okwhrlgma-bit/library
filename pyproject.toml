@@ -36,7 +36,7 @@ ui = [
   "streamlit>=1.39",
   "streamlit-authenticator==0.4.2",  # ADR 0011·DECISIONS 6dim+7 — PO 인증 (Part G Step 2)
   "bcrypt==4.3.0",                   # streamlit-authenticator 강제 핀 (PO 마스터 부록 A)
-  "PyYAML==6.0.2",                   # auth_config.yaml 파서 핀 (hanja 0.15.1 호환 검증됨)
+  "PyYAML>=6.0,<7",                  # auth_config.yaml 파서 (hanja 0.15.1 = pyyaml==6.0.1 정합)
 ]
 ocr = [
   "easyocr>=1.7",  # AI 없이 한국어 OCR (바코드 실패 시 폴백)
