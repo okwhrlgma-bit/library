@@ -30,6 +30,7 @@ dev = [
   "pytest-cov>=5.0",
   "ruff>=0.7",
   "mypy>=1.13",
+  "openpyxl>=3.1",  # xlsm/xlsx 매크로 파서 테스트
 ]
 ui = [
   "streamlit>=1.39",
