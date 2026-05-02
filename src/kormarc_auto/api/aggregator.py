@@ -1,4 +1,9 @@
-"""다중 소스 통합 — 폴백 순서대로 호출하고 결과를 신뢰도 가중 통합."""
+"""다중 소스 통합 — 폴백 순서대로 호출하고 결과를 신뢰도 가중 통합.
+
+Part 87 (2026-05-03) waterfall 정식화:
+- KDC 폴백 = nl_korea(SEOJI) → data4library → 부가기호 디코더 → AI
+- 부가기호 = 0 API 호출·100% 정확 = SEOJI KDC 공백 (2020-12-31 이후) 즉시 해소
+"""
 
 from __future__ import annotations
 
@@ -6,6 +11,7 @@ import logging
 from typing import Any
 
 from kormarc_auto.api import aladin, data4library, kakao, nl_korea
+from kormarc_auto.classification.budgaeho_decoder import decode_budgaeho
 
 logger = logging.getLogger(__name__)
 
@@ -98,6 +104,22 @@ def aggregate_by_isbn(isbn: str) -> dict[str, Any]:
     except Exception as e:
         logger.debug("도정나 키워드 조회 실패: %s", e)
         merged["keywords"] = []
+
+    # KDC 폴백: SEOJI/data4library 모두 미스 시 부가기호에서 추출 (Part 87)
+    if not merged.get("kdc") and merged.get("additional_code"):
+        decoded = decode_budgaeho(str(merged["additional_code"]))
+        if decoded:
+            merged["kdc"] = decoded.kdc_2digit
+            merged["kdc_source"] = "budgaeho_decoder"
+            merged.setdefault("source_map", {})["kdc"] = "budgaeho"
+            merged["kdc_audience"] = decoded.target_audience
+            merged["kdc_form"] = decoded.publication_form
+            logger.info(
+                "KDC 폴백 = 부가기호 디코더 (ISBN=%s, KDC=%s, 출처=%s)",
+                isbn,
+                decoded.kdc_2digit,
+                decoded.raw,
+            )
 
     return merged
 
