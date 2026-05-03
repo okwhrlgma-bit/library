@@ -71,8 +71,11 @@
 - "99.82%" 단일 = 폐기·per-block table 인용
 - STOP 조건 7건만 자율 정지 (회귀 5사이클·누설·본문 송신·키 commit·큐 소진·PO STOP·동일 P 3사이클 SKIP)
 
-## 9. 상세 참조 (agent_docs/)
-- KORMARC 도메인 → `agent_docs/CLAUDE-full-2026-05-03.md` (구버전 백업)
+## 9. 상세 참조 (agent_docs/·B안 P4)
+- KORMARC 필드 → `agent_docs/kormarc_field_reference.md` ★ (신규)
+- 평가 측정 → `agent_docs/running_evals.md` ★ (신규)
+- 릴리스 절차 → `agent_docs/release_process.md` ★ (신규)
+- 구버전 통합 → `agent_docs/CLAUDE-full-2026-05-03.md` (백업)
 - 외부 API → `docs/spec.md`
 - 테스트 → `docs/test_results.md`
 - 헌법 정밀화 → `.claude/rules/{autonomy-gates,kormarc-domain,business-impact-axes}.md`
