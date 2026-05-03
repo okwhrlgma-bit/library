@@ -1,7 +1,35 @@
 # 야간 자율 실행 로그 (2026-04-26 KST 시작)
 
 > NIGHT_RUN_PROTOCOL.md 표준 양식 따라 매 commit 변경 사유 기록.
-> 종료 게이트: pytest 통과 + binary_assertions 38/38 + commit.
+> 종료 게이트: pytest 통과 + binary_assertions 39/39 + commit.
+
+## v0.6.0 — 2026-05-04 (Plan B Cycle 1+2 종료·ADR 0025·외부 901 출처 진단 흡수)
+
+### Plan B 무중단 자율 채택 (ADR 0024 → ADR 0025 supersede)
+- 외부 deep research 901 출처 보고서 진단 4중 (identity fusion·productive avoidance·agent pace inflation·domain expert curse)
+- PO B안 명령 = 가드레일 6건 폐기·invariants 2건 보존 (헌법 0·자관 누설 0)
+- 무중단 사이클 7일·P1~P28 큐 ~6.5개월
+
+### Cycle 1 — per-block disaggregation publish (강제 산출물)
+- scripts/eval_per_record_roundtrip.py (자관 누설 0·SHA-256 익명화)
+- docs/eval/results/2026-05-04/per-record.json (3,383 레코드·100% pass)
+- docs/eval/results/2026-05-04/regression_baseline.json
+- docs/eval/methodology.md (재현 가능 명세)
+- 5 surface (README·Streamlit·FastAPI /accuracy·CLI info·prefix_discover_app)
+- "99.82%" 단일 = 모든 surface 폐기
+
+### Cycle 2 — T2-1 offline demo finish (강제 산출물)
+- aggregator KORMARC_DEMO_MODE=1 분기 (외부 호출 0건)
+- cmd_demo 5건 자동·30초 timing·round-trip 회귀
+- tests/test_offline_demo.py (5 tests)
+- 결과: 5/5 records · 0.00s · round-trip 100%
+
+### v0.6.0 메트릭
+- 650 tests passing / 7 skipped
+- ruff 0 errors
+- binary_assertions 39/39 (memory 가드 16종 패치 포함)
+- 자관 174 파일 round-trip baseline 100% (regression ≤ 1pp 게이트)
+
 
 ## v0.5.0+ — 2026-05-03 야간 (Part 87~93 + Champion 4/4 92.5점 + 키 3/6·CSAP·정확도 disaggregation)
 

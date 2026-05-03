@@ -52,6 +52,36 @@ def aggregate_by_isbn(isbn: str) -> dict[str, Any]:
         - `attributions`: 출처 표시 의무 문구 리스트
         - `keywords`: 도정나 키워드 (있으면)
     """
+    # B안 Cycle 2 — KORMARC_DEMO_MODE / KORMARC_OFFLINE 분기 (외부 호출 0건)
+    from kormarc_auto.demo.offline_mock_server import SAMPLE_BOOKS, is_demo_mode
+
+    if is_demo_mode():
+        book = SAMPLE_BOOKS.get(isbn)
+        if book:
+            return {
+                "isbn": isbn,
+                "title": book.get("title"),
+                "author": book.get("author"),
+                "publisher": book.get("publisher"),
+                "publication_year": book.get("publication_year"),
+                "kdc": book.get("kdc"),
+                "sources": ["offline_mock"],
+                "source_map": {k: "offline_mock" for k in book},
+                "confidence": 0.95,
+                "attributions": ["오프라인 데모 모드 (외부 API 호출 0)"],
+                "keywords": [],
+            }
+        # fixture 미스 = 외부 호출 X·빈 결과 (오프라인 invariant)
+        return {
+            "isbn": isbn,
+            "sources": [],
+            "source_map": {},
+            "confidence": 0.0,
+            "attributions": [],
+            "keywords": [],
+            "offline_no_match": True,
+        }
+
     results: dict[str, dict[str, Any]] = {}
 
     # 1순위: 국립중앙도서관

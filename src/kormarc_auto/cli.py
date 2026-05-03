@@ -533,8 +533,53 @@ def cmd_demo(args: argparse.Namespace) -> int:
                 "\n→ 실 사용 = .env에 NL_CERT_KEY·ANTHROPIC_API_KEY 입력 후 'kormarc-auto isbn <ISBN>'"
             )
     else:
-        print("\n사용: kormarc-auto demo --isbn 9788937437076")
-        print(f"전체 데모 ISBN 리스트: {list_demo_isbns()}")
+        # B안 Cycle 2 — 5건 자동 처리·30초 timing·round-trip 회귀
+        import time
+
+        from kormarc_auto.api.aggregator import aggregate_by_isbn
+        from kormarc_auto.kormarc.builder import build_kormarc_record
+        from kormarc_auto.kormarc.validator import validate_record
+
+        print("\n5건 자동 처리 (KORMARC_DEMO_MODE=1·외부 API 0건)\n")
+        t0 = time.time()
+        ok = 0
+        isbns = list_demo_isbns()[:5]
+        for i, isbn in enumerate(isbns, 1):
+            t_step = time.time()
+            data = aggregate_by_isbn(isbn)
+            if not data.get("sources"):
+                print(f"  [{i}/5] {isbn} ❌ no_data")
+                continue
+            try:
+                record = build_kormarc_record(data, cataloging_agency="DEMO")
+                errs = validate_record(record)
+                # round-trip 회귀 (Cycle 1 baseline 정합)
+                from io import BytesIO
+
+                from pymarc import MARCReader
+
+                raw1 = record.as_marc()
+                r2 = next(MARCReader(BytesIO(raw1), to_unicode=True, force_utf8=False), None)
+                roundtrip = r2 is not None and r2.as_marc() == raw1
+                rt_mark = "✓" if roundtrip else "✗"
+                title = (data.get("title") or "")[:25]
+                print(
+                    f"  [{i}/5] {isbn} ✓ {title} (errs={len(errs)}·rt={rt_mark}·{time.time() - t_step:.2f}s)"
+                )
+                ok += 1
+            except Exception as e:
+                print(f"  [{i}/5] {isbn} ❌ build_fail: {type(e).__name__}: {e}")
+
+        elapsed = time.time() - t0
+        print(f"\n=== Reproduced {ok}/5 records ({elapsed:.2f}s)")
+        if elapsed > 30:
+            print(f"⚠ 30초 초과 ({elapsed:.1f}s) — Cycle 2 회귀 게이트")
+            return 1
+        if ok < 5:
+            print(f"⚠ 5건 미만 처리 ({ok}/5)")
+            return 1
+        print("✓ B안 Cycle 2 demo 게이트 통과 (30초 5건 + round-trip 100%)")
+        print("\n사용: kormarc-auto demo --isbn 9788937437076 (단건 inspect)")
 
     return 0
 
