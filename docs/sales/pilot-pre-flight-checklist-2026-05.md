@@ -19,7 +19,7 @@ kormarc-auto info      # 환경 진단
 확인:
 - ☐ Python 3.12 OK
 - ☐ NL Korea API 키 OK (1~3 영업일 사전 발급 완료해야 함)
-- ☐ 알라딘·카카오 API 키 OK
+- ☐ 알라딘 TTBKey = **도서관 자체 발급** (`docs/sales/aladin-tenant-key-onboarding.md` 참조)·카카오 API 키 OK
 - ☐ KOLAS 마크 반입 폴더 경로 알고 있음
 
 ### 자료 (1분)
