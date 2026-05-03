@@ -59,6 +59,16 @@
 - 명령 없을 시 = 자율 모드 default
 - 매 사이클 = 사용자_TODO 자동 정리
 
+## 8B. 솔로 PO 가드레일 (외부 901 출처 진단 2026-05-03·ADR 0024)
+- agent 신규 모듈 = X (refactor·test·docs·offline mock·publish 산출물만)
+- v0.6.0 scope lock = (a) per-block disaggregation publish + (b) T2-1 offline demo finish ONLY
+- T3·T4·T5·T6 = parking lot (인터뷰 5명 + wedge 1택 후 재개)
+- 야간 자율 = Mon~Thu only (금 18시→월 9시 dead air)
+- cycle module budget = 5 modules / 3-week cycle (hard cap)
+- 24h hold on agent PR before merge
+- 사서 5명 cold outreach (Mom Test rules) = 모든 신규 코드보다 우선
+- "99.82%" 단일 = 폐기·per-block table 인용
+
 ## 9. 상세 참조 (agent_docs/)
 - KORMARC 도메인 → `agent_docs/CLAUDE-full-2026-05-03.md` (구버전 백업)
 - 외부 API → `docs/spec.md`
