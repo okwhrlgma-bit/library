@@ -473,6 +473,21 @@ def assert_research_14_part_manuals() -> bool:
     return len(part_numbers) >= 14 and 14 in part_numbers
 
 
+def assert_part87_modules_present() -> bool:
+    """Part 87·90·91 신규 8 모듈 존재 (회귀 차단)."""
+    required = [
+        "src/kormarc_auto/classification/budgaeho_decoder.py",  # Part 87
+        "src/kormarc_auto/classification/kdc_waterfall.py",  # M3
+        "src/kormarc_auto/classification/copy_cataloging.py",  # M7
+        "src/kormarc_auto/classification/ddc_classifier.py",  # Part 90
+        "src/kormarc_auto/classification/mesh_mapper.py",  # Part 90
+        "src/kormarc_auto/classification/lcsh_mapper.py",  # Part 91
+        "src/kormarc_auto/output/alma_xml_writer.py",  # Part 91
+        "src/kormarc_auto/mobile/offline_queue.py",  # Part 90
+    ]
+    return all((ROOT / p).exists() for p in required)
+
+
 # ── 실행 ───────────────────────────────────────────────────────────
 
 
@@ -515,6 +530,10 @@ ASSERTIONS: list[tuple[str, Callable[[], bool]]] = [
     ("CLI 3 명령 (prefix·pilot·funnel) 통합", assert_cli_pilot_funnel_commands),
     ("PILOT 4주차 매뉴얼 시리즈 (week1~4)", assert_pilot_week_manuals),
     ("14-Part 종합 매뉴얼 (research/part1~14)", assert_research_14_part_manuals),
+    (
+        "Part 87·90·91 신규 8 모듈 회귀 (DDC·MeSH·LCSH·Alma·budgaeho·waterfall·copy·offline)",
+        assert_part87_modules_present,
+    ),
 ]
 
 
