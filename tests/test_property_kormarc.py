@@ -17,7 +17,6 @@ hypothesis = pytest.importorskip("hypothesis")
 from hypothesis import given  # noqa: E402
 from hypothesis import strategies as st  # noqa: E402
 
-
 # MARC 제어 문자 (subfield delimiter \x1f·field terminator \x1e·record terminator \x1d) 제외
 # = realistic 입력 (실 도서관 데이터 = 인쇄 가능한 한글·한자·영문만)
 # v0.7 backlog: builder sanitization (헌법 위반은 X·robustness 개선)

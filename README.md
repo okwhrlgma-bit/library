@@ -1,8 +1,10 @@
 # kormarc-auto — 한국 도서관 KORMARC 자동 생성 SaaS
 
+> 🌐 **English**: [README.en.md](README.en.md) · 한국어 (이 파일)
+
 > **사서가 만든 사서를 위한 KORMARC 자동화 도구**.
 > ISBN 1번 입력 → KORMARC `.mrc` 5초 → **KOLAS III·독서로DLS·알파스 즉시 반입**.
-> **자관 PILOT 1관 (174 파일·3,383 레코드) round-trip 100% (200 sample)** — MARC 블록별 분리표 ↓ (측정 2026-05-03).
+> **자관 PILOT 1관 (174 파일·3,383 레코드) round-trip 100% (3,383 full)** — MARC 블록별 분리표 ↓ (측정 2026-05-04·B안 Cycle 1).
 
 [![release](https://img.shields.io/badge/release-v0.5.0%2B-blue)]() [![tests](https://img.shields.io/badge/tests-622%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-38%2F39-brightgreen)]() [![매뉴얼](https://img.shields.io/badge/연구-Part_94-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1관)-brightgreen)]() [![페르소나](https://img.shields.io/badge/페르소나-24_활성_%2B_98_백로그-blue)]() [![ICP_PMF](https://img.shields.io/badge/Champion_4%2F4-92.5점-brightgreen)]()
 
