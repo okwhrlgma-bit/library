@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 산출물 타입별 E1~E6 자동 호출·표준 100% 정합 추구·다른 페르소나 협업. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Expert Personas (해당 분야 전문가 페르소나 시뮬)

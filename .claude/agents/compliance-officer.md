@@ -4,6 +4,7 @@ description: PIPA·KWCAG·ISMS-P·자관 익명화·알라딘 출처 표시 등 
 model: claude-opus-4-7
 tools: [Read, Grep, Glob, Bash]
 isolation: worktree
+memory: project
 ---
 
 # Compliance Officer (컴플라이언스 책임자)

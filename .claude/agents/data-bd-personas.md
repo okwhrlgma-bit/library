@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 데이터·자치구·MOU 자동 호출·이탈 예측 80%+·자치구 1구/월·NLK MOU 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Data·BI + BD/Partnership Personas (5명)

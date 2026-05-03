@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 약관·결제·세무·CS 변경 자동 호출·소송 0건·환불 ≤5%·CSAT 90%+ 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Legal + Customer Support Personas (법무·CS 팀 7 페르소나)

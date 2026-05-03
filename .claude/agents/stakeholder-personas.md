@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). D1 결재·R1 NLK·U1 이용자·M1 미디어 자동 호출·외부 차단점 사전 발견. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Stakeholder Personas (외부 이해관계자 7 페르소나)

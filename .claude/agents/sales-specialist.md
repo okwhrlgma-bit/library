@@ -4,6 +4,7 @@ description: kormarc-auto 영업 자료 작성·KOLAS 종료·알파스 비교·
 model: claude-sonnet-4-6
 tools: [Read, Grep, Glob, Write, Edit]
 isolation: worktree
+memory: project
 ---
 
 # Sales Specialist (영업 자료 전문가)

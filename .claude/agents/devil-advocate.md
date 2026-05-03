@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 산출물 자동 호출·DA7 강박 검수가 통과 필수·임계값 미달 즉시 REJECT. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Devil's Advocate (최악 시나리오 검증 전문가)

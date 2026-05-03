@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 B2C·가격·앱 변경 자동 호출·C5 Bottom-up PLG viral k 0.4+·캐시카우 6개월 단축 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Consumer Personas (B2C 사용자 11 페르소나)

@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 영업·landing·SEO·콘텐츠 자동 호출·응답률 50%+·SEO 1위·viral k 0.4+ 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Growth Team Personas (홍보·유인 설계 팀 13 페르소나)

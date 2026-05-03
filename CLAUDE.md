@@ -38,7 +38,7 @@
 
 ## 5. 종료 게이트 (이중)
 - pytest 통과 + ruff 0 errors
-- binary_assertions 38/38 (현재 38/39)
+- binary_assertions 39/39 (2026-05-03 메모리 가드 16종 패치)
 - 평가축 §0/§12 양수 commit message 명시
 - `Co-Authored-By: Claude Opus 4.7 (1M context)` 포함
 

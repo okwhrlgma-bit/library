@@ -4,6 +4,7 @@ description: kormarc-auto SEO·콘텐츠·인플루언서·SNS 마케팅 전략�
 model: claude-sonnet-4-6
 tools: [Read, Grep, Glob, Write, Edit, WebFetch]
 isolation: worktree
+memory: project
 ---
 
 # Marketing Strategist (마케팅 전략가)

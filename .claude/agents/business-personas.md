@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 가격·기능·약관 변경 자동 호출·LTV/CAC≥3·NRR 110%+·Rule of 40 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Business Personas (B2B SaaS 비즈니스 팀 페르소나)

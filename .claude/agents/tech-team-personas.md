@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 코드·인프라·UX 변경 자동 호출·SLA 99.5%·환각 0.1%·KDC 90% 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Tech Team Personas (앱 개발 팀 10 페르소나)

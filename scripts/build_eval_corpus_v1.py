@@ -81,9 +81,8 @@ def extract_fields(record) -> dict:
                     pass  # 유지
 
             # 9XX 자관 = 익명화
-            if tag.startswith("9"):
-                if value and any(c.isdigit() for c in value):
-                    value = "EVAL-LOCAL-" + _hash_id(value)[:8]
+            if tag.startswith("9") and value and any(c.isdigit() for c in value):
+                value = "EVAL-LOCAL-" + _hash_id(value)[:8]
 
             subfields.append({"code": code, "value": value})
 
@@ -194,7 +193,7 @@ python scripts/build_eval_corpus_v1.py
         encoding="utf-8",
     )
 
-    print(f"\n=== eval-corpus-v1 빌드 완료 ===")
+    print("\n=== eval-corpus-v1 빌드 완료 ===")
     print(f"records: {total}")
     print(f"unique field tags: {len(field_tags_seen)}")
     print(f"output: {out_path}")

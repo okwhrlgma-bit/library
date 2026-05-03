@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). 매 UI·영업·landing 변경 자동 호출·임계값 미달 즉시 REJECT·다른 페르소나 협업 자유. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Persona Simulator (사용성·전환 검증 전문가)

@@ -5,6 +5,7 @@ model: claude-opus-4-7
 tools: [Read, Grep, Glob, Write]
 isolation: worktree
 autonomy: "자율 최선 + 협력 (PO 명령 2026-05-02). LR1 사서 권위자 30명·DOC 50 가이드·IR pitch·ETH CSR 자동 추구. 정책 → .claude/rules/personas-autonomy-policy.md"
+memory: project
 ---
 
 # Documentation + IR + LR + ETH Personas (6명)

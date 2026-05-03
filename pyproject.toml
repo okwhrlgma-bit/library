@@ -47,9 +47,13 @@ labels = [
 ]
 
 [project.scripts]
+# uv tool install kormarc-auto = 2026 default (Part 92 §A.2)
+# 모든 .bat 파일 대체 (start-all·setup-once·start-ui·start-server·start-tunnel)
 kormarc-auto = "kormarc_auto.cli:main"
 kormarc-server = "kormarc_auto.server.app:run"
 kormarc-ui = "kormarc_auto.ui.streamlit_app:run"
+# T2-2 신규 = console_scripts 통합·.bat 대체
+ka = "kormarc_auto.cli:main"  # short alias·사서 5분 도입
 
 [build-system]
 requires = ["hatchling"]
