@@ -59,15 +59,17 @@
 - 명령 없을 시 = 자율 모드 default
 - 매 사이클 = 사용자_TODO 자동 정리
 
-## 8B. 솔로 PO 가드레일 (외부 901 출처 진단 2026-05-03·ADR 0024)
-- agent 신규 모듈 = X (refactor·test·docs·offline mock·publish 산출물만)
-- v0.6.0 scope lock = (a) per-block disaggregation publish + (b) T2-1 offline demo finish ONLY
-- T3·T4·T5·T6 = parking lot (인터뷰 5명 + wedge 1택 후 재개)
-- 야간 자율 = Mon~Thu only (금 18시→월 9시 dead air)
-- cycle module budget = 5 modules / 3-week cycle (hard cap)
-- 24h hold on agent PR before merge
-- 사서 5명 cold outreach (Mom Test rules) = 모든 신규 코드보다 우선
+## 8B. Plan B 무중단 자율 (ADR 0025·PO 2026-05-03 채택)
+- 무중단 자율 사이클 = 7일 단위·P1~P28 큐 (~6.5개월)
+- Cycle 1 = per-block disaggregation publish (강제)
+- Cycle 2 = T2-1 offline demo finish + v0.6.0 tag (강제)
+- Cycle 3+ = T2-2 → ... → T6-6 v1.0.0 release gate
+- 자동 머지 차단 게이트 6건: ruff·pytest·binary_assertions 38/38·자관 174 회귀 ≤ 1pp·demo 30초·헌법 0건
+- 영구 invariants 2건 (비협상):
+  1) 헌법 위반 0: "100% 자동" / raw 확률 / 본문 송신 / 사서 검토 우회 = PR 차단
+  2) 자관 데이터 git 누설 0: D:\ commit 시도 = 자율 정지·PO 통보
 - "99.82%" 단일 = 폐기·per-block table 인용
+- STOP 조건 7건만 자율 정지 (회귀 5사이클·누설·본문 송신·키 commit·큐 소진·PO STOP·동일 P 3사이클 SKIP)
 
 ## 9. 상세 참조 (agent_docs/)
 - KORMARC 도메인 → `agent_docs/CLAUDE-full-2026-05-03.md` (구버전 백업)

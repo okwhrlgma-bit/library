@@ -100,6 +100,40 @@ def create_app() -> FastAPI:
             }
         )
 
+    @app.get("/accuracy", tags=["meta"])
+    def accuracy() -> JSONResponse:
+        """B안 Cycle 1 — MARC 블록별 분리 정합표 (단일 99.82% 폐기)."""
+        import json as _json
+        from pathlib import Path as _Path
+
+        eval_dir = _Path(__file__).resolve().parent.parent.parent.parent / "docs" / "eval"
+        per_block_path = eval_dir / "results" / "2026-05-03" / "per-block.json"
+        per_record_path = eval_dir / "results" / "2026-05-04" / "per-record.json"
+
+        out: dict = {
+            "headline": "자관 PILOT 1관·174 파일·3,383 레코드 round-trip 100%",
+            "methodology_url": "/static/methodology.md (또는 docs/eval/methodology.md)",
+            "single_99_82_deprecated": True,
+            "by_block": None,
+            "round_trip": None,
+            "limitation": "N=1·NL_CERT_KEY 미발급·LLM extraction 정합 별도",
+        }
+        if per_block_path.exists():
+            data = _json.loads(per_block_path.read_text(encoding="utf-8"))
+            out["by_block"] = data.get("by_block")
+            out["measurement_date_block"] = data.get("measurement_date")
+        if per_record_path.exists():
+            data = _json.loads(per_record_path.read_text(encoding="utf-8"))
+            out["round_trip"] = {
+                "metric": data.get("metric"),
+                "total_records": data.get("total_records"),
+                "pass": data.get("roundtrip_pass"),
+                "pass_pct": data.get("roundtrip_pass_pct"),
+                "fail_reasons": data.get("fail_reasons"),
+            }
+            out["measurement_date_roundtrip"] = data.get("measurement_date")
+        return JSONResponse(out)
+
     @app.post("/signup", response_model=SignupResponse, tags=["meta"])
     def signup(body: SignupRequest, request: Request) -> SignupResponse:
         """무료 체험 키 자동 발급 (인증 없음).

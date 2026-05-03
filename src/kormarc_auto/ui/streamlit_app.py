@@ -1258,7 +1258,7 @@ def _tab_prefix_discover() -> None:
 
     PILOT 첫 주: 사서가 자관 .mrc 디렉토리를 지정하면 prefix 분포를 자동 분석해
     config.yaml에 붙여넣을 snippet을 출력. 자관 「○○도서관」
-    실측 = 99.82% 정합 (4-29).
+    실측 = 자관 174 파일 round-trip 100% (B안 baseline·`docs/eval/methodology.md`).
     """
     st.subheader("049 prefix 자동 발견")
     st.caption(
@@ -1397,9 +1397,45 @@ def main() -> None:
         "아래 [ISBN] 탭에 ISBN 13자리만 넣으면 5초 안에 KORMARC가 생성됩니다."
     )
     st.caption(
-        "**자관 .mrc 99.82% 정합 검증 완료** ★ "
+        "**자관 PILOT 1관·174 파일·3,383 레코드 round-trip 100%** ★ "
+        "MARC 블록별 분리표 → 아래 expander 클릭 (단일 99.82% 폐기·`docs/eval/methodology.md`)  \n"
         "다른 자관 049 prefix 자동 발견 → `streamlit run src/kormarc_auto/ui/prefix_discover_app.py`"
     )
+
+    # B안 Cycle 1 — MARC 블록별 분리표 (단일 99.82% 폐기)
+    with st.expander("📊 MARC 블록별 정합 분리표 (B안 Cycle 1·자관 PILOT)"):
+        import json as _json
+        from pathlib import Path as _Path
+
+        eval_dir = (
+            _Path(__file__).resolve().parent.parent.parent.parent / "docs" / "eval" / "results"
+        )
+        per_block = eval_dir / "2026-05-03" / "per-block.json"
+        per_record = eval_dir / "2026-05-04" / "per-record.json"
+        if per_block.exists():
+            data = _json.loads(per_block.read_text(encoding="utf-8"))
+            rows = []
+            for blk, vals in data.get("by_block", {}).items():
+                rows.append(
+                    {
+                        "블록": blk,
+                        "presence (%)": vals.get("coverage_pct", 0),
+                        "평균 필드/권": vals.get("avg_fields_per_record", 0),
+                    }
+                )
+            st.dataframe(rows, use_container_width=True)
+        if per_record.exists():
+            data = _json.loads(per_record.read_text(encoding="utf-8"))
+            st.success(
+                f"Round-trip exact-match: **{data.get('roundtrip_pass_pct', 0):.2f}%** "
+                f"({data.get('roundtrip_pass', 0)} / {data.get('total_records', 0)}) — "
+                f"파서·builder 무손실 입증"
+            )
+        st.caption(
+            "측정: 자관 PILOT 1관 (N=1)·NL_CERT_KEY 미발급 = 외부 정답 비교 보류·"
+            "v0.7 = `kormarc-eval-corpus-v1` 1,000건 공개 예정 · "
+            "방법론: `docs/eval/methodology.md`"
+        )
     with st.expander("📖 5분 가이드 (처음 사용 시 권장)"):
         st.markdown(
             "**1. ISBN 단건** — 13자리 ISBN 입력 → KORMARC 생성  \n"

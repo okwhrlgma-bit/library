@@ -4,6 +4,31 @@
 > **사용**: 매 commit 직후 새로운 통찰 추가. 다음 세션이 자동 로드 (CLAUDE.md에서 참조).
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 
+## [2026-05-04·Plan B Cycle 1 종료]
+
+### 사실 1: 자관 174 파일 round-trip = 100.00% (3,383/3,383)
+- 근거: `scripts/eval_per_record_roundtrip.py` 실측·`docs/eval/results/2026-05-04/per-record.json`
+- 메트릭: `bytes(rec.as_marc()) == bytes(re_decoded.as_marc())` (signature 비교는 너무 strict·bytes 비교가 정합)
+- 적용: 단일 "99.82%" 폐기·모든 surface (README·Streamlit·FastAPI·CLI) per-block + round-trip 분리표 인용
+
+### 사실 2: pymarc round-trip = signature 비교 부적합·bytes 비교 적합
+- 근거: signature_diff = 3,383/3,383 fail (모두 false negative)·bytes_equal = 100% pass
+- 이유: pymarc `to_unicode=True` 시 leader/MARC8 padding 등 normalization 차이가 signature에는 보이나 bytes에는 동일
+- 적용: 미래 round-trip 측정 = bytes 비교만 사용 (signature 비교 X)
+
+### 사실 3: pymarc MARCReader는 encoding kwarg 안 받음
+- 근거: `MARCReader(f, to_unicode=True, encoding="cp949")` = TypeError·`encoding` 인자 X
+- 적용: 자관 .mrc는 UTF-8 default로 충분 (3,383 모두 read 성공)·cp949/euc-kr fallback 불필요
+
+### 사실 4: 외부 901 출처 보고서 진단 4중 패턴 = 인지·B안 채택
+- 근거: identity fusion + productive avoidance + agent pace inflation + domain expert curse
+- PO 결정: B안 무중단 자율 + invariants 2건 (헌법 0·자관 누설 0)·ADR 0024 → ADR 0025 supersede
+- 적용: PO TODO에 사서 5명 cold outreach + 청년 마음건강 등록 (PO 영역·CLAUDE 자율 X)
+
+### 사실 5: B안 자동 머지 게이트 = 6건 영구
+- ruff 0·pytest 전수·binary_assertions 38/38 (현재 39/39)·자관 회귀 ≤ 1pp·demo 30초·헌법 0건
+- 적용: 매 사이클 commit 직전 6 게이트 모두 자동 검증·1건 위반 = PR 차단
+
 ---
 
 ## 2026-05-03 — 옵션 2 disaggregation 실측 (status: active·중요)

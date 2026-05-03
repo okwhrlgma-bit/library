@@ -37,7 +37,7 @@
 
 ### 사서 가치
 - **권당 마크 시간**: 8분 → 1.5~2분 (descriptive 블록·외주 대비 75% 단축)
-- (위 ↑ MARC 블록별 분리표 = 단일 99.82% 대체·peer review·diligence 통과)
+- (위 ↑ MARC 블록별 분리표 = 단일 정합률 폐기·per-record round-trip 100% baseline·peer review·diligence 통과·`docs/eval/methodology.md`)
 - **KOLAS 자동 반입**: ISBN을 파일명으로 한 `.mrc` 출력 → 반입 폴더 자동 인식 (cp949·utf-8·euc-kr 자동 fallback)
 - **AI 비전**: ISBN 없는 자료(자비출판·옛 책·기증도서)도 표지 사진 한 장으로 처리
 - **KDC 자동 분류**: 다단계 폴백 (NL Korea → 부가기호 → AI 추천 3개·사서가 최종 선택)
@@ -100,7 +100,7 @@ kormarc-auto info
 streamlit run src/kormarc_auto/ui/prefix_discover_app.py
 ```
 
-→ 브라우저에서 자관 .mrc 디렉토리 입력 → 049 prefix 자동 발견 + config snippet 즉시 복사. 자관 사례 EQ·CQ·WQ → 99.82% 정합 도달.
+→ 브라우저에서 자관 .mrc 디렉토리 입력 → 049 prefix 자동 발견 + config snippet 즉시 복사. 자관 사례 EQ·CQ·WQ → MARC 블록별 분리표 (`docs/eval/methodology.md`) 참조.
 
 ### 6. 테스트·검증
 

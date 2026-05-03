@@ -1,0 +1,21 @@
+{
+  "baseline_date": "2026-05-04",
+  "baseline_harness": "scripts/eval_per_record_roundtrip.py",
+  "baseline_metric": "encode_decode_signature_exact_match",
+  "regression_threshold_pp": 1.0,
+  "overall_pct": 100.0,
+  "by_block_pct": {
+    "00X": 100.0,
+    "0XX": 100.0,
+    "1XX": 0,
+    "245": 100.0,
+    "250-300": 100.0,
+    "4XX-8XX": 100.0,
+    "5XX": 100.0,
+    "6XX": 100.0,
+    "7XX": 100.0,
+    "880": 0,
+    "9XX": 100.0
+  },
+  "comment": "B안 §0 게이트 — 다음 사이클 회귀 ≤ 1pp 위반 시 P0 격상"
+}

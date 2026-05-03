@@ -667,6 +667,31 @@ def cmd_info(args: argparse.Namespace) -> int:
     except ImportError:
         print("anthropic: ❌ 미설치")
 
+    # B안 Cycle 1 — MARC 블록별 분리표 (단일 99.82% 폐기)
+    print()
+    print("=== MARC 블록별 정합 (자관 PILOT 1관·174 파일·3,383 레코드) ===")
+    import json
+
+    eval_results = Path(__file__).resolve().parent.parent.parent / "docs" / "eval" / "results"
+    per_block_path = eval_results / "2026-05-03" / "per-block.json"
+    per_record_path = eval_results / "2026-05-04" / "per-record.json"
+
+    if per_block_path.exists():
+        data = json.loads(per_block_path.read_text(encoding="utf-8"))
+        for blk, vals in data.get("by_block", {}).items():
+            pct = vals.get("coverage_pct", 0)
+            print(f"  {blk:35s}  presence={pct:6.2f}%")
+
+    if per_record_path.exists():
+        data = json.loads(per_record_path.read_text(encoding="utf-8"))
+        print(
+            f"\n  Round-trip exact-match: {data.get('roundtrip_pass_pct', 0):.2f}%"
+            f" ({data.get('roundtrip_pass', 0)}/{data.get('total_records', 0)})"
+        )
+
+    print("\n  단일 헤드라인: 자관 round-trip 100% baseline (99.82% 단일 표시 폐기)")
+    print("  방법론: docs/eval/methodology.md")
+
     return 0
 
 
