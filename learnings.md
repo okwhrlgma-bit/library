@@ -6,6 +6,45 @@
 
 ---
 
+## 2026-05-03 — Part 91·92·93 핵심 학습 (status: active)
+
+### I. 99.82% 단일 정확도 = peer review 미통과 위험
+- SemEval-2025 Task 5 (arXiv 2504.07199): F1@5 < 0.35 (subject)
+- BERT-NLSH 2023 (KCI): micro-F1 0.6059
+- Yang & Zhang 2025 (PeerJ): F1 0.7920 (cover)
+- **적용**: MARC block별 disaggregation·`evaluation/accuracy_disaggregation.py`
+
+### J. CSAP·DPG 가이드라인 2.0 = api.anthropic.com 행정망 차단
+- DPG (2025-04-16)·PIPC 안내서 (2025-08-06)
+- **적용**: AWS Bedrock Seoul = CSAP·Claude 사용 가능
+- 코드: `llm/provider_router.py` (6 provider·세그먼트별)
+
+### K. KOLAS Ⅲ = 1,271관 X·2,242관
+- 1,271 = 2023년 공공도서관 총수 (혼동)
+- 2,242 = NL Korea 사용도서관 현황 실 설치
+- **적용**: 33 파일 일괄 정정·KLA 학술 인용 정합
+
+### L. CLAUDE.md = HumanLayer ceiling 60줄
+- 237줄 → 70줄 slim·agent_docs/ 분할
+
+### M. data4library-mcp = 자체 client 백본 + Phase 2 MCP Skill
+- isnow890·MIT·★6·25+ tools
+- 자체 `api/data4library.py` 백본 유지·MCP = 개발 보조
+
+### N. PO 키 발급 가이드 (3 즉시·3 신청)
+- DATA4LIBRARY·KAKAO REST·PUBMED = 즉시·rate 3→10/s
+- NL_CERT_KEY (SEOJI)·NL Open API·ANTHROPIC = 신청·5분~3일
+
+### O. fakellm offline mock = 30초·무키 데모 표준
+- Stripe sentinel 4242 패턴
+- `demo/offline_mock_server.py` (SAMPLE_BOOKS 7·SENTINEL 5)
+
+### P. 영구 정책: 매 사이클 8 파일 자동 최신화
+- 사용자_TODO·CHANGELOG·learnings·BACKLOG·README·INDEX·MEMORY·CLAUDE
+- 트리거 매트릭스 = `feedback_continuous_file_freshness.md`
+
+---
+
 ## 2026-05-03 — Part 87·88·89·90 핵심 학습 (status: active)
 
 ### A. 알라딘 약관 = 상업 SaaS 자체 키 호출 금지

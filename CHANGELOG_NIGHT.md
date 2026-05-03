@@ -3,6 +3,49 @@
 > NIGHT_RUN_PROTOCOL.md 표준 양식 따라 매 commit 변경 사유 기록.
 > 종료 게이트: pytest 통과 + binary_assertions 38/38 + commit.
 
+## v0.5.0+ — 2026-05-03 야간 (Part 87~93 + Champion 4/4 92.5점 + 키 3/6·CSAP·정확도 disaggregation)
+
+### Part 91·92·93 (자율 사이클)
+- Part 91: 100점 도달 매트릭스 (Champion 4 평균 92.5점)
+- Part 92: integrated dossier (정확도 disaggregation·LLM 추상화·CLAUDE slim·KOLAS 2,242 정정)
+- Part 93: data4library-mcp 통합 검토 (자체 client + Phase 2 MCP)
+
+### v0.6.0 권고 진행
+- demo/offline_mock_server (5~10 sample books·sentinel ISBN·30초 무키 데모)
+- evaluation/accuracy_disaggregation (5 MARC block·학술 ranges·marketing-safe)
+- llm/provider_router (6 provider·CSAP·도메스틱·세그먼트별)
+- security/{tenant_isolation·redaction}·observability/slo_metrics
+- evaluation/{billing_e2e·onboarding_smoke·load_test·cross_library_simulation}
+- ui/macro_librarian_mode·sales/cold_mail_engine
+- mobile/{offline_queue·bluetooth_scanner·sync_api·sync_router}
+- output/{dls_521_classifier·alma_xml_writer·decision_maker_pdf}
+- classification/{ddc·mesh·lcsh·budgaeho·kdc_waterfall·copy_cataloging}
+- intelligence/volunteer_onboarding·api/pubmed
+- interlibrary/kolas_migration
+
+### CLAUDE.md slim
+- 237 → 70줄 (HumanLayer ceiling·agent_docs/ 백업)
+
+### 사실 정정 (Part 92 §1.2)
+- KOLAS Ⅲ 1,271관 → 2,242관 (15 파일)
+- "86% 자원봉사" → "정규 사서교사 미배치 84%·공무직·기간제 포함 시 48~57% 배치" (18 파일)
+- 도서관법 §35-3 → PIPA §35의2
+
+### 키 발급 (3/6·세션 내)
+- ✅ DATA4LIBRARY_AUTH_KEY (KDC 보강·2차)
+- ✅ KAKAO_API_KEY (REST·5차 폴백)
+- ✅ PUBMED_API_KEY (페르소나 04 의학)
+- ⏳ NL_CERT_KEY (SEOJI 1차·1~3일 신청)
+- ⏳ NL Open API key (search·통합 검색)
+- ⏳ ANTHROPIC_API_KEY (LLM 핵심)
+
+### 누적 통계 (462 → 612+ tests)
+- pytest: 612 passed (+150 이 세션)
+- ruff: 0 errors / format ✓
+- CI: ✅ Green 연속 17회+
+- 신규 모듈: 30+
+- 신규 docs: 26+ (Part 87~93·legal·sales·academic·audits·personas)
+
 ## v0.5.0+ — 2026-05-03 야간 (Part 87·88·89·90 + M3·M7·M9 + Champion 4/4 회복)
 
 ### Part 87 전략 피벗 (deep research 200+ 소스)
