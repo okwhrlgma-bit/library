@@ -29,6 +29,22 @@
 - ruff 0·pytest 전수·binary_assertions 38/38 (현재 39/39)·자관 회귀 ≤ 1pp·demo 30초·헌법 0건
 - 적용: 매 사이클 commit 직전 6 게이트 모두 자동 검증·1건 위반 = PR 차단
 
+### 사실 6 (Cycle 3 사고): cmd_init --force = .env 키 덮어쓰기 위험
+- 자가 테스트 진행 중 .env에 있던 PO 키 3건 (KAKAO·DATA4LIBRARY·PUBMED) 덮어씀
+- 즉시 사용자_TODO.txt에서 키 복구·cmd_init 가드 강화 (기존 .env에 키 1건이라도 있으면 --force도 거부)
+- 적용: 모든 신규 CLI 명령 = "기존 사용자 데이터 덮어쓰기 가능성" 자가 검토·필요 시 hard guard
+
+### 사실 7 (Cycle 4): Hypothesis = MARC 제어 문자 builder 미sanitize 발견
+- KORMARC builder가 publisher/title 입력에 \x1f (subfield delimiter) 들어가면 round-trip fail
+- 실 도서관 데이터 = 인쇄 가능한 한글·한자·영문만 = 발생 X
+- v0.7 backlog: builder sanitization·헌법 위반 X·robustness 개선
+- 적용: hypothesis 입력 = `_PRINTABLE` (Cc/Cs blacklist) 제약·realistic 시뮬
+
+### 사실 8 (Cycle 4): pyproject [dev] hypothesis 정식 추가
+- hypothesis>=6.150 → [dev] extras
+- 12 property tests passing (8 기존 + 4 신규 KORMARC)
+- 적용: 매 builder/parser 변경 = property test 통과 필수
+
 ---
 
 ## 2026-05-03 — 옵션 2 disaggregation 실측 (status: active·중요)

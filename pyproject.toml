@@ -31,6 +31,7 @@ dev = [
   "ruff>=0.7",
   "mypy>=1.13",
   "openpyxl>=3.1",  # xlsm/xlsx 매크로 파서 테스트
+  "hypothesis>=6.150",  # B안 P3 — property-based tests (round-trip·idempotence·invariants)
 ]
 ui = [
   "streamlit>=1.39",
