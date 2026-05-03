@@ -1,6 +1,6 @@
 # 카카오톡 채널 1:1 자동응답 FAQ
 
-> **운영자**: PO `okwhrlgma@gmail.com`.
+> **운영자**: PO `contact@kormarc-auto.example`.
 > **목표**: 사서 90%가 이메일보다 카카오톡 선호. 영업일 24시간 SLA + 자동응답 키워드 20종으로 1차 응대.
 > **활용**: 카카오 비즈니스 채널 → 1:1 채팅 → "스마트채팅" 키워드 자동응답에 그대로 등록.
 
@@ -15,7 +15,7 @@
 |---|---|
 | `가입`, `시작`, `signup` | 안녕하세요 사서 선생님! 신규 가입 50건 무료입니다. https://app.kormarc.kr/signup 에 이메일·도서관명 입력 → 즉시 키 발급. 카드 등록 불필요. |
 | `무료`, `free` | kormarc-auto 무료 체험 50건 제공합니다. 이메일만 입력하시면 즉시 키 발급. 가입 링크: https://app.kormarc.kr/signup |
-| `데모`, `시연`, `demo` | 30분 화상 시연 가능합니다. PO 이메일(okwhrlgma@gmail.com)로 희망 일정 보내주시거나 이 채팅에 "시연 신청" 남겨주세요. |
+| `데모`, `시연`, `demo` | 30분 화상 시연 가능합니다. PO 이메일(contact@kormarc-auto.example)로 희망 일정 보내주시거나 이 채팅에 "시연 신청" 남겨주세요. |
 
 ### 가격·결제
 | 키워드 | 응답 |
@@ -27,7 +27,7 @@
 ### 기능·사용법
 | 키워드 | 응답 |
 |---|---|
-| `사용법`, `매뉴얼`, `가이드` | 5분 가이드: https://github.com/okwhr/kormarc-auto/blob/main/docs/quickstart-librarian.md / 영상은 베타 후 추가 예정. |
+| `사용법`, `매뉴얼`, `가이드` | 5분 가이드: https://github.com/kormarc-auto/kormarc-auto/blob/main/docs/quickstart-librarian.md / 영상은 베타 후 추가 예정. |
 | `ISBN` | ISBN 13자리만 입력하면 5초 안에 KORMARC 자동 생성됩니다. KOLAS 반입 폴더에 .mrc 두면 자동 인식. |
 | `사진`, `카메라`, `vision` | 책 표지·판권지 사진 1~3장 업로드하시면 Vision AI가 자동으로 ISBN·표제·저자 추출. 폰 카메라 직접 촬영도 가능. |
 | `KDC`, `분류` | KDC 6판 기준 다단계 분류 (NL Korea 부가기호 → AI 추천 3개 → 사서 선택). 사서 책임 영역이라 자동 결정 안 합니다. |
@@ -44,20 +44,20 @@
 ### 약관·개인정보
 | 키워드 | 응답 |
 |---|---|
-| `약관`, `이용약관`, `terms` | 이용약관: https://github.com/okwhr/kormarc-auto/blob/main/docs/terms-of-service.md / 개인정보처리방침: https://github.com/okwhr/kormarc-auto/blob/main/docs/privacy-policy.md |
+| `약관`, `이용약관`, `terms` | 이용약관: https://github.com/kormarc-auto/kormarc-auto/blob/main/docs/terms-of-service.md / 개인정보처리방침: https://github.com/kormarc-auto/kormarc-auto/blob/main/docs/privacy-policy.md |
 | `개인정보`, `삭제`, `탈퇴` | 본인 데이터 다운로드: GET /account/export / 영구 삭제: DELETE /account/delete (개인정보보호법 §35-3·§36). 또는 이 채팅에서 "탈퇴 요청" 남기시면 30일 내 처리. |
 
 ### 문제·지원
 | 키워드 | 응답 |
 |---|---|
 | `에러`, `오류`, `안 되`, `버그` | 죄송합니다. 다음을 알려주세요: (1) 어떤 화면 (2) 무엇을 했나요 (3) 에러 메시지 원문. PO가 24시간 내 답변드립니다. |
-| `연락`, `문의`, `이메일` | PO 직접 연락: okwhrlgma@gmail.com (영업일 24시간 SLA) / 이 카카오 채널도 동일 응답 시간. |
+| `연락`, `문의`, `이메일` | PO 직접 연락: contact@kormarc-auto.example (영업일 24시간 SLA) / 이 카카오 채널도 동일 응답 시간. |
 
 ### 단체·B2B
 | 키워드 | 응답 |
 |---|---|
-| `단체`, `컨소시엄`, `협의회` | 작은도서관협의회·시도 단체 계약 시 5~30곳 월 15~35만원 (개별 대비 50~70% 할인). 자세히: https://github.com/okwhr/kormarc-auto/blob/main/docs/consortium-pitch.md |
-| `납품업체`, `B2B`, `vendor` | 도서납품업체 전용 /batch-vendor API (1,000건/회). 마진 시뮬: 1,000권/월 → 순이익 70만원. 가이드: https://github.com/okwhr/kormarc-auto/blob/main/docs/b2b-vendor-guide.md |
+| `단체`, `컨소시엄`, `협의회` | 작은도서관협의회·시도 단체 계약 시 5~30곳 월 15~35만원 (개별 대비 50~70% 할인). 자세히: https://github.com/kormarc-auto/kormarc-auto/blob/main/docs/consortium-pitch.md |
+| `납품업체`, `B2B`, `vendor` | 도서납품업체 전용 /batch-vendor API (1,000건/회). 마진 시뮬: 1,000권/월 → 순이익 70만원. 가이드: https://github.com/kormarc-auto/kormarc-auto/blob/main/docs/b2b-vendor-guide.md |
 
 ---
 
@@ -85,7 +85,7 @@
 
 ## 4. 영업 시간 외 응답
 
-> 안녕하세요! 영업시간(평일 09~18시) 외 메시지입니다. 다음 영업일 24시간 내 PO가 직접 답변드립니다. 급하시면 okwhrlgma@gmail.com 으로 메일 주세요. 무료 체험은 24시간 가능: https://app.kormarc.kr/signup
+> 안녕하세요! 영업시간(평일 09~18시) 외 메시지입니다. 다음 영업일 24시간 내 PO가 직접 답변드립니다. 급하시면 contact@kormarc-auto.example 으로 메일 주세요. 무료 체험은 24시간 가능: https://app.kormarc.kr/signup
 
 ---
 
@@ -98,7 +98,7 @@
 > 2️⃣ 폰 카메라로 책 사진 → KORMARC
 > 3️⃣ 책나래·책바다 양식 자동
 >
-> 5분 가이드: https://github.com/okwhr/kormarc-auto/blob/main/docs/quickstart-librarian.md
+> 5분 가이드: https://github.com/kormarc-auto/kormarc-auto/blob/main/docs/quickstart-librarian.md
 >
 > 막히는 부분은 이 채팅에 편하게 남겨주세요. PO가 24시간 내 답변드립니다.
 
@@ -116,4 +116,4 @@
 | 베타 사서 50명 친구추가 캠페인 | ☐ |
 | 월 1회 정기 소식 (KORMARC 표준 변경·신규 기능) | ☐ |
 
-**문의**: PO `okwhrlgma@gmail.com`.
+**문의**: PO `contact@kormarc-auto.example`.

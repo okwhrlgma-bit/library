@@ -173,8 +173,8 @@ PILOT 1관 신청 (오늘 부스):
 - 50건 무료
 - 사서 결제 의향 직접 측정만 부탁
 
-okwhrlgma@gmail.com · 카카오 채널 [채널명]
-github.com/okwhr/kormarc-auto
+contact@kormarc-auto.example · 카카오 채널 [채널명]
+github.com/kormarc-auto/kormarc-auto
 ```
 
 **Q&A 예상 10건** (`docs/sales/pilot-package-2026-04-29.md §4` 참조)

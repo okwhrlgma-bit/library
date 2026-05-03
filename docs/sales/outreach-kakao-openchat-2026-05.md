@@ -19,7 +19,7 @@ ISBN 1번 → KORMARC 5초 → KOLAS 자동 반입.
 첫 50건 무료 + 월 3·5·15·30만원.
 
 5월 31일 KLA 전국도서관대회 발표 신청. 관심 있으시면 카카오 채널
-「kormarc-auto」 또는 okwhrlgma@gmail.com 부탁드립니다.
+「kormarc-auto」 또는 contact@kormarc-auto.example 부탁드립니다.
 ```
 
 ---
@@ -47,7 +47,7 @@ ISBN 1번 → KORMARC .mrc 5초 → 자관 KOLAS 자동 반입.
 권당 100원 또는 월 3만원~. 첫 50건 무료.
 
 카카오 채널 「kormarc-auto」
-github.com/okwhrlgma-bit/library
+github.com/kormarc-auto/library
 ```
 
 (영상 = 30초·자관 시연·`docs/sales/kakao-channel-content-2026-04-29.md` §2 참조)

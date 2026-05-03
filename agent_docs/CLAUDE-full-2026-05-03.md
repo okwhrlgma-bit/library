@@ -10,7 +10,7 @@
 
 **목표**: 사서의 마크 작업 시간을 권당 8분 → 2분으로 단축.
 
-**PO**: 사서 출신 1인 비개발자 창업자 (`okwhrlgma@gmail.com`).
+**PO**: 사서 출신 1인 비개발자 창업자 (`contact@kormarc-auto.example`).
 
 ---
 

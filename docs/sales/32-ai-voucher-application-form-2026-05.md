@@ -12,7 +12,7 @@
 - **사업자번호**: [PO U-17 등록 후 기재]
 - **대표자**: [PO 이름]
 - **주소**: [PO 주소]
-- **이메일**: okwhrlgma@gmail.com
+- **이메일**: contact@kormarc-auto.example
 - **유형**: 1인 창업·SaaS (바우처 우선 대상)
 
 ## 2. 사업 개요

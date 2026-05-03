@@ -163,7 +163,7 @@ def generate_handover_manual_markdown(data: HandoverManualData) -> str:
 | 대상 | 연락처 |
 |------|--------|
 | 전임 사서 ({data.librarian_name} 선생님) | {data.contact_email or "(개인 연락처는 별도 전달)"} |
-| kormarc-auto 운영자 | okwhrlgma@gmail.com |
+| kormarc-auto 운영자 | contact@kormarc-auto.example |
 | 자치구 도서관사업소 | (도서관 비치 연락처 확인) |
 
 ---

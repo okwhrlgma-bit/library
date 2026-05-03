@@ -319,7 +319,7 @@ KOLAS3 호환 + 책이음 동기화 + 책밴드 자체 상호대차. `.mrc` impo
 ## PILOT 신청 + 컨택
 
 - 카카오 채널: (개설 예정·5월 KLA 발표 전)
-- 메일: okwhrlgma@gmail.com
+- 메일: contact@kormarc-auto.example
 - KLA 전국도서관대회 부스 (2026-05-31): PILOT 5분 시연 + 직접 신청 가능
 
 **5월 학교·작은·공공 PILOT 5관 추가 모집** (4 페르소나별 1관). 무료 50건 + Q1 결제 의향 직접 측정만 부탁드립니다.

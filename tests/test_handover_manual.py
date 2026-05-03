@@ -66,7 +66,7 @@ def test_markdown_includes_contact_email() -> None:
     """전임 사서 연락처 + 운영자 이메일 포함."""
     md = generate_handover_manual_markdown(_sample_data())
     assert "kim@example.kr" in md
-    assert "okwhrlgma@gmail.com" in md
+    assert "contact@kormarc-auto.example" in md
 
 
 def test_save_handover_manual_creates_file(tmp_path) -> None:

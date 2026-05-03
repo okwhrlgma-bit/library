@@ -141,4 +141,4 @@
 
 ---
 
-**문의**: PO `okwhrlgma@gmail.com`. 영업·시연 일정 직접 협의.
+**문의**: PO `contact@kormarc-auto.example`. 영업·시연 일정 직접 협의.

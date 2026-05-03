@@ -62,7 +62,7 @@ git pull origin main   # cloud routine 자동 commit 받기
 |---|---|
 | ☐ | KLA 슬라이드 → Marp 또는 PowerPoint PDF 변환 |
 | ☐ | 시연 5분 데모 영상 사전 녹화 (장애 대비) |
-| ☐ | 명함 100매 인쇄 (PO·okwhrlgma@gmail.com·카카오 채널 「kormarc-auto」·GitHub) |
+| ☐ | 명함 100매 인쇄 (PO·contact@kormarc-auto.example·카카오 채널 「kormarc-auto」·GitHub) |
 | ☐ | KLA 부스 신청 (PILOT 신청 직접 받기) |
 | ☐ | 카카오 채널 KLA 발표 알림 콘텐츠 1건 (5/30 발행 예정) |
 

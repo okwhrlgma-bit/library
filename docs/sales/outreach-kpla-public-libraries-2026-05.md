@@ -40,7 +40,7 @@ KOLAS 종료 7개월 전 사전 검증 시작 권장드립니다.
 회신 주시면 무료 50건 + 마이그레이션 시뮬레이션을 전달드리겠습니다.
 
 [PO 이름] (사서 출신 1인 개발자)
-이메일: okwhrlgma@gmail.com
+이메일: contact@kormarc-auto.example
 링크: kormarc.app (또는 임시 URL)
 ```
 

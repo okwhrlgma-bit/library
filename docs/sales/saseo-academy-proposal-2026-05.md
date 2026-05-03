@@ -20,7 +20,7 @@
 - 5 시스템 운영자 (KOLAS III + 알파스 + 다우오피스 + Formtec + 한컴 한셀)
 - xlsm 매크로 자작 200KB+ (사서 E 사서 패턴)
 - kormarc-auto SaaS 개발자 (자관 PILOT 4주 검증 후 KLA 5.31 발표)
-- 메일: okwhrlgma@gmail.com · GitHub: [okwhrlgma-bit/library](https://github.com/okwhrlgma-bit/library)
+- 메일: contact@kormarc-auto.example · GitHub: [kormarc-auto/library](https://github.com/kormarc-auto/library)
 
 ---
 

@@ -3,7 +3,7 @@
 PO 명령 (Part 92·94 후속): 99.82% 단일 → MARC block별 분리표 교체.
 
 작동:
-1. D:\\내를건너서 숲으로 도서관\\수서\\2024\\2024_마크파일\\ 174 파일 로드
+1. D:\\○○도서관\\수서\\2024\\2024_마크파일\\ 174 파일 로드
 2. pymarc 파싱 (cp949·utf-8·euc-kr 자동 fallback)
 3. 11 MARC block별 필드 카운트·존재율
 4. round-trip = 우리 builder가 같은 input dict 받았을 때 동일 .mrc 생성 가능 여부
@@ -25,7 +25,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 # 자관 폴더
-LIBRARY_MRC_ROOT = Path(r"D:\내를건너서 숲으로 도서관\수서\2024\2024_마크파일")
+LIBRARY_MRC_ROOT = Path(r"D:\○○도서관\수서\2024\2024_마크파일")
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "docs" / "eval" / "results"
 
 

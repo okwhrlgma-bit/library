@@ -169,4 +169,4 @@
 - 스크립트: 본 파일
 - ROI 계산기: `docs/pricing.md` 참조
 
-**시연 책임자**: PO `okwhrlgma@gmail.com`. 시연 이후 24시간 내 모든 follow-up.
+**시연 책임자**: PO `contact@kormarc-auto.example`. 시연 이후 24시간 내 모든 follow-up.

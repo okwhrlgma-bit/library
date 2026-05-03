@@ -45,7 +45,7 @@
 
 ## 4. 환불 신청 절차
 
-1. 인앱 또는 이메일 (okwhrlgma@gmail.com) 신청
+1. 인앱 또는 이메일 (contact@kormarc-auto.example) 신청
 2. 신청 사유·계좌 정보
 3. 5영업일 내 처리
 

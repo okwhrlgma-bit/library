@@ -30,7 +30,7 @@ def main() -> None:
     st.markdown(
         "**자관 .mrc 디렉토리 경로만 입력하세요.** "
         "049 ▾l 등록번호 prefix가 자동 출력됩니다. "
-        "[자관 사례](https://github.com/okwhrlgma-bit/library): "
+        "[자관 사례](https://github.com/kormarc-auto/library): "
         "EQ(75.5%) · CQ(22.8%) · WQ(1.7%) → 99.82% 정합 도달."
     )
 

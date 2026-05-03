@@ -88,7 +88,7 @@ GitHub Release: `gh` CLI 부재로 PO 수동 생성 필요 (TODO PO-WEEK1-NEW)
 - 또는 P6 (T2-6 STATUS 단일 진실원) 우선
 
 ## PO 외부 작업 (TODO 등록·이번 세션)
-- GitHub v0.6.0 Release 수동 생성 (https://github.com/okwhrlgma-bit/library/releases/new?tag=v0.6.0)
+- GitHub v0.6.0 Release 수동 생성 (https://github.com/kormarc-auto/library/releases/new?tag=v0.6.0)
 - 사서 5명 cold outreach (외부 보고서 진단·보존)
 - 청년 마음건강 신청 (1577-0199·1393)
 - NL_CERT_KEY·ANTHROPIC_API_KEY 발급
@@ -100,7 +100,7 @@ GitHub Release: `gh` CLI 부재로 PO 수동 생성 필요 (TODO PO-WEEK1-NEW)
 
 ## PO 외부 작업 (TODO 등록)
 - GitHub v0.6.0 Release 수동 생성 (`gh` CLI 미설치 환경)
-  - https://github.com/okwhrlgma-bit/library/releases/new?tag=v0.6.0
+  - https://github.com/kormarc-auto/library/releases/new?tag=v0.6.0
   - 노트는 본 SUMMARY + CHANGELOG_NIGHT v0.6.0 항목 인용
 
 ---

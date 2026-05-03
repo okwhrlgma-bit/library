@@ -56,7 +56,7 @@
 
 - 권당 결제: 사용분만 청구, 환불 불요
 - 월 정액: 다음 달 미사용분 환불 가능
-- 분쟁은 PO에게 직접 연락 (`okwhrlgma@gmail.com`)
+- 분쟁은 PO에게 직접 연락 (`contact@kormarc-auto.example`)
 
 ## 8. 이용 제한
 
@@ -72,7 +72,7 @@
 ## 10. 운영자
 
 - 운영자: 김아무개 (사서 출신 1인 창업자)
-- 이메일: okwhrlgma@gmail.com
+- 이메일: contact@kormarc-auto.example
 - 사업자 등록: 정식 출시 시 별도 공지
 - 본 약관 적용 시점: 2026-04-25부터
 

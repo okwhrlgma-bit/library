@@ -10,7 +10,7 @@
 ### 환경 (1분)
 
 ```powershell
-cd "C:\Users\okwhr\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
+cd "C:\Users\kormarc-auto\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
 git pull origin main   # cloud routine 자동 commit 받기
 .\.venv\Scripts\Activate.ps1
 kormarc-auto info      # 환경 진단
@@ -52,7 +52,7 @@ kormarc-auto info      # 환경 진단
 - ☐ 1h routine `trig_01THW9GZG6G4sorCtwgJaR77` Enabled
 - ☐ 주간 routine `trig_01Yb5Ze4eAwn4Z6srKDDu2Ma` Enabled
 - ☐ 월간 routine `trig_01JGajzBSdRhMnS8KQPz5H8q` Enabled
-- ☐ GitHub repo (https://github.com/okwhrlgma-bit/library) commit 늘어나는 중
+- ☐ GitHub repo (https://github.com/kormarc-auto/library) commit 늘어나는 중
 
 문제 발생 시: `docs/cloud-routine-monitoring-guide.md` §3 참조.
 

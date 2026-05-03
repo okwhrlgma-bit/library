@@ -45,7 +45,7 @@ KOLAS·DLS 호환 KORMARC 자동 생성 SaaS를 만들었습니다.
 가격: <URL>/pricing.html
 
 ― 김아무개 (사서 출신, kormarc-auto 창업자)
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ## 3. 카카오톡 1대1
@@ -88,7 +88,7 @@ ISBN/사진/검색 → KORMARC 자동 생성 → KOLAS 반입
 - 사용 데이터 (개인정보 제외) 공유 — 도서관계 효율화 연구
 - 협회 추천 시 연 회비 10% 할인
 
-문의: okwhrlgma@gmail.com
+문의: contact@kormarc-auto.example
 ```
 
 ---

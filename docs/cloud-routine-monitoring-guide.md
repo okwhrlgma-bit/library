@@ -19,7 +19,7 @@
 
 ### 2-1. GitHub commit 확인 (1분)
 
-https://github.com/okwhrlgma-bit/library/commits/main 접속:
+https://github.com/kormarc-auto/library/commits/main 접속:
 
 - 지난 주 commit 수 (예: 168 commit/주 = 1h × 24h × 7일 = 168 fire)
 - 실제는 cloud agent가 작업 못 할 때도 있어서 50~150 commit/주 정상 범위
@@ -42,7 +42,7 @@ https://github.com/okwhrlgma-bit/library/commits/main 접속:
 ### 2-3. 영업 funnel 확인 (1분)
 
 ```powershell
-cd "C:\Users\okwhr\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
+cd "C:\Users\kormarc-auto\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
 git pull origin main
 .\.venv\Scripts\python.exe scripts\sales_funnel.py
 ```
@@ -104,7 +104,7 @@ git pull origin main
 3. 입력:
    - Name: 한국어 가능
    - Cron: 매시간 `0 * * * *`·매주 월 `0 0 * * 1`·매월 1일 `0 0 1 * *`
-   - Repository: https://github.com/okwhrlgma-bit/library
+   - Repository: https://github.com/kormarc-auto/library
    - Model: claude-sonnet-4-6
    - Prompt: 자율 작업 가이드 (CLAUDE.md·INDEX·BACKLOG 참조 + 평가축)
 4. Create

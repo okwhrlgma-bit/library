@@ -50,8 +50,8 @@ NL Korea API 1순위 폴백으로 통합 목록 정합도가 매우 높습니다
 - 작은도서관 PILOT 1관 모집 (4 페르소나 중 1관·6월 中)
 - 사서교육원·도서관저널 강의·기고 (5~7월)
 
-okwhrlgma@gmail.com · 카카오 채널 「kormarc-auto」
-github.com/okwhrlgma-bit/library
+contact@kormarc-auto.example · 카카오 채널 「kormarc-auto」
+github.com/kormarc-auto/library
 ```
 
 ---

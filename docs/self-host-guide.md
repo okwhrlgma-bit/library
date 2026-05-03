@@ -12,7 +12,7 @@
 
 1. https://render.com 가입 (GitHub 로그인)
 2. "New +" → "Web Service"
-3. GitHub repo 연결 (https://github.com/okwhrlgma-bit/library)
+3. GitHub repo 연결 (https://github.com/kormarc-auto/library)
 4. 설정:
    - Name: `kormarc-auto`
    - Region: Singapore (한국 latency 약 50ms)

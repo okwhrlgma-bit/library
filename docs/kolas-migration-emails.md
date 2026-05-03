@@ -43,7 +43,7 @@
 >
 > 회신 주시면 24시간 내 답장드립니다.
 >
-> kormarc-auto · `okwhrlgma@gmail.com`
+> kormarc-auto · `contact@kormarc-auto.example`
 
 ---
 
@@ -69,7 +69,7 @@
 >
 > 화상 5분 시연 일정 부탁드립니다.
 >
-> kormarc-auto · `okwhrlgma@gmail.com`
+> kormarc-auto · `contact@kormarc-auto.example`
 
 ---
 
@@ -96,7 +96,7 @@
 >
 > 작은도서관협회 단체 가입(컨소시엄 5~30곳) 시 추가 할인 가능합니다.
 >
-> kormarc-auto · `okwhrlgma@gmail.com`
+> kormarc-auto · `contact@kormarc-auto.example`
 
 ---
 
@@ -119,7 +119,7 @@
 >
 > 대학도서관 PILOT은 신착 100건 무료 처리부터 시작합니다.
 >
-> kormarc-auto · `okwhrlgma@gmail.com`
+> kormarc-auto · `contact@kormarc-auto.example`
 
 ---
 
@@ -150,7 +150,7 @@
 >
 > 30분 화상 미팅으로 영업담당 분과 직접 협의하고 싶습니다.
 >
-> kormarc-auto · `okwhrlgma@gmail.com`
+> kormarc-auto · `contact@kormarc-auto.example`
 
 ---
 
@@ -188,7 +188,7 @@
 >
 > 30분 화상 시연 + PILOT 50건 무료 키 즉시 발급.
 >
-> kormarc-auto · `okwhrlgma@gmail.com`
+> kormarc-auto · `contact@kormarc-auto.example`
 >
 > **참조**: `docs/d-drive-xlsm-macros-audit.md` (자관 4,233 매크로 매트릭스), `docs/saseo-personas-2026-04-28.md` (4 페르소나 ICP).
 
@@ -222,4 +222,4 @@
 
 ---
 
-**문의**: PO `okwhrlgma@gmail.com` · 24시간 SLA.
+**문의**: PO `contact@kormarc-auto.example` · 24시간 SLA.

@@ -44,6 +44,10 @@ REPLACEMENTS: list[tuple[str, str]] = [
     ("신은미", "사서 D"),
     ("조기흠", "사서 E"),
     ("조기홍", "사서 E"),
+    # PO 명령 2026-05-04: GitHub 하단 author 노출 = 익명화 추가
+    ("okwhrlgma@gmail.com", "contact@kormarc-auto.example"),
+    ("okwhrlgma-bit", "kormarc-auto"),
+    ("okwhr", "kormarc-auto"),
 ]
 
 # 익명화 검증 화이트리스트 (forbidden 리스트·PII guard rules에서 의도적으로 사용)
@@ -68,6 +72,7 @@ EXCLUDE_PATTERNS = [
     "/.mypy_cache/",
     "/.ruff_cache/",
     "/scripts/anonymize_pii.py",  # 자기 자신 제외
+    "/.claude/",  # Windows 시스템 경로 (Users/okwhr) 보존·hook·permission path 깨짐 방지
 ]
 
 # 익명화 제외 파일 (메타·라이선스)

@@ -3,7 +3,7 @@
 PO 명령 (옵션 1): "자관 174 → 합성 ID → tests/fixtures/eval_corpus/"
 
 작동:
-1. 자관 D:\\내를건너서 숲으로 도서관\\수서\\2024\\2024_마크파일\\ 174 파일 로드
+1. 자관 D:\\○○도서관\\수서\\2024\\2024_마크파일\\ 174 파일 로드
 2. 3,383 레코드 → 합성 ID 변환 (SHA-256 해시·자관 식별자 0)
 3. 핵심 필드만 추출 (PIPA·PII 위험 0):
    - 020 ISBN → 합성 (978·SHA hash)
@@ -28,7 +28,7 @@ import json
 import sys
 from pathlib import Path
 
-LIBRARY_MRC_ROOT = Path(r"D:\내를건너서 숲으로 도서관\수서\2024\2024_마크파일")
+LIBRARY_MRC_ROOT = Path(r"D:\○○도서관\수서\2024\2024_마크파일")
 OUTPUT_DIR = Path(__file__).resolve().parent.parent / "tests" / "fixtures" / "eval_corpus" / "v1"
 
 

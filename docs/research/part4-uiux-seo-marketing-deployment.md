@@ -46,7 +46,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",  # 모바일 collapsed 기본
     menu_items={
         "Get help": "https://pf.kakao.com/_kormarc",
-        "Report a bug": "mailto:okwhrlgma@gmail.com",
+        "Report a bug": "mailto:contact@kormarc-auto.example",
         "About": "사서 출신 1인 창업자가 만든 KORMARC 자동 SaaS",
     },
 )
@@ -846,7 +846,7 @@ jobs:
 
 | 항목 | 패턴 | 마스킹 후 |
 |---|---|---|
-| email | `okwhrlgma@gmail.com` | `o***@g***.com` |
+| email | `contact@kormarc-auto.example` | `o***@g***.com` |
 | phone | `010-1234-5678` | `010-****-5678` |
 | patron_name | `홍길동` | `홍**` |
 | patron_id | `2024-001234` | `2024-***234` |

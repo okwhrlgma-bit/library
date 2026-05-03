@@ -1,6 +1,6 @@
 # GitHub Release v0.4.37 발행 가이드 (PO 5분)
 
-> **목적**: GitHub repo (https://github.com/okwhrlgma-bit/library)에 정식 v0.4.37 release 발행 → 외부 사용자가 다운로드 가능 + 영업 자료 강화.
+> **목적**: GitHub repo (https://github.com/kormarc-auto/library)에 정식 v0.4.37 release 발행 → 외부 사용자가 다운로드 가능 + 영업 자료 강화.
 > **단일 진실**: 자관 .mrc 174 파일·3,383 레코드 → 99.82% 정합 ★
 
 ---
@@ -9,7 +9,7 @@
 
 ### 1-1. GitHub Web UI (가장 쉬움)
 
-1. https://github.com/okwhrlgma-bit/library 접속
+1. https://github.com/kormarc-auto/library 접속
 2. 우측 사이드바 "Releases" 클릭 → "Create a new release" 또는 "Draft a new release"
 3. 입력:
    - **Tag**: `v0.4.37`
@@ -22,7 +22,7 @@
 ### 1-2. gh CLI (자동·1줄)
 
 ```powershell
-cd "C:\Users\okwhr\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
+cd "C:\Users\kormarc-auto\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
 gh release create v0.4.37 --title "v0.4.37 — Phase 0 MVP 완성 + 자관 99.82% 정합" --notes-file docs/github-release-v0.4.37-guide.md
 ```
 
@@ -76,7 +76,7 @@ gh release create v0.4.37 --title "v0.4.37 — Phase 0 MVP 완성 + 자관 99.82
 ## PILOT 신청
 
 - 카카오 채널 「kormarc-auto」
-- okwhrlgma@gmail.com
+- contact@kormarc-auto.example
 - 첫 50건 무료 + 월 3·5·15·30만원 (작은·학교·일반·대규모)
 ```
 
@@ -88,7 +88,7 @@ gh release create v0.4.37 --title "v0.4.37 — Phase 0 MVP 완성 + 자관 99.82
 |---|---|
 | 카카오 채널 「kormarc-auto」 | "v0.4.37 정식 발행 — 99.82% 정합" 알림 |
 | 네이버·티스토리 블로그 | release notes 본문 → 블로그 글 |
-| 도서관저널 기고문 | "GitHub Release v0.4.37 (github.com/okwhrlgma-bit/library/releases)" 인용 |
+| 도서관저널 기고문 | "GitHub Release v0.4.37 (github.com/kormarc-auto/library/releases)" 인용 |
 | KLA 5.31 발표 슬라이드 | S15 마무리에 release URL 노출 |
 | 사서교육원 강의 | 수강 사서가 GitHub에서 직접 clone 가능 |
 | 작은·학교 영업 메일 | 신뢰도 ↑ (정식 release = 정식 제품) |

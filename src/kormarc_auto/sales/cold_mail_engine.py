@@ -190,7 +190,7 @@ def generate_cold_mail(request: ColdMailRequest) -> ColdMailDraft:
     signature = (
         "사서 출신 1인 개발자 (PO)\n"
         "kormarc-auto SaaS\n"
-        "GitHub: https://github.com/okwhrlgma-bit/library (private)\n"
+        "GitHub: https://github.com/kormarc-auto/library (private)\n"
         "이메일: [PO 이메일]"
     )
 

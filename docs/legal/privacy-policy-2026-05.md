@@ -133,7 +133,7 @@ PIPA §35·§36·§37·§35-2에 따라 다음 권리를 행사할 수 있습니
 ## 제10조 (개인정보 보호책임자)
 
 - **책임자**: kormarc-auto PO (창업자)
-- **이메일**: okwhrlgma@gmail.com (대표 메일)
+- **이메일**: contact@kormarc-auto.example (대표 메일)
 - **응답**: 10영업일 이내
 
 ---

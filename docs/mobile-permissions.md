@@ -12,7 +12,7 @@
 
 | 위치 | 파일 | 적용 범위 |
 |---|---|---|
-| 전역 | `C:\Users\okwhr\.claude\settings.json` | 모든 프로젝트 |
+| 전역 | `C:\Users\kormarc-auto\.claude\settings.json` | 모든 프로젝트 |
 | 프로젝트 | `kormarc-auto\.claude\settings.json` | 이 프로젝트만 |
 
 전역에는 **읽기 전용·정보 조회 명령**(`git status`, `ls`, `grep`, `python --version` 등)만 깔았습니다.

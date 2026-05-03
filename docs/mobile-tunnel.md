@@ -27,7 +27,7 @@ cloudflared tunnel --url http://localhost:8000
 #### 1. Cloudflare 계정 + 도메인
 
 - [cloudflare.com](https://www.cloudflare.com) 무료 계정 가입
-- 본인 도메인 1개 등록 (예: `okwhr.kr`) — 이미 있으면 그거 사용
+- 본인 도메인 1개 등록 (예: `kormarc-auto.kr`) — 이미 있으면 그거 사용
 - 도메인 없으면: 1년 약 1만원에 [Namecheap](https://www.namecheap.com)·[Cloudflare Registrar](https://www.cloudflare.com/products/registrar/)에서 구매
 
 #### 2. 로그인
@@ -50,8 +50,8 @@ cloudflared tunnel create kormarc-ui
 #### 4. 라우팅 설정
 
 ```powershell
-cloudflared tunnel route dns kormarc kormarc-api.okwhr.kr
-cloudflared tunnel route dns kormarc-ui kormarc.okwhr.kr
+cloudflared tunnel route dns kormarc kormarc-api.kormarc-auto.kr
+cloudflared tunnel route dns kormarc-ui kormarc.kormarc-auto.kr
 ```
 
 #### 5. config 파일
@@ -60,9 +60,9 @@ cloudflared tunnel route dns kormarc-ui kormarc.okwhr.kr
 
 ```yaml
 tunnel: kormarc
-credentials-file: C:\Users\okwhr\.cloudflared\<TUNNEL_ID>.json
+credentials-file: C:\Users\kormarc-auto\.cloudflared\<TUNNEL_ID>.json
 ingress:
-  - hostname: kormarc-api.okwhr.kr
+  - hostname: kormarc-api.kormarc-auto.kr
     service: http://localhost:8000
   - service: http_status:404
 ```
@@ -73,7 +73,7 @@ ingress:
 cloudflared tunnel run kormarc
 ```
 
-폰 브라우저 → `https://kormarc-api.okwhr.kr` 접속.
+폰 브라우저 → `https://kormarc-api.kormarc-auto.kr` 접속.
 
 ---
 

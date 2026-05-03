@@ -19,7 +19,7 @@
 ### 1) git history에서 일시 복원
 
 ```bash
-cd "C:\Users\okwhr\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
+cd "C:\Users\kormarc-auto\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto"
 
 # 최근 auth_setup.py가 있던 commit 검색 (지난 회전 또는 최초 도입)
 git log --diff-filter=AD --pretty=format:"%h %ad %s" --date=short -- scripts/auth_setup.py | head -5

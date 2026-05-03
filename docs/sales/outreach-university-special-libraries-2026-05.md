@@ -42,7 +42,7 @@ KSLA 한국사립대학도서관협의회 가입 도서관에 KORMARC 자동화 
 
 5월 KLA 5.31 발표 후 KSLA 학술대회 강의·기고 가능. 답장 부탁드립니다.
 
-[PO 이름] · okwhrlgma@gmail.com · github.com/okwhrlgma-bit/library
+[PO 이름] · contact@kormarc-auto.example · github.com/kormarc-auto/library
 ```
 
 ### 1-2. 국공립대학 도서관
@@ -68,7 +68,7 @@ KSLA 한국사립대학도서관협의회 가입 도서관에 KORMARC 자동화 
 - PILOT 4주 + 월 15만원 / 5,000건
 - KSLA·KERIS 협력 + KLA 발표 인용 가능
 
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ---
@@ -99,7 +99,7 @@ okwhrlgma@gmail.com
 - 사내망 호스팅 (self-host 옵션·Docker·Render·Fly.io)
 - DSAR·72h 신고 자동
 
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ### 2-2. 정부·공공기관 도서관
@@ -132,7 +132,7 @@ okwhrlgma@gmail.com
 - 개인정보보호법 §35-3·§36
 - PIPA 시행 (2026-09-11) 옵션 C 정합
 
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ### 2-3. 의학·법률 전문도서관 (분야 특화)
@@ -156,7 +156,7 @@ okwhrlgma@gmail.com
 - 첫 50건 무료
 - 분야 시소러스 추가 가능 (사서 요청·자율 적용)
 
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ---
@@ -185,7 +185,7 @@ NLK 온라인자료과는 MODS XML 5 자료유형 (멀티미디어·오디오북
 - NLK 디지털 컬렉션 위탁 운영 도서관 + 전국 디지털 아카이브
 - 월 30만원 / 무제한 (대규모 디지털 컬렉션)
 
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ---

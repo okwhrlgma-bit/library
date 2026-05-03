@@ -5,7 +5,7 @@
 
 ## Step 1: PO .env 작성 (5분)
 
-`C:\Users\okwhr\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto\.env`:
+`C:\Users\kormarc-auto\OneDrive\바탕 화면\클로드 코드 활동용\kormarc-auto\.env`:
 ```
 DATA4LIBRARY_AUTH_KEY=64b83252ee4c195e667c6cca0ba3226f93a10a1c487f254a93134f423ca8cde3
 KAKAO_API_KEY=05fdd9c0f5848cffc555f574d9ebfcc7

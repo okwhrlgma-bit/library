@@ -142,4 +142,4 @@
 
 ---
 
-**문의**: PO `okwhrlgma@gmail.com`. 인터뷰 진행 후 24시간 내 follow-up 메일 + PILOT 일정 제안.
+**문의**: PO `contact@kormarc-auto.example`. 인터뷰 진행 후 24시간 내 follow-up 메일 + PILOT 일정 제안.

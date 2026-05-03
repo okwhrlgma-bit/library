@@ -87,8 +87,8 @@ def _setup_page() -> None:
         layout="centered",
         initial_sidebar_state="collapsed",
         menu_items={
-            "Get Help": "mailto:okwhrlgma@gmail.com",
-            "Report a bug": "mailto:okwhrlgma@gmail.com",
+            "Get Help": "mailto:contact@kormarc-auto.example",
+            "Report a bug": "mailto:contact@kormarc-auto.example",
             "About": "kormarc-auto · 한국 도서관 KORMARC 자동 생성 SaaS",
         },
     )
@@ -1586,7 +1586,7 @@ def main() -> None:
         st.markdown(f"- [가격 페이지]({PAYMENT_INFO_URL})")
         st.markdown("---")
         st.markdown("### 약관·개인정보")
-        _docs_base = "https://github.com/okwhr/kormarc-auto/blob/main/docs"
+        _docs_base = "https://github.com/kormarc-auto/kormarc-auto/blob/main/docs"
         st.markdown(f"- [이용약관]({_docs_base}/terms-of-service.md)")
         st.markdown(f"- [개인정보 처리방침]({_docs_base}/privacy-policy.md)")
         st.caption("개인정보보호법 §35-3·§36에 따라 본인 데이터 다운로드/삭제 권리가 있습니다.")

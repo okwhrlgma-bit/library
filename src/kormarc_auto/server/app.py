@@ -471,7 +471,7 @@ def create_app() -> FastAPI:
                 "Koha / Alma (글로벌 표준)",
             ],
             "free_trial": "신규 가입 50건 무료 — `/signup` 호출",
-            "po_contact": "okwhrlgma@gmail.com",
+            "po_contact": "contact@kormarc-auto.example",
             "pricing_url": get_payment_info_url(),
         }
 

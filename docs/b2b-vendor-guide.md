@@ -158,7 +158,7 @@ for batch in chunks(isbns):
 1. `/signup`으로 키 발급 (50건 무료)
 2. 거래처 도서관 1곳 PILOT — 한 달 분 ISBN 100~200건 일괄 처리
 3. 정확도·시간 절감 측정 (사서 면담)
-4. 월 정액 전환 시 PO에 직접 상담 — `okwhrlgma@gmail.com`
+4. 월 정액 전환 시 PO에 직접 상담 — `contact@kormarc-auto.example`
 
 ---
 
@@ -178,4 +178,4 @@ for batch in chunks(isbns):
 
 ---
 
-**문의**: PO `okwhrlgma@gmail.com` · 응답 24시간 이내 (영업일).
+**문의**: PO `contact@kormarc-auto.example` · 응답 24시간 이내 (영업일).

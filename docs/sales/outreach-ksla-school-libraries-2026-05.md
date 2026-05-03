@@ -35,7 +35,7 @@
 
 감사합니다.
 [PO 이름] (사서 출신 1인 개발자)
-이메일: okwhrlgma@gmail.com
+이메일: contact@kormarc-auto.example
 링크: kormarc.app (또는 임시 URL)
 ```
 
@@ -93,7 +93,7 @@ KSLA 회원 선생님들께 정보 공유드립니다.
 
 [무료 50건 체험] [KSLA 회원 우선 PILOT 5관]
 
-문의: 회신 또는 okwhrlgma@gmail.com
+문의: 회신 또는 contact@kormarc-auto.example
 ```
 
 ### 뉴스레터 기고 (월간)

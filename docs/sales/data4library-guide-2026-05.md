@@ -59,7 +59,7 @@ kormarc-auto wishlist --input pilot_2week.txt --output reports/wishlist_2week.js
 - 30분 수동 → 5분 자동
 - 첫 50건 무료 + 월 3만 (작은) ~ 15만원 (일반 공공)
 
-okwhrlgma@gmail.com
+contact@kormarc-auto.example
 ```
 
 ---

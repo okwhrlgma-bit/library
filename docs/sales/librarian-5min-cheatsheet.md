@@ -79,7 +79,7 @@ kormarc-auto prefix-discover "D:\<자관>\수서"
 | KOLAS 반입 실패 | 마크 파일을 폰으로 PO에게 보내주세요 |
 | 인터넷 X | 캐시 7일 — 같은 ISBN은 오프라인 OK |
 
-**카카오 채널 「kormarc-auto」 또는 okwhrlgma@gmail.com — 24시간 내 답변.**
+**카카오 채널 「kormarc-auto」 또는 contact@kormarc-auto.example — 24시간 내 답변.**
 
 ---
 
@@ -107,4 +107,4 @@ kormarc-auto prefix-discover "D:\<자관>\수서"
 
 ---
 
-**문의·PILOT 신청**: okwhrlgma@gmail.com · 카카오 채널 「kormarc-auto」 · github.com/okwhrlgma-bit/library
+**문의·PILOT 신청**: contact@kormarc-auto.example · 카카오 채널 「kormarc-auto」 · github.com/kormarc-auto/library

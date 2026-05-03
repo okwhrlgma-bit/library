@@ -86,7 +86,7 @@ def emergency_contact_info(library_config: dict) -> dict:
         "119": "화재·구급",
         "관장": library_config.get("director_phone", "(미설정)"),
         "경비실": library_config.get("security_phone", "(미설정)"),
-        "kormarc-auto 지원": "okwhrlgma@gmail.com",
+        "kormarc-auto 지원": "contact@kormarc-auto.example",
     }
 
 

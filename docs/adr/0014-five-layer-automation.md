@@ -37,7 +37,7 @@ Routine 등록 시점:
 - `trig_01Yb5Ze4eAwn4Z6srKDDu2Ma` (주간)
 - `trig_01JGajzBSdRhMnS8KQPz5H8q` (월간)
 
-GitHub repo: PRIVATE (https://github.com/okwhrlgma-bit/library) — Cloud routine OAuth 인증으로 작동.
+GitHub repo: PRIVATE (https://github.com/kormarc-auto/library) — Cloud routine OAuth 인증으로 작동.
 
 ## Consequences
 

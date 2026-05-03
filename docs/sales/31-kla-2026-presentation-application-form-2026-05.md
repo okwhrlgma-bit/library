@@ -9,7 +9,7 @@
 
 - **성명**: [PO 이름]
 - **소속**: kormarc-auto (1인 SaaS·전 사서)
-- **이메일**: okwhrlgma@gmail.com
+- **이메일**: contact@kormarc-auto.example
 - **연락처**: [PO 연락처]
 - **전 소속**: PILOT 1관 (수도권·사서 8명 운영) ★ 자관명 X 표기
 

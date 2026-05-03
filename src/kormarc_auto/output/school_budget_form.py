@@ -121,7 +121,7 @@ def generate_school_budget_form_markdown(data: SchoolBudgetFormData) -> str:
 
 > 본 결재 양식은 kormarc-auto가 자동 생성한 초안입니다.
 > 학교 사정에 맞게 수정 후 제출해주세요.
-> 문의: okwhrlgma@gmail.com
+> 문의: contact@kormarc-auto.example
 
 {f"## 추가 메모{chr(10)}{chr(10)}{data.additional_notes}{chr(10)}" if data.additional_notes else ""}
 """

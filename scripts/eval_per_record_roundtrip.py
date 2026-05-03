@@ -24,7 +24,7 @@ from datetime import date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = Path(r"D:\내를건너서 숲으로 도서관\수서\2024\2024_마크파일")
+DATA_DIR = Path(r"D:\○○도서관\수서\2024\2024_마크파일")
 OUT_DIR_BASE = ROOT / "docs" / "eval" / "results"
 
 

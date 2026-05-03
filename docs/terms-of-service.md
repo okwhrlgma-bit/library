@@ -111,4 +111,4 @@
 - 사업화 체크리스트: `docs/business-checklist.md`
 - B2B 가이드: `docs/b2b-vendor-guide.md`
 
-**문의**: PO `okwhrlgma@gmail.com`
+**문의**: PO `contact@kormarc-auto.example`

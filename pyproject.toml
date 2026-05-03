@@ -5,7 +5,8 @@ description = "한국 도서관용 KORMARC 자동 생성 도구 — ISBN/사진 
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "Apache-2.0" }
-authors = [{ name = "okwhr", email = "okwhrlgma@gmail.com" }]
+authors = [{ name = "kormarc-auto contributors" }]
+maintainers = [{ name = "kormarc-auto" }]
 
 dependencies = [
   "pymarc>=5.3",

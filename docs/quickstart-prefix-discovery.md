@@ -142,7 +142,7 @@ kolas_register:
 | `D:\...` 디렉토리 없음 | 자관 .mrc 폴더 경로 다시 확인. |
 | 99% 미만 | 위반 유형 확인 → PO에게 출력 결과 보내주세요. 자관별 정책 검토 후 모듈 보강. |
 
-PO 컨택: okwhrlgma@gmail.com / 카카오 채널 [채널명]
+PO 컨택: contact@kormarc-auto.example / 카카오 채널 [채널명]
 
 ---
 

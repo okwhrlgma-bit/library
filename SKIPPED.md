@@ -15,4 +15,4 @@
 - 항목: B안 §2 v0.6.0 release notes 자동 push
 - 차단 사유: gh CLI PO 환경 미설치 (`which gh.exe` = not found)
 - 영향: tag v0.6.0은 push 완료·release notes만 PO 수동
-- PO 작업: https://github.com/okwhrlgma-bit/library/releases/new?tag=v0.6.0
+- PO 작업: https://github.com/kormarc-auto/library/releases/new?tag=v0.6.0

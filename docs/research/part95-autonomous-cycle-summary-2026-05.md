@@ -102,7 +102,7 @@ Part 92 dossier (옵션 1·2·3 + T1·T2 backlog) → 자율 실행 = **3 옵션
 
 - `scripts/anonymize_pii.py` 작성 + 122 files·533 substitutions
 - whitelist: anonymize_pii.py 자체·test_handover_manual·qa-validator agents·pii-guard-hook-design
-- "조기흠" → "사서 E"·도서관명 → "자관"·정량 통계 보존
+- "사서 E" → "사서 E"·도서관명 → "자관"·정량 통계 보존
 - v0.6.0 Q5 PIPA 게이트 = PASS (자관 식별자 leak 0건·eval corpus 검증)
 
 ---
@@ -206,7 +206,7 @@ Part 92 dossier (옵션 1·2·3 + T1·T2 backlog) → 자율 실행 = **3 옵션
 - Part 92 dossier (옵션 1+2+3 + T1·T2 backlog)
 - Part 93 data4library-mcp 분석
 - Part 94 1,447 sources sub-research (8 영역)
-- 자관 174 .mrc 실측 (D:\내를건너서 숲으로 도서관)
+- 자관 174 .mrc 실측 (D:\○○도서관)
 - HumanLayer CLAUDE.md ≤60 line ceiling
 - Anthropic prompt caching: 1.25× write·0.10× read
 - PCC 588 provenance: "augmentation, not automation"

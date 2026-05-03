@@ -154,7 +154,7 @@ def issue_free_trial_key(
     _append_signup_log(entry)
 
     docs_base = os.getenv(
-        "KORMARC_PUBLIC_DOCS_URL", "https://github.com/okwhr/kormarc-auto/blob/main/docs"
+        "KORMARC_PUBLIC_DOCS_URL", "https://github.com/kormarc-auto/kormarc-auto/blob/main/docs"
     )
     kakao_channel = os.getenv("KORMARC_KAKAO_CHANNEL_URL", "https://pf.kakao.com/_kormarc")
     welcome = (

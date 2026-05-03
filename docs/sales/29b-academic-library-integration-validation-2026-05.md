@@ -110,7 +110,7 @@
 - 본 검증 보고서에 사례 인용 (자관 익명화 정합)
 
 ### 신청
-- okwhrlgma@gmail.com
+- contact@kormarc-auto.example
 - 또는 kormarc.app PILOT 신청 폼
 
 ---
