@@ -3,6 +3,15 @@
 .env.local
 .env.*.local
 
+# 자관 데이터 보안 (PIPA·tenant_isolation·옵션 2 명령)
+# 측정 결과 JSON만 commit·원본 .mrc·매핑 테이블·합성 ID = git X
+docs/eval/raw/
+docs/eval/private/
+docs/eval/results/*/raw_records.json
+docs/eval/results/*/anonymization_mapping.json
+*.mrc
+!tests/samples/golden/*.mrc
+
 # Streamlit secrets (ADR 0011·DECISIONS 6dim+7 — Part G Step 2·4)
 .streamlit/auth_config.yaml
 .streamlit/secrets.toml

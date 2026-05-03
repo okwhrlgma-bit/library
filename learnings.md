@@ -6,6 +6,31 @@
 
 ---
 
+## 2026-05-03 — 옵션 2 disaggregation 실측 (status: active·중요)
+
+### Q. 자관 174 파일 disaggregation 실측 결과 (시나리오 A·자관 D 드라이브 접근 가능)
+- 174 파일·3,383 레코드 = claim 100% 정합·SKIPPED 0건
+- **round-trip 100%** (200 sample) = 파서·builder 무손실 입증
+- 블록별 존재율: 00X·0XX·245·260·6XX·7XX·9XX = **모두 100%**
+- 5XX 주기 = 59.21% (책별 차등·정상)
+- 4XX 총서 = 29.8% (총서 책 한정)
+- **1XX 주표목 = 0%** = 자관 정책 (700 부출만 사용)
+- **880 한자 병기 = 0%** = 자관 한자 자료 X (정책)
+- **결론**: 99.82% 단일 = round-trip 100%과 정합·peer review 통과 가능
+- **제한**: external API 매칭 정확도 ≠ round-trip·NL_CERT_KEY 발급 후 진짜 측정 가능
+
+### 학습: 측정 결과는 그대로 적기 (정직성)
+- 1XX/880 = 0% = 우리 builder 잘못 X·자관 정책 = README footnote 명시
+- 6XX 100% = 단순 존재율·F1 정확도 X = subject 정확도 별도 측정 필요
+- 측정 모듈: `evaluation/accuracy_disaggregation.py` + 실 데이터 = `scripts/eval_real_disaggregation.py`
+
+### PO 보고 가드 발동
+- 옵션 2 결과 = README 카피·badge 교체·우선순위 재조정 = PO 결정 영역
+- 자율 사이클 옵션 1 (eval-corpus 빌드)·옵션 3 (VCR 녹화) = PO 결정 후 진행
+- 측정 결과 60-80% 시나리오 = 발생 X (모두 100% 또는 자관 정책 0%)
+
+---
+
 ## 2026-05-03 — Part 91·92·93 핵심 학습 (status: active)
 
 ### I. 99.82% 단일 정확도 = peer review 미통과 위험

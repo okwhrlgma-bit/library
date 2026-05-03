@@ -1,0 +1,82 @@
+{
+  "eval_corpus_id": "PILOT-자관-2024",
+  "library_count": 1,
+  "files_count": 174,
+  "records_count": 3383,
+  "measurement_date": "2026-05-03",
+  "by_block": {
+    "00X 제어": {
+      "records_with_block": 3383,
+      "total_fields": 6766,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 2.0
+    },
+    "0XX 기술·식별": {
+      "records_with_block": 3383,
+      "total_fields": 15180,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 4.49
+    },
+    "1XX 주표목": {
+      "records_with_block": 0,
+      "total_fields": 0,
+      "coverage_pct": 0.0,
+      "avg_fields_per_record": 0.0
+    },
+    "245 표제·책임": {
+      "records_with_block": 3383,
+      "total_fields": 3383,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 1.0
+    },
+    "250·260·264·300 기술": {
+      "records_with_block": 3383,
+      "total_fields": 6896,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 2.04
+    },
+    "4XX·8XX 총서": {
+      "records_with_block": 1008,
+      "total_fields": 1008,
+      "coverage_pct": 29.8,
+      "avg_fields_per_record": 0.3
+    },
+    "5XX 주기": {
+      "records_with_block": 2003,
+      "total_fields": 2536,
+      "coverage_pct": 59.21,
+      "avg_fields_per_record": 0.75
+    },
+    "6XX 주제·NLSH": {
+      "records_with_block": 3383,
+      "total_fields": 3392,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 1.0
+    },
+    "7XX 부출표목": {
+      "records_with_block": 3383,
+      "total_fields": 6273,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 1.85
+    },
+    "880 한자 병기": {
+      "records_with_block": 0,
+      "total_fields": 0,
+      "coverage_pct": 0.0,
+      "avg_fields_per_record": 0.0
+    },
+    "9XX 자관": {
+      "records_with_block": 3383,
+      "total_fields": 4817,
+      "coverage_pct": 100.0,
+      "avg_fields_per_record": 1.42
+    }
+  },
+  "round_trip": {
+    "sample_size": 200,
+    "matched": 200,
+    "round_trip_pct": 100.0,
+    "failed_reasons": {}
+  },
+  "headline_warning": "PILOT 자관 1관 한정·cross-library 검증 X·external API 매칭 X (NL_CERT_KEY 미발급)·본 결과 = 자관 .mrc 파싱·블록 존재율·round-trip만"
+}

@@ -2,9 +2,9 @@
 
 > **사서가 만든 사서를 위한 KORMARC 자동화 도구**.
 > ISBN 1번 입력 → KORMARC `.mrc` 5초 → **KOLAS III·독서로DLS·알파스 즉시 반입**.
-> **자관 .mrc 174 파일·3,383 레코드 → 99.82% 정합 검증 완료** (2026-04-29).
+> **자관 PILOT 1관 (174 파일·3,383 레코드) round-trip 100% (200 sample)** — MARC 블록별 분리표 ↓ (측정 2026-05-03).
 
-[![release](https://img.shields.io/badge/release-v0.5.0%2B-blue)]() [![tests](https://img.shields.io/badge/tests-532%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-38%2F39-brightgreen)]() [![매뉴얼](https://img.shields.io/badge/연구-Part_91-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![자관 정합](https://img.shields.io/badge/자관_.mrc-99.82%25_(1관)-brightgreen)]() [![페르소나](https://img.shields.io/badge/페르소나-24_활성_%2B_98_백로그-blue)]() [![ICP_PMF](https://img.shields.io/badge/Champion_4%2F4-92.5점-brightgreen)]()
+[![release](https://img.shields.io/badge/release-v0.5.0%2B-blue)]() [![tests](https://img.shields.io/badge/tests-622%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-38%2F39-brightgreen)]() [![매뉴얼](https://img.shields.io/badge/연구-Part_94-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1관)-brightgreen)]() [![페르소나](https://img.shields.io/badge/페르소나-24_활성_%2B_98_백로그-blue)]() [![ICP_PMF](https://img.shields.io/badge/Champion_4%2F4-92.5점-brightgreen)]()
 
 **한국 도서관 사서**가 매일 부딪히는 KORMARC 마크 작업을 권당 8분 → 2분으로 단축. 사서 출신 1인 개발자가 자관 「○○도서관」 PILOT을 거쳐 만든 SaaS.
 
@@ -14,8 +14,30 @@
 
 ## 핵심 가치 (★ 영업 정량)
 
-- ★ **자관 .mrc 174 파일·3,383 레코드 99.82% 정합** (KORMARC 2023.12 한국 KOLAS 실무 정합 검증 완료)
-- **권당 마크 시간**: 8분 → **2분** (75% 단축)
+### MARC 블록별 정합 (자관 PILOT 1관·2026-05-03 측정·Part 94 정합)
+
+| 블록 | 측정값 | 비고 |
+|---|---:|---|
+| **Round-trip 직렬화** | **100%** (200 sample) | 파서·builder 무손실 입증 |
+| 00X 제어 (001·005·008) | 100% | 모든 레코드 |
+| 0XX 기술·식별 (020·040·049·056·082·090) | 100% | 평균 4.49 필드/권 |
+| 245 표제·책임 | 100% | |
+| 250·260·300 기술 | 100% | |
+| 6XX 주제·NLSH | 100% (650 자동) | F1 측정 = NL_CERT_KEY 발급 후 |
+| 7XX 부출표목 | 100% | 평균 1.85/권 |
+| 9XX 자관 (049 prefix·청구기호) | 100% | |
+| 5XX 주기 (520 요약·588 출처) | 59.21% | 책별 차등 (정상) |
+| 4XX·8XX 총서 | 29.8% | 총서 책 한정 |
+| 1XX 주표목 (100·110) | 0% (자관 정책) | 자관 = 700 부출만 사용 |
+| 880 한자 병기 | 0% (자관 한자 자료 X) | 한자 자료 도입 시 활성 |
+
+**측정 출처**: `docs/eval/results/2026-05-03/per-block.json` ([결과 JSON 공개](docs/eval/results/2026-05-03/per-block.json))
+**측정 코퍼스**: 자관 PILOT 1관·174 파일·3,383 레코드·SKIPPED 0건
+**제한**: cross-library 검증 X·external API 매칭 X (NL_CERT_KEY 미발급)·v0.7 = `kormarc-eval-corpus-v1` 1,000건 공개 예정 (Part 92 §A.5)
+
+### 사서 가치
+- **권당 마크 시간**: 8분 → 1.5~2분 (descriptive 블록·외주 대비 75% 단축)
+- (위 ↑ MARC 블록별 분리표 = 단일 99.82% 대체·peer review·diligence 통과)
 - **KOLAS 자동 반입**: ISBN을 파일명으로 한 `.mrc` 출력 → 반입 폴더 자동 인식 (cp949·utf-8·euc-kr 자동 fallback)
 - **AI 비전**: ISBN 없는 자료(자비출판·옛 책·기증도서)도 표지 사진 한 장으로 처리
 - **KDC 자동 분류**: 다단계 폴백 (NL Korea → 부가기호 → AI 추천 3개·사서가 최종 선택)
