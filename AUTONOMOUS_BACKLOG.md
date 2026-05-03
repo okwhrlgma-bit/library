@@ -2,10 +2,75 @@
 
 > **목적**: 1h cloud routine·주간·월간 fire 시 자율 작업 우선순위 가이드. 매 사이클 cloud agent가 본 파일을 자동 참조해서 다음 작업 결정.
 > **자동 갱신**: cloud agent가 작업 완료 시 본 파일에서 항목 제거·신규 추가.
-> **단일 진실 (2026-05-02·03 야간 사이클 갱신)**:
-> - ★ 자관 .mrc 99.82% 정합 + 영업 자료 50건 + 약관 3건 (DPA·SLA·환불)
-> - ★ Part 76~82 = 사서 페인 54건 정부·학술·언론 검증
-> - ★ 신규 코드 모듈 43건 (오늘) + 459 tests passed
+> **단일 진실 (2026-05-03 야간 + Part 87·88·89·90 갱신)**:
+> - ★ 자관 .mrc 99.82% 정합 + 영업 자료 50건 + 법무 7건 (DPA·SLA·환불·aladin·privacy·incident·retention)
+> - ★ Part 76~90 = 사서 페인 54건 + 5 페르소나 검증·회복 + KORMARC 표준 8 카테고리 정정
+> - ★ 신규 코드 모듈 50+ + **515 tests passed** + ruff 0 errors + CI Green
+
+---
+
+## 🆕 2026-05-03 야간 신규 P0 큐 (Part 87·88·89·90 후속)
+
+### KLA D-28 (2026-05-31 마감) 게이트
+- [ ] **1-1 진실 점검** — docs/audits/2026-05-03-reality-check.md (READMS·STATUS·assertion 정량 주장 vs 실제 코드 검증)
+- [ ] **1-2 KLA 5분 시연 가드레일** — scripts/demo/kla_5min.sh + 4 페르소나 1분 시연 + 부스 노트북 setup 가이드
+- [ ] **1-3 backlog 정합** — 본 파일 형식 정렬 (id·status·owner·priority·blockers·acceptance)
+
+### 정확도 일반화 (PMF 2번째 위험)
+- [ ] **2-1 잔여 0.18% 분석** — Part 87 residual error analysis (6레코드 diff·분류·수정)
+- [ ] **2-2 cross-library 시뮬** — scripts/simulation/cross_library_accuracy.py (4 페르소나 가상 자관 5곳)
+- [ ] **2-3 KDC 폴백 정확도** — scripts/eval/kdc_pipeline_eval.py (4단계·비용·정확도)
+- [ ] **2-4 880 한자 회귀** — tests/test_field_880.py 5종 케이스 강화
+- [ ] **2-5 Vision 비용·정확도** — scripts/eval/vision_cost_accuracy.py (Haiku vs Sonnet 4 시나리오)
+
+### PILOT 5관 모집·온보딩 자동화
+- [ ] **3-1 5분 온보딩 측정** — scripts/onboarding/five_minute_smoke.py (가상 신규 사서·매일 cron)
+- [ ] **3-2 페르소나 PILOT 폼** — landing/pilot/{ec,su,sc,sm}/ + 자동 환영 메일
+- [ ] **3-3 prefix 정확도** — top-3 후보 + UI 1클릭 선택
+
+### KOLAS Ⅲ 종료 (2026-12-31) 영업 캠페인
+- [ ] **4-1 KOLAS → ALPAS/Koha/Alma/SOLARS 마이그** — round-trip 95%+ 검증
+- [ ] **4-2 1,271관 funnel** — 자치구·교육청·학교법인 세그멘테이션
+
+### 사서 E (1순위 ICP) UX
+- [ ] **5-1 사서 E 매크로 사서 모드** — Streamlit 한 화면 (.mrc + hwp + 라벨 + 보고)
+- [ ] **5-2 페르소나 어휘 일관성** — UI/문서 mismatch audit
+- [ ] **5-3 122 페르소나 11 subagent 실효성** — dead code 식별
+
+### 결제·법규
+- [ ] **6-1 billing e2e** — 4 plan + 권당 100원 + grace + 환불
+- [ ] **6-2 PIPA gap audit** — §35-3·§36·§15·§17 코드 매핑
+
+### 86-Part 통합·학술
+- [ ] **7-1 docs/INDEX.md 다층** — 페르소나별 진입 경로
+- [ ] **7-2 KLA 학술 포스터** — Part 86 비교표 → docs/academic/
+
+### 테스트·CI 강화
+- [ ] **8-1 부하 테스트** — batch_vendor 1,000건·50k 마이그
+- [ ] **8-2 CI 강화** — pre-commit·detect-secrets·nightly cycle
+- [ ] **8-3 binary_assertions 카탈로그** — 38건 항목·위치·기준
+
+### 보안·관측성
+- [ ] **9-1 secret scan + redaction middleware** — 로그 PII 누설 0
+- [ ] **9-2 SLO 99.5/99.9/99.95% 측정** — Prometheus /metrics + 다운타임 핑
+
+### 메타 (over-engineering 점검)
+- [ ] **10-2 v0.5.0 모듈 over-engineering 자기 점검** — 4 페르소나 페인 직결 X = SKIPPED 이관
+
+### Part 91·92·93·94 (다음 사이클 보고서)
+- [ ] **Part 91 페르소나 100점 도달 매트릭스** — Champion 4 × 8 차원 + 보완 모듈 우선순위
+- [ ] **Part 92 122 페르소나 dead code audit**
+- [ ] **Part 93 부하 테스트 결과**
+- [ ] **Part 94 binary_assertions 38건 카탈로그**
+
+### 페르소나 100점 도달 (PO 명령 2026-05-03)
+- [ ] **페르소나 01 김지원 (현 82) → 100**: decision_maker_pdf·DLS 521 강화·사서교사 일과 통합
+- [ ] **페르소나 02 박서연 (현 86) → 100**: 1인 운영 통합 dashboard·자원봉사 onboarding
+- [ ] **페르소나 03 이민재 (52→~74) → 100**: Flutter 앱 실구현·sync_api·conflict_resolver
+- [ ] **페르소나 04 정유진 (53→~70) → 100**: lcsh_mapper·alma_xml_writer·authority_control v2·PubMed
+- [ ] **페르소나 05 최영자 Rejecter → 60**: KOLAS 100% 호환 보강·30년차 차별 없음 정책
+
+---
 > - ★ 122 페르소나 / 28 카테고리 / 11 subagent 자율 가동
 > - ★ PMF 검증 통과 (Sean Ellis 62.5%·LTV/CAC 15.8x·10단어 통과)
 > - ★ 캐시카우 도달율 = 900~1,380% (월 5,940만~9,110만 잠재·13.8x exit)

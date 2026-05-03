@@ -3,6 +3,43 @@
 > NIGHT_RUN_PROTOCOL.md 표준 양식 따라 매 commit 변경 사유 기록.
 > 종료 게이트: pytest 통과 + binary_assertions 38/38 + commit.
 
+## v0.5.0+ — 2026-05-03 야간 (Part 87·88·89·90 + M3·M7·M9 + Champion 4/4 회복)
+
+### Part 87 전략 피벗 (deep research 200+ 소스)
+- 사진 OCR → ISBN 바코드 + SEOJI 백본 우선
+- ADR 0021·0022·0023 (바코드 / 알라딘 자체 키 위임 / LLM 분리)
+- budgaeho_decoder (EAN-13 add-on → KDC 0 API 호출·100% 정확)
+
+### M3 KDC waterfall + M7 KOLIS-NET 카피 카탈로깅
+- kdc_waterfall.py (SEOJI→data4library→budgaeho→AI 폴백·source/confidence 추적)
+- copy_cataloging.py (KOLIS-NET 가중 다수결·5개관 매칭 신뢰도)
+- aggregator 통합 (KDC 자동 폴백 hook)
+
+### M9 컴플라이언스 4종
+- aladin-compliance·privacy-policy·incident-response·data-retention
+- PIPA 2026-09-11 + ISMS-P 2027-07-01 2단계 분리
+
+### Part 88 v2 전략 + 5 페르소나 정리
+- files/ → docs/research/part88·88a·88b + docs/personas/01~05 정리·익명화·원본 삭제
+- 결제자 ≠ 사서·권당 200원·외주 흡수·12~18개월 660만
+
+### Part 89 페르소나 깐깐 검증
+- Champion 4 중 2 PASS·2 FAIL (이민재 52·정유진 53)
+
+### Part 90 FAIL → PASS 회복
+- DDC classifier (윤희윤 2017 KDC↔DDC swap)
+- MeSH mapper (한국어 의학 40+ → KORMARC 650 ▾2 mesh)
+- mobile/offline_queue (SQLite·tenant 격리·sync API)
+- mobile/bluetooth_scanner (EAN-13·3 권장 모델·BT MAC)
+- 22 신규 tests + README Phase 2-A/2-B 분리
+
+### 누적 통계
+- pytest: 462 → **515 passed** (+53)
+- ruff: 0 errors·format ✓
+- CI: ✅ success 연속
+- docs: 267 .md (research 73·sales 44·personas 5·legal 7·adr 24)
+- 신규 모듈 7건 (budgaeho·kdc_waterfall·copy_cataloging·ddc·mesh·offline_queue·bt_scanner)
+
 ## v0.5.0 — 2026-05-02·03 (야간 무중단 사이클·Part 76~82·40 신규 모듈)
 
 ### PO 비전 확정

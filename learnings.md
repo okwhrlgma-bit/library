@@ -6,6 +6,54 @@
 
 ---
 
+## 2026-05-03 — Part 87·88·89·90 핵심 학습 (status: active)
+
+### A. 알라딘 약관 = 상업 SaaS 자체 키 호출 금지
+- **출처**: blog.aladin.co.kr/openapi/5353304
+- **사실**: "도서 판매·도서 정보 기반 영리 서비스 이용 불가"
+- **적용**: Tenant-Owned Key 모델 (도서관이 자체 발급한 TTBKey를 우리 서버가 위임 호출)
+- **코드**: src/kormarc_auto/api/aladin.py docstring + ADR 0022 + docs/legal/aladin-compliance
+
+### B. KORMARC 표준 = 8 카테고리 (NOT 9)
+- **사실**: BK·CR·CF·MP·MU·VM·RB·MX (도서·계속·전자·지도·녹음·시청각·고서·복합)
+- **우리 코드**: 17 세부 subtype (book_single·thesis·braille 등) → 8 카테고리에 매핑 (정합 ✅)
+- **정정**: README/CLAUDE.md "9 자료유형" 표현 = 통계 분류와 혼동 → 갱신 완료
+
+### C. 부가기호 5자리 = SEOJI KDC 공백 0 API 호출 해소
+- **출처**: 한국출판유통진흥원 ISBN·CIP 발급 안내
+- **사실**: EAN-13 add-on 5자리 = 독자대상·발행형태·KDC 대분류·세분류
+- **예**: `03810` = 교양·단행본·문학·한국문학
+- **적용**: budgaeho_decoder.py (100% 정확·SEOJI 2020-12-31 이후 KDC 공백 즉시 해소)
+
+### D. KDC↔DDC swap 규칙 (윤희윤 2017)
+- KDC 4(자연) ↔ DDC 5 / KDC 5(기술) ↔ DDC 6 / KDC 6(예술) ↔ DDC 7 / KDC 7(언어) ↔ DDC 4
+- main class 정확도 90%+·세부 75%
+- 적용: classification/ddc_classifier.py = 대학 분관 페르소나 04 deal-breaker 해소
+
+### E. 결제자 ≠ 사서 (Part 88 v2 핵심 정정)
+- 학교: 사서교사 12~15% 배치 + 86% 자원봉사 = 외주 + 사서 검수만
+- 영업 깔때기: "사서 → 행정실장·교장·본관·교육청" **2단계 설계 필수**
+- 1차 ICP: 페르소나 02 (작은도서관 관장·본인 결제) + 01 (사서교사·행정실 결재)
+- Phase 2 ICP: 03 (P15 순회·교육청 3단계) + 04 (대학 분관·본관 3단계)
+
+### F. PIPA 2026-09-11 + ISMS-P 2027-07-01 = 2단계 컴플라이언스
+- 1단계 (2026-09): 과징금 매출 3%→10%·CEO 개인 감독·24h 통보 의무
+- 2단계 (2027-07): ISMS-P 의무화 (대규모 처리자만)
+- 660만/월 = ISMS-P 의무 X·단 PIPA 1단계는 즉시 대응 (DPA·SLA·환불·IR 4종 docs 완비)
+
+### G. NLM MeSH 한국어 매핑 = 의학도서관 차별화
+- 의학도서관 (페르소나 04 의학대학 분관) = LCSH·NLSH X·**MeSH** 사용
+- KORMARC 650 ▾2 mesh 자동 (mesh_mapper.py 40+ 한국어 키워드)
+- Phase 2: KMeSH XML 30,000+ term import 가능
+
+### H. 5 페르소나 통과 임계값 = 70+
+- Champion 4: 임계값 70+ (B2B 상위 25%)
+- Rejecter 1: 35점 = 정상 (ICP 외 명확화)
+- Part 89 검증: 김지원 82·박서연 86 PASS / 이민재 52·정유진 53 FAIL
+- Part 90 회복: DDC·MeSH·offline_queue·BT scanner = 03·04 PASS 도달 추정
+
+---
+
 ## 2026-04-29 — PO 종합 전략 보고서 흡수 (status: active)
 
 **source**: PO 메시지 2026-04-29 — "kormarc-auto 종합 전략 보고서" (8 PART)
