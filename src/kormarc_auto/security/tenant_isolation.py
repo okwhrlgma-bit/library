@@ -26,9 +26,7 @@ from __future__ import annotations
 import functools
 from collections.abc import Callable
 from contextvars import ContextVar
-from typing import Any, TypeVar
-
-T = TypeVar("T")
+from typing import Any
 
 # 요청별 tenant_id 전파 (None = unset = 거부)
 _current_tenant: ContextVar[str | None] = ContextVar("current_tenant", default=None)
@@ -76,7 +74,7 @@ def assert_tenant_match(record_tenant_id: str) -> None:
         )
 
 
-def tenant_scoped(func: Callable[..., T]) -> Callable[..., T]:
+def tenant_scoped[T](func: Callable[..., T]) -> Callable[..., T]:
     """함수에 tenant 검증 강제 (decorator).
 
     사용:
