@@ -156,11 +156,23 @@ kormarc-auto/
 ## Phase별 진척 (v0.5.0 / 2026-05-03)
 
 - ✅ Phase 1 — ISBN → KORMARC + KOLAS 자동 반입
-- ✅ Phase 2 — Vision 2단계 (Haiku ISBN → Sonnet 종합) + prompt caching
+- ✅ **Phase 2-A** — Vision 2단계 (Haiku ISBN → Sonnet 종합) + prompt caching
+- 🚧 **Phase 2-B (P15 순회사서)** — Flutter 모바일 앱 (offline_queue·BT 스캐너 backend stub 완성·앱 구현 진행 중)
 - ✅ Phase 3 — KDC AI 추천 + 880 한자 병기 자동
 - ✅ Phase 4 — Streamlit 14탭 + 모바일 반응형 + Pretendard 사서 친화 테마
 - ✅ Phase 5 — FastAPI REST + X-API-Key + 사용량 카운터 + B2B + 결제 안내
-- ✅ **Phase 6 (v0.5.0)** — 야간 사이클 (Part 76~86) + 사서 친화 + 자관 특이성 + 122 페르소나 11 subagent
+- ✅ **Phase 6 (v0.5.0)** — 야간 사이클 (Part 76~89) + 사서 친화 + 자관 특이성 + 122 페르소나 11 subagent
+- ✅ **Phase 7 (Part 87~89)** — 바코드 우선 피벗 + DDC/MeSH 지원 + 알라딘 자체 키 위임 + 5 페르소나 검증
+
+### 영업 ICP 페르소나 (Part 88·89 검증 통과)
+
+| # | 페르소나 | 결제권자 | 영업 우선순위 | 통과 점수 |
+|---|---|---|---|---:|
+| 01 | 사립 중학교 사서교사 | 행정실장 (2단계) | **Phase 1 ICP** | 82 ✅ |
+| 02 | 작은도서관 관장 (1인) | 본인 (직접) | **Phase 1 ICP** | 86 ✅ |
+| 03 | 학교도서관 순회사서 | 교육청 (3단계) | Phase 2 (Flutter 앱 후) | 52→PASS 진행 |
+| 04 | 사립대 의과대학 분관 | 본관 (3단계) | Phase 2 (DDC/MeSH 적용 후) | 53→PASS 진행 |
+| 05 | 공공도서관 평사서 25년차 | 관장 | ICP 외 (Rejecter) | 35 (정상) |
 
 ### v0.4.x 자율 흡수 (PO 자료 기반)
 
