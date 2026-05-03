@@ -48,11 +48,31 @@
 
 ---
 
-## 빠른 시작 (5분, 더블클릭만)
+## 빠른 시작 (5분, 30초 데모는 키 0개)
 
-### 1. 최초 셋업 (1회)
+### 0. 30초 데모 (API 키 0개·B안 Cycle 2)
 
-`setup-once.bat` 더블클릭 → Python·venv·의존성 자동 설치.
+```bash
+pip install -e .
+KORMARC_DEMO_MODE=1 kormarc-auto demo
+```
+
+→ SAMPLE 7건 + SENTINEL 5건 = 외부 API 호출 0건·5/5 records·round-trip 100%
+
+### 1. 정식 설치 (모든 OS·B안 P2 권장 경로)
+
+```bash
+# 권장 = uv tool install (Python 3.12+·아무 OS)
+uv tool install kormarc-auto
+
+# 또는 pipx
+pipx install kormarc-auto
+
+# 또는 .venv (Windows·기존 .bat 호환)
+setup-once.bat
+```
+
+이후 `kormarc-auto init` → `.env` 템플릿 자동 생성 → 키 입력 → `kormarc-auto serve`.
 
 ### 2. API 키 채우기
 

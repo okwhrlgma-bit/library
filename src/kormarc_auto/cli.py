@@ -211,6 +211,63 @@ def cmd_search(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_init(args: argparse.Namespace) -> int:
+    """B안 P2 — 신규 환경 초기화 (.env 템플릿·작업 디렉토리).
+
+    안전: 기존 .env에 키 값이 1건이라도 있으면 --force도 거부 (PO 키 보호).
+    """
+    cwd = Path.cwd()
+    env_path = cwd / ".env"
+
+    if env_path.exists():
+        existing = env_path.read_text(encoding="utf-8")
+        # 비어있지 않은 KEY=VALUE 1건이라도 있으면 차단 (--force 무관)
+        has_real_value = any(
+            "=" in line
+            and not line.lstrip().startswith("#")
+            and line.split("=", 1)[1].strip() not in ("", '""', "''")
+            for line in existing.splitlines()
+        )
+        if has_real_value:
+            print(f"⛔ .env에 이미 키가 입력되어 있습니다 ({env_path})")
+            print("  PO 키 보호를 위해 --force도 거부합니다.")
+            print("  덮어쓰려면 .env를 직접 백업·삭제 후 init 재실행하세요.")
+            return 1
+        if not args.force:
+            print(f"⚠ .env 이미 존재 (모두 빈 값): {env_path}")
+            print("  덮어쓰려면 --force")
+            return 1
+
+    template = """# kormarc-auto .env 템플릿 (kormarc-auto init 자동 생성)
+# 발급 가이드: 사용자_TODO.txt 참조
+
+# 필수 (B안 §1 backbone)
+NL_CERT_KEY=
+ANTHROPIC_API_KEY=
+
+# 권장 (다중 폴백)
+DATA4LIBRARY_AUTH_KEY=
+KAKAO_API_KEY=
+PUBMED_API_KEY=
+
+# 자관 정책 (선택)
+KORMARC_AGENCY=OURLIB
+KORMARC_PRICE_PER_RECORD_KRW=200
+
+# Plan B Cycle 2 — 키 0개로 30초 데모 = KORMARC_DEMO_MODE=1 후 'kormarc-auto demo'
+KORMARC_DEMO_MODE=
+"""
+
+    env_path.write_text(template, encoding="utf-8")
+    print(f"✓ .env 템플릿 생성 → {env_path}")
+    print()
+    print("다음 단계:")
+    print("  1. .env 메모장으로 열어 키 입력 (사용자_TODO.txt 참조)")
+    print("  2. 키 0개로 즉시 시도 = KORMARC_DEMO_MODE=1 kormarc-auto demo")
+    print("  3. 실 사용 = kormarc-auto isbn 9788937437076")
+    return 0
+
+
 def cmd_serve(args: argparse.Namespace) -> int:
     """FastAPI 서버 실행."""
     from kormarc_auto.server.app import run
@@ -1062,6 +1119,10 @@ def build_parser() -> argparse.ArgumentParser:
     p_demo = sub.add_parser("demo", help="30초 무키 데모 (SAMPLE 7건·SENTINEL 5건)")
     p_demo.add_argument("--isbn", default=None, help="데모 ISBN (없으면 리스트만 출력)")
     p_demo.set_defaults(func=cmd_demo)
+
+    p_init = sub.add_parser("init", help="신규 환경 초기화 (.env 템플릿 생성)")
+    p_init.add_argument("--force", action="store_true", help="기존 .env 덮어쓰기")
+    p_init.set_defaults(func=cmd_init)
 
     # isbn
     p_isbn = sub.add_parser("isbn", help="단일 ISBN → KORMARC")
