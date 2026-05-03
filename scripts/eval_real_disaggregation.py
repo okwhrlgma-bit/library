@@ -203,9 +203,7 @@ def main() -> int:
                 "files_count": len(mrc_files),
                 "records_count": total,
                 "round_trip_pct": round_trip["round_trip_pct"],
-                "block_coverage": {
-                    b: stats["coverage_pct"] for b, stats in block_report.items()
-                },
+                "block_coverage": {b: stats["coverage_pct"] for b, stats in block_report.items()},
             },
             ensure_ascii=False,
             indent=2,
@@ -216,7 +214,11 @@ def main() -> int:
     # SKIPPED
     skipped_path = out_dir / "skipped.json"
     skipped_path.write_text(
-        json.dumps({"skipped_count": len(all_skipped), "items": all_skipped[:50]}, ensure_ascii=False, indent=2),
+        json.dumps(
+            {"skipped_count": len(all_skipped), "items": all_skipped[:50]},
+            ensure_ascii=False,
+            indent=2,
+        ),
         encoding="utf-8",
     )
 

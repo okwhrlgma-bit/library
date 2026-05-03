@@ -477,6 +477,68 @@ def cmd_deposit(args: argparse.Namespace) -> int:
     return 1
 
 
+def cmd_demo(args: argparse.Namespace) -> int:
+    """30초 무키 데모 — Part 92 §A.1 / T2-1 step 5.
+
+    fakellm-style mock 서버 활성·.env·API 키 X·SAMPLE_BOOKS 7건 즉시 사용.
+    """
+    if hasattr(sys.stdout, "reconfigure"):
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+    import os
+
+    from kormarc_auto.demo.offline_mock_server import (
+        SAMPLE_BOOKS,
+        SENTINEL_ISBNS,
+        list_demo_isbns,
+    )
+
+    # KORMARC_DEMO_MODE = aggregator·외부 API 모듈이 자동 mock 사용
+    os.environ["KORMARC_DEMO_MODE"] = "1"
+
+    print("=" * 60)
+    print("kormarc-auto 데모 모드 (30초·API 키 불필요)")
+    print("=" * 60)
+    print(f"\n사용 가능 SAMPLE ISBN ({len(SAMPLE_BOOKS)}건):")
+    for isbn, book in SAMPLE_BOOKS.items():
+        print(f"  {isbn} = {book.get('title', '')}")
+
+    print(f"\nSENTINEL ISBN ({len(SENTINEL_ISBNS)}건·테스트):")
+    for isbn, kind in SENTINEL_ISBNS.items():
+        print(f"  {isbn} = {kind}")
+
+    if args.isbn:
+        from kormarc_auto.demo.offline_mock_server import (
+            mock_anthropic_kdc_recommendation,
+            mock_data4library,
+            mock_seoji,
+        )
+
+        print(f"\n데모 처리: ISBN {args.isbn}")
+        seoji = mock_seoji(args.isbn)
+        d4l = mock_data4library(args.isbn)
+        ai = mock_anthropic_kdc_recommendation(f"book_{args.isbn}")
+
+        print(f"  SEOJI: {seoji.status_code} = {len(seoji.json_body.get('docs', []))}건")
+        print(f"  data4library: {d4l.status_code}")
+        print(f"  AI KDC: {ai.status_code} (mock·결정성)")
+
+        if args.isbn in SAMPLE_BOOKS:
+            book = SAMPLE_BOOKS[args.isbn]
+            print("\nKORMARC 자동 채움 (예시):")
+            for k in ("title", "author", "publisher", "publication_year", "kdc"):
+                if k in book:
+                    print(f"  {k}: {book[k]}")
+            print(
+                "\n→ 실 사용 = .env에 NL_CERT_KEY·ANTHROPIC_API_KEY 입력 후 'kormarc-auto isbn <ISBN>'"
+            )
+    else:
+        print("\n사용: kormarc-auto demo --isbn 9788937437076")
+        print(f"전체 데모 ISBN 리스트: {list_demo_isbns()}")
+
+    return 0
+
+
 def cmd_inspect(args: argparse.Namespace) -> int:
     """책장 사진 OCR → 자관 DB 대조 (장서 점검)."""
     if hasattr(sys.stdout, "reconfigure"):
@@ -925,6 +987,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--verbose", "-v", action="store_true", help="DEBUG 로그 출력")
 
     sub = parser.add_subparsers(dest="cmd", required=True)
+
+    # demo (T2-1 step 5·Part 92 §A.1)
+    p_demo = sub.add_parser("demo", help="30초 무키 데모 (SAMPLE 7건·SENTINEL 5건)")
+    p_demo.add_argument("--isbn", default=None, help="데모 ISBN (없으면 리스트만 출력)")
+    p_demo.set_defaults(func=cmd_demo)
 
     # isbn
     p_isbn = sub.add_parser("isbn", help="단일 ISBN → KORMARC")
