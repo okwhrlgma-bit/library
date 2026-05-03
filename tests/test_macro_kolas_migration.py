@@ -137,6 +137,6 @@ class TestKolasMigration:
 
         msg = kolas_eol_countdown_message()
         assert msg["eol_date"] == "2026-12-31"
-        assert msg["tam_libraries"] == 1271
+        assert msg["tam_libraries"] == 2242  # Part 92 정정
         assert msg["urgency"] in ("low", "medium", "high", "critical")
-        assert "1,271" in msg["headline"] or "1271" in msg["headline"]
+        assert "2,242" in msg["headline"] or "2242" in msg["headline"]

@@ -3,7 +3,7 @@
 PO 명령 (12-섹션 §4.1): "KOLAS → ALPAS/Koha/Alma/SOLARS round-trip 95%+"
 
 배경:
-- KOLAS Ⅲ EOL 2026-12-31 → 1,271관 마이그레이션 필요 (TAM 18,400관)
+- KOLAS Ⅲ 2,242관 마이그레이션 필요 (TAM 18,400관)
 - 평균 5만권/관 × 1,271관 = 6,355만 레코드
 
 타깃 시스템:
@@ -188,9 +188,9 @@ def kolas_eol_countdown_message() -> dict:
         "eol_date": "2026-12-31",
         "days_remaining": days,
         "urgency": urgency,
-        "headline": f"KOLAS Ⅲ 종료 D-{days} = 1,271관 마이그레이션 골든타임",
-        "tam_libraries": 1271,
-        "estimated_records": 1271 * 50_000,  # 6,355만
+        "headline": f"KOLAS Ⅲ 종료 D-{days} = 2,242관 마이그레이션 골든타임",
+        "tam_libraries": 2242,  # Part 92 정정 (NL Korea 사용도서관 현황)
+        "estimated_records": 2242 * 50_000,  # 약 1.12억
     }
 
 

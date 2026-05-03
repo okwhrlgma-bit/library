@@ -36,7 +36,7 @@ ColdSegment = Literal[
 # Segment별 페인 키워드 (Part 76~82)
 SEGMENT_PAINS: dict[ColdSegment, list[str]] = {
     "school_teacher": [
-        "사서교사 13.9% 배치·86% 자원봉사",
+        "사서교사 13.9% 배치·정규 사서교사 미배치 84% (공무직·기간제 포함 시 48~57% 배치)",
         "권당 8분 KORMARC = 사서교사 시간 부족",
         "DLS 521 자료유형 자동 안 됨 = 자원봉사 어려움",
         "행정실 결재 = 사서가 직접 자료 만들기 부담",

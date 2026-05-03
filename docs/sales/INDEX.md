@@ -56,8 +56,8 @@
 | 페르소나 | 비중 | 권장 플랜 | 영업 자료 |
 |---|---|---|---|
 | ★ Excel 매크로 사서 (사서 E) | 1순위·전국 1,500~2,500명 | 월 5만원 | pilot-week1·pilot-package §2.1 |
-| 수서 사서 (사서 A) | 2순위·KOLAS 1,271관 | 월 3~15만원 | pilot-package §2.2 |
-| 종합 사서 (4명) | 3순위·학교 12,200관 86% 자원봉사 | 월 3~5만원 | pilot-package §2.3·outreach-small-school §2 |
+| 수서 사서 (사서 A) | 2순위·KOLAS Ⅲ 2,242관 | 월 3~15만원 | pilot-package §2.2 |
+| 종합 사서 (4명) | 3순위·학교 12,200관 정규 사서교사 미배치 84% (공무직·기간제 포함 시 48~57% 배치) | 월 3~5만원 | pilot-package §2.3·outreach-small-school §2 |
 | 영상 편집 사서 | 영업 X | - | pilot-package §2.4 |
 
 ---
