@@ -119,14 +119,80 @@ PIPA §35·§36·§37·§35-2에 따라 다음 권리를 행사할 수 있습니
 
 ---
 
-## 제9조 (국외 이전)
+## 제9조 (국외 이전) — PIPA §28의8 6항목 명시 (강화 2026-05-04·외부 858 출처 보고서 정합)
 
-| 수신자 | 국가 | 이전 정보 | 근거 |
-|---|---|---|---|
-| Cloudflare | 미국 | 트래픽 메타·CDN 캐시 | 정보주체 동의 |
-| Anthropic | 미국 | KORMARC 생성 prompt (서지 메타·개인정보 X) | 정보주체 동의 |
+본 조는 「개인정보 보호법」 §28의8(개인정보의 국외 이전) ①항 제3호 (계약 이행을 위한 처리위탁·보관 + 처리방침 공개로 동의 갈음)에 따라 6항목을 모두 공개합니다. PIPC 결정 2024-010-184(2024.10) 동일 사유 시정 처분 선례 회피.
 
-→ 이전 거부 시 본 서비스 사용 불가 (인프라 의존성).
+### 9.1 Anthropic, PBC (LLM 추론·KORMARC 자동 생성 핵심)
+
+| 항목 | 내용 |
+|---|---|
+| 이전 항목 | 이용자가 입력한 도서 메타데이터 (서명·저자·출판사·ISBN·KDC·요약), Streamlit/CLI 입력 텍스트 |
+| 이전 국가 | 미국 (us-east-1·us-west-2 region) |
+| 이전 일시·방법 | 실시간·HTTPS API (api.anthropic.com:443·TLS 1.3) |
+| 이전 받는 자 | Anthropic, PBC (privacy@anthropic.com·548 Market St #93953, San Francisco, CA 94104) |
+| 이용 목적·기간 | KORMARC 자동 생성 LLM 추론·Anthropic Commercial Terms 정합 30일 내 삭제·학습 미사용 약관 |
+| 거부 방법·효과 | 회원탈퇴 또는 개별 처리정지 요청 (privacy@kormarc-auto.example)·거부 시 AI 생성 기능 이용 불가·기본 KORMARC 생성은 가능 |
+
+### 9.2 Amazon Web Services (인프라 호스팅·Lightsail Seoul)
+
+| 항목 | 내용 |
+|---|---|
+| 이전 항목 | 회원 인증 정보·KORMARC 레코드·로그·audit log JSONL |
+| 이전 국가 | 한국 (ap-northeast-2 Seoul) 우선·DR 백업 us-east-1 |
+| 이전 일시·방법 | 상시·EBS·S3·RDS (TLS in-transit + AES-256 at-rest) |
+| 이전 받는 자 | Amazon Web Services, Inc. (privacy@amazon.com) |
+| 이용 목적·기간 | SaaS 인프라 운영·계약 종료 후 90일 내 삭제 |
+| 거부 방법·효과 | 회원탈퇴·서비스 이용 불가 (인프라 의존성) |
+
+### 9.3 PortOne, Inc. (결제 처리·Cycle 14+ 활성)
+
+| 항목 | 내용 |
+|---|---|
+| 이전 항목 | 결제 token·구매 내역·세금계산서 발급 정보 |
+| 이전 국가 | 미국·일본 (PortOne global infra) |
+| 이전 일시·방법 | 결제 발생 시·HTTPS API (api.portone.io) |
+| 이전 받는 자 | PortOne, Inc. (privacy@portone.io) |
+| 이용 목적·기간 | 결제 처리·세금계산서·전자상거래법 5년 보관 |
+| 거부 방법·효과 | 결제 거부·유료 플랜 이용 불가·무료 plan 가능 |
+
+### 9.4 Google LLC (업무 메일·Workspace Starter)
+
+| 항목 | 내용 |
+|---|---|
+| 이전 항목 | 영업·지원 이메일 본문·첨부 |
+| 이전 국가 | 미국 |
+| 이전 일시·방법 | 이메일 발송 시·SMTP |
+| 이전 받는 자 | Google LLC (privacy@google.com) |
+| 이용 목적·기간 | 업무 통신·계약 종료 시까지 |
+| 거부 방법·효과 | 이메일 외 (전화·우편) 가능 |
+
+### 9.5 Cloudflare, Inc. (CDN·DDoS·SSL)
+
+| 항목 | 내용 |
+|---|---|
+| 이전 항목 | 트래픽 메타·IP·User-Agent·캐시 페이지 |
+| 이전 국가 | 미국 + 글로벌 edge (ICN/NRT/SIN 우선) |
+| 이전 일시·방법 | 상시·HTTPS edge proxy |
+| 이전 받는 자 | Cloudflare, Inc. (privacy@cloudflare.com) |
+| 이용 목적·기간 | CDN·보안·계약 종료 시까지 |
+| 거부 방법·효과 | 직접 origin 접근 불가·서비스 차단 |
+
+→ 이전 거부 시 일부 또는 전체 서비스 이용 불가 (인프라 의존성).
+→ 본 6항목 공개 = §28의8 ①항 3호 정보주체 동의 갈음 근거.
+
+---
+
+## 제9조의2 (자동화된 결정 — §37의2 입장)
+
+본 서비스는 KORMARC 레코드를 인공지능(Anthropic Claude)으로 자동 생성하나, 최종 채택·수정·승인은 사서(이용자)가 수행하므로 「개인정보 보호법」 제37조의2에서 정한 "완전히 자동화된 결정"에 해당하지 않는다고 판단합니다.
+
+다만 정보주체는 본 처리에 대한 설명을 요구할 수 있으며, contact@kormarc-auto.example로 신청 시 30일 내 회신합니다.
+
+근거:
+- 도서 메타데이터(서명·저자·ISBN)는 일반적으로 개인정보가 아님 → §37의2 발동 전제 미충족
+- 사서 검토 단계 보존 (헌법 §4 + Cycle 9 ghost text + per-field accept/reject)
+- ⚠ 조문 정정: §35의2 = 전송요구권 (2025.3.13 시행)·§37의2 = 자동화된 결정 (2024.3.15 시행)
 
 ---
 

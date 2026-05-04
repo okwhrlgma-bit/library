@@ -30,6 +30,7 @@
 - ✅ pymarc UTF-8 명시
 - ✅ 한국어 docstring
 - ✅ §9 동일 입력 = 동일 출력 (모델 pinning + temperature=0·top_p=1·ADR 0028)
+- ✅ §10 AI 생성 사실은 KORMARC 588 + audit log + UI ghost text 4곳 명시 (ADR 0029·인공지능 기본법 §31)
 
 ## 4. 자율성 4단계
 - L1 자율: 오타·린트·docstring
