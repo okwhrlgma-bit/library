@@ -148,6 +148,73 @@ def create_app() -> FastAPI:
             }
         )
 
+    @app.get("/migration/kolas3", tags=["meta"])
+    def migration_kolas3() -> JSONResponse:
+        """KOLAS III D-240 카운트다운 + 5 데이터 카테고리 + 타임라인 (Cycle 12 P37)."""
+        from kormarc_auto.migration import (
+            days_until_kolas3_end,
+            timeline_actions_for_remaining_days,
+        )
+        from kormarc_auto.migration.countdown import KOLAS3_END_DATE, lost_data_categories
+
+        days = days_until_kolas3_end()
+        return JSONResponse(
+            {
+                "kolas3_end_kst": KOLAS3_END_DATE.isoformat(),
+                "days_remaining": days,
+                "urgency_window": (
+                    "golden" if days > 90 else "critical" if days > 0 else "expired"
+                ),
+                "official_source": (
+                    "books.nl.go.kr/PU/contents/P40300000000.do "
+                    "(국립중앙도서관 KOLAS III 표준형 기술 지원 종료 공지)"
+                ),
+                "scope_clarification": "표준형만 종료·확장형은 별도 트랙 유지",
+                "public_libraries_count_2024": 1296,
+                "knu_unused_small_libraries": 5100,
+                "official_successors": [
+                    "코라스Ⅲ 확장형 (KAIT/채움씨앤아이)",
+                    "알파스 (이씨오)",
+                    "K-LAS 3.0 (채움씨앤아이)",
+                    "KOLAS-WEB (오픈소스 2021.12)",
+                ],
+                "lost_data_categories": lost_data_categories(),
+                "timeline_actions": timeline_actions_for_remaining_days(days),
+                "diagnose_endpoint": "POST /migration/kolas3/diagnose (5문항)",
+                "campaign_note": (
+                    "1,296 공공 + 12,200 학교 + 5,100 KNU 미사용 작은도서관 = "
+                    "단 한 번의 마이그레이션 골든윈도우"
+                ),
+            }
+        )
+
+    @app.post("/migration/kolas3/diagnose", tags=["meta"])
+    def migration_diagnose(body: dict[str, Any]) -> JSONResponse:
+        """5문항 자가진단 → 시급도 점수 + 권장 액션."""
+        from kormarc_auto.migration import DiagnosisAnswer, diagnose_migration
+
+        try:
+            ans = DiagnosisAnswer(
+                uses_kolas3_standard=bool(body.get("uses_kolas3_standard", False)),
+                has_recent_backup=bool(body.get("has_recent_backup", False)),
+                has_alternative_plan=bool(body.get("has_alternative_plan", False)),
+                over_5000_records=bool(body.get("over_5000_records", False)),
+                has_dedicated_staff=bool(body.get("has_dedicated_staff", False)),
+            )
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"잘못된 입력: {e}") from e
+
+        d = diagnose_migration(ans)
+        return JSONResponse(
+            {
+                "urgency": d.urgency,
+                "score": d.score,
+                "days_remaining": d.days_remaining,
+                "recommendation": d.recommendation,
+                "next_actions": d.next_actions,
+            }
+        )
+
     @app.get("/accuracy", tags=["meta"])
     def accuracy() -> JSONResponse:
         """B안 Cycle 1 — MARC 블록별 분리 정합표 (단일 99.82% 폐기)."""
