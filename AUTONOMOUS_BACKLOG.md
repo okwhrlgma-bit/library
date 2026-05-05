@@ -53,6 +53,26 @@
 - 비용 폭주 방지 4 룰 (--max-turns·stream-json·주간 누적·회귀 감지)
 - 90일 로드맵 (W1-2 기반·W3-4 자동화·W5-8 외부·W9-12 멀티 에이전트)
 
+## 🧠 V2 메타 오케스트레이션 큐 P46~P52 (2026-05-06·L4 자율성)
+
+| P | 영역 | 우선 | 의존성 | 상태 |
+|---|---|---|---|---|
+| **P46** | 메타 라우터 (Haiku 분류·Sonnet/Opus 자동) | 월 3 | 없음 | 대기 |
+| **P47** | PAVR 슬래시 (`/pavr`·worktree·결정론 검증) | 월 2 | 없음 | 대기 |
+| **P48** | learnings.md + Failure Replay (~/.claude/replays/) | 월 4 | P17 ✅ | 대기 |
+| **P49** | budget-guard.sh (SessionStart 일일 예산 차단) | 월 2 | 없음 | 대기 |
+| **P50** | refine-claudemd skill (PR만·자동 머지 X) | 월 5 | P48 | 대기 |
+| **P51** | Progressive Trust 권한 단계 (Level 1~5·30회 성공) | 월 5 | P48 | 대기 |
+| **P52** | 일일 자율 루프 cron (Goal Decomposer·Action) | 월 5 | paid pilot | 대기 |
+
+### V2 핵심 원칙 (메모리: project_claude_code_automation_v2_2026_05_06.md)
+- L4 자율성 = 1인 빌더 권장 상한 (L5 위험)
+- 결정론 = 모델 외부 (hook·셸·Verify 단계)
+- 자기 수정 = PR만·자동 머지 X
+- Progressive Trust = 좁은 권한 → 30회 성공 → PR 승인 → 확대
+- unsafe = 항상 사람 큐 (가격·결제·DB schema·도메인)
+- 다중 에이전트 4 패턴 (Proposer-Critic·N-Vote·Hierarchical·Adversarial)
+
 ---
 
 ## 🆕 2026-05-03 야간 신규 P0 큐 (Part 87·88·89·90 후속)
