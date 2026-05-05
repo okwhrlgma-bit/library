@@ -1,0 +1,63 @@
+# Cycle 27 — Claude Code 컨텍스트 제외 (V2 §11 항상 해야 할 것)
+# .gitignore는 git에 안 올림·.claudeignore는 모델이 안 봄.
+
+# 의존성·빌드
+.venv/
+venv/
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# 시크릿
+.env
+.env.local
+.env.*
+*.key
+*.pem
+secrets/
+
+# 자관 데이터 (PIPA 안전·CLAUDE.md 헌법)
+D:/내를건너서*
+**/원본_*.mrc
+docs/eval/raw/
+
+# 대용량 자료
+참고자료/
+backup/
+logs/
+*.log
+*.zip
+*.tar.gz
+*.7z
+
+# 자동 생성 산출물
+htmlcov/
+coverage.xml
+.coverage
+output/
+
+# IDE·OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Claude Code 내부 (audit·replay·budget = ~/ 위치이므로 자동 제외되지만 명시)
+.claude/last_*.txt
+.claude/*.tmp
+
+# CHANGELOG_NIGHT (이미 너무 큼·세션마다 컨텍스트 X)
+CHANGELOG_NIGHT.md
+
+# v0.5.0 이전 backup
+agent_docs/CLAUDE-full-2026-05-03.md
