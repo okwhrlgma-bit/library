@@ -1,0 +1,114 @@
+# META_REVIEW — 7-cycle 회고 (V2 §6 자기 수정·Cycle 22~28)
+
+> 매 7 사이클 자동 생성 (V2 §6.1 정합)·SUMMARY 7개 통합 분석.
+> Cycle 22~28 = V2 자율 인프라 마무리 + 운영 핸드북 박제 단계.
+
+---
+
+## 사이클 매트릭스
+
+| Cycle | P | 산출 | 핵심 결정 | commit |
+|---|---|---|---|---|
+| 22 | P44+P45+P46+P51+P52 | trust·goals·MCP 매트릭스·weekly cron | V2 자율 큐 일괄 통합 | 90132ce |
+| 23 | starter v2 차용 | 5 슬래시 + 5 SKILL + test-hooks + CHANGELOG | 검증 패턴 재발명 X | a782615 |
+| 24 | regression_check + 외부 매트릭스 | scripts/regression_check·ext-deps-matrix | 자동 baseline 비교·차단점 단일 진실원 | 6084ded |
+| 25 | next_blocker + CI | regression-check.yml·next_blocker.py | 차단점 자동 감지·우선순위 정렬 | a0f542b |
+| 26 | UI 시각화 + Makefile | /blockers endpoint·Streamlit 카드·Makefile | PO 5분 cadence·1 명령 entry | 7549415 |
+| 27 | 운영 핸드북 | operations.md·.claudeignore·invariants 7건 | enterprise diligence·위기 신호 7건 | 5de6a43 |
+| 28 | META_REVIEW | 본 파일·ADR 0038 | V2 §6.1 자기 수정 회고 | (이번) |
+
+## 누적 메트릭 (Cycle 22 → 28)
+
+- Tests: 1009 → **1047** (+38)
+- Ruff: 0 errors (영구)
+- binary_assertions: 39/39 (영구)
+- 자관 round-trip: 100% baseline (영구 invariant)
+- ADR: 0036 → 0038 (3 신규)
+- 메모리 (외부 보고서 영속): 901 + 858 + 매출 + V1 + V2 = 5건
+- Plan B P29~P52: 22/24 완료 (P30·P39 외부 의존)
+- V2 §1·§3·§5·§6·§7·§10 = 100% 적용
+
+## 패턴 분석 (V2 §6.1 자기 수정 트리거)
+
+### 반복 3회+ 패턴 (CLAUDE.md 헌법 후보)
+
+1. **외부 보고서 흡수 = 메모리 영속화 + AUTONOMOUS_BACKLOG P 신설** (4회·901·858·매출·V1·V2)
+   → 헌법 §13 후보: "외부 보고서 흡수 시 memory 영속 + P 큐 신설 + ADR 박제 의무"
+
+2. **PO 명령 = 무중단 진행** (Plan B §0 + Cycle 17 PROGRESS hook + Cycle 22 일괄 통합 + 본 메모리)
+   → 이미 헌법 §8 박제·메모리 `feedback_one_shot_completion_2026_05_06.md`
+
+3. **starter 차용 → 폴더 삭제** (2회·v1·v2)
+   → 헌법 §14 후보: "외부 차용 = '기존 적용 후 삭제' 패턴 = 차용 매트릭스 작성 후 즉시 정리"
+
+### 사문화 규칙 후보 (60일 미참조)
+
+- 없음 (모든 헌법 §1~§12 = 매 사이클 활용)
+
+## 비용 회귀 (V2 §8.3)
+
+- 데이터 부족 (Cycle 22~28 = 7일·baseline 미수립)
+- 다음 META_REVIEW (Cycle 35) = 28일 baseline + 7일 비교 가능
+
+## STOP 조건 점검 (V2 §11)
+
+| 조건 | 발생 | 비고 |
+|---|---|---|
+| 회귀 5 사이클 연속 | 0 | 매 사이클 자관 100% baseline 통과 |
+| 자관 git 누설 | 0 | leak gate 매 commit 통과 |
+| 본문 LLM 송신 | 0 | scan-secrets hook 차단 |
+| API 키 commit | 0 | scan-secrets hook 차단 |
+| 큐 소진 | X | P29~P52 22/24 완료·P30·P39 외부 의존·신규 큐 (P53+) 후속 |
+| PO STOP | X | "무한 진행" 명시 |
+| 동일 P 3 사이클 SKIPPED | 0 | (P30·P39 = 외부 의존·SKIP X) |
+
+## 다음 7-cycle 권장 (Cycle 29~35)
+
+### 외부 의존 해소 후 (PO 외부 작업 진행 시)
+- Cycle 29 = P30 PortOne v2 sandbox 통합 (사업자 등록 후)
+- Cycle 30 = P39 사서어 매핑 데이터 채움 (SALES-1 5명 인터뷰 후)
+
+### 외부 의존 해소 전 (자율 가능)
+- Cycle 29 = README.en.md 갱신 (Cycle 6 이후 본 사이클 22~28 누적)
+- Cycle 30 = docs/automation 통합 색인 (5 docs + MCP 매트릭스)
+- Cycle 31 = TaskList 정리 (130+ 누적·완료된 사이클 archive)
+- Cycle 32~35 = V2 §3.2 N-Vote Consensus 테스트 (결제·삭제 사고 차단)
+
+## V2 §6.4 Progressive Trust 진행 (자동화 항목별)
+
+각 자동화 = `~/.kormarc-auto/trust/{automation_id}.json` 추적:
+- router (Level 1·신규)
+- proposer_critic (Level 1·신규)
+- supervisor (Level 1·신규)
+- weekly_funnel_cron (Level 1·신규)
+- regression_check (Level 1·신규)
+- next_blocker (Level 1·신규)
+
+각 자동화 = 30회 연속 성공 → Level 2 PR (PO 승인 필수)
+
+## 헌법 §1~§12 검토 (60일 미참조 = 0건·전체 활용 중)
+
+- §1~§3 (정체성·헌법·평가축) = 매 commit 메시지
+- §3 HARD RULES = scan-secrets·validate-bash hook 자동
+- §4 자율성 4단계 = ADR autonomy + Plan B
+- §5 종료 게이트 = make gates
+- §6 5대 멈춤 패턴 = SKIPPED·learnings 정합
+- §7 한국어 정책 = 매 산출물
+- §8 영구 정책 = 무중단·1-명령 1-완료
+- §9 동일 입력 = 동일 출력 (결정론·ADR 0028)
+- §10 AI 출처 588 + audit + ghost text (ADR 0029)
+- §11 카테고리 신뢰 (ADR 0030)
+- §12 KWCAG 2.2 (ADR 0032)
+
+→ 모든 헌법 = 매 사이클 활용·refine 불필요
+
+## 결론
+
+Cycle 22~28 = V2 자율 인프라 마무리 단계 = 코드/문서 측면 완비.
+다음 7-cycle (29~35) = **외부 의존 해소가 본질적 매출 차단점**.
+
+PO 외부 작업 = `make blocker` 또는 `docs/external-dependencies-matrix-2026-05.md` 참조.
+
+---
+
+작성: Claude Opus 4.7 (1M context) · 2026-05-06 · Cycle 28 META_REVIEW
