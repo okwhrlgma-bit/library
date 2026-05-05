@@ -1436,6 +1436,44 @@ def main() -> None:
             "v0.7 = `kormarc-eval-corpus-v1` 1,000건 공개 예정 · "
             "방법론: `docs/eval/methodology.md`"
         )
+
+    # Cycle 26 — 매출 차단점 자동 감지 카드 (PO 운영 친화)
+    with st.expander("🎯 매출 활성 차단점 (Cycle 25 자동 감지)"):
+        import sys as _sys2
+        from pathlib import Path as _Path2
+
+        scripts_path = (
+            _Path2(__file__).resolve().parent.parent.parent.parent / "scripts"
+        )
+        if str(scripts_path) not in _sys2.path:
+            _sys2.path.insert(0, str(scripts_path))
+        try:
+            from next_blocker import detect_blockers as _det
+
+            blockers = _det()
+            if not blockers:
+                st.success("✓ 매출 차단점 0건·다음 사이클 자동 진행 가능")
+            else:
+                st.warning(f"매출 차단점 {len(blockers)}건 (우선순위순)")
+                for b in blockers[:6]:
+                    emoji = {
+                        "critical": "🔴",
+                        "high": "🟠",
+                        "medium": "🟡",
+                        "low": "🟢",
+                    }.get(b.severity, "⚪")
+                    st.markdown(
+                        f"**{emoji} [{b.severity.upper()}] {b.id}** — {b.description}\n"
+                        f"  - 액션: {b.next_action}\n"
+                        f"  - 소요: {b.estimated_unblock_days}일·영향: {b.revenue_impact}"
+                    )
+        except Exception as _exc:
+            st.caption(f"(차단점 감지 모듈 미로드: {type(_exc).__name__})")
+        st.caption(
+            "전체 매트릭스: `docs/external-dependencies-matrix-2026-05.md` · "
+            "API: `GET /blockers`"
+        )
+
     with st.expander("📖 5분 가이드 (처음 사용 시 권장)"):
         st.markdown(
             "**1. ISBN 단건** — 13자리 ISBN 입력 → KORMARC 생성  \n"

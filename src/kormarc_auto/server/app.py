@@ -188,6 +188,35 @@ def create_app() -> FastAPI:
             }
         )
 
+    @app.get("/blockers", tags=["meta"])
+    def blockers() -> JSONResponse:
+        """매출 차단점 자동 감지 (Cycle 25 P0~P52 + 외부 의존성)."""
+        import sys as _sys
+        from dataclasses import asdict as _asdict
+        from pathlib import Path as _Path
+
+        scripts_dir = _Path(__file__).resolve().parent.parent.parent.parent / "scripts"
+        if str(scripts_dir) not in _sys.path:
+            _sys.path.insert(0, str(scripts_dir))
+        try:
+            from next_blocker import detect_blockers as _detect
+
+            blocker_list = _detect()
+            return JSONResponse(
+                {
+                    "blocker_count": len(blocker_list),
+                    "blockers": [_asdict(b) for b in blocker_list],
+                    "note": (
+                        "PO 외부 작업 우선순위 = severity 정렬·"
+                        "docs/external-dependencies-matrix-2026-05.md 참조"
+                    ),
+                }
+            )
+        except ImportError:
+            return JSONResponse(
+                {"blocker_count": 0, "blockers": [], "note": "next_blocker 모듈 로드 실패"}
+            )
+
     @app.post("/migration/kolas3/diagnose", tags=["meta"])
     def migration_diagnose(body: dict[str, Any]) -> JSONResponse:
         """5문항 자가진단 → 시급도 점수 + 권장 액션."""
