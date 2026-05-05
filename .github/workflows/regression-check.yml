@@ -1,0 +1,54 @@
+name: 자관 회귀 자동 비교 (Cycle 25)
+
+# 매주 월요일 + main push 시 = 자관 round-trip 100% baseline 회귀 검사.
+# D:\ 미접근 환경 = SKIPPED·CI 통과 (게이트는 PO 로컬 환경에서만).
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/eval_per_record_roundtrip.py'
+      - 'scripts/eval_real_disaggregation.py'
+      - 'scripts/regression_check.py'
+      - 'src/kormarc_auto/kormarc/builder.py'
+      - 'src/kormarc_auto/kormarc/validator.py'
+      - 'src/kormarc_auto/kormarc/mapping.py'
+      - 'src/kormarc_auto/output/**'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/regression_check.py'
+      - 'src/kormarc_auto/kormarc/builder.py'
+  schedule:
+    - cron: '0 0 * * 1'  # 매주 월 09:00 KST (UTC 0)
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 의존성 (pymarc만 필요)
+        run: |
+          pip install pymarc
+
+      - name: 자관 회귀 비교 (D:\ 미접근·CI = SKIPPED·exit 0)
+        run: |
+          python scripts/regression_check.py --strict
+        env:
+          PYTHONIOENCODING: utf-8
+
+      - name: baseline 파일 검증 (Plan B §0 게이트 #4)
+        run: |
+          test -f docs/eval/results/2026-05-04/regression_baseline.json
+          python -c "import json; d = json.load(open('docs/eval/results/2026-05-04/regression_baseline.json', encoding='utf-8')); assert d['overall_pct'] >= 99.0, f'baseline regression: {d[\"overall_pct\"]}'"
+
+      - name: methodology 정합
+        run: |
+          test -f docs/eval/methodology.md
+          grep -q "100.00%" docs/eval/methodology.md
