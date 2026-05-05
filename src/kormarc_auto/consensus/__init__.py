@@ -11,6 +11,13 @@ from kormarc_auto.consensus.adversarial import (
     AdversarialFinding,
     classify_finding,
 )
+from kormarc_auto.consensus.hierarchical import (
+    HierarchicalPlan,
+    WorkerStatus,
+    WorkUnit,
+    assign_to_workers,
+    decompose_into_units,
+)
 from kormarc_auto.consensus.n_vote import (
     DEFAULT_AGREEMENT_THRESHOLD,
     ConsensusResult,
@@ -24,8 +31,13 @@ __all__ = [
     "DEFAULT_AGREEMENT_THRESHOLD",
     "AdversarialFinding",
     "ConsensusResult",
+    "HierarchicalPlan",
     "Vote",
+    "WorkUnit",
+    "WorkerStatus",
     "aggregate_votes",
+    "assign_to_workers",
     "classify_finding",
+    "decompose_into_units",
     "is_consensus_reached",
 ]
