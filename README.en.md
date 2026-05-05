@@ -4,7 +4,7 @@
 > ISBN → KORMARC `.mrc` in 5 seconds → **KOLAS III·DLS·ALPAS direct import**.
 > **Self-library PILOT (1 library·174 files·3,383 records) round-trip 100%** — per-MARC-block disaggregation table below (measured 2026-05-04).
 
-[![release](https://img.shields.io/badge/release-v0.6.0-blue)]() [![tests](https://img.shields.io/badge/tests-662%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-39%2F39-brightgreen)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1)-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]()
+[![release](https://img.shields.io/badge/release-v0.7.0-blue)]() [![tests](https://img.shields.io/badge/tests-1047%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-39%2F39-brightgreen)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1)-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![cycles](https://img.shields.io/badge/Plan_B-22%2F24_complete-brightgreen)]()
 
 **Korean librarians** spend ~8 minutes per record on KORMARC cataloging. kormarc-auto cuts this to ~2 minutes for descriptive blocks. Solo founder (former librarian) shipping after self-library PILOT.
 
@@ -122,14 +122,28 @@ Cycle = 7 days · P1~P28 queue · ~6.5 months runtime · auto-merge gate (ruff +
 
 ---
 
-## Status (Cycles 1~6 complete)
+## Status (Cycles 1~28 complete · 2026-05-06)
 
-- 662 tests passing / 6 skipped
+- **1,047 tests** passing / 6 skipped
 - ruff: 0 errors
 - binary_assertions: 39/39
 - Self-library round-trip baseline: 100% (3,383 records)
-- v0.6.0 GitHub tag pushed
-- agent_docs/ · 4 reference files (kormarc_field_reference, running_evals, release_process, full backup)
+- **v0.7.0** GitHub tag pushed
+- agent_docs/ · 5 reference files (kormarc_field_reference, running_evals, release_process, operations, full backup)
+- **Plan B P29~P52 = 22/24 complete** (P30 PortOne·P39 librarian-language pending external)
+- V2 self-improvement infra: Progressive Trust 5 levels·PAVR slash·Failure Replay·budget tracker
+- 39 ADRs (0024~0038)·Korean SaaS production decisions
+- KOLAS III countdown D-day automated (2026-12-31·official_source: books.nl.go.kr)
+
+### Key automation (V2 §1·§3·§5·§6·§7·§10)
+
+- `make blocker` — auto revenue blocker detection (next_blocker.py)
+- `make funnel` — weekly funnel report cron
+- `make demo` — 30-second offline demo (zero API keys)
+- `make gates` — 6-gate verification (ruff·pytest·assertions·regression·demo·constitution)
+- `/pavr <task>` — Plan→Act→Verify→Reflect autonomous loop
+- `/refine-claudemd` — self-improvement PR (auto-merge blocked)
+- `automation/po_loop.sh` — non-stop autonomous cycle runner
 
 ---
 
