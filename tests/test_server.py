@@ -37,11 +37,19 @@ def test_healthz(client):
 
 
 def test_pricing(client):
+    """Cycle 11 P31 갱신 — 4 플랜 응답 + 호환성 (legacy 키 보존)."""
     r = client.get("/pricing")
     assert r.status_code == 200
     body = r.json()
-    assert body["price_per_record_krw"] > 0
-    assert "free_quota_default" in body
+    # 새 응답 = plans 배열·각 플랜에 monthly_krw·monthly_records
+    assert "plans" in body and len(body["plans"]) == 5
+    plan_codes = {p["code"] for p in body["plans"]}
+    assert plan_codes == {"free", "small", "school", "public", "enterprise"}
+    # 호환성 = legacy_per_record_krw 키 보존
+    assert body.get("legacy_per_record_krw", 0) > 0
+    # founding_member·free_trial 핵심 메타
+    assert body["founding_member"]["discount_pct"] == 0.50
+    assert body["free_trial"]["credit_card_required"] is False
 
 
 def test_isbn_requires_api_key(client):

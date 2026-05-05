@@ -2,10 +2,39 @@
 
 > **목적**: 1h cloud routine·주간·월간 fire 시 자율 작업 우선순위 가이드. 매 사이클 cloud agent가 본 파일을 자동 참조해서 다음 작업 결정.
 > **자동 갱신**: cloud agent가 작업 완료 시 본 파일에서 항목 제거·신규 추가.
-> **단일 진실 (2026-05-03 야간 + Part 87·88·89·90 갱신)**:
-> - ★ 자관 .mrc 99.82% 정합 + 영업 자료 50건 + 법무 7건 (DPA·SLA·환불·aladin·privacy·incident·retention)
-> - ★ Part 76~90 = 사서 페인 54건 + 5 페르소나 검증·회복 + KORMARC 표준 8 카테고리 정정
-> - ★ 신규 코드 모듈 50+ + **515 tests passed** + ruff 0 errors + CI Green
+> **단일 진실 (2026-05-05 갱신·외부 매출 성장 보고서 P29~P40 흡수)**:
+> - ★ 자관 174 round-trip 100% baseline + 영업 자료 50+건 + 법무 8건 (DPA·SLA·환불·aladin·privacy·incident·retention·ai-disclaimer)
+> - ★ Part 76~95 = 사서 페인 + 5 페르소나 + 8 카테고리 + Plan B Cycle 1~10 + ADR 0024~0029
+> - ★ 721 tests passed + ruff 0 + binary_assertions 39/39 + CI Green
+> - ★ KOLAS III 2026.12.31 종료 = D-240 골든윈도우
+
+## 🚨 외부 매출 성장 보고서 P29~P40 큐 (2026-05-05·8주 로드맵)
+
+### 진척
+- ✅ **P29** 처리방침 §28의8 + AI disclaimer (Cycle 10B·8e17030)
+- ⏳ **P30** PortOne v2 sandbox (사업자 등록 후)
+- ⏳ **P31** 가격 페이지 4 플랜 ← **현재 Cycle 11**
+- 🟡 **P32** 데모 (offline demo CLI 부분·Cycle 2)
+- ⏳ **P33** 한도 알림 + CTA
+- ⏳ **P34** Funnel Plausible
+- ⏳ **P35** 네이버 SEO + JSON-LD
+- ⏳ **P36** 블로그 파이프라인
+- ⏳ **P37** KOLAS III 카운트다운 (D-240·**3주 마지노선**) ← Cycle 11 병행 권장
+- ⏳ **P38** 자치구 묶음 영업 (W7·월 600-700만원 점프)
+- 🟡 **P39** 사서어 매핑 (field_status 부분·KLA 5/31 후)
+- ⏳ **P40** LLM GEO + 인용 측정
+
+### 핵심 의사결정 4건
+1. 사업자 등록 = P30 직후·P31 공개 직전·일반과세자·간이과세 차단
+2. P37 = D-240·즉시 시작·3주 마지노선
+3. Founding Member = LTD 금지·연간결제·100관·2026-06-30
+4. P39 = KLA 5/31 인터뷰 후 결정
+
+### 게이트 (모든 P 공통)
+- ruff 0·pytest 전수·binary_assertions 39/39
+- 자관 174 회귀 ≤ 1pp = 즉시 STOP
+- 변경 = ADR 작성 후 commit
+- 게이트 누락 = 가장 큰 리스크 (P29 누락 P34 = PIPA 매출 3% 과징금)
 
 ---
 

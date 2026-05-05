@@ -90,13 +90,61 @@ def create_app() -> FastAPI:
 
     @app.get("/pricing", tags=["meta"])
     def pricing() -> JSONResponse:
+        """4 플랜 가격표 (Cycle 11 P31·외부 858+매출 보고서 정합)."""
+        from kormarc_auto.billing import FOUNDING_MEMBER, list_plans
+
+        plans_payload = [
+            {
+                "code": p.code,
+                "label": p.label,
+                "label_en": p.label_en,
+                "monthly_krw": p.monthly_krw,
+                "annual_krw_after_17pct_discount": p.annual_krw_after_discount,
+                "monthly_records": p.monthly_records,
+                "user_count": p.user_count,
+                "branch_count": p.branch_count,
+                "api_call_limit_monthly": p.api_call_limit_monthly,
+                "sso_audit_log": p.sso_audit_log,
+                "csap_environment": p.csap_environment,
+                "support_channel": p.support_channel,
+                "description": p.description,
+            }
+            for p in list_plans()
+        ]
         return JSONResponse(
             {
-                "price_per_record_krw": PRICE_PER_RECORD_KRW,
-                "free_quota_default": 50,
-                "payment_url": get_payment_info_url(),
+                "plans": plans_payload,
                 "currency": "KRW",
-                "notes": "권당 과금. 신규 키 50건 무료 체험. 정식 결제는 곧 출시 예정.",
+                "vat_rate": 0.10,
+                "vat_note": "VAT 별도 표기·세금계산서 발행 (일반과세자)",
+                "annual_discount_pct": 0.17,  # 2개월 무료 (ChartMogul 표준)
+                "quarterly_discount_pct": 0.05,
+                "bundle_discounts": {
+                    "5_branch_or_more": 0.10,
+                    "10_branch_or_more": 0.15,
+                    "25_branch_or_more": 0.20,
+                    "100_branch_or_more": 0.25,
+                },
+                "founding_member": {
+                    "discount_pct": FOUNDING_MEMBER.discount_pct,
+                    "seat_limit": FOUNDING_MEMBER.seat_limit,
+                    "deadline": FOUNDING_MEMBER.deadline.isoformat(),
+                    "annual_only": FOUNDING_MEMBER.annual_only,
+                    "permanent_lock_in": FOUNDING_MEMBER.permanent_lock_in,
+                    "note": "100관 한정·연간결제 의무·LTD 금지·가격 영구 동결",
+                },
+                "free_trial": {
+                    "days": 30,
+                    "credit_card_required": False,
+                    "auto_revert_to_freemium": True,
+                    "freemium_records_per_month": 50,
+                },
+                "legacy_per_record_krw": PRICE_PER_RECORD_KRW,
+                "payment_url": get_payment_info_url(),
+                "notes": (
+                    "도서관 카테고리 명명 (한국도서관법 정합)·30일 trial + 50건 영구 freemium·"
+                    "연간 17% 할인·5/10/25/100관 묶음·Founding Member 영구 50% (~2026-06-30)"
+                ),
             }
         )
 
