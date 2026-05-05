@@ -1,0 +1,83 @@
+name: Hook & Security Validation
+
+# 모든 PR과 main push에서 실행. 보안 hook이 망가지면 PR이 머지 안 됨.
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/hooks/**'
+      - 'tests/test-hooks.sh'
+      - '.claude/settings.json'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/hooks/**'
+      - 'tests/test-hooks.sh'
+      - '.claude/settings.json'
+  # 매주 월요일 02:00 UTC (KST 11:00) — 시간 흐름에 따른 회귀 감지
+  schedule:
+    - cron: '0 2 * * 1'
+
+jobs:
+  validate-hooks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 실행 권한 부여
+        run: chmod +x scripts/hooks/*.sh tests/*.sh
+
+      - name: settings.json 유효성 검증 (jq)
+        run: |
+          if ! jq empty .claude/settings.json; then
+            echo "::error::.claude/settings.json이 유효한 JSON이 아닙니다"
+            exit 1
+          fi
+          echo "✓ settings.json 유효"
+
+      - name: hook이 위험 명령을 차단하는지 검증
+        run: ./tests/test-hooks.sh
+
+      - name: shellcheck (hook 스크립트 정적 분석)
+        run: |
+          sudo apt-get install -y shellcheck
+          set +e
+          fail=0
+          for f in scripts/hooks/*.sh scripts/*.sh tests/*.sh; do
+            shellcheck -S warning "$f" || fail=1
+          done
+          exit $fail
+
+      - name: hook 누락 검증 (settings.json에 등록된 hook 파일이 실제 존재하는지)
+        run: |
+          missing=0
+          while IFS= read -r path; do
+            if [ -n "$path" ] && [ ! -f "$path" ]; then
+              echo "::error::settings.json에 등록된 hook 파일 없음: $path"
+              missing=1
+            fi
+          done < <(jq -r '.. | objects | .command? // empty' .claude/settings.json | grep -oE 'scripts/hooks/[^ ]+\.sh' | sort -u)
+          exit $missing
+
+  secret-scan-self:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: 스타터 자체에 시크릿 누출 여부
+        run: |
+          # 우리 hook 자체로 우리 코드를 검증 (도그푸딩)
+          chmod +x scripts/hooks/scan-secrets.sh
+          # placeholder만 있어야 함 (sk-ant-..., sk-xxx 등)
+          if grep -rE 'sk-ant-api03-[A-Za-z0-9_-]{40,}' --include='*.md' --include='*.py' --include='*.sh' --include='*.json' --include='*.yml' . ; then
+            echo "::error::실제 Anthropic API 키 패턴 감지"
+            exit 1
+          fi
+          if grep -rE '(sk_live|pk_live)_[A-Za-z0-9]{24,}' --include='*.md' --include='*.py' --include='*.sh' --include='*.json' --include='*.yml' . ; then
+            echo "::error::실제 Stripe live 키 패턴 감지"
+            exit 1
+          fi
+          echo "✓ 시크릿 누출 없음"

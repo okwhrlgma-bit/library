@@ -1,0 +1,84 @@
+# Changelog
+
+이 스타터의 변경 이력. [Keep a Changelog](https://keepachangelog.com/) 형식.
+
+> 새 SaaS에 적용 시 어느 버전을 가져왔는지 `decisions.md`에 기록하면 추후 동기화가 쉬워집니다.
+
+## [Unreleased]
+
+## [1.0.0] - 2026-05-06
+
+### Added — 1차 출시
+
+**핵심 인프라**
+- `CLAUDE.md` 템플릿 — 매 세션 자동 로드되는 컨벤션·금지사항
+- `.claude/settings.json` — permissions·hooks 통합 설정 (allow/deny)
+- 5개 SessionStart/PreToolUse/PostToolUse/Stop/PreCompact hook
+- `.claudeignore` 컨텍스트 절약
+
+**자율 시스템 (V2 자율성)**
+- `automation/router.py` — Haiku 기반 8 카테고리 분류기
+- `automation/proposer_critic.py` — Sonnet 제안 + Opus 비평 패턴
+- `automation/supervisor.py` — 멀티 SaaS 우선순위 큐
+- `automation/daily-autonomy.sh` — 일일 자율 루프
+
+**비코드 자동화**
+- `automation/content_pipeline.py` — SEO 블로그 자동 초안 (Sonnet→Opus 검증)
+- `automation/support_triage.py` — 고객지원 티켓 분류·응답 (Haiku→Sonnet)
+- `automation/dunning.py` — Stripe 결제 실패 던닝 (4단계 톤 차별)
+
+**서브에이전트 4개**
+- code-reviewer · test-writer · debugger · researcher
+
+**슬래시 커맨드 8개**
+- `/pavr` · `/deploy` · `/refine-claudemd`
+- `/fix-bug` · `/add-feature` · `/review-pr` · `/test-this` · `/explain-this-code`
+
+**Skills 5개**
+- payment-handling · db-migration-safely · tdd-workflow · add-feature-flag · incident-response
+
+**보안 hook 9개**
+- `validate-bash.sh` — `rm -rf`, `sudo`, `curl|sh`, fork bomb 차단
+- `scan-secrets.sh` — Anthropic/Stripe/AWS/GitHub/Slack/JWT/PEM 패턴 차단
+- `budget-guard.sh` — 일일 USD 예산 하드 스톱
+- `auto-format.sh` · `append-progress.sh` · `append-learning.sh`
+- `update-usage.sh` · `inject-recent-learnings.sh` · `backup-transcript.sh`
+
+**운영 도구**
+- `scripts/emergency-stop.sh` — 5단계 즉시 정지
+- `scripts/rollback.sh` — 안전한 PR 복구
+- `scripts/health-check.sh` — 셋업 검증
+- `scripts/audit-query.sh` · `cost-report.sh` · `notify.sh` · `backup-state.sh`
+- `scripts/new-project.sh` — 이 스타터를 새 SaaS로 복제
+
+**GitHub Actions 4개**
+- `claude-pr-review.yml` — PR 자동 코드 리뷰
+- `nightly-autonomy.yml` — 매일 03:00 KST 자율 작업
+- `security-audit.yml` — 매주 월요일 보안 스캔
+- `test-hooks.yml` — 모든 PR에서 보안 hook 회귀 테스트
+
+**테스트**
+- `tests/test-hooks.sh` — hook이 실제 차단하는지 회귀 검증
+- shellcheck 정적 분석 (CI)
+
+**문서**
+- `README.md` · `docs/ONBOARDING.md` · `docs/ROLLBACK_PLAYBOOK.md`
+- `docs/DEBUGGING.md` · `docs/NON_CODE_AUTOMATION.md` · `docs/PROMPT_LIBRARY.md`
+- `SECURITY.md`
+
+**부트스트랩**
+- `bootstrap.sh` · `Makefile` (16 타깃) · `.env.example`
+
+---
+
+## 변경 정책
+
+- **Major (X.0.0)**: 디렉터리 구조 변경, hook API 변경, 호환 깨짐
+- **Minor (1.X.0)**: 새 자동화 스크립트, 새 skill, 새 슬래시 커맨드
+- **Patch (1.0.X)**: 버그 수정, 문서 개선, hook 패턴 추가
+
+새 SaaS에 동기화 시:
+1. 현재 사용 중인 버전 확인 (`cat VERSION`)
+2. 이 CHANGELOG에서 그 버전 이후 변경사항 검토
+3. 필요한 변경만 cherry-pick
+4. `decisions.md`에 동기화 기록
