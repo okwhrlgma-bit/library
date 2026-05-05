@@ -153,6 +153,13 @@
             "timeout": 120,
             "async": true,
             "statusMessage": "세션 종료 어셔션 누적 중..."
+          },
+          {
+            "type": "command",
+            "command": "bash \"/c/Users/okwhr/OneDrive/바탕 화면/클로드 코드 활동용/kormarc-auto/.claude/hooks/append-progress.sh\" 2>/dev/null || true",
+            "timeout": 30,
+            "async": true,
+            "statusMessage": "PROGRESS.md 자동 갱신 (Cycle 17 P41)"
           }
         ]
       }

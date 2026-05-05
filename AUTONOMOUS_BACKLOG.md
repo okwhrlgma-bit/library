@@ -36,6 +36,23 @@
 - 변경 = ADR 작성 후 commit
 - 게이트 누락 = 가장 큰 리스크 (P29 누락 P34 = PIPA 매출 3% 과징금)
 
+## 🚀 자동화 인프라 큐 P41~P45 (2026-05-06·외부 자동화 가이드)
+
+| P | 영역 | 우선 | 의존성 | 상태 |
+|---|---|---|---|---|
+| **P41** | Stop hook = PROGRESS.md 자동 갱신 | 즉시 (Cycle 17) | 없음 | ✅ 진행 중 |
+| **P42** | PostToolUse / Edit 자동 ruff format 강화 | W1 | 없음 | 부분 |
+| **P43** | 슬래시 커맨드 /deploy + /release | W2 | P30 사업자 | 대기 |
+| **P44** | cron 주간 funnel 리포트 (P34 정합) | W3 | P34 ✅ | 대기 |
+| **P45** | MCP Stripe + 이메일 + Slack | W5 | P30·사업자 | 대기 |
+
+### 외부 자동화 가이드 핵심 (메모리: project_claude_code_automation_2026_05_06.md)
+- 4 레이어: CLAUDE.md → Hooks → Subagents → Headless/SDK
+- 7 빌딩 블록 (CLAUDE.md·Skills·Slash·Subagents·Agent Teams·Hooks·MCP)
+- SaaS 6축 (개발·배포·결제·마케팅·SEO·분석)
+- 비용 폭주 방지 4 룰 (--max-turns·stream-json·주간 누적·회귀 감지)
+- 90일 로드맵 (W1-2 기반·W3-4 자동화·W5-8 외부·W9-12 멀티 에이전트)
+
 ---
 
 ## 🆕 2026-05-03 야간 신규 P0 큐 (Part 87·88·89·90 후속)
