@@ -1,8 +1,23 @@
 # learnings.md — kormarc-auto 자율 학습 누적
 
-> **목적**: PO 자율성 가이드 레벨 2 — 세션을 넘는 학습.
-> **사용**: 매 commit 직후 새로운 통찰 추가. 다음 세션이 자동 로드 (CLAUDE.md에서 참조).
+> **목적**: 세션을 넘는 학습 (V2 §4 Warm Tier)
+> **사용**: 매 commit 직후 새로운 통찰 추가. PAVR 실패 시 자동 추가 (Cycle 20A).
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
+> **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
+
+## [2026-05-06·Cycle 20A+B] V2 §2 PAVR + §4 3-Tier Memory
+
+### 사실 9: PAVR 4 단계 = Plan→Act→Verify→Reflect
+- 모델 자체 검증 = 거짓 통과 (V2 §2.4)
+- Verify = 결정론 셸 (모델 외부): ruff·pytest·assertions·자관 회귀 ≤ 1pp·leak 게이트
+- Reflect = learnings.md 자동 추가 (실패 패턴 → 다음 PAVR 전 체크)
+- 적용: `.claude/commands/pavr.md` 슬래시 = 모든 큰 작업 진입점
+
+### 사실 10: Failure Replay = ~/.kormarc-auto/replays/{date}-{slug}/
+- input.json·expected.txt·actual.txt 3 파일
+- 새 모델/프롬프트 = 모든 replay 자동 회귀 검사 (V2 §4.3)
+- KOLAS3 종료일 = 2026-12-31 = 영원히 변하면 안 되는 invariant·Replay 등록 권장
+- 적용: 매 외부 보고서 인용 사실 = create_replay 등록 후 회귀 게이트화
 
 ## [2026-05-04·Plan B Cycle 1 종료]
 
