@@ -157,3 +157,51 @@
 - 입력: `git push --force`
 - 사유: irreversible-guard
 - 우회: 다음 단계로 진행 (자율 게이트 §자동 우회)
+
+---
+
+## 2026-05-06 — Cycle 60: UI/UX 통합 (헌법 §12 doc → 코드 100%)
+
+**컨텍스트**: 28 사이클 동안 헌법 §12 (KWCAG 2.2 + KRDS + Pretendard) = doc 박제·코드 적용 0건
+**선택**: `.streamlit/config.toml` + `a11y_inject.py` + `librarian_ux.py` 신설·모든 Streamlit 진입점 1회 호출
+**대안**: 페이지별 inject (중복)·Streamlit components-html (iframe 격리·키보드 흐름 단절)
+**이유**: KWCAG 2.2 9 항목 (1.3.1·1.4.3·1.4.4·1.4.13·2.3.3·2.4.1·2.4.7·2.5.5)·헌법 §12 invariant 영구 게이트
+**되돌릴 수 있는가**: 가능 (모듈 단위 git revert)
+**관련 ADR**: 0044
+
+## 2026-05-06 — Cycle 61: 8 ICP 페르소나 + 상업성/SEO/AEO/GEO + invariant 11
+
+**컨텍스트**: PO "사서 페르소나가 이거 돈 내고 살까?"·외부 자료 종합·인터뷰 0건
+**선택**: 8 ICP 페르소나 (P1~P8) × 5 영역 매트릭스·정직 헤더 영구 (invariant 11·ADR 0046)
+**대안**: 시뮬 결과로 PMF 결정 (외부 901 진단 4중 패턴 위험)·인터뷰만 (1주 시간)
+**이유**: 결제 의향 ≠ 결제 권한 분리 통찰·8/8 권당 200원 모델 적합·시간 절감 5/8만 정합
+**되돌릴 수 있는가**: 어려움 (CLAUDE.md §13 헌법 박제·invariant 11)
+**관련 ADR**: 0045·0046
+
+## 2026-05-06 — Cycle 62: 마케팅 30+ 갭 (콜드 메일 5 페르소나)
+
+**컨텍스트**: PO "검색·노출 잘되게"·SEO/AEO/GEO 모듈 박제·발행 0건
+**선택**: 5 영역 30+ 갭 매트릭스 박제·콜드 메일 5 페르소나 시드·콘텐츠 캘린더 90일·press kit·MOU 8
+**대안**: 발행까지 (도메인 필요)·매트릭스만 (Cycle 16 이미 박제·중복)
+**이유**: 페르소나별 메시지 분기 (5/8 시간 절감 + 3 다른 동기) 사전 박제·인터뷰 후 v2
+**되돌릴 수 있는가**: 가능 (시드 markdown 단위)
+**관련 ADR**: 0045 §B (영업 시기) + ADR 0046 (정직 헤더)
+
+## 2026-05-06 — Cycle 63: 신경 0 배포 stack (₩0/월·도메인 X) + E-E-A-T
+
+**컨텍스트**: PO "도메인 필수? 돈 안 들이고 신경끄는 구조"
+**선택**: GitHub Pages + Streamlit Community Cloud + GitHub Actions + GitHub Releases
+**대안**: AWS Lightsail (₩7K/월 Cycle 26)·자체 도메인 (₩30K/년)·CSAP NCP (₩50K+/월)
+**이유**: PO Phase 1 (사용자 0명) = ₩0 stack 충분·15분 외부 작업으로 활성·git push 자동
+**되돌릴 수 있는가**: 가능·매출 후 AWS Lightsail로 이전 (외부 858 보고서 정합)
+**관련 ADR**: 0026 §E (인프라)·도메인 = Phase 2 권장
+
+## 2026-05-06 — Cycle 63: E-E-A-T 4 신호 (검색·LLM 신뢰도)
+
+**컨텍스트**: PO "신뢰도 영향 간다고 하던데"·Google 2022 EEAT update + LLM 인용 정합
+**선택**: About 페이지·Schema Person/Organization·통계 박스·5 권위 인용 (NLK·KAIT·MCST·KLA·KLMA)
+**대안**: 자체 평판 신호만 (외부 인용 X)·MOU만 (사업자 등록 후·시간 ↑)
+**이유**: 코드만으로 즉시 가능·도메인 0원·인터뷰 + 사업자 후 = MOU 추가 가능
+**되돌릴 수 있는가**: 가능 (markdown·landing 단위)
+**관련 ADR**: 0044 (UI/UX)·0046 (정직)·press-kit-2026-05.md 통합
+

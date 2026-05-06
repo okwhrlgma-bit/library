@@ -58,6 +58,25 @@
 | **V3.6** | cross-project sync | ⏳ | - | 두 번째 SaaS 시작 시 |
 | **V3.7** | RUNBOOK + Makefile | ✅ | 44 + 49 | 즉시 |
 
+## 🎨 Cycle 60·61·62·63 큐 (2026-05-06 마무리·UI/UX·페르소나·마케팅·신경 0)
+
+| Cycle | 영역 | 상태 | 산출 |
+|---|---|---|---|
+| **60** | UI/UX (헌법 §12 doc → 코드 100%) | ✅ | KWCAG 2.2 9 항목·KRDS·Pretendard·a11y_inject·librarian_ux |
+| **61** | 8 ICP 페르소나 깊이 시뮬 | ✅ | Part 96·deep_simulation·three_stage_funnel·persona-message-matrix |
+| **61b** | 상업성·SEO·AEO·GEO | ✅ | commercial-seo·aeo-geo-strategy·30+ 갭 매트릭스 |
+| **61c** | invariant 11 (페르소나 ≠ 인터뷰) | ✅ | ADR 0046·CLAUDE.md §13·정직 헤더 영구 |
+| **62** | 마케팅 30+ 갭 점검 | ✅ | 콜드 메일 5·콘텐츠 캘린더 90일·press kit·MOU 8 기관 |
+| **63** | 신경 0 배포 stack (₩0/월) | ✅ | GitHub Pages·Streamlit Cloud·E-E-A-T·landing index/about |
+
+### 다음 7-cycle 권장 (Cycle 64~70)
+- 64: bandit + mypy strict 실 검증 (다음 사이클 권장)
+- 65: PO 외부 작업 후 = 첫 콜드 메일 5건 발송 결과 박제
+- 66: 사서 5명 인터뷰 결과 = invariant 11 활성·페르소나 v2 재작성
+- 67: KOLAS3 D-200 보도자료 발행 (2026-06-15)
+- 68: META_REVIEW Cycle 60~67 + ADR 0047
+- 69·70: PO 외부 작업 진척에 따라 결정
+
 ### 외부 자동화 가이드 핵심 (메모리: project_claude_code_automation_2026_05_06.md)
 - 4 레이어: CLAUDE.md → Hooks → Subagents → Headless/SDK
 - 7 빌딩 블록 (CLAUDE.md·Skills·Slash·Subagents·Agent Teams·Hooks·MCP)
