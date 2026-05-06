@@ -6,7 +6,7 @@
 > ISBN 1번 입력 → KORMARC `.mrc` 5초 → **KOLAS III·독서로DLS·알파스 즉시 반입**.
 > **자관 PILOT 1관 (174 파일·3,383 레코드) round-trip 100% (3,383 full)** — MARC 블록별 분리표 ↓ (측정 2026-05-04·B안 Cycle 1).
 
-[![release](https://img.shields.io/badge/release-v0.5.0%2B-blue)]() [![tests](https://img.shields.io/badge/tests-622%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-38%2F39-brightgreen)]() [![매뉴얼](https://img.shields.io/badge/연구-Part_94-blue)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1관)-brightgreen)]() [![페르소나](https://img.shields.io/badge/페르소나-24_활성_%2B_98_백로그-blue)]() [![ICP_PMF](https://img.shields.io/badge/Champion_4%2F4-92.5점-brightgreen)]()
+[![release](https://img.shields.io/badge/release-v0.7.1-blue)]() [![tests](https://img.shields.io/badge/tests-1152%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-39%2F39-brightgreen)]() [![Plan_B](https://img.shields.io/badge/Plan_B-22%2F24%20complete-brightgreen)]() [![V2_V3](https://img.shields.io/badge/V2%2BV3-100%25%20scaffolding-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1)-brightgreen)]() [![invariants](https://img.shields.io/badge/invariants-10-brightgreen)]() [![ADRs](https://img.shields.io/badge/ADRs-0024~0042-blue)]()
 
 **한국 도서관 사서**가 매일 부딪히는 KORMARC 마크 작업을 권당 8분 → 2분으로 단축. 사서 출신 1인 개발자가 자관 「○○도서관」 PILOT을 거쳐 만든 SaaS.
 

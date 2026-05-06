@@ -1,20 +1,56 @@
-# Operations Handbook (Cycle 27·운영 핸드북)
+# Operations Handbook (Cycle 27·운영 핸드북·Cycle 58 V3 통합)
 
-> Plan B 무중단 자율 + V2 L4 자율성·1인 SaaS 운영 단일 진실원.
+> Plan B 무중단 자율 + V2 L4 자율성 + V3 외부 256 출처·1인 SaaS 운영 단일 진실원.
+> **상세 사고 응답**: `docs/RUNBOOK.md` (Cycle 44·Tonight's command·Morning check·Incident response).
 
 ## 매일 (PO 외부 작업·5분)
 
 ```bash
 make blocker       # 매출 차단점 자동 감지
 make cost          # 일일 USD 비용 확인
+make kolas3        # KOLAS III D-day 갱신 (cron 자동·수동 트리거)
 ```
 
 ## 매주 월요일 (5분)
 
 ```bash
 make funnel        # 주간 funnel 리포트 (P34)
+make weekly        # V3 Block 4 주간 리포트 (Cycle 47·1주 audit 데이터 후)
 git log --oneline -20  # 지난 주 commit 검토
 ```
+
+## 매월 1회 (router_patcher·V3 Block 5)
+
+```bash
+python automation/router_patcher.py --dry-run   # 30일 audit 권고
+python automation/router_patcher.py --apply     # PR 브랜치 생성·자동 머지 X
+```
+
+활성: 2026-06-06+ (audit.jsonl 30일 누적 후·MIN_SAMPLES=20).
+
+## V3 야간 무중단 자율 (Phase 2·사업자 등록 + API 키 후)
+
+```bash
+# Tonight's command (RUNBOOK §0)
+./automation/po_loop_with_cost_guard.sh \
+  --hard 20 --soft 5 --per-iter 2 \
+  "다음 매출 차단점 1건 자동 진행"
+
+# 정지 (3 방법)
+touch /tmp/po-stop                 # po_loop 다음 사이클부터
+# Ctrl+C                           # 트랩 → STOP 파일 자동
+# 채팅: "STOP" / "PAUSE"            # 즉시
+```
+
+## V3 사고 응답 (RUNBOOK §3 정합)
+
+| 영역 | 명령 | 시점 |
+|---|---|---|
+| 비용 폭주 | `make stop` + `cat /tmp/claude-budget.json` | 즉시 |
+| 자관 round-trip 회귀 | `python scripts/regression_check.py --strict` | 1pp 초과 시 |
+| GitHub Actions 실패 | `gh run list --limit 5` + `gh run view <id> --log-failed` | 매주 |
+| 인증 깨짐 | `unset ANTHROPIC_API_KEY` 후 `claude /login` | 401 시 |
+| 자관 누설 의심 | `git diff HEAD~5..HEAD \| grep -iE 'okwhr[^-]\|박지수'` | 발견 시 |
 
 ## 매월 (15분)
 

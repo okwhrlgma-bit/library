@@ -1,19 +1,25 @@
 # STATUS — kormarc-auto 단일 진실원 (B안 P6)
 
 > Plan B Cycle 7 (P6) — STATUS_REALITY_CHECK.md → `docs/archive/STATUS_REALITY_CHECK-2026-04-27.md`로 이동·이 파일이 단일 진실원
+> **갱신**: 2026-05-06 Cycle 58 (v0.7.1 release·V3 외부 256 출처 통합 마무리)
 
-## 현재 상태 (2026-05-04 Cycle 7)
+## 현재 상태 (2026-05-06 Cycle 58 마무리)
 
 | 항목 | 값 |
 |---|---|
-| 버전 | v0.6.0 (tag push 완료) |
-| Tests | 662 passing / 6 skipped |
+| 버전 | **v0.7.1** (tag push 완료·2026-05-06) |
+| Tests | **1,152** passing / 6 skipped |
 | ruff | 0 errors |
 | binary_assertions | 39/39 |
 | 자관 174 round-trip | 100% baseline (regression ≤ 1pp 게이트) |
-| CLAUDE.md | 85줄 (60 ceiling 초과·v0.7 추가 슬림) |
-| agent_docs/ | 4 파일 (kormarc_field_reference·running_evals·release_process·CLAUDE-full 백업) |
-| GitHub | 동기 (origin/main = 로컬·v0.6.0 tag pushed) |
+| 영구 invariants | **10건** (Cycle 27·V3 추가 3건·ADR 0041) |
+| ADRs | **0024~0042** (19건 누적) |
+| 메모리 | 7건 (901·858·매출·V1·V2·V3·1-명령 1-완료 ⭐⭐⭐⭐⭐) |
+| Plan B P29~P52 | 22/24 (P30·P39 외부 의존만) |
+| V2 §1·§3·§5·§6·§7·§10·§11 | 100% scaffolding |
+| V3 Block 1·2·3·4·5·7 | ✅ scaffolding (Block 6 = 두 번째 SaaS 시작 시) |
+| GitHub | 동기 (origin/main = 로컬·v0.7.1 tag pushed) |
+| 28 사이클 누적 (Cycle 22 → 58) | tests 1,009 → 1,152 (+143) |
 
 ## Plan B 사이클 진행 (B안 §0)
 

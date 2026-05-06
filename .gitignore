@@ -3,6 +3,19 @@
 .env.local
 .env.*.local
 
+# V3 외부 256 출처 (Cycle 43~58·자율 운영 산출물·로컬 누적)
+audit.jsonl
+report.md
+*.py.bak.*
+/tmp/claude-budget.json
+.kormarc-auto/
+~/.kormarc-auto/
+
+# V3 Phase 2 비밀 (사업자 등록 후·night workspace)
+.env.night
+docs/sales/kolas3-countdown-current.json
+docs/sales/kolas3-countdown-previous.json
+
 # 자관 데이터 보안 (PIPA·tenant_isolation·옵션 2 명령)
 # 측정 결과 JSON만 commit·원본 .mrc·매핑 테이블·합성 ID = git X
 docs/eval/raw/

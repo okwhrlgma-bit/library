@@ -4,7 +4,7 @@
 > ISBN → KORMARC `.mrc` in 5 seconds → **KOLAS III·DLS·ALPAS direct import**.
 > **Self-library PILOT (1 library·174 files·3,383 records) round-trip 100%** — per-MARC-block disaggregation table below (measured 2026-05-04).
 
-[![release](https://img.shields.io/badge/release-v0.7.0-blue)]() [![tests](https://img.shields.io/badge/tests-1047%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-39%2F39-brightgreen)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1)-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![cycles](https://img.shields.io/badge/Plan_B-22%2F24_complete-brightgreen)]()
+[![release](https://img.shields.io/badge/release-v0.7.1-blue)]() [![tests](https://img.shields.io/badge/tests-1152%20passed-brightgreen)]() [![ruff](https://img.shields.io/badge/ruff-0%20errors-brightgreen)]() [![assertions](https://img.shields.io/badge/binary__assertions-39%2F39-brightgreen)]() [![round-trip](https://img.shields.io/badge/round--trip-100%25_(PILOT_1)-brightgreen)]() [![KORMARC](https://img.shields.io/badge/KORMARC-2023.12-blue)]() [![cycles](https://img.shields.io/badge/Plan_B-22%2F24%20complete-brightgreen)]() [![V3](https://img.shields.io/badge/V2%2BV3-100%25%20scaffolding-brightgreen)]()
 
 **Korean librarians** spend ~8 minutes per record on KORMARC cataloging. kormarc-auto cuts this to ~2 minutes for descriptive blocks. Solo founder (former librarian) shipping after self-library PILOT.
 
