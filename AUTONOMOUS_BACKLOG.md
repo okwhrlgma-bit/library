@@ -40,11 +40,23 @@
 
 | P | 영역 | 우선 | 의존성 | 상태 |
 |---|---|---|---|---|
-| **P41** | Stop hook = PROGRESS.md 자동 갱신 | 즉시 (Cycle 17) | 없음 | ✅ 진행 중 |
-| **P42** | PostToolUse / Edit 자동 ruff format 강화 | W1 | 없음 | 부분 |
-| **P43** | 슬래시 커맨드 /deploy + /release | W2 | P30 사업자 | 대기 |
-| **P44** | cron 주간 funnel 리포트 (P34 정합) | W3 | P34 ✅ | 대기 |
-| **P45** | MCP Stripe + 이메일 + Slack | W5 | P30·사업자 | 대기 |
+| **P41** | Stop hook = PROGRESS.md 자동 갱신 | 즉시 (Cycle 17) | 없음 | ✅ 완료 |
+| **P42** | PostToolUse / Edit 자동 ruff format 강화 | W1 | 없음 | ✅ 완료 (Cycle 18A) |
+| **P43** | 슬래시 커맨드 /deploy + /release | W2 | P30 사업자 | ✅ scaffold (Cycle 21) |
+| **P44** | cron 주간 funnel 리포트 (P34 정합) | W3 | P34 ✅ | ✅ 완료 (Cycle 22 + 52) |
+| **P45** | MCP Stripe + 이메일 + Slack | W5 | P30·사업자 | 🟡 매트릭스 박제 (Cycle 22) |
+
+## 🌍 V3 외부 256 출처 큐 (2026-05-06·Cycle 43~58 마무리)
+
+| Block | 영역 | 상태 | Cycle | 활성 시점 |
+|---|---|---|---|---|
+| **V3.1** | Headless Auth | ✅ doc | 43 | 즉시 |
+| **V3.2** | Cost Cap 3-Layer | ✅ | 43 | Phase 2 (API 키 후) |
+| **V3.3** | audit.jsonl Schema | ✅ | 43 | 즉시·1주 누적 시작 |
+| **V3.4** | weekly_report (13 메트릭) | ✅ scaffold | 47 | 2026-05-13+ (audit 7일) |
+| **V3.5** | router_patcher AST | ✅ scaffold | 53 | 2026-06-06+ (30일 데이터) |
+| **V3.6** | cross-project sync | ⏳ | - | 두 번째 SaaS 시작 시 |
+| **V3.7** | RUNBOOK + Makefile | ✅ | 44 + 49 | 즉시 |
 
 ### 외부 자동화 가이드 핵심 (메모리: project_claude_code_automation_2026_05_06.md)
 - 4 레이어: CLAUDE.md → Hooks → Subagents → Headless/SDK

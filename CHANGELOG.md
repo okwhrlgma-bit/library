@@ -6,6 +6,40 @@
 
 ## [Unreleased]
 
+## [0.7.1] - 2026-05-06 — V3 외부 256 출처 마무리 통합
+
+### Added (Cycle 43~56)
+- **V3 Block 1 Auth**: `docs/automation/HEADLESS_AUTH.md` — 인증 우선순위·5 디버깅 케이스
+- **V3 Block 2 Cost Cap 3-Layer**:
+  - `automation/cost_supervisor.py` — stream-json 단일 세션 watchdog
+  - `.claude/hooks/budget-cap-precheck.sh` — PreToolUse exit 2 차단
+- **V3 Block 3 Audit Schema**: `.claude/hooks/audit-log.sh` — PostToolUse append-only
+- **V3 Block 4 Weekly Report**: `automation/weekly_report.py` — 13 메트릭 통계 결정적 (LLM 호출 0)
+- **V3 Block 5 Router Patcher** (scaffold): `automation/router_patcher.py` — AST 패치 + 백업·자동 머지 X
+- **V3 Block 7 RUNBOOK**: `docs/RUNBOOK.md` — Tonight's command·incident response
+- **Phase 2 Wrapper**: `automation/po_loop_with_cost_guard.sh` — po_loop + cost_supervisor
+- **KOLAS3 Cron**: `scripts/automation/kolas3-daily-update.sh` — 매일 D-day 자동 갱신
+- **GitHub Actions**: `.github/workflows/weekly-report.yml` — 매주 월 리포트
+- **UI 통합**:
+  - Streamlit KOLAS3 D-day 실시간 카드 (Cycle 50)
+  - revenue_dashboard에 weekly_report 통합 (Cycle 51)
+
+### Changed
+- `Makefile`: 3 신규 명령 (`make weekly`·`make kolas3`·`make night-loop`)
+- `pyproject.toml`·`__init__.py`: 0.7.0 → 0.7.1
+- `META_REVIEW.md`: 21 → 28 사이클 누적
+
+### ADRs
+- ADR 0041 — V3 Block 1+2+3 통합
+- ADR 0042 — Cycle 43~49 V3 마무리 통합
+
+### Tests
+- 1,107 → **1,170+** (+60·V3 §4 13 메트릭 결정적 검증)
+- 신규: test_cost_supervisor (23)·test_weekly_report (21)·test_router_patcher (12)
+
+### Invariants
+- 7 → **10건** (V3 추가): cost_supervisor 래핑·budget-cap 우회 금지·audit append-only
+
 ## [1.0.0] - 2026-05-06
 
 ### Added — 1차 출시

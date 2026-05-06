@@ -98,6 +98,41 @@ def render_dashboard() -> None:
             st.caption(f"(funnel 모듈 미로드: {type(exc).__name__})")
 
     st.markdown("---")
+    st.subheader("📈 V3 Block 4 주간 리포트 (Cycle 47)")
+    try:
+        import sys as _sys_w
+        from pathlib import Path as _Path_w
+
+        auto_dir = _Path_w(__file__).resolve().parent.parent.parent.parent / "automation"
+        if str(auto_dir) not in _sys_w.path:
+            _sys_w.path.insert(0, str(auto_dir))
+        from weekly_report import compute_metrics, load_audit, load_usage
+
+        metrics = compute_metrics(load_audit(), load_usage())
+        if "error" in metrics:
+            st.info(
+                f"📊 데이터 부족·{metrics.get('hint', '')}·"
+                "audit-log.sh hook 활성 (Cycle 43) 후 누적 시작"
+            )
+        else:
+            wcol1, wcol2, wcol3, wcol4 = st.columns(4)
+            with wcol1:
+                st.metric("주간 사이클", metrics["cycles_total"])
+            with wcol2:
+                rate = metrics["M01_success_rate"]
+                st.metric("성공률 M01", f"{rate:.0%}", "임계 70%")
+            with wcol3:
+                st.metric("주간 비용", f"${metrics['M04_total_weekly_cost']:.2f}")
+            with wcol4:
+                st.metric("cycle당", f"${metrics['M04_avg_cost_per_cycle']:.3f}")
+            if metrics["M01_success_rate"] < 0.7:
+                st.error("❌ 성공률 < 70% → router unsafe 추가 권장")
+            if metrics["M04_avg_cost_per_cycle"] > 3:
+                st.warning("💰 cycle당 > $3 → Haiku 비중 확대")
+    except Exception as _exc:
+        st.caption(f"(weekly_report 미로드: {type(_exc).__name__})")
+
+    st.markdown("---")
     st.subheader("🚀 다음 액션 (자동 추천)")
     try:
         from next_blocker import detect_blockers

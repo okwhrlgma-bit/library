@@ -1437,14 +1437,54 @@ def main() -> None:
             "방법론: `docs/eval/methodology.md`"
         )
 
+    # Cycle 50 — KOLAS III D-day 실시간 카운트다운 카드 (V3 + P37 통합)
+    with st.expander("⏰ KOLAS III 표준형 종료 카운트다운 (D-day 실시간)"):
+        try:
+            from kormarc_auto.migration.countdown import (
+                KOLAS3_END_DATE,
+                days_until_kolas3_end,
+                lost_data_categories,
+            )
+
+            days = days_until_kolas3_end()
+            urgency = "golden" if days > 90 else "critical" if days > 0 else "expired"
+            urgency_emoji = {"golden": "🟢", "critical": "🟠", "expired": "🔴"}[urgency]
+            urgency_label = {
+                "golden": "골든윈도우",
+                "critical": "긴급",
+                "expired": "종료됨",
+            }[urgency]
+
+            col_a, col_b, col_c = st.columns([1, 1, 2])
+            with col_a:
+                st.metric("종료까지", f"D-{days}", urgency_label)
+            with col_b:
+                st.metric("종료일", KOLAS3_END_DATE.strftime("%Y-%m-%d"), "23:59 KST")
+            with col_c:
+                st.markdown(f"**{urgency_emoji} {urgency_label} 상태**")
+                if urgency == "golden":
+                    st.success("1,296 공공 + 12,200 학교 + 5,100 KNU 미사용 = 단 한 번 시장")
+                elif urgency == "critical":
+                    st.warning("3개월 미만·즉시 영업 가속 필요")
+                else:
+                    st.error("종료됨·후속 시스템 마이그레이션")
+
+            st.caption(
+                "출처: books.nl.go.kr (국립중앙도서관 공식 공지)·"
+                "후속 4: 코라스Ⅲ 확장형·알파스·K-LAS 3.0·KOLAS-WEB"
+            )
+            with st.popover("🗂 종료 시 마이그레이션 필요 데이터"):
+                for cat in lost_data_categories():
+                    st.markdown(f"- {cat}")
+        except Exception as _exc:
+            st.caption(f"(KOLAS3 카운트다운 미로드: {type(_exc).__name__})")
+
     # Cycle 26 — 매출 차단점 자동 감지 카드 (PO 운영 친화)
     with st.expander("🎯 매출 활성 차단점 (Cycle 25 자동 감지)"):
         import sys as _sys2
         from pathlib import Path as _Path2
 
-        scripts_path = (
-            _Path2(__file__).resolve().parent.parent.parent.parent / "scripts"
-        )
+        scripts_path = _Path2(__file__).resolve().parent.parent.parent.parent / "scripts"
         if str(scripts_path) not in _sys2.path:
             _sys2.path.insert(0, str(scripts_path))
         try:
@@ -1470,8 +1510,7 @@ def main() -> None:
         except Exception as _exc:
             st.caption(f"(차단점 감지 모듈 미로드: {type(_exc).__name__})")
         st.caption(
-            "전체 매트릭스: `docs/external-dependencies-matrix-2026-05.md` · "
-            "API: `GET /blockers`"
+            "전체 매트릭스: `docs/external-dependencies-matrix-2026-05.md` · API: `GET /blockers`"
         )
 
     with st.expander("📖 5분 가이드 (처음 사용 시 권장)"):

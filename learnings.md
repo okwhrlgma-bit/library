@@ -5,6 +5,39 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 43~58] V3 외부 256 출처 통합 + 자동화 인프라 마무리
+
+### 사실 11: V3 §3 Cost Cap = 단일 의존 절대 금지·3 계층 중첩 필수
+- Anthropic Admin Usage API = 5분 지연 = 하드 스톱 부적합 (사후 정산만)
+- `--max-budget-usd` = 공식 cli-reference 미등재 = 단독 의존 위험
+- 3 계층 = 외부 watchdog (cost_supervisor) + PreToolUse hook + Stop hook = 모두 깔아야 안전
+- 적용: `automation/cost_supervisor.py` + `.claude/hooks/budget-cap-precheck.sh` 모두 박제
+
+### 사실 12: 비용 폭주 실제 사례 = $500/야간 (V3 §3.6)
+- GH `claude-code#35166` = 100+ MCP 도구 등록·컨텍스트 42% 도구 정의 점유·/compact·즉시 초과·무한 재시도
+- 방어: --max-turns + 외부 watchdog + MCP deferred 로딩 (`ENABLE_TOOL_SEARCH=auto:5`)
+- 동일 명령 7회 반복 (#19699) = PreToolUse hook이 "직전 N분 동일 명령 + 비제로 exit" 차단
+
+### 사실 13: V3 §4 자가 진단 = 1주 데이터 후 활성·미리 빌드 X
+- 13 메트릭 = 1주+ 데이터 충분 시 의미·1주 미만 = 거짓 신호
+- scaffold = 즉시 (graceful 메시지 빌드)·활성 = audit.jsonl 7일 누적 후
+- LLM 호출 0 (V3 §4.10) = 통계 결정적·anthropic·openai SDK import 0건
+
+### 사실 14: V3 §4.5 router AST 패치 = 정규식 절대 금지
+- 정규식 치환 = 인용부호·주석에서 깨짐
+- AST 패치 + .py.bak.{timestamp} 백업 = 안전·되돌리기 가능
+- 자동 머지 X·PR 브랜치만 (V2 §6.1 자기 수정 정합)
+
+### 사실 15: Windows cp949 = subprocess.run encoding="utf-8" 명시 필수
+- git log 한국어 commit message = 기본 cp949 = stdout None 또는 깨짐
+- `subprocess.run(... encoding="utf-8", errors="replace")` 명시
+- print 시 = `sys.stdout.reconfigure(encoding="utf-8", errors="replace")`
+
+### 사실 16: V3 §6 권고 = "Block 1·2·3 즉시·Block 4 1주 후·Block 5 30일 후"
+- "1주일 운영 데이터 없이 만드는 게 맞나? 아니다." (V3 §6 정직 권고)
+- 메트릭 임계값 (성공률 70%·반복 15·cost $3) = 다른 사람 데이터·본인 워크로드 다를 수 있음
+- 적용: scaffold만 빌드·활성 = 데이터 누적 후 임계 재조정
+
 ## [2026-05-06·Cycle 20A+B] V2 §2 PAVR + §4 3-Tier Memory
 
 ### 사실 9: PAVR 4 단계 = Plan→Act→Verify→Reflect

@@ -1,0 +1,54 @@
+name: V3 Block 4 Weekly Report (Cycle 52)
+
+# 매주 월요일 06:00 KST (UTC 21:00 일요일) = 주간 리포트 자동 생성.
+# audit.jsonl 7일 누적 = 통계 리포트·부족 = graceful 메시지.
+
+on:
+  schedule:
+    - cron: "0 21 * * 0"  # UTC 21:00 Sun = KST 06:00 Mon
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - 'automation/weekly_report.py'
+      - 'tests/test_weekly_report.py'
+
+permissions:
+  contents: read
+
+jobs:
+  weekly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: Run weekly_report
+        run: |
+          python automation/weekly_report.py
+          echo "--- generated ---"
+          head -50 report.md || echo "report.md 없음"
+
+      - name: Upload report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-report-${{ github.run_id }}
+          path: report.md
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Run weekly_report tests
+        if: github.event_name == 'pull_request'
+        run: |
+          python -m pip install pytest hypothesis
+          python -m pytest tests/test_weekly_report.py -q
