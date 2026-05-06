@@ -92,6 +92,11 @@ def _setup_page() -> None:
             "About": "kormarc-auto · 한국 도서관 KORMARC 자동 생성 SaaS",
         },
     )
+
+    # Cycle 60 (UI/UX·헌법 §12) — KWCAG 2.2 Level AA + KRDS + Pretendard 글로벌 inject
+    from kormarc_auto.ui.a11y_inject import inject_global_a11y
+
+    inject_global_a11y()
     st.markdown(
         """
         <style>

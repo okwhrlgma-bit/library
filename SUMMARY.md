@@ -1,108 +1,105 @@
-# SUMMARY — Plan B Cycle 1+2 (2026-05-03 → 2026-05-04)
+# SUMMARY — kormarc-auto 누적 진척 (Cycle 1 → 60·v0.7.1)
 
-> B안 §0 영구 헤더 적용·ADR 0025 채택 후 Cycle 1+2 종료
-> 다음 = Cycle 3 자동 전환 (P2 = T2-2 .bat 제거 + uv tool install)
+> **갱신**: 2026-05-06 Cycle 60 마무리·v0.7.1 release·UI/UX 통합 완료.
+> **이전 SUMMARY** = `docs/archive/SUMMARY-2026-05-04-cycle1-2.md` (B안 §0 적용 시점).
+> **단일 진실원**: `STATUS.md` (현재)·본 SUMMARY = 누적 매트릭스.
 
-## Cycle 1 — Per-block disaggregation publish (B안 §1·강제·완료)
+## 60 사이클 매트릭스 (Cycle 1 → 60)
 
-산출물:
-- `scripts/eval_per_record_roundtrip.py` (script only·자관 누설 0)
-- `docs/eval/results/2026-05-04/per-record.json` (3,383 / 100% pass)
-- `docs/eval/results/2026-05-04/regression_baseline.json` (사이클 회귀 ≤ 1pp 게이트)
-- `docs/eval/methodology.md` (재현 가능 명세·N=1 한계 명시)
-- 5 surface 정정: README·Streamlit·FastAPI `/accuracy`·CLI `info`·prefix_discover_app
-- "99.82%" 단일 = 모든 surface 폐기
+| Cycle 그룹 | 영역 | tests | ADR | 핵심 산출 |
+|---|---|---:|---|---|
+| 1~2 (B안 §0) | per-block disaggregation + offline demo + v0.6.0 tag | 645 → 658 | 0024·0025 | regression baseline |
+| 3~6 | init/serve·Hypothesis·agent_docs·README.en | 658 → 753 | - | uv tool install |
+| 7~14 | STATUS·익명화·결정론·audit·Ghost text·카테고리 신뢰·visible diff·KWCAG | 753 → 903 | 0026~0033 | v0.7.0 종착 |
+| 15~21 | KWCAG·KRDS·SEO·블로그·자치구·Hooks·LLM GEO·budget·온보딩·PAVR·Failure Replay·starter v2 | 903 → 1009 | 0034~0036 | V2 §3·§4·§6 |
+| 22~28 | V2 자율 인프라 + regression + blocker + UI + operations | 1009 → 1047 | 0037·0038 | invariants 7건 |
+| 29~35 | V2 §3 다중 에이전트 4 패턴 (Proposer·N-Vote·Hierarchical·Adversarial) | 1047 → 1083 | 0039 | 100% scaffolding |
+| 36~42 | 차단점 동적 + 매출 대시보드 + V2 §3 시나리오 | 1083 → 1107 | 0040 | 13 시나리오 tests |
+| 43~49 | V3 외부 256 출처 (Auth·Cost Cap 3-Layer·Audit·Weekly·RUNBOOK·KOLAS3 cron) | 1107 → 1140 | 0041·0042 | invariants 10건 |
+| 50~58 | V3 마무리 (Streamlit KOLAS3·revenue Block 4·router_patcher AST·v0.7.1 release) | 1140 → 1152 | (0043) |  |
+| 59 | 일괄 검토 + 6 갭 메우기 (README/STATUS/.gitignore/operations/META/ADR 0043) | 1152 | 0043 | 단일 진실원 동기 |
+| **60** | **UI/UX 통합 (KWCAG 2.2 + KRDS + Pretendard + 사서 친화)** | **1152 → 1186** | **0044** | **헌법 §12 100%** |
 
-ADR 0025: Plan B 무중단 자율 채택 (ADR 0024 supersede)·invariants 2건만 보존
+## 최신 메트릭 (Cycle 60 마무리)
 
-## Cycle 2 — T2-1 Offline demo finish (B안 §2·강제·완료)
+| 항목 | 값 |
+|---|---:|
+| Tests | **1,186** passing / 6 skipped (+177 over 38 cycles) |
+| ruff | 0 errors |
+| binary_assertions | 39/39 |
+| 자관 174 round-trip | 100% baseline (regression ≤ 1pp 영구 게이트) |
+| 영구 invariants | **10건** (V3 추가 3건·ADR 0041) |
+| ADRs 누적 | **0024~0044** (21건) |
+| 메모리 | 7건 (901·858·매출·V1·V2·V3·1-명령 1-완료 ⭐⭐⭐⭐⭐) |
+| Plan B P29~P52 | 22/24 (P30·P39 외부 의존만) |
+| V2 §1·§3·§5·§6·§7·§10·§11 | 100% scaffolding |
+| V3 Block 1·2·3·4·5·7 | ✅ scaffolding (Block 6 = 두 번째 SaaS 시작 시) |
+| **UI/UX (헌법 §12)** | **KWCAG 2.2 9 항목·KRDS·Pretendard 글로벌 적용** |
+| GitHub | origin/main 동기·v0.7.1 tag |
 
-산출물:
-- `aggregator` `KORMARC_DEMO_MODE=1` 분기 (외부 호출 0건)
-- `cmd_demo` 5건 자동·30초 timing·round-trip 회귀
-- `tests/test_offline_demo.py` (5 tests passing)
-- 결과: 5/5 records · 0.00s · round-trip 100%
-- pyproject 0.5.0 → 0.6.0·`__init__.py` 0.6.0 정정
-- git tag v0.6.0 push 완료
+## V3 통합 매트릭스 최종
 
-GitHub Release: `gh` CLI 부재로 PO 수동 생성 필요 (TODO PO-WEEK1-NEW)
+| Block | Cycle | 상태 | 활성 시점 |
+|---|---|---|---|
+| 1 Auth | 43 | ✅ doc | 즉시 |
+| 2 Cost Cap 3-Layer | 43 | ✅ | Phase 2 (API 키 후) |
+| 3 audit.jsonl | 43 | ✅ | 즉시 |
+| 4 weekly_report | 47·51·52 | ✅ scaffold + UI + cron | 2026-05-13+ (audit 7일) |
+| 5 router_patcher | 53·54 | ✅ scaffold + tests | 2026-06-06+ (30일 데이터) |
+| 6 cross-project | - | ⏳ | 두 번째 SaaS 시작 시 |
+| 7 RUNBOOK + Makefile | 44·49 | ✅ | 즉시 |
 
-## 게이트 통과 (B안 §0·둘 다 사이클)
-- ruff check . = All checks passed
-- pytest -q = 650 passed / 7 skipped
-- binary_assertions = 39/39 (100%)
-- 자관 174 파일 round-trip = 100% baseline
-- 헌법 위반 = 0건
-- 자관 git 누설 = 0건
-- demo 30초 게이트 = 0.00s 통과
+## 영구 invariants 10건
 
-## Commits (Cycle 1+2)
-1. c94cc74 — T2-2 console_scripts + T2-4 prompt cache + Part 95 + 39/39
-2. a4ab145 — ADR 0024 (가드레일·이후 supersede)
-3. e7d74f6 — Cycle 1 per-record + ADR 0025 + 5 surface
-4. c292b6d — Cycle 2 offline demo finish + v0.6.0 bump
-5. tag v0.6.0 → origin
+1. 헌법 위반 0건
+2. 자관 데이터 git 누설 0건
+3. 결정론 (ADR 0028)
+4. AI 출처 표시 (ADR 0029)
+5. 카테고리형 신뢰 (ADR 0030)
+6. KWCAG 2.2 (ADR 0032)
+7. KOLAS3 종료일 = 2026-12-31 (ADR 0026)
+8. 야간 자율 = cost_supervisor 래핑 (ADR 0041)
+9. budget-cap-precheck.sh exit 2 우회 금지 (ADR 0041)
+10. audit.jsonl append-only·직접 편집·삭제 금지 (ADR 0041)
 
-## 다음 사이클 (Cycle 3 — 자동 전환)
-- B안 §3 P2: T2-2 .bat 제거 + uv tool install
-- 일부 완료 (console_scripts·ka alias)·잔여:
-  - init·serve 서브커맨드 신설
-  - .bat deprecation stub
-  - README "uv tool install" 섹션
+## 단일 진실원 동기화 (Cycle 59 + 60)
 
-## Cycle 3 — P2 .bat deprecation + init subcmd (완료)
-- `kormarc-auto init` 신규 (B안 P2)
-- 안전 가드: 기존 .env에 키 1건이라도 있으면 --force도 거부
-- start-all.bat: deprecation 안내 (기능 유지·v0.7+ 제거)
-- README "빠른 시작": 30초 데모 + uv tool install
-- ⚠ 자가 사고: init --force가 PO 키 3건 덮어씀 → 즉시 사용자_TODO에서 복구·가드 강화·learnings 사실 6
-- commit: 1a4c019
+| 파일 | 갱신 시점 |
+|---|---|
+| README.md (한국어) | Cycle 59 |
+| README.en.md (영문) | Cycle 59 |
+| STATUS.md | Cycle 59 |
+| META_REVIEW.md | Cycle 59 |
+| agent_docs/operations.md | Cycle 59 |
+| .gitignore | Cycle 59 (V3 8 패턴) |
+| docs/RUNBOOK.md | Cycle 44 |
+| CHANGELOG.md | Cycle 60 (Unreleased UI/UX) |
+| Makefile | Cycle 60 (a11y·ui-test·dashboard) |
+| **SUMMARY.md** | **Cycle 60 (이 파일)** |
 
-## Cycle 4 — P3 Hypothesis 정식 통합 (완료)
-- pyproject [dev] hypothesis>=6.150
-- tests/test_property_kormarc.py 4 신규 class (008·ISBN·결정성·round-trip)
-- 12 property tests passing
-- 발견: builder가 \x1f (MARC delimiter) 입력에 round-trip fail (v0.7 backlog)
-- commit: d736864
+## 다음 7-cycle 권장 (Cycle 61~67)
 
-## Cycle 5 — P4 agent_docs/ 분할 (완료)
-- agent_docs/kormarc_field_reference.md (KS X 6006-0:2023.12 필드)
-- agent_docs/running_evals.md (Hamel 3-level eval)
-- agent_docs/release_process.md (사이클 종료·v1.0 게이트·STOP)
-- CLAUDE.md §9 참조 갱신·85줄 (60 ceiling 초과·v0.7 추가 슬림 검토)
-- commit: 4898711
+| Cycle | 영역 | 의존 |
+|---|---|---|
+| 61 | weekly_report 1주 데이터 첫 검증 | 2026-05-13+ |
+| 62 | KOLAS3 countdown UI A/B | 즉시 |
+| 63 | revenue_dashboard 인터랙티브 | 즉시 |
+| 64 | router_patcher 30일 첫 분석 | 2026-06-06+ |
+| 65 | (P30 PortOne 활성) | PO 사업자 등록 |
+| 66 | UI/UX 페르소나 시뮬 재검증 (Part 49 56% 전환) | 즉시 |
+| 67 | META_REVIEW Cycle 60~67 + ADR 0045 | 7-cycle 마무리 |
 
-## 누적 메트릭 (Cycle 1~5)
-- Tests: 662 passing / 6 skipped
-- ruff: 0 errors
-- binary_assertions: 39/39
-- 자관 round-trip: 100% baseline
-- CLAUDE.md: 85줄 (60 ceiling)
-- agent_docs/: 4 파일 (1 백업 + 3 신규)
-- v0.6.0 tag push 완료
+## PO 외부 작업 (불변 차단점)
 
-## 다음 사이클 (Cycle 6 — Plan B P5)
-- T2-5 이중언어 README + vhs GIF
-- vhs (charmbracelet) 외부 도구 의존 = 일부 SKIPPED 예상
-- 가능한 잔여: README.en.md 신설·README.md 한국어 검증
-- 또는 P6 (T2-6 STATUS 단일 진실원) 우선
+`docs/external-dependencies-matrix-2026-05.md` 단일 진실원.
 
-## PO 외부 작업 (TODO 등록·이번 세션)
-- GitHub v0.6.0 Release 수동 생성 (https://github.com/kormarc-auto/library/releases/new?tag=v0.6.0)
-- 사서 5명 cold outreach (외부 보고서 진단·보존)
-- 청년 마음건강 신청 (1577-0199·1393)
-- NL_CERT_KEY·ANTHROPIC_API_KEY 발급
-
-## SKIPPED (없음·Cycle 1+2 강제 산출물 모두 완료)
-
-## Stop Reason
-- 없음·다음 사이클 자동 트리거
-
-## PO 외부 작업 (TODO 등록)
-- GitHub v0.6.0 Release 수동 생성 (`gh` CLI 미설치 환경)
-  - https://github.com/kormarc-auto/library/releases/new?tag=v0.6.0
-  - 노트는 본 SUMMARY + CHANGELOG_NIGHT v0.6.0 항목 인용
+| ID | 작업 | 차단 해소 |
+|---|---|---|
+| PO-PROD-1 | 일반과세자 홈택스 등록 | P30 PortOne 라이브 |
+| PO-PROD-5 | NL_CERT_KEY 발급 | 정확도 |
+| PO-PROD-6 | ANTHROPIC_API_KEY 발급 | AI 기능 + V3 Phase 2 |
+| SALES-1 | 사서 5명 인터뷰 | wedge·P39 사서어 |
 
 ---
 
-작성: Claude Opus 4.7 (1M context) · 2026-05-04 · Plan B Cycle 1+2 종료 · 무중단 자율
+작성: Claude Opus 4.7 (1M context) · 2026-05-06 Cycle 60 · v0.7.1 + UI/UX 통합 · 무중단 자율 38 사이클 누적

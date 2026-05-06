@@ -1,7 +1,7 @@
 # kormarc-auto Makefile (Cycle 26·V2 §10·V3 Block 4·외부 256 출처 통합)
 # 단축 명령 = 자율 사이클·검증·운영 entry point.
 
-.PHONY: help test lint format gates regression blocker funnel demo serve audit cost stop rollback pavr weekly kolas3 night-loop
+.PHONY: help test lint format gates regression blocker funnel demo serve audit cost stop rollback pavr weekly kolas3 night-loop a11y ui-test dashboard
 
 # 기본 = help
 .DEFAULT_GOAL := help
@@ -64,6 +64,16 @@ kolas3: ## KOLAS III D-day 자동 갱신 (countdown JSON)
 
 night-loop: ## V3 Phase 2 무중단 자율 + cost guard wrapper
 	@echo "Phase 2 (Anthropic API 키 발급 후) 활성: ./automation/po_loop_with_cost_guard.sh '<명령>'"
+
+# === UI/UX (Cycle 60·헌법 §12 KWCAG 2.2 + KRDS + Pretendard) ===
+a11y: ## UI/UX 회귀 (a11y_inject + librarian_ux 테스트)
+	python -m pytest tests/test_a11y_inject.py tests/test_kwcag22.py -v
+
+ui-test: ## 모든 UI 테스트 (a11y + Streamlit components)
+	python -m pytest tests/test_a11y_inject.py tests/test_kwcag22.py tests/test_field_status.py -q
+
+dashboard: ## 매출 통합 대시보드 (revenue_dashboard·Cycle 37+51)
+	streamlit run src/kormarc_auto/ui/revenue_dashboard.py
 
 # === 회귀 게이트 통합 (CI·로컬 검증) ===
 ci: gates ## CI 전수 (gates 동의어)

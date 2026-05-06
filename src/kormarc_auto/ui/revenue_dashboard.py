@@ -25,6 +25,12 @@ def render_dashboard() -> None:
     import streamlit as st
 
     st.set_page_config(page_title="kormarc-auto 매출 대시보드", layout="wide")
+
+    # Cycle 60 (UI/UX·헌법 §12) — KWCAG 2.2 + KRDS + Pretendard 글로벌 inject
+    from kormarc_auto.ui.a11y_inject import inject_global_a11y
+
+    inject_global_a11y()
+
     st.title("📊 kormarc-auto 매출 대시보드")
     st.caption("Cycle 37 통합·차단점 + 예산 + Funnel·매일 5분 cadence (operations.md 정합)")
 

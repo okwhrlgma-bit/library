@@ -5,6 +5,30 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 60] UI/UX 통합 (헌법 §12 doc → 코드 100% 적용)
+
+### 사실 17: ADR doc 박제 ≠ 실제 코드 적용 = 28 사이클 동안 §12 잠재 위반
+- ADR 0032 (Cycle 15A) = KWCAG·KRDS 모듈 신설했으나 검사 도구만·Streamlit 적용 0건
+- 28 사이클 동안 헌법 §12 = doc-only·실제 a11y inject 0건·Pretendard CDN 0건
+- 적용: 매 헌법 추가 시 = "코드 적용 검증 테스트" 동시 추가 필수 (Cycle 60 = 34 신규 tests)
+
+### 사실 18: Streamlit `unsafe_allow_html=True` = a11y 필수 영역에서만 허용
+- Streamlit 정책 = HTML inject 비권장 (XSS 위험)
+- 그러나 KWCAG 2.4.1 skip-link·2.4.7 focus visible·1.3.1 lang ko = HTML/CSS 필수
+- 적용: a11y 글로벌 inject = 1회·고정 string·동적 input X = XSS risk 0
+
+### 사실 19: Pretendard CDN = jsdelivr·v1.3.9·system fallback 4 단계
+- jsdelivr CDN = SLA 99.9%+·orioncactus 공식 배포
+- fallback: Apple SD Gothic Neo (Mac) → 맑은 고딕 (Windows) → Noto Sans KR → sans-serif
+- 오프라인 환경에서도 한국어 가독 보장
+- 적용: `font-family: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif`
+
+### 사실 20: 사서 친화 어휘 = IT 일대일 매핑 + 일과 사이클 + 권위 인용 3중
+- IT → 사서: import → 반입·validation → 검증·indicator → 지시기호 (12 항목)
+- 일과: 수서 → 정리 → 배가 → 이용 → 납본 (Part 49 5 단계)
+- 권위: NLK·KAIT·MCST·KLA·KLMA (5 인용·전환율 +25%)
+- 적용: `librarian_ux.py` 단일 모듈·재사용 = 모든 페이지에서 동일 어휘
+
 ## [2026-05-06·Cycle 43~58] V3 외부 256 출처 통합 + 자동화 인프라 마무리
 
 ### 사실 11: V3 §3 Cost Cap = 단일 의존 절대 금지·3 계층 중첩 필수

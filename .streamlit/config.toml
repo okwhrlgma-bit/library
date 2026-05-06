@@ -1,0 +1,43 @@
+# Streamlit 글로벌 테마 (Cycle 60·KRDS + Pretendard 정합·헌법 §12)
+# 출처: src/kormarc_auto/a11y/krds.py KRDS_COLOR_TOKENS·KWCAG 2.2 Level AA 4.5:1 대비
+
+[theme]
+# Korea blue 60 (CTA·링크) = WCAG AA 4.5:1 대비 (vs white)
+primaryColor = "#0F4C9F"
+
+# 배경 = gray_5 (눈 피로 ↓·사서 장시간 사용 정합)
+backgroundColor = "#FAFAFA"
+
+# 보조 배경 (사이드바·카드)
+secondaryBackgroundColor = "#F3F4F6"
+
+# 본문 텍스트 = gray_90 (4.5:1 대비 vs backgroundColor)
+textColor = "#1F2937"
+
+# Pretendard 한글 폰트 (orioncactus·v1.3.9·jsdelivr CDN)
+# Streamlit 1.33+ font 옵션 = sans serif fallback (CDN inject = a11y_inject.py)
+font = "sans serif"
+
+# 글꼴 크기 base = 16px (KWCAG 1.4.4 텍스트 200% 확대 정합)
+baseFontSize = 16
+
+[client]
+# 사서 사용 시 메뉴 노출 (디버깅·도움말 접근)
+toolbarMode = "minimal"
+showSidebarNavigation = true
+
+[server]
+# 보안: 헤드리스 환경 (Docker·V3 §2.7 정합)
+headless = true
+runOnSave = false
+
+# 업로드 한도 (자관 .mrc 174 파일 일괄 = 50MB 충분)
+maxUploadSize = 50
+
+[browser]
+# Telemetry 차단 (PIPA·자관 익명 정합·헌법 §3)
+gatherUsageStats = false
+
+[runner]
+# 페이지 새로고침 시 캐시 보존 (사서 검토 흐름 유지)
+fastReruns = true

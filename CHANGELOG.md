@@ -4,7 +4,32 @@
 
 > 새 SaaS에 적용 시 어느 버전을 가져왔는지 `decisions.md`에 기록하면 추후 동기화가 쉬워집니다.
 
-## [Unreleased]
+## [Unreleased] - Cycle 60 UI/UX 통합 (헌법 §12 정합)
+
+### Added
+- `.streamlit/config.toml` — KRDS 색상 토큰·Pretendard·KWCAG 1.4.4 base 16px·Telemetry 차단 (헌법 §3)
+- `src/kormarc_auto/ui/a11y_inject.py` — 글로벌 KWCAG 2.2 Level AA + Pretendard CDN
+  * 9 KWCAG 정합 (1.3.1·1.4.3·1.4.4·1.4.13·2.3.3·2.4.1·2.4.7·2.5.5)
+  * `inject_global_a11y()` = 모든 페이지 진입점 1회 호출
+  * `render_confidence_chip()` = 카테고리형 신뢰 (헌법 §11·raw % 금지)
+  * `render_ai_ghost()` = AI 생성 표시 (헌법 §10·인공지능 기본법 §31)
+- `src/kormarc_auto/ui/librarian_ux.py` — 사서 친화 UI 헬퍼
+  * `LIBRARIAN_DAILY_CYCLE` 5 단계 (수서·정리·배가·이용·납본)
+  * `LIBRARIAN_VOCABULARY` IT → 사서 어휘 매핑
+  * `time_saved_estimate()` = 헌법 §0 (8분 → 2분) 시각화
+  * `render_librarian_friendly_error()` = 5 사서 친화 에러 (PIPA 정합)
+  * `render_workflow_position()` = 일과 위치 마이크로 카피
+  * `cite_authority()` = 5 권위 인용 (NLK·KAIT·MCST·KLA·KLMA)
+- `tests/test_a11y_inject.py` (34 신규 tests)
+  * KWCAG 2.2 9 항목·헌법 §10·§11·§12 invariants
+  * 사서 친화 에러·시간 절감·workflow position 검증
+
+### Changed
+- `streamlit_app.py`·`revenue_dashboard.py` 진입부에 `inject_global_a11y()` 호출
+- `Makefile` 3 신규 명령 (`make a11y`·`ui-test`·`dashboard`)
+
+### Tests
+- 1,152 → **1,186** (+34·UI/UX 회귀)
 
 ## [0.7.1] - 2026-05-06 — V3 외부 256 출처 마무리 통합
 
