@@ -1,0 +1,77 @@
+name: UI/UX A11y Regression (Cycle 61·헌법 §12)
+
+# PR + main push = a11y_inject + librarian_ux + KWCAG 검사 회귀.
+# 헌법 §12 = UI = KWCAG 2.2 Level AA 영구 게이트.
+
+on:
+  pull_request:
+    paths:
+      - 'src/kormarc_auto/ui/**'
+      - 'src/kormarc_auto/a11y/**'
+      - '.streamlit/config.toml'
+      - 'tests/test_a11y_inject.py'
+      - 'tests/test_kwcag22.py'
+      - 'tests/test_field_status.py'
+  push:
+    branches: [main]
+    paths:
+      - 'src/kormarc_auto/ui/**'
+      - 'src/kormarc_auto/a11y/**'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  a11y:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install minimal deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pytest hypothesis pymarc
+
+      - name: Install package (a11y modules import)
+        run: |
+          python -m pip install -e .
+
+      - name: Run UI/UX regression
+        run: |
+          python -m pytest tests/test_a11y_inject.py tests/test_kwcag22.py tests/test_field_status.py -v
+
+      - name: Verify constitution §12 compliance
+        run: |
+          # 헌법 §12 invariants 자동 검증 (Cycle 60 a11y_inject 정합)
+          python -c "
+          from kormarc_auto.ui.a11y_inject import A11Y_GLOBAL_CSS
+
+          assert 'pretendard' in A11Y_GLOBAL_CSS.lower(), 'Pretendard CDN missing'
+          assert 'skip-link' in A11Y_GLOBAL_CSS, 'KWCAG 2.4.1 skip link missing'
+          assert 'focus-visible' in A11Y_GLOBAL_CSS, 'KWCAG 2.4.7 focus visible missing'
+          assert '44px' in A11Y_GLOBAL_CSS, 'KWCAG 2.5.5 touch target missing'
+          assert 'prefers-reduced-motion' in A11Y_GLOBAL_CSS, 'KWCAG 2.3.3 missing'
+          print('✓ 헌법 §12 KWCAG 2.2 Level AA 5 핵심 항목 모두 정합')
+          "
+
+      - name: Verify Korean librarian vocabulary
+        run: |
+          python -c "
+          from kormarc_auto.ui.librarian_ux import (
+              LIBRARIAN_DAILY_CYCLE, LIBRARIAN_VOCABULARY, time_saved_estimate,
+          )
+
+          assert len(LIBRARIAN_DAILY_CYCLE) == 5, 'Part 49 5 단계 위반'
+          assert '반입' in LIBRARIAN_VOCABULARY.values(), 'IT → 사서 어휘 매핑 누락'
+          result = time_saved_estimate(100)
+          assert '8분' in result['context'], '헌법 §0 (8분 → 2분) 누락'
+          print('✓ 사서 친화 어휘 + 헌법 §0 시간 절감 정합')
+          "

@@ -1,0 +1,51 @@
+name: Daily Blocker Detection (Cycle 61)
+
+# 매일 06:00 KST (UTC 21:00 전날) = 매출 차단점 자동 감지 + 변경 시 알림.
+# next_blocker.py 정합 (Cycle 25)·외부 의존 진척 시 severity 자동 변경 → 알림.
+
+on:
+  schedule:
+    - cron: "0 21 * * *"   # UTC 21:00 = KST 06:00 (매일)
+  workflow_dispatch: {}
+  pull_request:
+    paths:
+      - 'scripts/next_blocker.py'
+      - 'tests/test_next_blocker.py'
+
+permissions:
+  contents: read
+
+jobs:
+  blocker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run next_blocker
+        id: detect
+        run: |
+          python scripts/next_blocker.py --json > blockers.json
+          echo "--- blockers.json ---"
+          cat blockers.json | head -50
+
+      - name: Upload blockers artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: blockers-${{ github.run_id }}
+          path: blockers.json
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Run blocker tests (PR only)
+        if: github.event_name == 'pull_request'
+        run: |
+          python -m pip install pytest hypothesis
+          python -m pytest tests/test_next_blocker.py -q

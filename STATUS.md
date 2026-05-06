@@ -3,24 +3,26 @@
 > Plan B Cycle 7 (P6) — STATUS_REALITY_CHECK.md → `docs/archive/STATUS_REALITY_CHECK-2026-04-27.md`로 이동·이 파일이 단일 진실원
 > **갱신**: 2026-05-06 Cycle 58 (v0.7.1 release·V3 외부 256 출처 통합 마무리)
 
-## 현재 상태 (2026-05-06 Cycle 60 마무리·UI/UX 통합)
+## 현재 상태 (2026-05-06 Cycle 61 마무리·페르소나 깊이 시뮬 + 상업성/SEO/AEO/GEO)
 
 | 항목 | 값 |
 |---|---|
-| 버전 | **v0.7.1** (tag push 완료) + Cycle 60 UI/UX [Unreleased] |
-| Tests | **1,186** passing / 6 skipped (+34 from Cycle 60) |
+| 버전 | **v0.7.1** (tag push 완료) + Cycle 60·61 [Unreleased] |
+| Tests | **1,211** passing / 6 skipped (+25 from Cycle 61) |
 | ruff | 0 errors |
 | binary_assertions | 39/39 |
 | 자관 174 round-trip | 100% baseline (regression ≤ 1pp 영구 게이트) |
 | 영구 invariants | **10건** (Cycle 27·V3 추가 3건·ADR 0041) |
-| ADRs | **0024~0044** (21건 누적·Cycle 60 = ADR 0044) |
+| ADRs | **0024~0045** (22건 누적·Cycle 61 = ADR 0045) |
 | 메모리 | 7건 (901·858·매출·V1·V2·V3·1-명령 1-완료 ⭐⭐⭐⭐⭐) |
 | Plan B P29~P52 | 22/24 (P30·P39 외부 의존만) |
 | V2 §1·§3·§5·§6·§7·§10·§11 | 100% scaffolding |
 | V3 Block 1·2·3·4·5·7 | ✅ scaffolding (Block 6 = 두 번째 SaaS 시작 시) |
 | **헌법 §12 (UI/UX)** | **doc → 코드 100% 적용 (Cycle 60·ADR 0044)** |
+| **8 ICP 페르소나 깊이 시뮬** | **Cycle 61·Part 96·매트릭스 + tests 25 신규 (인터뷰 0건·가설)** |
+| **상업성·SEO·AEO·GEO** | **Cycle 61 매트릭스 박제·발행 = PO 외부 작업 후** |
 | GitHub | 동기 (origin/main = 로컬·v0.7.1 tag pushed) |
-| 38 사이클 누적 (Cycle 22 → 60) | tests 1,009 → 1,186 (+177) |
+| 39 사이클 누적 (Cycle 22 → 61) | tests 1,009 → 1,211 (+202) |
 
 ## Plan B 사이클 진행 (B안 §0)
 

@@ -738,6 +738,69 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 1
 
 
+def cmd_status(args: argparse.Namespace) -> int:
+    """Cycle 61 — STATUS.md 요약 + 자율 사이클 진척 + 차단점 1건.
+
+    PO 매일 5분 cadence 정합 (RUNBOOK §1·operations.md).
+    """
+    print(f"=== kormarc-auto v{__version__} 상태 ===")
+    print()
+
+    # STATUS.md 헤더 메트릭 추출 (단일 진실원 정합)
+    status_path = Path(__file__).resolve().parent.parent.parent / "STATUS.md"
+    if status_path.exists():
+        lines = status_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        # | Tests | ... 같은 메트릭 줄 추출 (table)
+        in_table = False
+        for line in lines[:50]:
+            if line.startswith("| 항목 | 값 |") or line.startswith("|---|"):
+                in_table = True
+                continue
+            if in_table:
+                if line.startswith("|") and "|" in line[1:]:
+                    parts = [p.strip() for p in line.split("|") if p.strip()]
+                    if len(parts) >= 2:
+                        print(f"  {parts[0]:25s}: {parts[1]}")
+                elif line.startswith("##"):
+                    break
+    else:
+        print("  STATUS.md 미발견")
+    print()
+
+    # 다음 차단점 1순위 (next_blocker 통합)
+    try:
+        scripts_dir = Path(__file__).resolve().parent.parent.parent / "scripts"
+        sys.path.insert(0, str(scripts_dir))
+        from next_blocker import detect_blockers
+
+        blockers = detect_blockers()
+        if blockers:
+            top = blockers[0]
+            severity_emoji = {
+                "critical": "🔴",
+                "high": "🟠",
+                "medium": "🟡",
+                "low": "🟢",
+            }.get(top.severity, "⚪")
+            print(f"=== 다음 차단점 (1/{len(blockers)}) ===")
+            print(f"{severity_emoji} [{top.severity.upper()}] {top.id}")
+            print(f"  설명: {top.description}")
+            print(f"  액션: {top.next_action}")
+            print(f"  소요: {top.estimated_unblock_days}일·영향: {top.revenue_impact}")
+        else:
+            print("✓ 차단점 0건 — 자율 사이클 진행 가능")
+    except Exception as e:
+        print(f"(차단점 감지 미로드: {type(e).__name__})")
+
+    print()
+    print("=== 운영 명령 (RUNBOOK §1) ===")
+    print("  make blocker        # 전체 차단점 리스트")
+    print("  make weekly         # V3 Block 4 주간 리포트 (audit 7일 후)")
+    print("  make kolas3         # KOLAS III D-day 갱신")
+    print("  make a11y           # UI/UX 회귀 (헌법 §12)")
+    return 0
+
+
 def cmd_info(args: argparse.Namespace) -> int:
     """프로젝트·환경 진단."""
     import os
@@ -1274,6 +1337,10 @@ def build_parser() -> argparse.ArgumentParser:
     # info
     p_info = sub.add_parser("info", help="환경·설치 상태 진단")
     p_info.set_defaults(func=cmd_info)
+
+    # Cycle 61 — STATUS 요약 + 차단점 1건 (RUNBOOK §1 정합)
+    p_status = sub.add_parser("status", help="STATUS.md 요약 + 다음 차단점 1건")
+    p_status.set_defaults(func=cmd_status)
 
     # dispose — 제적·폐기
     p_dis = sub.add_parser(

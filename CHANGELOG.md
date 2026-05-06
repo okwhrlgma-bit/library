@@ -4,6 +4,28 @@
 
 > 새 SaaS에 적용 시 어느 버전을 가져왔는지 `decisions.md`에 기록하면 추후 동기화가 쉬워집니다.
 
+## [Unreleased] - Cycle 60·61 UI/UX + 페르소나 깊이 시뮬 + 상업성/SEO/AEO/GEO
+
+### Added (Cycle 61·Part 96·ADR 0045)
+- `docs/research/part96-deep-persona-simulation-2026-05.md` — 8 ICP × 앱 5 영역 매트릭스
+- `src/kormarc_auto/personas/__init__.py` + `deep_simulation.py` — 8 페르소나·점수·gaps
+- `tests/test_deep_personas.py` — 25 신규 tests (페르소나·PMF·결제권 분리)
+- `docs/sales/persona-message-matrix-2026-05.md` — 8 페르소나별 영업 메시지 5 분기
+- `docs/sales/commercial-seo-checklist-2026-05.md` — 상업성 10 + SEO 12 매트릭스
+- `docs/sales/aeo-geo-strategy-2026-05.md` — SEO + AEO + GEO 6 원칙·8 페르소나 query
+- ADR 0045 (12 추가 고려 영역 매트릭스·결제 채널 분리·PMF 3 단계 등)
+- CLI `kormarc-auto status` 신규 = STATUS.md 요약 + 차단점 1순위
+- `.github/workflows/daily-blocker.yml` = 매일 차단점 자동 감지
+- `.github/workflows/a11y-ci.yml` = 헌법 §12 PR 회귀
+- `.claude/skills/a11y-audit/SKILL.md` 신규
+- `analytics/three_stage_funnel.py` = 사용자/추천자/결제자 3 분리
+
+### Changed
+- 정직 헤더 명시: 페르소나 시뮬 = 가설·인터뷰 0건·SALES-1 우선
+
+### Tests
+- 1,186 → **1,211** (+25)
+
 ## [Unreleased] - Cycle 60 UI/UX 통합 (헌법 §12 정합)
 
 ### Added
