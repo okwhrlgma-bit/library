@@ -5,6 +5,36 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 62] 마케팅 노출 30+ 갭 점검 (PO "검색·노출 완벽?")
+
+### 사실 29: SEO/AEO/GEO 모듈 박제·발행 0건 = 효과 0
+- Cycle 15B SEO·Cycle 18B GEO·Cycle 61 매트릭스 = 모두 코드 100%
+- 그러나 도메인·랜딩 0건·블로그 발행 0건·콜드 메일 0건
+- 적용: 발행 시드 100% scaffolding (콜드 메일 5·콘텐츠 90일·press kit·MOU 8)·발행 = PO 외부
+
+### 사실 30: 30+ 마케팅 갭 = 5 영역 분포
+- SEO 12 (사이트맵·서치콘솔·메타·CWV·백링크·C-Rank·시멘틱·rich snippet 등)
+- AEO 6 (Featured snippet·PAA·Voice·Answer Box·통계 밀도·측정 cron)
+- GEO 5 (llms.txt 발행·E-E-A-T·인용 사실 100선·Q/A·인용 모니터링)
+- 마케팅 16 (콜드 메일·drip·deliverability·lead magnet·press kit·webinar 등)
+- 측정 5 (Plausible 활성·키워드 추적·attribution·A/B test 등)
+
+### 사실 31: 콜드 메일 = 8 페르소나 분기 필수
+- P3 공공 계약직 = 시간 절감 ≠ 동기 → "민원 ↓·KOLAS III 마이그"
+- P8 도서관장 = "사서 야근 ↓ = 본인 평판 ↑"
+- 단일 메시지 = 5/8만 정합 (Cycle 61 통찰 정합)
+- 적용: 5 페르소나 × 1 메시지 = 5 시드 + 표준 서명/CTA/deliverability
+
+### 사실 32: 콘텐츠 캘린더 = KOLAS III D-238 정합 필수
+- W1~2 KOLAS III 마이그·W3~4 사서 페인·W5~6 학교·W7~8 작은도서관·W9~10 도서관장
+- W11~12 대학·W13~14 AI = 14주 = 36 발행 시드
+- 적용: D-200 (2026-06-15) 첫 보도자료·D-100·D-30 카운트다운 캠페인
+
+### 사실 33: MOU 시도 = 사업자 등록·인터뷰 후만 가능
+- KLMA·KLA = 회비 ₩50K·즉시 가능
+- NLK·KAIT·KERIS = 사업자 등록 + PILOT 5관 후
+- 거부 시 = 자체 신뢰 시그널 (자관 PILOT·NPS·도서관 백서 광고)
+
 ## [2026-05-06·Cycle 61 추가 조사] 미커버 영역·invariant 11
 
 ### 사실 26: Cycle 61 신규 모듈 = three_stage_funnel tests 0건 (회귀 부재)

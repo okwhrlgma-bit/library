@@ -32,6 +32,14 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 62·마케팅 노출 30+ 갭 점검)
+- 30+ 갭 식별: SEO 12 + AEO 6 + GEO 5 + 마케팅 16 + 측정 5
+- `docs/sales/cold-email-templates-2026-05.md` = 5 페르소나 (P1·P2·P3·P5·P8) 콜드 메일
+- `docs/sales/content-calendar-90-days-2026-05.md` = 16 키워드 × 14주 = 36 발행 시드
+- `docs/sales/press-kit-2026-05.md` = 5 분기 보도자료 + FAQ 10 + About + 통계 박스
+- `docs/sales/partnership-mou-matrix-2026-05.md` = 8 기관 (KLMA·KLA·NLK·KAIT·KERIS 등)
+- 정직 헤더 영구 (invariant 11) = 시뮬·인터뷰 0건·발행 0건 모두 명시
+
 ## [Unreleased] - Cycle 60 UI/UX 통합 (헌법 §12 정합)
 
 ### Added
