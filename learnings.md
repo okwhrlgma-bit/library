@@ -5,6 +5,34 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 63] 신경 0 배포 stack + E-E-A-T 4 신호
+
+### 사실 34: 도메인 등록 = 노출 필수 X·GitHub Pages = 무료·SEO 인덱싱 정상
+- `okwhrlgma-bit.github.io/library/` = 구글·네이버 자동 인덱싱
+- HTTPS·CDN·sitemap.xml·robots.txt 모두 무료
+- 도메인 = 매출 시작 후 추가 (Phase 2)
+
+### 사실 35: Streamlit Community Cloud = 실제 앱 무료 호스팅
+- 1 앱·CPU 1·메모리 1GB·sleep 후 cold start 30초
+- git push = 자동 재배포·secrets toml 박스 입력
+- 사서 5명·PILOT 5관 = 충분 (부하 X)
+
+### 사실 36: 신경 0 stack 비용 ₩0/월·maintenance ₩0
+- GitHub Pages + Streamlit Cloud + GitHub Actions + GitHub Releases
+- 매일 5분 (PO blocker check)·매주 10분·매월 30분
+- 사고 시 = `make stop` + `git revert` (자동 재배포)
+
+### 사실 37: E-E-A-T = 검색·LLM 노출 핵심 (Google 2022 업데이트)
+- Experience (자관 6년·PILOT)·Expertise (사서 출신·KORMARC 100% 정합)
+- Authority (NLK·KAIT 정합·KOLAS III 후속)·Trust (invariant 11·법무 8 doc)
+- About 페이지 + Schema Person/Organization JSON-LD = E-E-A-T 4 신호 모두 박제
+- LLM 인용 = E-E-A-T 점수 = hallucination ↓·인용 ↑
+
+### 사실 38: PO 진짜 의도 = "올려놓고 신경끄는 구조" (set and forget)
+- 도메인·서버 운영·메일 인증 = 모두 무료 옵션 + 자동 deploy 가능
+- "운영 부담 ↓ = 1인 SaaS 핵심"·외부 901 진단 정합
+- 적용: 15분 PO 외부 작업 = 완성·이후 git push만
+
 ## [2026-05-06·Cycle 62] 마케팅 노출 30+ 갭 점검 (PO "검색·노출 완벽?")
 
 ### 사실 29: SEO/AEO/GEO 모듈 박제·발행 0건 = 효과 0

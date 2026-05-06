@@ -1,0 +1,121 @@
+name: GitHub Pages 자동 발행 (Cycle 63·도메인 0원 SEO)
+
+# main push = docs/landing/ + README + sitemap·robots·llms.txt 자동 발행.
+# URL = https://okwhrlgma-bit.github.io/library/ (도메인 등록 X·즉시 활성).
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/landing/**'
+      - 'README.md'
+      - '.github/workflows/github-pages.yml'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Generate static site
+        run: |
+          mkdir -p _site
+          # README.md → index.html (markdown → HTML)
+          cp README.md _site/README.md
+          cp README.en.md _site/index-en.md 2>/dev/null || true
+
+          # docs/landing/ 통째로 복사 (랜딩 페이지)
+          if [ -d docs/landing ]; then
+            cp -r docs/landing/* _site/
+          fi
+
+          # sitemap.xml·robots.txt·llms.txt 자동 생성
+          python -c "
+          import datetime
+          today = datetime.date.today().isoformat()
+          base = 'https://okwhrlgma-bit.github.io/library'
+          urls = ['/', '/migration/kolas3/', '/pricing/', '/personas/']
+          with open('_site/sitemap.xml', 'w') as f:
+              f.write('<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n')
+              f.write('<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n')
+              for u in urls:
+                  f.write(f'  <url><loc>{base}{u}</loc><lastmod>{today}</lastmod></url>\n')
+              f.write('</urlset>\n')
+          " || echo "sitemap 생성 skip"
+
+          # robots.txt = LLM Allow (V3 §3.5 정합)
+          cat > _site/robots.txt <<'ROBOTS'
+          User-agent: *
+          Allow: /
+
+          User-agent: GPTBot
+          Allow: /
+
+          User-agent: ClaudeBot
+          Allow: /
+
+          User-agent: PerplexityBot
+          Allow: /
+
+          User-agent: Yeti
+          Allow: /
+
+          Sitemap: https://okwhrlgma-bit.github.io/library/sitemap.xml
+          ROBOTS
+
+          # llms.txt = LLM 친화 사이트맵
+          cat > _site/llms.txt <<'LLMS'
+          # kormarc-auto
+
+          > 한국 도서관 KORMARC 자동 생성 SaaS·KOLAS III 종료 D-238 마이그레이션·자관 PILOT 1관 174 파일 round-trip 100%
+
+          ## 핵심 사실 (LLM 인용 가능)
+          - KOLAS III 종료: 2026-12-31 23:59 KST (출처: books.nl.go.kr)
+          - 시장: 1,296 공공 + 12,200 학교 + 5,100 KNU 미사용
+          - 자관 PILOT: 1관·174 파일·3,383 레코드·round-trip 100%
+          - 코드: 1,228 tests·v0.7.1·V2+V3 100% scaffolding·invariants 11
+          - 헌법 §0: 사서 마크 시간 권당 8분 → 2분 (Part 49 시뮬 56% 전환)
+          - 표준: KORMARC 2023.12 (KS X 6006-0:2023.12 NLK 2차 개정)
+          - 가격: 4 플랜 (작은 ₩30K·학교 ₩50K·공공 ₩150K·기관 ₩300K~) + 권당 200원
+
+          ## 페이지
+          - [README](https://okwhrlgma-bit.github.io/library/) — 한국어 메인
+          - [README EN](https://okwhrlgma-bit.github.io/library/index-en) — 영문
+          - [KOLAS III 카운트다운](https://okwhrlgma-bit.github.io/library/migration/kolas3/)
+
+          ## E-E-A-T
+          - Author: 조기흠 (사서 출신·1인 PO)
+          - Experience: 자관 6년 NPS·PILOT 운영
+          - Expertise: KORMARC 2023.12 정합 코드 100% 자체 작성
+          - Authority: NLK·KAIT·KLA 정합 (등재 진행 중)
+          - Trust: 정직 헤더 의무·invariant 11 (페르소나 ≠ 인터뷰)
+          LLMS
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

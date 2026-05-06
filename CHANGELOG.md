@@ -32,6 +32,16 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 63·신경 0 배포 + E-E-A-T)
+- `.github/workflows/github-pages.yml` = GitHub Pages 자동 deploy (₩0·도메인 X)
+- `.streamlit/secrets.toml.example` = Streamlit Community Cloud 무료 호스팅 가이드
+- `docs/automation/zero-cost-deploy-2026-05.md` = ₩0/월·신경 0 배포 stack 매뉴얼
+- `docs/sales/e-e-a-t-trust-signals-2026-05.md` = E-E-A-T 4 신호 매트릭스 + 코드 적용 가이드
+- `docs/landing/index.md` = 메인 랜딩 (E-E-A-T 통합·핵심 사실 LLM 인용 친화)
+- `docs/landing/about.md` = About 페이지 (Experience·Expertise·Authority·Trust 4 영역)
+- 자동 sitemap.xml + robots.txt + llms.txt (GitHub Pages 빌드 시)
+- LLM Allow (GPTBot·ClaudeBot·PerplexityBot·Yeti)
+
 ### Added (Cycle 62·마케팅 노출 30+ 갭 점검)
 - 30+ 갭 식별: SEO 12 + AEO 6 + GEO 5 + 마케팅 16 + 측정 5
 - `docs/sales/cold-email-templates-2026-05.md` = 5 페르소나 (P1·P2·P3·P5·P8) 콜드 메일

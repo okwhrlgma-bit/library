@@ -22,6 +22,8 @@
 | **8 ICP 페르소나 깊이 시뮬** | **Cycle 61·Part 96·매트릭스 + tests 25 신규 (인터뷰 0건·가설)** |
 | **상업성·SEO·AEO·GEO** | **Cycle 61~62 매트릭스 박제·발행 = PO 외부 작업 후** |
 | **마케팅·노출 (Cycle 62)** | **30+ 갭 식별·콜드 메일 5 페르소나·콘텐츠 캘린더 90일·press kit·MOU 8 기관 시드** |
+| **신경 0 배포 (Cycle 63)** | **GitHub Pages + Streamlit Cloud + GitHub Actions = ₩0/월·도메인 X·git push 자동** |
+| **E-E-A-T 4 신호** | **Cycle 63 매트릭스·Author/About/Schema Person·landing index + about** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
