@@ -1,0 +1,62 @@
+{
+  "kolas3_end_kst": "2026-12-31T23:59:59+09:00",
+  "days_remaining": 238,
+  "urgency_window": "golden",
+  "official_source": "books.nl.go.kr (국립중앙도서관 KOLAS III 표준형 기술 지원 종료 공지)",
+  "public_libraries_count_2024": 1296,
+  "knu_unused_small_libraries": 5100,
+  "lost_data_categories": [
+    {
+      "category": "서지 데이터 (.mrc)",
+      "why": "KORMARC 표준 = 도서관 핵심 자산·재구축 시 권당 8분",
+      "action": "월 1회 외부 저장소 백업·정식 export 절차 (KOLAS III → .mrc)"
+    },
+    {
+      "category": "대출 이력",
+      "why": "이용자 통계·5년 보존 의무 (도서관법 시행령)",
+      "action": "이용자 익명화 후 CSV export·SaaS 이전 시 mapping 보존"
+    },
+    {
+      "category": "이용자 정보",
+      "why": "회원증·만 14세 미만 학교 위탁 정합·PIPA §28의8 정합",
+      "action": "익명 ID + 도서관부호 매핑·DPA 기반 이전"
+    },
+    {
+      "category": "RFID/바코드 매핑",
+      "why": "물리 자료 ↔ 디지털 레코드 연결 단절 시 장서점검 불가",
+      "action": "049 ▾l 등록번호 ↔ RFID UID CSV 백업"
+    },
+    {
+      "category": "책이음·책나래 회원 키",
+      "why": "5종 상호대차 통합·끊기면 이용자 즉시 불편",
+      "action": "API 키·federation token 백업·이전 후 재발급 절차 사전 확보"
+    }
+  ],
+  "timeline_actions": {
+    "D-240+ (현재·골든윈도우 시작)": [
+      "마이그레이션 후보 3종 비교 (kormarc-auto·확장형·알파스·K-LAS 3.0)",
+      "kormarc-auto 무료 trial 30일",
+      "사서 동료·자치구 IT 담당과 정보 공유"
+    ],
+    "D-180 (6개월 전·예산 편성)": [
+      "차년 본예산 또는 추경 SaaS 항목 반영",
+      "kormarc-auto PoC 1관 1주 (자관 049 prefix 검증)",
+      "DPA·SLA·세금계산서 발행 가능 확인"
+    ],
+    "D-90 (3개월 전·계약·이전)": [
+      "kormarc-auto 정식 계약 (월·분기·연간 선택)",
+      "기존 KOLAS III .mrc 일괄 export → kormarc-auto 일괄 import",
+      "1주 병행 운영 (회귀 검증·round-trip 100% 정합 확인)"
+    ],
+    "D-30 (1개월 전·전환)": [
+      "신규 입수 자료 = kormarc-auto 단독 등록 (KOLAS III X)",
+      "사서 교육 1회 (5분 cheatsheet)",
+      "KOLAS III 백업 보관 (5년·법적 보존)"
+    ],
+    "D-0 ~ D+30 (종료·이후)": [
+      "KOLAS III 접근 차단 후 검색·통계는 kormarc-auto 단독",
+      "잔여 데이터 검증 (월 1회 round-trip 회귀)",
+      "다음 사서 인수인계 매뉴얼 갱신"
+    ]
+  }
+}

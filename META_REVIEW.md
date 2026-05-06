@@ -1,23 +1,27 @@
-# META_REVIEW — V2 §6 자기 수정 (Cycle 22~42 누적·21 사이클)
+# META_REVIEW — V2 §6 자기 수정 (Cycle 22~49 누적·28 사이클)
 
-> 매 7 사이클 자동 생성 (V2 §6.1 정합)·Cycle 22~42 = 21 사이클 통합.
-> 최신 = Cycle 42·다음 = Cycle 49 (PO 추가 명령 시).
+> 매 7 사이클 자동 생성 (V2 §6.1 정합)·Cycle 22~49 = 28 사이클 통합.
+> 최신 = Cycle 49·다음 = Cycle 56 (PO 추가 명령 시).
 
-## 21 사이클 누적 (Cycle 22 → 42)
+## 28 사이클 누적 (Cycle 22 → 49)
 
 | 그룹 | 영역 | tests | ADR |
 |---|---|---:|---|
 | Cycle 22~28 | V2 자율 인프라 마무리 + starter v2 + regression + blocker + UI + operations | 1009 → 1047 | 0037·0038 |
 | Cycle 29~35 | 운영 청결 + V2 §3 다중 에이전트 4 패턴 (Proposer·N-Vote·Hierarchical·Adversarial) | 1047 → 1083 | 0039 |
 | Cycle 36~42 | 차단점 동적 + 매출 대시보드 + V2 §3 시나리오 + ADR 0040 | 1083 → 1107 | 0040 |
+| Cycle 43~49 | V3 외부 256 출처 흡수 (Auth·Cost Cap·Audit·Weekly·RUNBOOK·KOLAS3 cron) | 1107 → 1140 | 0041·0042 |
 
-## 최신 메트릭 (Cycle 42 마무리)
+## 최신 메트릭 (Cycle 49 마무리)
 
-- Tests: **1,107** (1009 → +98 over 21 cycles)
-- ADRs: **0040** (3 신규)
-- 메모리: 6건 (901·858·매출·V1·V2·1-명령 1-완료 ⭐⭐⭐⭐⭐)
+- Tests: **1,140** (1009 → +131 over 28 cycles)
+- ADRs: **0042** (5 신규·0036~0042)
+- 메모리: 7건 (901·858·매출·V1·V2·**V3**·1-명령 1-완료 ⭐⭐⭐⭐⭐)
 - Plan B P29~P52: 22/24 (P30·P39 외부 의존만)
 - V2 §1·§3·§5·§6·§7·§10·§11 = 100% scaffolding
+- V3 Block 1·2·3·4·7 = ✅ scaffolding·5·6 = ⏳ (데이터/시간 의존)
+- 영구 invariants: 7건 → **10건** (V3 추가 3건)
+- 자동화 모듈: cost_supervisor·budget-cap-precheck·audit-log·weekly_report·kolas3-daily-update·po_loop_with_cost_guard·RUNBOOK
 
 ## V2 §3 다중 에이전트 4 패턴 = 100% + 시나리오 13 tests 확정
 
@@ -28,7 +32,7 @@
 | §3.3 | Hierarchical | consensus/hierarchical.py | 14 (TestDecompose+) + 3 (TestHierarchicalKormarcMigration) |
 | §3.4 | Adversarial | consensus/adversarial.py | 6 (TestAdversarial*) + 6 (TestAdversarialRedScenarios) |
 
-## 영구 invariants 7건 (Cycle 27)
+## 영구 invariants 10건 (Cycle 27 + V3 추가 Cycle 43)
 
 1. 헌법 위반 0건
 2. 자관 데이터 git 누설 0건
@@ -37,14 +41,33 @@
 5. 카테고리형 신뢰 (ADR 0030)
 6. KWCAG 2.2 (ADR 0032)
 7. KOLAS3 종료일 = 2026-12-31 (1초 변경 = STOP)
+8. **야간 자율 = cost_supervisor 래핑 의무 (ADR 0041·Phase 2+)**
+9. **budget-cap-precheck.sh exit 2 = 절대 우회 금지 (ADR 0041)**
+10. **audit.jsonl append-only·직접 편집·삭제 금지 (ADR 0041)**
 
 ## STOP 조건 점검 (V2 §11)
 
 모든 STOP 조건 = 0건·자율 무중단 정합.
 
-## 다음 7-cycle 권장 (Cycle 43~49)
+## V3 통합 (Cycle 43~49)
 
-→ ADR 0040 §"다음 7-cycle 권장" 참조·외부 의존 해소 시 P30·P39 즉시 활성.
+| Block | 영역 | 상태 |
+|---|---|---|
+| Block 1 (Auth) | docs/automation/HEADLESS_AUTH.md | ✅ |
+| Block 2 (Cost Cap 3-Layer) | cost_supervisor + budget-cap-precheck + budget tracker | ✅ |
+| Block 3 (audit.jsonl) | .claude/hooks/audit-log.sh | ✅ |
+| Block 4 (weekly_report) | automation/weekly_report.py | ✅ scaffold·1주 후 활성 |
+| Block 5 (Haiku 분류기) | (미작성) | ⏳ 30일 후 |
+| Block 6 (cross-project) | (미작성·미해당) | ⏳ |
+| Block 7 (verify-overnight) | docs/RUNBOOK.md + Makefile | ✅ |
+
+## 다음 7-cycle 권장 (Cycle 50~56)
+
+→ ADR 0042 §"다음 7-cycle 권장" 참조.
+- 시간 의존: weekly_report 1주 데이터 검증 (2026-05-13 후)
+- 데이터 의존: Block 5 router_patcher (1개월+ audit)
+- 즉시 가능: KOLAS3 streamlit 카드·revenue dashboard·cron yml
+- 외부 의존: P30 PortOne 활성 (PO 사업자 등록 후)
 
 ---
 

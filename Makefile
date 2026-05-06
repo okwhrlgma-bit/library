@@ -1,7 +1,7 @@
-# kormarc-auto Makefile (Cycle 26·V2 §10·starter 차용 정합)
+# kormarc-auto Makefile (Cycle 26·V2 §10·V3 Block 4·외부 256 출처 통합)
 # 단축 명령 = 자율 사이클·검증·운영 entry point.
 
-.PHONY: help test lint format gates regression blocker funnel demo serve audit cost stop rollback pavr
+.PHONY: help test lint format gates regression blocker funnel demo serve audit cost stop rollback pavr weekly kolas3 night-loop
 
 # 기본 = help
 .DEFAULT_GOAL := help
@@ -54,6 +54,16 @@ rollback: ## 최근 1 commit revert (--commits N 으로 다중)
 # === PAVR + V2 ===
 pavr: ## PAVR 슬래시 진입 (Claude Code 세션 권장)
 	@echo "Claude Code 세션에서 /pavr <작업> 입력"
+
+# === V3 자동화 (외부 256 출처·Cycle 43~49) ===
+weekly: ## V3 Block 4 주간 리포트 (audit.jsonl 7일 후 활성)
+	python automation/weekly_report.py
+
+kolas3: ## KOLAS III D-day 자동 갱신 (countdown JSON)
+	bash scripts/automation/kolas3-daily-update.sh
+
+night-loop: ## V3 Phase 2 무중단 자율 + cost guard wrapper
+	@echo "Phase 2 (Anthropic API 키 발급 후) 활성: ./automation/po_loop_with_cost_guard.sh '<명령>'"
 
 # === 회귀 게이트 통합 (CI·로컬 검증) ===
 ci: gates ## CI 전수 (gates 동의어)
