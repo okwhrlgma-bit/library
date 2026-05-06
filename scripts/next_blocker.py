@@ -54,14 +54,23 @@ def _has_env_key(key: str) -> bool:
     return False
 
 
+def _interview_count() -> int:
+    """사서 인터뷰 진척 = docs/research/librarian-interviews-2026-05/ 파일 수 (Cycle 36)."""
+    log_dir = ROOT / "docs" / "research" / "librarian-interviews-2026-05"
+    if not log_dir.exists():
+        return 0
+    return sum(1 for _ in log_dir.glob("*.md"))
+
+
 def detect_blockers() -> list[Blocker]:
-    """현재 환경 → 차단점 리스트 (우선순위 정렬)."""
+    """현재 환경 → 차단점 리스트 (우선순위 정렬·Cycle 36 동적 강화)."""
     blockers: list[Blocker] = []
 
     # P30 PortOne = 사업자 등록 차단
     has_anthropic = _has_env_key("ANTHROPIC_API_KEY")
     has_nl_cert = _has_env_key("NL_CERT_KEY")
     has_data4lib = _has_env_key("DATA4LIBRARY_AUTH_KEY")
+    interviews_done = _interview_count()
 
     # 사업자 등록 (가장 큰 매출 차단점)
     if not (ROOT / ".business-registered").exists():
@@ -102,18 +111,22 @@ def detect_blockers() -> list[Blocker]:
             )
         )
 
-    # 사서 인터뷰 (외부 901 보고서 진단)
-    interviews_log = ROOT / "docs" / "research" / "librarian-interviews-2026-05"
-    if not interviews_log.exists():
+    # 사서 인터뷰 진척 (Cycle 36 동적 = 0~5 단계 표시)
+    if interviews_done < 5:
+        remaining = 5 - interviews_done
+        sev: str = "high" if interviews_done < 2 else "medium"
         blockers.append(
             Blocker(
                 id="SALES-1",
-                severity="high",
-                description="사서 5명 cold outreach 미진행 = wedge 확정 불가 = P39 사서어 매핑 부분",
-                next_action=(
-                    "학교도서관저널·작은도서관·사서 카페에 Mom Test 메시지 5건 발송 (1시간)"
+                severity=sev,
+                description=(
+                    f"사서 인터뷰 진척 {interviews_done}/5 완료·"
+                    f"잔여 {remaining}건 = wedge 확정·P39 사서어 매핑 데이터"
                 ),
-                estimated_unblock_days=14,
+                next_action=(
+                    "Mom Test rules·docs/research/librarian-interviews-2026-05/{slug}.md 1건씩 기록"
+                ),
+                estimated_unblock_days=14 if interviews_done == 0 else 7,
                 revenue_impact="🔴 wedge = 매출 방향 결정",
             )
         )

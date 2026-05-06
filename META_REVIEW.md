@@ -1,4 +1,54 @@
-# META_REVIEW — 7-cycle 회고 (V2 §6 자기 수정·Cycle 22~28)
+# META_REVIEW — V2 §6 자기 수정 (Cycle 22~42 누적·21 사이클)
+
+> 매 7 사이클 자동 생성 (V2 §6.1 정합)·Cycle 22~42 = 21 사이클 통합.
+> 최신 = Cycle 42·다음 = Cycle 49 (PO 추가 명령 시).
+
+## 21 사이클 누적 (Cycle 22 → 42)
+
+| 그룹 | 영역 | tests | ADR |
+|---|---|---:|---|
+| Cycle 22~28 | V2 자율 인프라 마무리 + starter v2 + regression + blocker + UI + operations | 1009 → 1047 | 0037·0038 |
+| Cycle 29~35 | 운영 청결 + V2 §3 다중 에이전트 4 패턴 (Proposer·N-Vote·Hierarchical·Adversarial) | 1047 → 1083 | 0039 |
+| Cycle 36~42 | 차단점 동적 + 매출 대시보드 + V2 §3 시나리오 + ADR 0040 | 1083 → 1107 | 0040 |
+
+## 최신 메트릭 (Cycle 42 마무리)
+
+- Tests: **1,107** (1009 → +98 over 21 cycles)
+- ADRs: **0040** (3 신규)
+- 메모리: 6건 (901·858·매출·V1·V2·1-명령 1-완료 ⭐⭐⭐⭐⭐)
+- Plan B P29~P52: 22/24 (P30·P39 외부 의존만)
+- V2 §1·§3·§5·§6·§7·§10·§11 = 100% scaffolding
+
+## V2 §3 다중 에이전트 4 패턴 = 100% + 시나리오 13 tests 확정
+
+| § | 패턴 | 모듈 | tests |
+|---|---|---|---|
+| §3.1 | Proposer-Critic | automation/proposer_critic.py | (LLM 호출 외부) |
+| §3.2 | N-Vote | consensus/n_vote.py | 13 (TestNVote*) + 4 (TestRefundNVoteScenario) |
+| §3.3 | Hierarchical | consensus/hierarchical.py | 14 (TestDecompose+) + 3 (TestHierarchicalKormarcMigration) |
+| §3.4 | Adversarial | consensus/adversarial.py | 6 (TestAdversarial*) + 6 (TestAdversarialRedScenarios) |
+
+## 영구 invariants 7건 (Cycle 27)
+
+1. 헌법 위반 0건
+2. 자관 데이터 git 누설 0건
+3. 결정론 (ADR 0028)
+4. AI 출처 표시 (ADR 0029)
+5. 카테고리형 신뢰 (ADR 0030)
+6. KWCAG 2.2 (ADR 0032)
+7. KOLAS3 종료일 = 2026-12-31 (1초 변경 = STOP)
+
+## STOP 조건 점검 (V2 §11)
+
+모든 STOP 조건 = 0건·자율 무중단 정합.
+
+## 다음 7-cycle 권장 (Cycle 43~49)
+
+→ ADR 0040 §"다음 7-cycle 권장" 참조·외부 의존 해소 시 P30·P39 즉시 활성.
+
+---
+
+# META_REVIEW (구버전·Cycle 22~28)
 
 > 매 7 사이클 자동 생성 (V2 §6.1 정합)·SUMMARY 7개 통합 분석.
 > Cycle 22~28 = V2 자율 인프라 마무리 + 운영 핸드북 박제 단계.
