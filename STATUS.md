@@ -8,12 +8,12 @@
 | 항목 | 값 |
 |---|---|
 | 버전 | **v0.7.1** (tag push 완료) + Cycle 60·61 [Unreleased] |
-| Tests | **1,211** passing / 6 skipped (+25 from Cycle 61) |
+| Tests | **1,228** passing / 6 skipped (+17 from Cycle 61 추가·three_stage_funnel) |
 | ruff | 0 errors |
 | binary_assertions | 39/39 |
 | 자관 174 round-trip | 100% baseline (regression ≤ 1pp 영구 게이트) |
 | 영구 invariants | **10건** (Cycle 27·V3 추가 3건·ADR 0041) |
-| ADRs | **0024~0045** (22건 누적·Cycle 61 = ADR 0045) |
+| ADRs | **0024~0046** (23건 누적·Cycle 61 = ADR 0045·0046) |
 | 메모리 | 7건 (901·858·매출·V1·V2·V3·1-명령 1-완료 ⭐⭐⭐⭐⭐) |
 | Plan B P29~P52 | 22/24 (P30·P39 외부 의존만) |
 | V2 §1·§3·§5·§6·§7·§10·§11 | 100% scaffolding |
@@ -21,6 +21,9 @@
 | **헌법 §12 (UI/UX)** | **doc → 코드 100% 적용 (Cycle 60·ADR 0044)** |
 | **8 ICP 페르소나 깊이 시뮬** | **Cycle 61·Part 96·매트릭스 + tests 25 신규 (인터뷰 0건·가설)** |
 | **상업성·SEO·AEO·GEO** | **Cycle 61 매트릭스 박제·발행 = PO 외부 작업 후** |
+| **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
+| **mypy** | strict = true·실 검증 = 다음 사이클 |
+| **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
 | GitHub | 동기 (origin/main = 로컬·v0.7.1 tag pushed) |
 | 39 사이클 누적 (Cycle 22 → 61) | tests 1,009 → 1,211 (+202) |
 

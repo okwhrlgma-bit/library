@@ -14,7 +14,7 @@
 | Cycle 50~58 | V3 마무리 (Streamlit KOLAS3·revenue Block 4·router_patcher AST·weekly cron·v0.7.1 release) | 1140 → 1152 | (이번) |
 | Cycle 59 | 일괄 검토 + 6 갭 메우기 (README/STATUS/.gitignore/operations/META/ADR 0043) | 1152 (변동 없음) | 0043 |
 | **Cycle 60** | **UI/UX 통합 (헌법 §12 100%·KWCAG 2.2 9 항목·KRDS·Pretendard·사서 친화)** | **1152 → 1186** | **0044** |
-| **Cycle 61** | **8 ICP 페르소나 깊이 시뮬 + 상업성·SEO·AEO·GEO 매트릭스 + Part 96** | **1186 → 1211** | **0045** |
+| **Cycle 61** | **8 ICP 페르소나 깊이 + 상업성·SEO·AEO·GEO 매트릭스 + Part 96 + invariant 11** | **1186 → 1228** | **0045·0046** |
 
 ## 최신 메트릭 (Cycle 58 마무리·v0.7.1 release)
 
@@ -37,7 +37,7 @@
 | §3.3 | Hierarchical | consensus/hierarchical.py | 14 (TestDecompose+) + 3 (TestHierarchicalKormarcMigration) |
 | §3.4 | Adversarial | consensus/adversarial.py | 6 (TestAdversarial*) + 6 (TestAdversarialRedScenarios) |
 
-## 영구 invariants 10건 (Cycle 27 + V3 추가 Cycle 43)
+## 영구 invariants 11건 (Cycle 27 + V3 Cycle 43 + Cycle 61)
 
 1. 헌법 위반 0건
 2. 자관 데이터 git 누설 0건
@@ -46,9 +46,10 @@
 5. 카테고리형 신뢰 (ADR 0030)
 6. KWCAG 2.2 (ADR 0032)
 7. KOLAS3 종료일 = 2026-12-31 (1초 변경 = STOP)
-8. **야간 자율 = cost_supervisor 래핑 의무 (ADR 0041·Phase 2+)**
-9. **budget-cap-precheck.sh exit 2 = 절대 우회 금지 (ADR 0041)**
-10. **audit.jsonl append-only·직접 편집·삭제 금지 (ADR 0041)**
+8. 야간 자율 = cost_supervisor 래핑 의무 (ADR 0041·Phase 2+)
+9. budget-cap-precheck.sh exit 2 = 절대 우회 금지 (ADR 0041)
+10. audit.jsonl append-only·직접 편집·삭제 금지 (ADR 0041)
+11. **페르소나 시뮬 ≠ 실 사서 인터뷰·정직 헤더 의무·PMF 결정 = SALES-1 후 (ADR 0046·이번)**
 
 ## STOP 조건 점검 (V2 §11)
 

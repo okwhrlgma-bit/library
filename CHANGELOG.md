@@ -24,7 +24,13 @@
 - 정직 헤더 명시: 페르소나 시뮬 = 가설·인터뷰 0건·SALES-1 우선
 
 ### Tests
-- 1,186 → **1,211** (+25)
+- 1,186 → **1,228** (+42·three_stage_funnel 17 추가)
+
+### Added (Cycle 61 추가 조사·ADR 0046)
+- `tests/test_three_stage_funnel.py` (17 신규·Cycle 61 미커버 해소)
+- ADR 0046 = 영구 invariant 11 (페르소나 시뮬 ≠ 실 인터뷰·정직 헤더 의무)
+- CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
+- 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
 ## [Unreleased] - Cycle 60 UI/UX 통합 (헌법 §12 정합)
 

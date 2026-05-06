@@ -5,6 +5,21 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 61 추가 조사] 미커버 영역·invariant 11
+
+### 사실 26: Cycle 61 신규 모듈 = three_stage_funnel tests 0건 (회귀 부재)
+- 페르소나 deep_simulation = 25 tests·but three_stage_funnel = 0 tests
+- 적용: tests/test_three_stage_funnel.py = 17 tests 추가·임계 6/20/30% 검증
+
+### 사실 27: bandit 보안 스캔 미설치·mypy strict=true 실 검증 미실행
+- 도구 = pyproject.toml 박제·but 실제 실행 → 위반 여부 미확인
+- 적용: 다음 사이클 = bandit 도입 + mypy 위반 매트릭스 박제
+
+### 사실 28: 영구 invariant 11 = 페르소나 시뮬 ≠ 실 인터뷰
+- 외부 901 보고서 4중 패턴 (identity fusion·productive avoidance·agent pace inflation·domain expert curse) 영구 게이트
+- ADR 0046 + CLAUDE.md §13 박제·정직 헤더 의무
+- 적용: 모든 페르소나 doc/code = 시뮬·가설·인터뷰 N건 명시
+
 ## [2026-05-06·Cycle 61] 8 ICP 페르소나 깊이 + 상업성/SEO/AEO/GEO 매트릭스
 
 ### 사실 21: 결제 의향 ≠ 결제 권한 (5/8 페르소나 분리)
