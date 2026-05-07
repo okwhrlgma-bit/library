@@ -1,0 +1,95 @@
+{
+  "name": "kormarc-auto · 사서 KORMARC 자동 SaaS",
+  "short_name": "kormarc-auto",
+  "description": "사서가 만든 KORMARC 자동 SaaS · ISBN 1번 입력 5초 .mrc · 본인 결제 ₩9,900/월",
+  "start_url": "/library/",
+  "scope": "/library/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FAFAFA",
+  "theme_color": "#0F4C9F",
+  "lang": "ko-KR",
+  "categories": ["productivity", "utilities", "business"],
+  "icons": [
+    {
+      "src": "icon-72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "ISBN → KORMARC 5초",
+      "short_name": "ISBN 입력",
+      "description": "ISBN 1번 입력으로 5초 안에 KORMARC .mrc 생성",
+      "url": "/library/?action=isbn",
+      "icons": [{"src": "icon-96.png", "sizes": "96x96"}]
+    },
+    {
+      "name": "KOLAS III 마이그",
+      "short_name": "KOLAS III",
+      "description": "KOLAS III 종료 D-day + 마이그 5단계",
+      "url": "/library/migration/kolas3/",
+      "icons": [{"src": "icon-96.png", "sizes": "96x96"}]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "사서 모바일 화면"
+    },
+    {
+      "src": "screenshot-desktop.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "사서 데스크톱 화면"
+    }
+  ]
+}

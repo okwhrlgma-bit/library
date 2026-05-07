@@ -5,6 +5,43 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 70] 사서 B2C 진지 활성 (founder fit 정합·실 사용 가능)
+
+### 사실 69: Supabase Auth B2C scaffold = env only·헌법 §3 정합
+- src/kormarc_auto/auth/supabase_client.py 신설
+- 환경변수만 (SUPABASE_URL·SUPABASE_ANON_KEY)·코드 키 X
+- 자관 .mrc·자관 양식 X = 사서 컴퓨터 (헌법 §14·invariant 12)
+- 사서 PII 최소만 (이메일·해시 PW·결제 history)·전화·주민·주소 X
+- 4 플랜 (free 50건·personal ₩9,900·pro ₩19,900·founding ₩4,950 영구 50%)
+
+### 사실 70: PWA = 앱스토어 30% 수수료 회피·즉시 활성
+- docs/landing/manifest.json + sw.js
+- KRDS Korea blue 60 theme·Pretendard 정합 (Cycle 60)
+- shortcuts 2 (ISBN·KOLAS3)·screenshots (mobile·desktop)
+- iOS·Android = 핸드폰 홈 추가 = 앱처럼 작동
+- App Store 거절 정책 (4.2.2) 회피·우리 PortOne 결제 = 마진 ↑
+
+### 사실 71: 사서 카페 5 채널 = 1주 작업·founder 신뢰 활용
+- 한국도서관협회·사서끼리·학교도서관저널·LinkedIn·KNU
+- 글 시드 4편 박제 (Mom Test 정합·Q1~Q5)
+- 보상: 커피 쿠폰 ₩10K + Founding 50% 영구
+- founder 메시지: "사서가 사서 위해 만든·답답해서 직접"
+
+### 사실 72: B2C 통합 = 코드 추가 X 표면적·실 활성 가능
+- Cycle 70 = Supabase scaffold + PWA + 사서 추출 = PO 외부 작업 즉시 가능
+- 토큰 발급 + Streamlit Cloud 배포 = 1주 안 활성 가능
+- 사서 5명 인터뷰 = 1주 = 결제 가설 검증
+
+### 사실 73: tests 1,228 → 1,249 (+21·Supabase B2C 회귀)
+- TestSupabaseClient·TestAuthState·TestSubscriptionGate·TestSubscriptionFeatures
+- TestConstitutionInvariants (자관 .mrc 저장 X·PII 최소·MAU 50K)
+- TestEnvironmentSeparation (B2B AWS·B2C Supabase 분리)
+
+### 사실 74: 진지 사이클 정의 = "표면적 코드 X·실 활성 가능 통합"
+- 외부 901 진단 = 코드 추가 = productive avoidance 위험
+- 진지 = "PO 외부 작업 1주 = 60 사이클 가치 활성"
+- 코드 = scaffold·자료·시드만·실 통합 = PO 외부 작업
+
 ## [2026-05-06·Cycle 69] founder-market fit + 사서 B2C 상세 + 앱스토어 매트릭스 + 자동 클리커 깊이
 
 ### 사실 62: PO "사서 프로그램 = 내가 필요해서 만든" = founder-market fit 강력 신호
