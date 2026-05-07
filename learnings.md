@@ -5,6 +5,27 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 64] Supabase 도입 검토 (ADR 0047 Draft)
+
+### 사실 39: PO Supabase 토큰 채팅 노출 = 헌법 §3 위반·but PO 처리 OK
+- `sbp_*` = Supabase Personal Access Token = 시크릿
+- 채팅 = Anthropic 서버 영구 기록·완전 삭제 X
+- PO "괜찮아" = 처리 위임·우리는 코드에 직접 박지 X (헌법 §3 정합)
+- 적용: 코드 = `os.getenv("SUPABASE_ACCESS_TOKEN")` only·실 통합 = PO 결정 후
+
+### 사실 40: Supabase = 현재 stack에 미해당 (Phase 1)
+- DB·Storage·Realtime·Edge = 현재 stack (GitHub Pages + Streamlit Cloud) 으로 충분
+- Auth만 = 50K MAU 무료·streamlit-authenticator 대체 가능
+- PIPA §28의8 = 6수신자 추가 (Anthropic·AWS·PortOne·Google·Cloudflare → +Supabase)
+- 자관 .mrc·PII = 외부 BaaS Storage·DB 절대 X (헌법 §3·invariant 2)
+- 적용: 옵션 A (미사용) Phase 1 권장·옵션 B (Auth) Phase 2 검토
+
+### 사실 41: 외부 BaaS = 자관 데이터 절대 X (영구 invariant 12 후보)
+- Storage = 자관 .mrc 누설 위험 (invariant 2)
+- DB = PIPA 국외이전·PIPC 시정 위험 (외부 858 보고서)
+- Auth = 사서 PII 최소·OK·but privacy-policy v2 발행 의무
+- 적용: 외부 858 §E (AWS Lightsail Seoul) Phase 2 권장·Supabase = Auth만
+
 ## [2026-05-06·Cycle 63] 신경 0 배포 stack + E-E-A-T 4 신호
 
 ### 사실 34: 도메인 등록 = 노출 필수 X·GitHub Pages = 무료·SEO 인덱싱 정상

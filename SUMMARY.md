@@ -22,6 +22,7 @@
 | **61** | **8 ICP 페르소나 깊이 + 상업성/SEO/AEO/GEO + Part 96 + 추가 조사 (커버리지·invariant 11)** | **1186 → 1228** | **0045·0046** | **invariant 11 박제** |
 | **62** | **마케팅 노출 30+ 갭 + 콜드 메일 5 + 콘텐츠 캘린더 90일 + press kit + MOU 8** | **1228** | (시드) | **발행 시드 100% scaffolding** |
 | **63** | **신경 0 배포 stack (₩0/월·GitHub Pages·Streamlit Cloud) + E-E-A-T + landing about** | **1228** | (workflow + doc) | **15분 활성·도메인 X** |
+| **64** | **BaaS 10 옵션 비교·ADR 0047 Accepted (Supabase 미도입)·Phase 1/2/3 stack** | **1228** | **0047** | **자동 결정 완료** |
 
 ## 최신 메트릭 (Cycle 60 마무리)
 

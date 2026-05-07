@@ -32,6 +32,18 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 64·BaaS 자동 검토)
+- ADR 0047 = Supabase 도입 검토 → **Accepted (옵션 A 채택·Supabase 미도입)**
+  * Phase 1: streamlit-authenticator + yaml (자관 100% 로컬·★★★★★)
+  * Phase 2: AWS Cognito + Lightsail Seoul (한국 호스팅·PIPA 정합·★★★★)
+  * Phase 3: NCP Cloud + CSAP (자치구 진입·★★★)
+- `docs/automation/baas-comparison-2026-05.md` = 10 옵션 × 7 기준 매트릭스
+  * Supabase 미도입 이유: 미국 호스팅·PIPA §28의8 6수신자 추가·도서관 인지도 ↓
+  * AWS Cognito + Lightsail Seoul 우위: 동일 50K MAU 무료 + 한국 호스팅
+- 영구 invariant 12 후보: 자관 .mrc·PII = 외부 BaaS 절대 X
+- AUTONOMOUS_BACKLOG.md = Cycle 60~64 누락 row 갱신
+- decisions.md = Cycle 60~64 5 결정 박제 (V2 §4.4 표준)
+
 ### Added (Cycle 63·신경 0 배포 + E-E-A-T)
 - `.github/workflows/github-pages.yml` = GitHub Pages 자동 deploy (₩0·도메인 X)
 - `.streamlit/secrets.toml.example` = Streamlit Community Cloud 무료 호스팅 가이드

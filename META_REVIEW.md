@@ -17,6 +17,7 @@
 | **Cycle 61** | **8 ICP 페르소나 깊이 + 상업성·SEO·AEO·GEO 매트릭스 + Part 96 + invariant 11** | **1186 → 1228** | **0045·0046** |
 | **Cycle 62** | **마케팅 30+ 갭 점검 + 콜드 메일 5 페르소나 + 콘텐츠 캘린더 90일 + press kit + MOU 8 기관** | **1228 (변동 없음)** | (시드만) |
 | **Cycle 63** | **신경 0 배포 stack (₩0/월 GitHub Pages + Streamlit Cloud) + E-E-A-T 4 신호 + landing 페이지** | **1228 (변동 없음)** | (시드 + workflow) |
+| **Cycle 64** | **BaaS 10 옵션 자동 비교 + ADR 0047 Accepted (Supabase 미도입·3 Phase stack) + 누락 자료 갱신** | **1228** | **0047** |
 
 ## 최신 메트릭 (Cycle 58 마무리·v0.7.1 release)
 

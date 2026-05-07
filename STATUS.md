@@ -13,7 +13,7 @@
 | binary_assertions | 39/39 |
 | 자관 174 round-trip | 100% baseline (regression ≤ 1pp 영구 게이트) |
 | 영구 invariants | **10건** (Cycle 27·V3 추가 3건·ADR 0041) |
-| ADRs | **0024~0046** (23건 누적·Cycle 61 = ADR 0045·0046) |
+| ADRs | **0024~0047** (24건 누적·Cycle 64 = ADR 0047 Supabase Draft) |
 | 메모리 | 7건 (901·858·매출·V1·V2·V3·1-명령 1-완료 ⭐⭐⭐⭐⭐) |
 | Plan B P29~P52 | 22/24 (P30·P39 외부 의존만) |
 | V2 §1·§3·§5·§6·§7·§10·§11 | 100% scaffolding |
@@ -24,6 +24,7 @@
 | **마케팅·노출 (Cycle 62)** | **30+ 갭 식별·콜드 메일 5 페르소나·콘텐츠 캘린더 90일·press kit·MOU 8 기관 시드** |
 | **신경 0 배포 (Cycle 63)** | **GitHub Pages + Streamlit Cloud + GitHub Actions = ₩0/월·도메인 X·git push 자동** |
 | **E-E-A-T 4 신호** | **Cycle 63 매트릭스·Author/About/Schema Person·landing index + about** |
+| **BaaS 자동 검토 (Cycle 64)** | **ADR 0047 Accepted·Supabase 미도입·Phase 1=streamlit-authenticator·Phase 2=AWS Cognito·Phase 3=NCP CSAP** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
