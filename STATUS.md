@@ -38,6 +38,7 @@
 | **🟢 B2C 활성 (Cycle 70)** | **Supabase Auth scaffold·env only·헌법 §3·invariant 12 정합·tests 21·plan 4 (free/personal/pro/founding)** |
 | **PWA (Cycle 70)** | **manifest.json·sw.js·핸드폰 홈 추가·앱스토어 X·KRDS Korea blue 60 theme** |
 | **사서 추출 시드 (Cycle 70)** | **`docs/sales/librarian-cafe-recruit-2026-05.md`·5 채널 글 시드·founder 강조** |
+| **🌙 야간 자율 (Cycle 71~76)** | **META 7-cycle·자동 클리커 PoC scaffold·인터뷰 분석 도구·TEMPLATE.md·tests + Makefile (interviews·b2c-status)** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |

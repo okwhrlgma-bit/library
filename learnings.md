@@ -5,6 +5,39 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 71~76 야간 자율] 자료·통합·실 활성 가능 도구
+
+### 사실 75: 야간 자율 정의 = 표면적 코드 X·실 활성 가능 자료
+- 외부 901·Cycle 67~70 정합 = "코드 추가 = productive avoidance"
+- 진정한 야간 = META·자료·인터뷰 도구·자동 클리커 PoC scaffold
+- PO 외부 작업 즉시 가능 = 60 사이클 가치 활성
+
+### 사실 76: 자동 클리커 PoC = 안전 영역 우선 (Phase 1)
+- 네이버 리뷰 답변 = 자영업 사장 본인 권한·합법
+- LLM (Claude) prompt 빌더·평점별 톤 자동 (사과·정중·감사)
+- 사용자 검수 단계 필수 (자동 발송 X·검수 후 발송) = 법적 안전
+- 시간 환산 = 5분/리뷰 → 1분 = 자영업 시급 ₩30K = 매월 ₩100K~₩600K 절감
+
+### 사실 77: 인터뷰 결과 박제 자동화 = invariant 11 활성 도구
+- TEMPLATE.md·익명 ID 강제 (invariant 2 정합)
+- analyze_interviews.py = 통계 결정적·LLM 호출 0 (V3 §4.10)
+- 결정 트리: ≥3.5 = B2C/B2B 분기·2.5~3.5 = 5명 추가·<2.5 = MarcEdit 모델
+- 페르소나 분포·결제 의향 (B2C/B2B)·경쟁자 빈도 자동
+
+### 사실 78: 결정 트리 분기 (인터뷰 후 자동·next_action)
+- 평균 ≥3.5 + B2C 결제 ≥3 → "B2C 진행·Supabase·PortOne·PILOT 5관"
+- 평균 ≥3.5 + B2C 결제 <3 → "B2B 우위·도서관장 우선·KLMA·세금계산서"
+- 평균 2.5~3.5 → "5명 추가·메시지 v2"
+- 평균 <2.5 → "MarcEdit 모델·자동 클리커 시작"
+
+### 사실 79: tests 1,249 → 1,267+ (+18·인터뷰 분석 회귀)
+- TestAggregateResults·TestNextActionTree·TestRenderReport·TestInvariantCompliance
+- 5명 score 시뮬·결정 트리 4 분기·invariant 11·invariant 2 검증
+
+### 사실 80: Makefile = `make interviews` + `make b2c-status` 추가
+- PO 1주 작업 후 = 1 명령으로 결과 분석
+- B2C Auth 상태 = 5초 확인 (Supabase 통합 검증)
+
 ## [2026-05-06·Cycle 70] 사서 B2C 진지 활성 (founder fit 정합·실 사용 가능)
 
 ### 사실 69: Supabase Auth B2C scaffold = env only·헌법 §3 정합

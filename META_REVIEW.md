@@ -20,6 +20,10 @@
 | **Cycle 64** | **BaaS 10 옵션 자동 비교 + ADR 0047 Accepted (Supabase 미도입·3 Phase stack) + 누락 자료 갱신** | **1228** | **0047** |
 | **Cycle 65** | **사서 자가 설치 친화 (PyInstaller .exe 3 OS·launcher·5초 가이드·README 강화)·invariant 12·헌법 §14·§15·ADR 0048** | **1228** | **0048** |
 | **Cycle 66** | **비즈니스 모델 = Open Core + Hosted SaaS·"왜 결제?" 자료·도서관별 결제 가능성 정직 분석·ADR 0049** | **1228** | **0049** |
+| Cycle 67 | 사업성 1순위·인터뷰 playbook 박제·코드 STOP·PO 외부 작업 1주 정합 | 1228 | (playbook) |
+| Cycle 68 | B2C "몰래 쓰기" 전환·Supabase 부활 (B2C 한정)·자동 클리커 후보 폴더 박제 | 1228 | 0050 |
+| Cycle 69 | founder-market fit + B2C 상세 설계 + 앱스토어 매트릭스 + 자동 클리커 깊이 조사 | 1228 | (3 doc) |
+| **Cycle 70** | **사서 B2C 진지 활성 (Supabase scaffold + PWA + 사서 추출 시드 + 21 tests)** | **1228 → 1249** | (5 산출) |
 
 ## 최신 메트릭 (Cycle 58 마무리·v0.7.1 release)
 

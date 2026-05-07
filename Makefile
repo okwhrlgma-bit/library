@@ -1,7 +1,7 @@
 # kormarc-auto Makefile (Cycle 26·V2 §10·V3 Block 4·외부 256 출처 통합)
 # 단축 명령 = 자율 사이클·검증·운영 entry point.
 
-.PHONY: help test lint format gates regression blocker funnel demo serve audit cost stop rollback pavr weekly kolas3 night-loop a11y ui-test dashboard
+.PHONY: help test lint format gates regression blocker funnel demo serve audit cost stop rollback pavr weekly kolas3 night-loop a11y ui-test dashboard interviews b2c-status
 
 # 기본 = help
 .DEFAULT_GOAL := help
@@ -74,6 +74,13 @@ ui-test: ## 모든 UI 테스트 (a11y + Streamlit components)
 
 dashboard: ## 매출 통합 대시보드 (revenue_dashboard·Cycle 37+51)
 	streamlit run src/kormarc_auto/ui/revenue_dashboard.py
+
+# === B2C 인터뷰 (Cycle 67~73·invariant 11 활성) ===
+interviews: ## 사서 인터뷰 결과 분석 (5명 .md 박제 후 실행)
+	python scripts/analyze_interviews.py
+
+b2c-status: ## B2C Auth 상태 (Supabase 환경변수 검증)
+	python -c "from kormarc_auto.auth import get_supabase_client; import json; print(json.dumps(get_supabase_client().status(), ensure_ascii=False, indent=2))"
 
 # === 회귀 게이트 통합 (CI·로컬 검증) ===
 ci: gates ## CI 전수 (gates 동의어)

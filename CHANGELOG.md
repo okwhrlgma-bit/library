@@ -32,6 +32,21 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 71~76·야간 자율·자료·통합·실 활성)
+- META_REVIEW Cycle 64~70 7-cycle row 추가 (V2 §6.1 자동)
+- 후보_아이디어/auto-clicker-saas/poc/naver_review_responder.py
+  * 자영업 리뷰 답변 PoC scaffold (Phase 1·법적 안전)
+  * LLM prompt 빌더·평점별 톤·시간 환산·사용자 검수 워크플로우
+- docs/research/librarian-interviews-2026-05/TEMPLATE.md
+  * 인터뷰 박제 표준 형식 (Mom Test 5문항·익명 ID·invariant 2 정합)
+  * Q1~Q5 + 도입 가능성 점수 + 핵심 인용 + PO 학습
+- scripts/analyze_interviews.py = 인터뷰 결과 분석 자동
+  * 통계 결정적·LLM 호출 0 (V3 §4.10)
+  * 결정 트리 4 분기 (B2C 진행·B2B 우위·5명 추가·MarcEdit 모델)
+  * 페르소나 분포·결제 의향·경쟁자 빈도
+- tests/test_analyze_interviews.py (18 신규)
+- Makefile: `make interviews`·`make b2c-status` 추가
+
 ### Added (Cycle 69·founder-market fit·B2C 상세·앱스토어·자동 클리커 깊이)
 - PO 통찰 박제: "사서 프로그램 = 내가 필요해서 만든·있으면 사서 썼을 것"
   * founder-market fit = 강력 PMF 신호·B2C 1순위 정합
