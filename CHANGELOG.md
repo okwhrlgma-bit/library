@@ -32,6 +32,16 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 66·비즈니스 모델 Open Core + Hosted SaaS)
+- ADR 0049 = Open Core + Hosted SaaS 결정 (Apache-2.0 영구 + 결제 서비스 패키지)
+  * 검증 사례: Koha (1,399 도서관)·FOLIO (100+)·GitLab·Sentry
+  * 반례: MarcEdit (영구 무료·매출 ₩0·26년·우리 ≠)
+  * 자가 빌드 = 5% (가난한 사서)·결제 = 95% (학교·자치구·공공·기관·도서관장)
+- docs/sales/why-pay-2026-05.md = "왜 결제?" 도서관장·사서 친화 영업 자료
+  * 무료 vs SaaS 비교표 (시간·법적·결재 통과)
+  * 학교운영위 결재 시나리오 A·B
+  * 페르소나별 결제 가능성 정직 분석
+
 ### Added (Cycle 65·사서 자가 설치 친화)
 - `.github/workflows/build-exe.yml` = PyInstaller 3 OS 자동 빌드 (Windows·Mac·Linux)
   * tag push `v*` = 자동 빌드 + GitHub Releases 자동 업로드

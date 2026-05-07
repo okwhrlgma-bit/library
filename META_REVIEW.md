@@ -18,7 +18,8 @@
 | **Cycle 62** | **마케팅 30+ 갭 점검 + 콜드 메일 5 페르소나 + 콘텐츠 캘린더 90일 + press kit + MOU 8 기관** | **1228 (변동 없음)** | (시드만) |
 | **Cycle 63** | **신경 0 배포 stack (₩0/월 GitHub Pages + Streamlit Cloud) + E-E-A-T 4 신호 + landing 페이지** | **1228 (변동 없음)** | (시드 + workflow) |
 | **Cycle 64** | **BaaS 10 옵션 자동 비교 + ADR 0047 Accepted (Supabase 미도입·3 Phase stack) + 누락 자료 갱신** | **1228** | **0047** |
-| **Cycle 65** | **사서 자가 설치 친화 (PyInstaller .exe 3 OS·launcher·5초 가이드·README 강화)** | **1228** | (workflow + scaffold) |
+| **Cycle 65** | **사서 자가 설치 친화 (PyInstaller .exe 3 OS·launcher·5초 가이드·README 강화)·invariant 12·헌법 §14·§15·ADR 0048** | **1228** | **0048** |
+| **Cycle 66** | **비즈니스 모델 = Open Core + Hosted SaaS·"왜 결제?" 자료·도서관별 결제 가능성 정직 분석·ADR 0049** | **1228** | **0049** |
 
 ## 최신 메트릭 (Cycle 58 마무리·v0.7.1 release)
 

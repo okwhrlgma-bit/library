@@ -23,7 +23,8 @@
 | **62** | **마케팅 노출 30+ 갭 + 콜드 메일 5 + 콘텐츠 캘린더 90일 + press kit + MOU 8** | **1228** | (시드) | **발행 시드 100% scaffolding** |
 | **63** | **신경 0 배포 stack (₩0/월·GitHub Pages·Streamlit Cloud) + E-E-A-T + landing about** | **1228** | (workflow + doc) | **15분 활성·도메인 X** |
 | **64** | **BaaS 10 옵션 비교·ADR 0047 Accepted (Supabase 미도입)·Phase 1/2/3 stack** | **1228** | **0047** | **자동 결정 완료** |
-| **65** | **사서 자가 설치 친화 (`.exe` 자동 빌드·launcher.py·5초 가이드)** | **1228** | (workflow) | **PO 방문 X·사서 더블클릭만** |
+| **65** | **사서 자가 설치 친화 (`.exe` 자동 빌드·launcher.py·5초 가이드)·invariant 12** | **1228** | **0048** | **PO 방문 X·사서 더블클릭** |
+| **66** | **비즈니스 모델 Open Core + Hosted SaaS·"왜 결제?" 매트릭스** | **1228** | **0049** | **자가 5%·결제 95%** |
 
 ## 최신 메트릭 (Cycle 60 마무리)
 
