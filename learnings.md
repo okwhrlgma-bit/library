@@ -5,6 +5,36 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-08·Cycle 84] 자동 클리커 Phase 2 = 모바일 게임 PoC (PO 통찰)
+
+### 사실 86: 자동 클리커 진척 = 5 doc + 3 PoC scaffold (Phase 0 활성)
+- README + concept + market-research + 5-scenarios (4 doc·Cycle 68·69·77)
+- PoC 1: naver_review_responder (Cycle 72·자영업·합법)
+- PoC 2: sns_multipost (Cycle 80·SNS·합법)
+- PoC 3: mobile_game_raid (Cycle 84 이번·옵트인·면책)
+
+### 사실 87: 모바일 게임 자동 = Phase 2 옵트인·면책 필수
+- PO 통찰: "핵전쟁 게임 레이드 자동 = 산다 ㅋㅋㅋㅋ"
+- founder = 사용자 = 1차 검증 신호 강함
+- ⚠ 게임 약관 위반·BAN 위험·우리 = 도구 제공자
+- 사용자 명시 동의 (체크박스 X·버튼)·미성년자 차단
+
+### 사실 88: 게이머 시간 가치 = 손가락 스트레스 + 보상 ↑
+- 1 레이드 = 30초 손가락·놓치면 보상 ↓
+- 일일 10 레이드 = 5분 절감·매월 2.5시간
+- 가치 = 시간 X·즐거움·스트레스 ↓ (게이머 동기 다름)
+- BYOK 옵션 = LLM Vision 비용 = 사용자 부담·우리 마진 100%
+
+### 사실 89: PortOne 결제 거절 위험 = 게임 매크로 카테고리
+- PortOne·Stripe·KCP = 게임 자동 SaaS 결제 거절 가능
+- 회피: PWA + 우리 결제·또는 별도 PG (Phase 2 활성 시)
+- BYOK = 사용자 결제·우리 X = 결제 위험 회피
+
+### 사실 90: 자동 클리커 5 안전 체크리스트
+- 옵트인·면책·미성년자 차단·5 실패 시 자동 일시 중지
+- 게임 정책 업데이트 알림·Anthropic 가이드라인 정합
+- PG 거절 시 BYOK 옵션 활성
+
 ## [2026-05-06·Cycle 78~83 야간 자동화] B2C 메트릭 + 자동 클리커 시나리오 2
 
 ### 사실 81: B2C 메트릭 = 4 임계값 박제 (외부 858 보고서·ChartMogul 정합)

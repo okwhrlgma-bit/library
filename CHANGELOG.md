@@ -32,6 +32,17 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 84·자동 클리커 Phase 2 모바일 게임 PoC)
+- 후보_아이디어/auto-clicker-saas/poc/mobile_game_raid.py
+  * PO 통찰 정합 (핵전쟁 게임 레이드 자동·"산다 ㅋㅋㅋㅋ")
+  * 5 게임 카테고리 (raid_start·energy·popup·attendance·boss_clicker)
+  * LLM Vision prompt 빌더 (레이드 시작 인식·confidence>0.8 트리거)
+  * 면책 조항 (사용자 명시 동의·미성년자 차단·옵트인)
+  * 안전 체크리스트 8건 (Anthropic·Apple·Google 가이드라인 정합)
+  * 게이머 시간 환산 (10 레이드/일 = 매월 2.5시간 절감)
+- ⚠ Phase 2·옵트인·면책 필수
+- PG 결제 거절 위험 = BYOK 옵션 활성 권장
+
 ### Added (Cycle 78~83·야간 자동화·B2C 메트릭·SNS 자동)
 - src/kormarc_auto/b2c/__init__.py + metrics.py
   * SubscriptionTier 4 플랜 (FREE·PERSONAL·PRO·FOUNDING) enum

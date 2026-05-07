@@ -40,6 +40,7 @@
 | **사서 추출 시드 (Cycle 70)** | **`docs/sales/librarian-cafe-recruit-2026-05.md`·5 채널 글 시드·founder 강조** |
 | **🌙 야간 자율 (Cycle 71~76)** | **META 7-cycle·자동 클리커 PoC scaffold·인터뷰 분석 도구·TEMPLATE.md·tests + Makefile (interviews·b2c-status)** |
 | **🌙 야간 자동화 (Cycle 78~83)** | **B2C 메트릭 (MRR·activation·churn·시간 절감)·자동 클리커 시나리오 2 (SNS 자동)·tests +23 (1287)** |
+| **🎮 자동 클리커 Phase 2 (Cycle 84)** | **모바일 게임 레이드 PoC (PO 통찰·핵전쟁 게임)·옵트인·면책·LLM Vision prompt 시드·안전 체크리스트 8건** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
