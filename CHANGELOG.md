@@ -32,6 +32,25 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 69·founder-market fit·B2C 상세·앱스토어·자동 클리커 깊이)
+- PO 통찰 박제: "사서 프로그램 = 내가 필요해서 만든·있으면 사서 썼을 것"
+  * founder-market fit = 강력 PMF 신호·B2C 1순위 정합
+  * 외부 사서 5명 인터뷰 = 2차 검증·페르소나 v2 재작성
+- docs/sales/b2c-detailed-design-2026-05.md = B2C 상세 설계
+  * UI·서비스 방법·온보딩·결제 흐름·영업 채널·founder 스토리
+  * 시장 정확 측정 (TAM 31,500·SOM 1,500~3,000)
+  * 진지 검토 (옵션 A·B·C 비교·사서 B2C 권고)
+- docs/automation/app-store-and-distribution-2026-05.md = 앱스토어 매트릭스
+  * Apple App Store 거절 정책 (4.2.2·5.2.1)
+  * Google Play 자동화 카테고리·게임 거절
+  * PWA + GitHub Releases + Streamlit Cloud = 1순위
+  * 결제 30% 수수료 회피 = PWA + PortOne
+- 후보_아이디어/auto-clicker-saas/docs/market-research-2026-05.md = 깊이 조사
+  * 8 시나리오 (게임 5 + 안전 3·PO 핵전쟁 게임 정합)
+  * LLM Vision 비용·마진 모델 (사용자당 $0.1~$1/월)
+  * 법적 매트릭스 (안전·회색·위험)
+  * 모바일 한정 (PC = 회피·PO 통찰 정합)
+
 ### Added (Cycle 68·B2C 전환·"몰래 쓰기"·Supabase 부활)
 - ADR 0050 = 사서 B2C 방향 전환 (결제권자 = 결제자 일치·"몰래 쓰기")
   * 8 페르소나 중 7 = 결제 권한 X·B2B 영업 어려움

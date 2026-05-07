@@ -31,6 +31,10 @@
 | **다음 단계 (필수)** | **사서 5명 인터뷰 (Mom Test 5문항·1주·docs/research/librarian-interview-playbook-2026-05.md)** |
 | **🔄 B2C 전환 (Cycle 68)** | **PO 명령: "사서 B2C·몰래 쓰기·결제권자=결제자"·ADR 0050·Supabase 부활 (B2C 한정)·₩9,900/월·docs/landing/b2c.md** |
 | **자동 클리커 후보 SaaS** | **별도 폴더 박제·`후보_아이디어/auto-clicker-saas/`·README + concept doc·Phase 0 시드** |
+| **🟢 founder-market fit (Cycle 69)** | **PO 통찰: "사서 프로그램 = 내가 필요해서 만든·있으면 사서 썼을 것"·1차 검증 신호·B2C 1순위 정합** |
+| **B2C 상세 설계 (Cycle 69)** | **`docs/sales/b2c-detailed-design-2026-05.md`·UI·서비스·온보딩·결제·영업 채널·founder 스토리** |
+| **앱스토어 분석 (Cycle 69)** | **`docs/automation/app-store-and-distribution-2026-05.md`·웹/PWA/`.exe`/Play/iOS 매트릭스** |
+| **자동 클리커 시장 조사** | **`후보_아이디어/auto-clicker-saas/docs/market-research-2026-05.md`·게임 영역 + 법적 분석** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
