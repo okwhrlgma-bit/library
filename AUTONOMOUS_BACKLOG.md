@@ -68,6 +68,8 @@
 | **61c** | invariant 11 (페르소나 ≠ 인터뷰) | ✅ | ADR 0046·CLAUDE.md §13·정직 헤더 영구 |
 | **62** | 마케팅 30+ 갭 점검 | ✅ | 콜드 메일 5·콘텐츠 캘린더 90일·press kit·MOU 8 기관 |
 | **63** | 신경 0 배포 stack (₩0/월) | ✅ | GitHub Pages·Streamlit Cloud·E-E-A-T·landing index/about |
+| **64** | BaaS 10 옵션 자동 비교 | ✅ | ADR 0047 Accepted·Supabase 미도입·Phase 1=streamlit-auth·Phase 2=AWS Cognito Seoul·Phase 3=NCP CSAP |
+| **65** | 사서 자가 설치 친화 (PO 방문 X) | ✅ | `.exe` 자동 빌드 (Win·Mac·Linux)·launcher.py·5초 가이드·invariant 12·헌법 §14·§15·ADR 0048 |
 
 ### 다음 7-cycle 권장 (Cycle 64~70)
 - 64: bandit + mypy strict 실 검증 (다음 사이클 권장)

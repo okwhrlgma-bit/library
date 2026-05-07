@@ -54,6 +54,8 @@ labels = [
 kormarc-auto = "kormarc_auto.cli:main"
 kormarc-server = "kormarc_auto.server.app:run"
 kormarc-ui = "kormarc_auto.ui.streamlit_app:run"
+# Cycle 65 = 사서 자가 설치 친화 .exe 진입점 (PyInstaller 빌드 시 launcher.py 호출)
+kormarc-auto-launcher = "kormarc_auto.cli:run_launcher"
 # T2-2 신규 = console_scripts 통합·.bat 대체
 ka = "kormarc_auto.cli:main"  # short alias·사서 5분 도입
 

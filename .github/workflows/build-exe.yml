@@ -1,0 +1,109 @@
+name: Build .exe / .app / .bin (Cycle 65·사서 자가 설치 친화)
+
+# tag push (v0.7.2 등) = Windows·Mac·Linux 3 OS 자동 빌드.
+# GitHub Releases에 자동 첨부 → 사서 = 다운로드 1회·더블클릭.
+# 사서 IT 자신감 L1·L2 (60%) 친화·Python 설치 X·명령어 X.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            artifact: kormarc-auto-windows.exe
+            ext: .exe
+          - os: macos-latest
+            artifact: kormarc-auto-mac
+            ext: ""
+          - os: ubuntu-latest
+            artifact: kormarc-auto-linux
+            ext: ""
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          python -m pip install pyinstaller streamlit
+
+      - name: Build single-file executable
+        run: |
+          pyinstaller --onefile --name kormarc-auto-launcher \
+            --hidden-import=streamlit \
+            --hidden-import=kormarc_auto \
+            --hidden-import=kormarc_auto.cli \
+            --collect-all kormarc_auto \
+            scripts/launcher.py
+        shell: bash
+
+      - name: Rename artifact (OS별)
+        run: |
+          mv dist/kormarc-auto-launcher${{ matrix.ext }} dist/${{ matrix.artifact }} 2>/dev/null || true
+          ls -la dist/
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/${{ matrix.artifact }}
+          retention-days: 90
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: Flatten artifacts
+        run: |
+          mkdir -p release/
+          find artifacts/ -type f -exec cp {} release/ \;
+          ls -la release/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*
+          generate_release_notes: true
+          body: |
+            ## 설치 (사서·클릭 1회)
+
+            **Windows**: `kormarc-auto-windows.exe` 다운로드 → 더블클릭
+            **Mac**: `kormarc-auto-mac` 다운로드 → 우클릭·열기
+            **Linux**: `kormarc-auto-linux` 다운로드 → `chmod +x && ./` 실행
+
+            > Python 설치 X·명령어 X·인터넷 차단 시도 일부 작동 (offline demo·KORMARC_DEMO_MODE=1).
+
+            ## 빠른 시작 (5초)
+
+            1. 위 파일 다운로드 (한 OS만)
+            2. 더블클릭
+            3. 자동으로 브라우저 열림 → 즉시 사용
+
+            상세: [docs/landing/install.md](https://github.com/okwhrlgma-bit/library/blob/main/docs/landing/install.md)

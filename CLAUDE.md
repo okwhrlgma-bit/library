@@ -34,6 +34,8 @@
 - ✅ §11 신뢰도 = 카테고리 (확실/검토 필요/불확실)·raw % UI/API/CLI 모두 금지 (ADR 0030·llm/confidence.py)
 - ✅ §12 모든 UI = KWCAG 2.2 Level AA·KRDS 색상 토큰·Pretendard CDN (ADR 0032·a11y/kwcag22.py·디지털포용법 §21)
 - ✅ §13 페르소나 시뮬 ≠ 실 사서 인터뷰·PMF 결정 = SALES-1 후·정직 헤더 의무 (ADR 0046·invariant 11)
+- ✅ §14 사서 데이터 = 사서 컴퓨터·SaaS 서버 저장 X (invariant 12 후보·ADR 0048)·도서관 RFP 100% 통과
+- ✅ §15 사서 자가 설치 친화 = `.exe` 더블클릭 + URL 클릭만·Python·명령어 X (Cycle 65·`docs/landing/install.md`)
 
 ## 4. 자율성 4단계
 - L1 자율: 오타·린트·docstring

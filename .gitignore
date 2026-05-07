@@ -3,6 +3,13 @@
 .env.local
 .env.*.local
 
+# Cycle 65 PyInstaller 부산물 (사서 자가 설치 .exe 빌드)
+dist/
+build/
+*.spec
+*.exe
+*.app
+
 # V3 외부 256 출처 (Cycle 43~58·자율 운영 산출물·로컬 누적)
 audit.jsonl
 report.md

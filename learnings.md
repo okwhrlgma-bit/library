@@ -5,6 +5,33 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 65] 사서 자가 설치 친화 (PO 방문 X)
+
+### 사실 42: PO 방문 X = 사서가 자기 컴퓨터에 자기 손으로 설치 = SaaS 영업 결정적
+- 사서 IT 자신감 L1 워드만 25%·L2 엑셀 35% = 60% = 명령어 거부
+- L3 SaaS 친숙 25%·L4 코드 12%·L5 IT 전공 3% = 40% = 명령어 OK
+- 적용: 옵션 A URL 클릭 (가장 친화) + 옵션 B `.exe` 더블클릭 (오프라인 가능)
+
+### 사실 43: PyInstaller .exe = 3 OS 자동 빌드·tag push 1회
+- GitHub Actions = matrix (Windows·Mac·Linux) = tag push 시 동시 빌드
+- GitHub Releases = 자동 첨부·사서 다운로드
+- Python 설치 X·명령어 X·100MB 미만 단일 파일
+
+### 사실 44: 데이터 사서 컴퓨터 + .exe = 도서관 RFP 100% 통과
+- 자관 .mrc = 사서 컴퓨터 = 한국 안 보관 (PIPA 자동)
+- .exe = 사서 컴퓨터 안에서만 작동 = 외부 전송 X
+- 도서관 RFP "데이터 한국 보관" + "외부 SaaS X" = 자동 정합
+
+### 사실 45: launcher.py = Streamlit 자동 실행·브라우저 자동 열기
+- 더블클릭 = subprocess.Popen Streamlit·5초 후 webbrowser.open
+- 포트 8501·이미 사용 시 +1 자동
+- offline demo 자동 (KORMARC_DEMO_MODE=1) = 인터넷 차단 시도 일부 작동
+
+### 사실 46: 사서 친화 에러 메시지 = "PO에게 보내기" 표준 형식
+- 에러 발생 = 자동 진단 (OS·Python·에러 첫 줄)
+- GitHub Issues link + 이메일 + 1일 답변 약속
+- 사서 = "에러 = 무서워요" 회피 = 결제 거부 위험 ↓
+
 ## [2026-05-06·Cycle 64] Supabase 도입 검토 (ADR 0047 Draft)
 
 ### 사실 39: PO Supabase 토큰 채팅 노출 = 헌법 §3 위반·but PO 처리 OK

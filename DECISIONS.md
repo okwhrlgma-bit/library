@@ -205,3 +205,31 @@
 **되돌릴 수 있는가**: 가능 (markdown·landing 단위)
 **관련 ADR**: 0044 (UI/UX)·0046 (정직)·press-kit-2026-05.md 통합
 
+
+## 2026-05-06 — Cycle 64: BaaS 10 옵션 자동 비교 → Supabase 미도입
+
+**컨텍스트**: PO Supabase 토큰 발급 + "자동 도입 검토" + "다른게 더 좋나?"
+**선택**: 옵션 A (Supabase 미도입)·Phase 1 streamlit-authenticator·Phase 2 AWS Cognito Seoul·Phase 3 NCP CSAP
+**대안**: 옵션 B (Supabase Auth만·Phase 2)·옵션 C (Supabase 전면·자관 누설 위험)
+**이유**: Supabase 미국 호스팅 = PIPA §28의8 6수신자 추가·AWS Seoul = 동일 50K MAU + 한국 호스팅·NCP CSAP = 자치구 RFP 통과
+**되돌릴 수 있는가**: 가능 (10 옵션 매트릭스 박제·Phase별 재선택 가능)
+**관련 ADR**: 0047
+
+## 2026-05-06 — Cycle 65: 사서 자가 설치 친화 + 데이터 로컬리티 invariant 12
+
+**컨텍스트**: PO "사서 컴퓨터에 못 가니까 직접 하도록"·"GitHub만으로 끝?"
+**선택**: 옵션 A (URL 클릭·Streamlit Cloud) + 옵션 B (`.exe` 다운로드·PyInstaller 3 OS 자동 빌드)
+**대안**: 사서 Python 설치 + pip (사서 IT L1·L2 60% 거부)·온프레미스 직접 설치 (1인 SaaS 한계)·모바일 앱 (v1.0+)
+**이유**: 사서 IT L1·L2 = 60% = 명령어 거부·더블클릭만 가능·데이터 100% 사서 컴퓨터 = 도서관 RFP 통과·PIPA 자동·SaaS 종료 위험 0
+**되돌릴 수 있는가**: 가능 (.exe 빌드 워크플로우 비활성·URL 옵션은 영구 유지)
+**관련 ADR**: 0048
+
+## 2026-05-06 — Cycle 65: 영구 invariant 12 (사서 데이터 = 사서 컴퓨터)
+
+**컨텍스트**: PO 통찰 = 데이터 위치 = 도서관 결제 결정 핵심
+**선택**: 헌법 §14 박제 = "사서 .mrc·자관 양식·사용 통계 = 사서 컴퓨터 저장. 우리 SaaS = stateless. 외부 BaaS Storage·DB 절대 X."
+**대안**: 일부 우리 서버 저장 (도서관 RFP 통과 어려움)·완전 X (영업 효율 ↓)
+**이유**: 도서관 RFP 100% 통과·PIPA §28의8 의무 ↓·SaaS 종료 위험 0·1인 SaaS 신뢰 장벽 1위 해소
+**되돌릴 수 있는가**: 어려움 (헌법 §14 박제·invariant 12·PR 차단 게이트)
+**관련 ADR**: 0048·헌법 §14·§15
+

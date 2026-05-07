@@ -25,6 +25,7 @@
 | **신경 0 배포 (Cycle 63)** | **GitHub Pages + Streamlit Cloud + GitHub Actions = ₩0/월·도메인 X·git push 자동** |
 | **E-E-A-T 4 신호** | **Cycle 63 매트릭스·Author/About/Schema Person·landing index + about** |
 | **BaaS 자동 검토 (Cycle 64)** | **ADR 0047 Accepted·Supabase 미도입·Phase 1=streamlit-authenticator·Phase 2=AWS Cognito·Phase 3=NCP CSAP** |
+| **사서 자가 설치 (Cycle 65)** | **`.exe` 자동 빌드 (Win·Mac·Linux)·launcher.py·5초 설치 가이드·도서관 RFP 100% 통과** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |

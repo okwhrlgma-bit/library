@@ -50,7 +50,26 @@
 
 ---
 
-## 빠른 시작 (5분, 30초 데모는 키 0개)
+## 빠른 시작 (사서·클릭 1회·Python 설치 X)
+
+### 🚀 옵션 A — URL 클릭 (5초)
+
+```
+https://kormarc-auto.streamlit.app
+```
+
+→ 즉시 사용·설치 X·핸드폰·태블릿 OK.
+
+### 💾 옵션 B — `.exe` 다운로드 (도서관 인터넷 차단 시)
+
+[GitHub Releases](https://github.com/okwhrlgma-bit/library/releases/latest) →
+- Windows: `kormarc-auto-windows.exe` 더블클릭
+- Mac: `kormarc-auto-mac` 우클릭·열기
+- Linux: `chmod +x && ./` 실행
+
+→ 100% 사서 컴퓨터·도서관 RFP 통과·자관 데이터 100% 로컬.
+
+상세: [`docs/landing/install.md`](./docs/landing/install.md)
 
 ### 0. 30초 데모 (API 키 0개·B안 Cycle 2)
 

@@ -1507,6 +1507,23 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def run_launcher() -> int:
+    """Cycle 65 — `.exe` 진입점 (PyInstaller 빌드).
+
+    pyproject `kormarc-auto-launcher` 엔트리 포인트.
+    scripts/launcher.py = 동일 로직·PyInstaller 정합 wrapper.
+    """
+    import runpy
+
+    launcher_path = Path(__file__).resolve().parent.parent.parent / "scripts" / "launcher.py"
+    if launcher_path.exists():
+        runpy.run_path(str(launcher_path), run_name="__main__")
+        return 0
+    print(f"⚠ launcher.py 미발견: {launcher_path}")
+    print("→ 일반 CLI 모드로 fallback")
+    return main(["demo"])
+
+
 def main(argv: list[str] | None = None) -> int:
     """CLI 진입점."""
     load_dotenv()

@@ -32,6 +32,19 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 65·사서 자가 설치 친화)
+- `.github/workflows/build-exe.yml` = PyInstaller 3 OS 자동 빌드 (Windows·Mac·Linux)
+  * tag push `v*` = 자동 빌드 + GitHub Releases 자동 업로드
+  * 사서 IT 자신감 L1·L2 (60%) 친화 = Python 설치 X·명령어 X·더블클릭만
+- `scripts/launcher.py` = `.exe` 진입점
+  * Streamlit 자동 실행·브라우저 자동 열기·offline demo 모드 자동
+  * 사서 친화 에러 메시지 + GitHub Issues link
+- `docs/landing/install.md` = 5초 설치 가이드
+  * 옵션 A URL 클릭·옵션 B `.exe` 다운로드·옵션 C 명령어 (개발자)
+  * Windows·Mac·Linux 3 OS 단계별 스크린샷 시드
+  * 사서 자주 묻는 질문 6선
+- README.md "빠른 시작" 섹션 강화 = 옵션 A·B 사서 친화
+
 ### Added (Cycle 64·BaaS 자동 검토)
 - ADR 0047 = Supabase 도입 검토 → **Accepted (옵션 A 채택·Supabase 미도입)**
   * Phase 1: streamlit-authenticator + yaml (자관 100% 로컬·★★★★★)
