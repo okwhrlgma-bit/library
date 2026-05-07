@@ -5,6 +5,36 @@
 > **원칙**: 사실 + 근거 + 적용 방법. 추측은 ⚠ 표시.
 > **회귀 검증**: Failure Replay (Cycle 20B P48·src/kormarc_auto/replay/) = 새 모델/프롬프트 시 모든 replay 자동 재실행
 
+## [2026-05-06·Cycle 78~83 야간 자동화] B2C 메트릭 + 자동 클리커 시나리오 2
+
+### 사실 81: B2C 메트릭 = 4 임계값 박제 (외부 858 보고서·ChartMogul 정합)
+- MRR 목표 = ₩5,000,000/월 (시드·SOM 500명)
+- ACTIVATION = 100권 처리 + 보고서 1회 (Lenny 2.5x 정합)
+- CHURN_RISK D+14 = medium·D+30 = high·D+60 = critical
+- TIME_SAVED = 6분/권 × 시급 ₩20K (헌법 §0)
+- demo snapshot = 50 trial / 5 paid / ₩49,500 MRR (1% MRR 목표)
+
+### 사실 82: B2C 4 플랜 (SubscriptionTier enum·Cycle 68 ADR 0050)
+- FREE ₩0 50건/월·PERSONAL ₩9,900 무제한·PRO ₩19,900 + AI/OCR
+- FOUNDING ₩4,950 (영구 50%·100관 한정·~2026-06-30)
+- 100 personal + 50 pro + 100 founding = ₩2.48M/월
+
+### 사실 83: 자동 클리커 시나리오 2 = SNS 다중 업로드 (Phase 1 안전)
+- 자영업·크리에이터 본인 권한·합법
+- 1 사진 = 인스타 + X + 페이스북 동시 (15분 → 5분)
+- LLM Vision = 이미지 분류 (food·landscape·person·product)
+- LLM = 캡션·해시태그·매장 톤·검수 단계 필수
+- 자영업 시급 ₩30K·매월 ₩300K~₩1.2M 절감 = ROI 30:1+
+
+### 사실 84: B2C 메트릭 invariants (헌법 §14·invariant 12 정합)
+- SaaSMetrics = 카운트만·이메일·이름·전화 X
+- 자관 .mrc·자관 양식 = 사서 컴퓨터 (영구)
+- 사서 PII = Auth 한정 (Supabase B2C)·메트릭 = 익명 카운트만
+
+### 사실 85: tests 1,264 → 1,287 (+23·B2C 메트릭 회귀)
+- TestSubscriptionTier·MRR·Activation·TimeSaved·Churn·DemoSnapshot·Constitution
+- Founding 50%·activation 100권+보고서·시간 환산 ₩200K·ROI 20:1·D+14 churn
+
 ## [2026-05-06·Cycle 71~76 야간 자율] 자료·통합·실 활성 가능 도구
 
 ### 사실 75: 야간 자율 정의 = 표면적 코드 X·실 활성 가능 자료

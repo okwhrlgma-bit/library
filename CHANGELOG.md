@@ -32,6 +32,19 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 78~83·야간 자동화·B2C 메트릭·SNS 자동)
+- src/kormarc_auto/b2c/__init__.py + metrics.py
+  * SubscriptionTier 4 플랜 (FREE·PERSONAL·PRO·FOUNDING) enum
+  * MRR 계산·activation (100권+보고서·Lenny 2.5x)·churn 4 단계
+  * 시간 절감 환산 (6분/권·시급 ₩20K·ROI 20:1)
+  * demo snapshot (50 trial / 5 paid / ₩49,500 MRR)
+- tests/test_b2c_metrics.py (23 신규)
+  * SubscriptionTier·MRR·Activation·TimeSaved·Churn·Constitution
+- 후보_아이디어/auto-clicker-saas/poc/sns_multipost.py
+  * 시나리오 2 (인스타·X·페이스북 동시 업로드·법적 안전)
+  * LLM Vision 이미지 분류·캡션·해시태그·검수 워크플로우
+  * 자영업 ROI 30:1+ (15분→5분·매월 ₩300K~₩1.2M)
+
 ### Added (Cycle 71~76·야간 자율·자료·통합·실 활성)
 - META_REVIEW Cycle 64~70 7-cycle row 추가 (V2 §6.1 자동)
 - 후보_아이디어/auto-clicker-saas/poc/naver_review_responder.py

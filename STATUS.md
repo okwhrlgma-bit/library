@@ -8,7 +8,7 @@
 | 항목 | 값 |
 |---|---|
 | 버전 | **v0.7.1** (tag push 완료) + Cycle 60·61 [Unreleased] |
-| Tests | **1,249** passing / 6 skipped (+21 from Cycle 70·Supabase B2C) |
+| Tests | **1,287** passing / 6 skipped (+23 from Cycle 78·B2C 메트릭) |
 | ruff | 0 errors |
 | binary_assertions | 39/39 |
 | 자관 174 round-trip | 100% baseline (regression ≤ 1pp 영구 게이트) |
@@ -39,6 +39,7 @@
 | **PWA (Cycle 70)** | **manifest.json·sw.js·핸드폰 홈 추가·앱스토어 X·KRDS Korea blue 60 theme** |
 | **사서 추출 시드 (Cycle 70)** | **`docs/sales/librarian-cafe-recruit-2026-05.md`·5 채널 글 시드·founder 강조** |
 | **🌙 야간 자율 (Cycle 71~76)** | **META 7-cycle·자동 클리커 PoC scaffold·인터뷰 분석 도구·TEMPLATE.md·tests + Makefile (interviews·b2c-status)** |
+| **🌙 야간 자동화 (Cycle 78~83)** | **B2C 메트릭 (MRR·activation·churn·시간 절감)·자동 클리커 시나리오 2 (SNS 자동)·tests +23 (1287)** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
