@@ -27,6 +27,8 @@
 | **BaaS 자동 검토 (Cycle 64)** | **ADR 0047 Accepted·Supabase 미도입·Phase 1=streamlit-authenticator·Phase 2=AWS Cognito·Phase 3=NCP CSAP** |
 | **사서 자가 설치 (Cycle 65)** | **`.exe` 자동 빌드 (Win·Mac·Linux)·launcher.py·5초 설치 가이드·도서관 RFP 100% 통과** |
 | **비즈니스 모델 (Cycle 66)** | **Open Core + Hosted SaaS·코드 Apache-2.0·결제 = 외부 API + 법적 + SLA + 결재 통과·ADR 0049** |
+| **🚨 사업성 1순위 (Cycle 67)** | **PO 명령: "사업성이 1순위·없는 게 가장 큰 문제"·인터뷰 가이드 박제·코드 STOP·PO 외부 작업 1주 = 60 사이클 가치 검증** |
+| **다음 단계 (필수)** | **사서 5명 인터뷰 (Mom Test 5문항·1주·docs/research/librarian-interview-playbook-2026-05.md)** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |
