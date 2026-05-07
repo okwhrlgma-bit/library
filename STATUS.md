@@ -13,7 +13,7 @@
 | binary_assertions | 39/39 |
 | 자관 174 round-trip | 100% baseline (regression ≤ 1pp 영구 게이트) |
 | 영구 invariants | **10건** (Cycle 27·V3 추가 3건·ADR 0041) |
-| ADRs | **0024~0049** (26건 누적·Cycle 65 = ADR 0048·Cycle 66 = ADR 0049) |
+| ADRs | **0024~0050** (27건 누적·Cycle 68 = ADR 0050 B2C 전환) |
 | 메모리 | 7건 (901·858·매출·V1·V2·V3·1-명령 1-완료 ⭐⭐⭐⭐⭐) |
 | Plan B P29~P52 | 22/24 (P30·P39 외부 의존만) |
 | V2 §1·§3·§5·§6·§7·§10·§11 | 100% scaffolding |
@@ -29,6 +29,8 @@
 | **비즈니스 모델 (Cycle 66)** | **Open Core + Hosted SaaS·코드 Apache-2.0·결제 = 외부 API + 법적 + SLA + 결재 통과·ADR 0049** |
 | **🚨 사업성 1순위 (Cycle 67)** | **PO 명령: "사업성이 1순위·없는 게 가장 큰 문제"·인터뷰 가이드 박제·코드 STOP·PO 외부 작업 1주 = 60 사이클 가치 검증** |
 | **다음 단계 (필수)** | **사서 5명 인터뷰 (Mom Test 5문항·1주·docs/research/librarian-interview-playbook-2026-05.md)** |
+| **🔄 B2C 전환 (Cycle 68)** | **PO 명령: "사서 B2C·몰래 쓰기·결제권자=결제자"·ADR 0050·Supabase 부활 (B2C 한정)·₩9,900/월·docs/landing/b2c.md** |
+| **자동 클리커 후보 SaaS** | **별도 폴더 박제·`후보_아이디어/auto-clicker-saas/`·README + concept doc·Phase 0 시드** |
 | **영구 invariant 11** | **페르소나 시뮬 ≠ 실 인터뷰 (ADR 0046·CLAUDE.md §13)** |
 | **mypy** | strict = true·실 검증 = 다음 사이클 |
 | **bandit (보안 스캔)** | ⏳ 미설치·다음 사이클 도입 권장 |

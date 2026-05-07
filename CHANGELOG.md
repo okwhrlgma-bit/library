@@ -32,6 +32,20 @@
 - CLAUDE.md §13 박제 (페르소나 시뮬 ≠ 인터뷰)
 - 추가 조사 결과: bandit 미설치 (다음 사이클)·mypy strict 실 검증 (다음 사이클)
 
+### Added (Cycle 68·B2C 전환·"몰래 쓰기"·Supabase 부활)
+- ADR 0050 = 사서 B2C 방향 전환 (결제권자 = 결제자 일치·"몰래 쓰기")
+  * 8 페르소나 중 7 = 결제 권한 X·B2B 영업 어려움
+  * B2C 사서 본인 = ₩9,900/월·체크카드·세금계산서 X·결재 X
+  * 시간 환산 = ₩200K/월 절감 = 20:1 ROI
+  * ADR 0047 부분 supersede = B2C 한정 Supabase Auth 부활
+- docs/landing/b2c.md = "몰래 쓰기" B2C 랜딩 페이지
+  * 본인 결제 메시지·5초 시작·Founding Member ₩4,950/월
+  * Supabase Auth + PortOne v2 (Phase 2)
+- 후보_아이디어/auto-clicker-saas/ 폴더 신설 (별도 PoC)
+  * README 박제·concept-2026-05.md (5 시나리오 시드)
+  * LLM 의사결정·다중 chain·자동 복구 차별화
+  * Phase 0 = 시장 조사·자영업 5명 인터뷰·PoC 1건
+
 ### Added (Cycle 66·비즈니스 모델 Open Core + Hosted SaaS)
 - ADR 0049 = Open Core + Hosted SaaS 결정 (Apache-2.0 영구 + 결제 서비스 패키지)
   * 검증 사례: Koha (1,399 도서관)·FOLIO (100+)·GitLab·Sentry
