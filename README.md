@@ -354,6 +354,62 @@ GitHub topics: `library`, `marc`, `kormarc`, `kolas`, `korean-library`, `catalog
 
 ---
 
+## 🚀 Streamlit Cloud 배포 (Cycle 676·Day 1 매출 시작점)
+
+### 배포 흐름
+
+```
+1. https://share.streamlit.io 가입 (GitHub OAuth·이미 완료)
+2. New app → 이 repo 선택 → Main file = streamlit_app.py → Deploy
+3. Settings → Secrets → 아래 templates 입력
+4. 자동 배포 URL 발급 (예: kormarc-auto.streamlit.app)
+5. 이후 git push = 자동 재배포 (Claude가 push만 하면 자동)
+```
+
+### 필요 Secrets (placeholder·실 값은 PO 입력)
+
+```toml
+# 외부 API (없으면 demo mode 자동)
+NL_CERT_KEY = ""
+DATA4LIBRARY_AUTH_KEY = ""
+ALADIN_TTB_KEY = ""
+KAKAO_API_KEY = ""
+ANTHROPIC_API_KEY = ""
+KORMARC_DEMO_MODE = "1"
+
+# 결제 (Day 1 매출·Cycle 672)
+LEMONSQUEEZY_API_KEY = "lemonsqueezy_jwt_여기"
+LEMONSQUEEZY_STORE_ID = "369481"  # indie-kr (Cycle 675 검증)
+LEMONSQUEEZY_VARIANT_ID = ""      # 제품 등록 후 (PO 외부 작업·5분)
+LEMONSQUEEZY_WEBHOOK_SECRET = ""
+
+# DB (Cycle 668 검증·MongoDB Atlas Python pymongo)
+MONGODB_URI = "mongodb+srv://..."
+MONGODB_DB_NAME = "kormarc_auto"
+```
+
+전체 templates → `.streamlit/secrets.toml.example`
+
+### 보안
+
+- ⚠️ `.env` · `.streamlit/secrets.toml` = git 제외 (.gitignore)
+- ✅ Streamlit Cloud Secrets = 클라우드 측 암호화 저장
+- ✅ 코드 = `st.secrets` + `os.environ` fallback (로컬·CI 호환·`streamlit_app.py:_get_secret`)
+
+### 배포 후 자동 흐름
+
+```
+git push origin main
+    ↓
+Streamlit Cloud 자동 빌드·재배포 (~3분)
+    ↓
+사용자 → kormarc-auto.streamlit.app
+    ↓
+LemonSqueezy 결제 → 매출 ₩ → MongoDB 로그
+```
+
+---
+
 ## 라이선스
 
 Apache 2.0 (코어 엔진). 부가 SaaS 서비스는 상용.
