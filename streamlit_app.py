@@ -92,14 +92,98 @@ def _render_lemonsqueezy_cta() -> None:
     )
 
 
+LICENSE_SESSION_KEY = "_kormarc_license_state"
+LICENSE_CACHE_HOURS = 24
+
+
+def _is_license_cached_valid(state: dict) -> bool:
+    """캐시된 라이선스 24h TTL 검증."""
+    if not isinstance(state, dict) or not state.get("valid"):
+        return False
+    cached_at = state.get("cached_at", "")
+    if not cached_at:
+        return False
+    try:
+        from datetime import UTC, datetime, timedelta
+
+        ts = datetime.fromisoformat(cached_at)
+        return datetime.now(UTC) - ts < timedelta(hours=LICENSE_CACHE_HOURS)
+    except (ValueError, TypeError):
+        return False
+
+
+def _activate_license(license_key: str) -> dict:
+    """LS license activate 호출 (Form-data·Cycle 680 정합)."""
+    import requests
+
+    api_key = _get_secret("LEMONSQUEEZY_API_KEY")
+    if not api_key:
+        return {"valid": False, "reason": "LEMONSQUEEZY_API_KEY 미설정"}
+    try:
+        resp = requests.post(
+            "https://api.lemonsqueezy.com/v1/licenses/activate",
+            data={"license_key": license_key, "instance_name": "kormarc-auto"},
+            headers={"Authorization": f"Bearer {api_key}", "Accept": "application/json"},
+            timeout=10,
+        )
+    except requests.RequestException as exc:
+        return {"valid": False, "reason": f"호출 실패: {exc}"}
+    if resp.status_code >= 400:
+        return {"valid": False, "reason": f"HTTP {resp.status_code}"}
+    data = resp.json()
+    from datetime import UTC, datetime
+
+    return {
+        "valid": bool(data.get("activated") or data.get("valid")),
+        "instance_id": str((data.get("instance") or {}).get("id", "")),
+        "customer_email": str((data.get("meta") or {}).get("customer_email", "")),
+        "cached_at": datetime.now(UTC).isoformat(),
+    }
+
+
+def _render_license_gate() -> bool:
+    """LS license gate UI (Day 1 흐름·Cycle 682)."""
+    import streamlit as st  # type: ignore[import-not-found]
+
+    if not _get_secret("LEMONSQUEEZY_API_KEY"):
+        return True  # LS 미설정 = 게이트 무시 (개발·demo)
+
+    cached = st.session_state.get(LICENSE_SESSION_KEY, {})
+    if _is_license_cached_valid(cached):
+        return True
+
+    st.subheader("🔑 라이선스 키 입력")
+    st.caption("LemonSqueezy 결제 후 이메일로 받은 키 입력·24h 유효")
+    license_input = st.text_input(
+        "라이선스 키",
+        type="password",
+        placeholder="XXXX-XXXX-XXXX-XXXX",
+        key="_kormarc_license_input",
+    )
+    if license_input and st.button("검증·활성화"):
+        result = _activate_license(license_input)
+        st.session_state[LICENSE_SESSION_KEY] = result
+        if result["valid"]:
+            st.success(f"✅ 활성화·{result.get('customer_email', '?')}")
+            st.rerun()
+            return True
+        st.error(f"❌ {result.get('reason', '검증 실패')}")
+    return False
+
+
 def main() -> None:
     """Streamlit Cloud entry point."""
-    # 본체 streamlit_app 호출 (Cycle 63 정교한 4 탭 UI 재사용)
+    import streamlit as st  # type: ignore[import-not-found]
+
+    # 1. license gate (LS 설정 시만·Day 1 흐름)
+    if not _render_license_gate():
+        _render_health_sidebar()
+        return
+
+    # 2. 본체 UI 로드
     try:
         from kormarc_auto.ui import streamlit_app  # type: ignore[import-not-found]
     except ImportError as exc:
-        import streamlit as st  # type: ignore[import-not-found]
-
         st.error(f"본체 UI 로드 실패: {exc}")
         st.info(
             "fallback: `pip install -e .` 또는 Streamlit Cloud requirements.txt 확인 의무"
@@ -109,12 +193,10 @@ def main() -> None:
     _render_health_sidebar()
     _render_lemonsqueezy_cta()
 
-    # 본체 main 호출 (Cycle 63 4 탭 UI)
+    # 3. 본체 main 호출 (Cycle 63 4 탭 UI)
     if hasattr(streamlit_app, "main"):
         streamlit_app.main()
     else:
-        import streamlit as st  # type: ignore[import-not-found]
-
         st.warning("본체 main() 함수 부재·src/kormarc_auto/ui/streamlit_app.py 직접 실행 권장")
 
 
