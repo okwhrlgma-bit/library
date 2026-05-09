@@ -1,0 +1,9 @@
+{
+  "name": "kormarc-auto-landing",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@polar-sh/sdk": "^0.32.0"
+  }
+}

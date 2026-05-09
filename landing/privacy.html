@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>개인정보처리방침 — kormarc-auto</title>
+  <link rel="canonical" href="https://kormarc-auto-landing.vercel.app/privacy.html">
+  <meta name="robots" content="index,follow">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <style>
+    body { font-family: 'Pretendard Variable', Pretendard, sans-serif; max-width: 720px; margin: 40px auto; padding: 24px; color: #0f172a; line-height: 1.7; }
+    h1 { font-size: 28px; margin-top: 32px; }
+    h2 { font-size: 20px; margin-top: 24px; color: #5b21b6; }
+    h3 { font-size: 16px; margin-top: 16px; }
+    table { border-collapse: collapse; width: 100%; margin: 12px 0; }
+    th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+    th { background: #f3f0ff; }
+    blockquote { border-left: 4px solid #5b21b6; padding-left: 16px; color: #64748b; margin: 16px 0; }
+    a { color: #5b21b6; }
+    .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b; }
+  </style>
+</head>
+<body>
+<h1>개인정보처리방침 template (한국 PIPA 정합·30-apps 공유)</h1>
+<blockquote>사용처: 모든 30-apps 배포 시 자동 inject</blockquote>
+<blockquote>출처: 개인정보보호위원회 「개인정보처리방침 만들기」 + GitHub `kimlawtech/korean-privacy-terms`</blockquote>
+<blockquote>헌법 §14 정합: 사용자 데이터 = 사용자 컴퓨터·SaaS 서버 X (offline 우선)</blockquote>
+<hr>
+<h2>1. 개인정보의 처리 목적</h2>
+<p>본 서비스는 다음의 목적을 위하여 개인정보를 처리합니다:</p>
+<li>회원 가입 의사 확인·서비스 제공·요금 결제·정산</li>
+<li>고객 상담·민원 응대·서비스 개선</li>
+<h2>2. 처리하는 개인정보 항목</h2>
+<tr><th>분류</th><th>항목</th></tr>
+<tr><td>필수</td><td>이메일</td></tr>
+<tr><td>선택</td><td>이름·연락처</td></tr>
+<tr><td>자동 수집</td><td>IP·접속 로그·쿠키·서비스 이용 기록</td></tr>
+<p><strong>자관·민감정보 = 본 서비스 서버 저장 X</strong> (헌법 §14·offline 우선·사용자 컴퓨터 처리).</p>
+<h2>3. 개인정보의 처리 및 보유 기간</h2>
+<li>회원 가입 정보: 회원 탈퇴 시까지</li>
+<li>결제 기록: 5년 (전자상거래법)</li>
+<li>접속 로그: 3개월 (통신비밀보호법)</li>
+<h2>4. 개인정보의 제3자 제공</h2>
+<p>원칙적으로 제공 X. 다음 예외:</p>
+<li>정보주체 사전 동의</li>
+<li>법령 의무 (수사기관·세무관서)</li>
+<li>결제 처리 (PortOne·Stripe·Lemon Squeezy 등 PG)</li>
+<h2>5. 개인정보 처리의 위탁</h2>
+<tr><td>수탁자</td><td>업무</td></tr>
+<tr><td>PortOne (또는 Stripe·Lemon Squeezy)</td><td>결제 처리</td></tr>
+<tr><td>Resend (또는 SendGrid)</td><td>이메일 발송</td></tr>
+<tr><td>Plausible (옵션)</td><td>익명 통계 (cookie-less)</td></tr>
+<h2>6. 정보주체의 권리·의무 및 행사 방법</h2>
+<p>정보주체는 언제든지 다음 권리 행사 가능:</p>
+<li>열람·정정·삭제·처리정지 요구</li>
+<li>**자동화 결정 거부권** (PIPA 2026.3 개정안 정합·헌법 §11)</li>
+<li>**개인정보 전송 요구권**</li>
+<p>행사 = 이메일 (privacy@<your-domain>) 또는 서비스 내 설정.</p>
+<h2>7. 개인정보의 안전성 확보 조치</h2>
+<li>bcrypt 해시 (비밀번호)</li>
+<li>AES-256 암호화 (저장 시)</li>
+<li>TLS 1.2+ (전송 시)</li>
+<li>접근 권한 분리 + audit_log 해시 체인</li>
+<h2>8. 자동화된 결정에 관한 사항</h2>
+<p>본 서비스는 LLM·룰 기반 추천을 제공할 수 있으며, 정보주체는 다음 권리 행사 가능:</p>
+<li>자동화 결정 거부 권리</li>
+<li>사람의 검토 요구</li>
+<li>결정 근거 설명 요구</li>
+<p>→ 본 서비스 권고 = 자기 측정·검토 보조이며 의료·법률·세무 자문 X.</p>
+<h2>9. 개인정보 보호책임자</h2>
+<li>성명: <PO 이름></li>
+<li>이메일: privacy@<your-domain></li>
+<li>처리방침 변경 시 = 7일 이내 공지</li>
+<h2>10. 개정 이력</h2>
+<li>2026-MM-DD: 최초 제정</li>
+<hr>
+<p><strong>※ 본 처리방침 = template·각 앱 배포 전 사업자 정보·이메일·연락처 등 기입 필요.</strong></p>
+<div class="footer">
+  <a href="/">← kormarc-auto 홈</a>
+</div>
+</body>
+</html>

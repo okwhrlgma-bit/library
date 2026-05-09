@@ -13,4 +13,4 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
-Sitemap: https://kormarc-auto.com/sitemap.xml
+Sitemap: https://kormarc-auto-landing.vercel.app/sitemap.xml
