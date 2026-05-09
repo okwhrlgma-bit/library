@@ -1,0 +1,38 @@
+# kormarc-auto requirements (Cycle 673·import 스캔 + 버전 핀)
+# 생성: 2026-05-09·`pip list --format=freeze` 정합·실 import 검증
+
+# ─── 핵심 (PO 의무) ───
+streamlit==1.56.0
+pymongo==4.17.0
+python-dotenv==1.2.2
+
+# ─── KORMARC 처리 (도메인) ───
+pymarc==5.3.1
+pyzbar==0.1.9
+hanja==0.15.1
+openpyxl==3.1.5
+PyYAML==6.0.1
+
+# ─── HTTP / API ───
+httpx==0.28.1
+requests==2.33.1
+urllib3==2.6.3
+tenacity==9.1.4
+
+# ─── 데이터 모델 / UI ───
+pydantic==2.13.3
+pillow==12.2.0
+pandas==3.0.2
+streamlit-authenticator==0.4.2
+
+# ─── 서버 / 캐시 ───
+fastapi==0.136.1
+uvicorn==0.46.0
+diskcache==5.6.3
+
+# ─── BYOK AI ───
+anthropic==0.97.0
+
+# ─── 테스트 (CI·로컬·Streamlit Cloud는 자동 skip) ───
+pytest==9.0.3
+hypothesis==6.152.4
