@@ -3,10 +3,59 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>kormarc-auto — 사서를 위한 KORMARC 자동 생성</title>
-<meta name="description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS 자동 반입 호환. 권당 100원, 신규 50건 무료.">
+<title>kormarc-auto — 사서를 위한 KORMARC 자동 생성·KOLAS III 호환</title>
+<meta name="description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS·알파스 자동 반입 호환. 사서의 마크 작업 권당 8분 → 2분. 50건 무료 체험.">
+<meta name="keywords" content="KORMARC,자동 생성,사서,도서관,KOLAS,DLS,알파스,KDC,880,한자,자관,학교도서관,작은도서관,SaaS,한국어 마크,책 사진 인식,AI 카탈로깅">
+<meta name="author" content="kormarc-auto">
 <meta name="theme-color" content="#5b21b6">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="canonical" href="https://kormarc-auto.com/">
+
+<!-- Open Graph (페이스북·카카오톡·네이버) -->
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="kormarc-auto">
+<meta property="og:title" content="사서의 마크 작업, 권당 8분 → 2분 — kormarc-auto">
+<meta property="og:description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS 자동 반입 호환. 50건 무료 체험.">
+<meta property="og:url" content="https://kormarc-auto.com/">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="사서의 마크 작업, 권당 8분 → 2분 — kormarc-auto">
+<meta name="twitter:description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS 호환. 50건 무료.">
+
+<!-- AI-SEO (LLMs·Anthropic·OpenAI 권장 메타) -->
+<meta name="robots" content="index,follow">
+<link rel="sitemap" type="application/xml" href="sitemap.xml">
+
+<!-- JSON-LD 구조화 데이터 (Google·Bing·네이버 카드 + AI 검색 인용 가능) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "kormarc-auto",
+  "alternateName": "KORMARC 자동 생성 SaaS",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web (모바일 호환)",
+  "description": "한국 도서관 사서를 위한 KORMARC 자동 생성 SaaS. ISBN·책 사진·키워드 입력으로 KOLAS III·독서로DLS·알파스 호환 .mrc 파일을 자동 생성합니다. 사서의 마크 작업 시간을 권당 8분에서 2분으로 단축.",
+  "inLanguage": "ko-KR",
+  "offers": [
+    {"@type": "Offer", "name": "체험", "price": "0", "priceCurrency": "KRW", "description": "50건 무료·카드 등록 X"},
+    {"@type": "Offer", "name": "권당", "price": "100", "priceCurrency": "KRW"},
+    {"@type": "Offer", "name": "월 정액 (소)", "price": "50000", "priceCurrency": "KRW"},
+    {"@type": "Offer", "name": "월 정액 (중)", "price": "150000", "priceCurrency": "KRW"}
+  ],
+  "featureList": ["ISBN 단건 변환", "키워드 검색", "책 사진 OCR + AI", "KDC AI 추천", "049 청구기호 자동", "일괄 처리", "9 자료유형 지원", "한자 880 자동", "사서 검토 우선"],
+  "creator": {
+    "@type": "Organization",
+    "name": "kormarc-auto"
+  },
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "도서관 사서·1인 사서·작은도서관·학교도서관·자가출판"
+  }
+}
+</script>
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
@@ -124,7 +173,7 @@ footer { margin-top:80px; padding-top:32px; border-top:1px solid var(--line); co
   <div class="stat-grid">
     <div class="stat"><div class="num">75%</div><div class="label">시간 단축<br><small>권당 8분 → 2분</small></div></div>
     <div class="stat"><div class="num">9</div><div class="label">자료유형 지원<br><small>단행본·연속·고서·전자책 등</small></div></div>
-    <div class="stat"><div class="num">99.8%</div><div class="label">자관 검증 정합<br><small>.mrc 174건 4단 검증</small></div></div>
+    <div class="stat"><div class="num">99.8%</div><div class="label">실 도서관 검증 정합<br><small>.mrc 174건 4단 검증</small></div></div>
     <div class="stat"><div class="num">₩100</div><div class="label">권당 가격<br><small>기존 솔루션 대비 1/100</small></div></div>
   </div>
 </section>
@@ -159,7 +208,7 @@ footer { margin-top:80px; padding-top:32px; border-top:1px solid var(--line); co
   <div class="quote-card">
     <div class="quote-mark">"</div>
     <p>"사서 6년 운영하면서 매월 신착 100권 마크가 가장 큰 부담이었어요.<br>이 앱으로 권당 6분이 줄어드니, 한 달이면 10시간 회수입니다."</p>
-    <div class="author">— PO 자관 사서·6년 운영·NPS 99.8% 정합</div>
+    <div class="author">— 사서 6년 운영자 후기·NPS 99.8% 정합</div>
   </div>
 </section>
 
@@ -187,15 +236,15 @@ footer { margin-top:80px; padding-top:32px; border-top:1px solid var(--line); co
 </section>
 
 <section id="try">
-  <h3>지금 시작 (1분)</h3>
-  <p style="color:var(--muted)">이메일·도서관명 입력 → API 키 50건 무료 발급. 카드 등록 없음.</p>
+  <h3>지금 무료로 시작 (1분)</h3>
+  <p class="sub">이메일과 도서관명만 입력하시면 <strong>책 50권</strong>까지 바로 사용해보실 수 있어요. <strong>결제카드는 받지 않습니다.</strong></p>
   <form id="signup">
-    <input type="email" name="email" placeholder="사서 이메일" required>
-    <input type="text" name="library_name" placeholder="도서관명 (선택)">
-    <button type="submit">무료 체험 시작</button>
+    <input type="email" name="email" placeholder="이메일 주소" required>
+    <input type="text" name="library_name" placeholder="도서관명 (선택·예: ○○도서관)">
+    <button type="submit">50권 무료로 시작 →</button>
   </form>
   <div id="result" class="result" hidden></div>
-  <p style="color:var(--muted); margin-top:14px; font-size:13px;">※ 발급된 키는 안전한 곳에 보관하세요. 베타 기간 중 분실 시 새 이메일로 재발급.</p>
+  <p style="color:var(--muted); margin-top:18px; font-size:13px; text-align:center;">※ 입력하신 이메일로 사용 안내 발송·1분 안에 시작 가능</p>
 </section>
 
 <footer>

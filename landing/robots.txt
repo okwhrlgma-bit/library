@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# AI 검색 명시 허용 (Anthropic·OpenAI·Perplexity·Google AI 권장)
+User-agent: ClaudeBot
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+
+Sitemap: https://kormarc-auto.com/sitemap.xml
