@@ -67,9 +67,25 @@ def require_login() -> None:
     """Streamlit 진입점에서 호출 — 인증 미통과 시 st.stop().
 
     PO 마스터 §G.4 + DECISIONS 6dim+7 (2026-04-27).
+    M28 정합 (2026-05-10): Streamlit Cloud 환경 = secrets DISABLE_AUTH 또는 자동 bypass.
+    Self-host = auth_config.yaml 의존 (기존 동작 유지).
     """
+    # M28: Streamlit Cloud bypass 체크
+    try:
+        if st.secrets.get("DISABLE_AUTH") is True or st.secrets.get("DISABLE_AUTH") == "true":
+            return  # bypass·인증 X·매출 ₩0 lazy validation 정합
+    except Exception:
+        pass
+
     config = _load_config()
     if config is None:
+        # M28: auth_config.yaml 없음 = Streamlit Cloud 환경 추정
+        # secrets에 STREAMLIT_CLOUD_BYPASS = true 시 bypass·아니면 setup 안내
+        try:
+            if st.secrets.get("STREAMLIT_CLOUD_BYPASS"):
+                return
+        except Exception:
+            pass
         _show_setup_required()
         return  # st.stop() 후 도달 X (정적 분석 보조)
 
