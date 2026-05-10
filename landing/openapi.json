@@ -1,0 +1,47 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "kormarc-auto",
+    "description": "사서를 위한 KORMARC 자동 생성 SaaS·KOLAS·DLS·알파스 호환·KS X 6006:2023.12 정합",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://kormarc-auto-landing.vercel.app/api"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/checkout": {
+      "post": {
+        "summary": "Purchase kormarc-auto subscription",
+        "responses": {
+          "200": {
+            "description": "Polar checkout URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "checkout_url": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

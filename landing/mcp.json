@@ -1,0 +1,33 @@
+{
+  "mcp_version": "1.0",
+  "server_name": "kormarc-auto",
+  "description": "사서를 위한 KORMARC 자동 생성 SaaS·KOLAS·DLS·알파스 호환·KS X 6006:2023.12 정합",
+  "tools": [
+    {
+      "name": "kormarc-auto_invoke",
+      "description": "Invoke kormarc-auto·사서를 위한 KORMARC 자동 생성 SaaS·KOLAS·DLS·알파스 호환·KS X 6006:2023.12 정합",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string",
+            "description": "Service input"
+          },
+          "license_key": {
+            "type": "string",
+            "description": "Polar license key"
+          }
+        },
+        "required": [
+          "input",
+          "license_key"
+        ]
+      }
+    }
+  ],
+  "auth": {
+    "type": "api_key",
+    "header": "Authorization",
+    "purchase_url": "https://buy.polar.sh/polar_cl_NaL9NuSCZItsgM7uUmIuZPV7nxQqgpaGRiKK01YAa3P"
+  }
+}

@@ -66,6 +66,60 @@
 - 명령 없을 시 = 자율 모드 default
 - 매 사이클 = 사용자_TODO 자동 정리
 
+## 8C/D. PO 영구 정책 (메모리 단일 출처)
+- §8C NO offline activities → memory feedback_no_offline_activities.md
+- §8D 30 apps portfolio → memory feedback_30_apps_portfolio.md
+
+## 8L. _shared 정식 패키지 (Cycle 104·ADR 0066·Sandi Metz AHA)
+- 5 사용처 도달 = packages/ 승격 시점·정식 Python 패키지화 완료
+- 위치: `30-apps/_shared/` (Apache-2.0·v0.1.0·Python 3.11+)
+- 4 모듈: payments·auth·email_helper·landing·법적 templates·flow·roadmap
+- email → **email_helper rename** (Python 표준 충돌 회피·sys.path 등록 시)
+- tests: 9 smoke passing·헌법 §3 (env only)·전자상거래법 §17 정합
+- 사용 패턴: `sys.path.insert(0, "../_shared")` + `from landing import ...`
+- ROI: 30 앱 누적 시 코드 단축 30~50%·캐시카우 가속
+
+## 8J/K. PO 영구 정책 (메모리 단일 출처)
+- §8J Blanket authorization → memory feedback_blanket_authorization.md (ADR 0064)
+- §8K 15 요건 페인 평가 → memory feedback_15_criteria_pain_eval.md (ADR 0065)
+
+## 8I. 계획 선행 의무 (PO 영구 2026-05-08)
+- PO 명령: "조사 및 앱 제작도 계획이 선행되어야함·스타트업처럼 순서 맞춰서 계획대로 진행"
+- 매 신규 앱 = 다음 순서 의무:
+  1. ADR 0055 페인 게이트 평가 카드 박제 (시장·캐시카우·Q5)
+  2. 통과 시 = `30-apps/_shared/STARTUP_ROADMAP.md` Phase 정합 확인
+  3. spec.md (단일 기능 1줄·평가축·의존성)
+  4. 코드 (pyproject·LICENSE·src·tests ≥ 15)
+  5. README (한국어·차별화 표·면책)
+  6. _shared 활용 (payments·legal·landing·email)
+  7. 박제 (INDEX·STATUS·learnings)
+- 매 cycle = 현재 Phase 진척 + 다음 게이트 체크
+- 게이트 미달 = Phase 유지·skip X
+- 모든 외부 발사 = ADR 0058 4 조건 + Phase 3 진입 모두 통과 후만
+
+## 8H. Conditional deployment cashcow (PO 영구 2026-05-08·ADR 0058)
+- PO 명령: "수익 확실·캐시카우 가능 판단 시 코딩 및 배포 허용"
+- 4 조건: 시장 ≥ 75·캐시카우 ≥ 80·벤치마크 1+·Q5 PASS
+- 통과 = Streamlit Cloud + 도메인 + 결제 wrapper + ProductHunt·HN 발사 허용
+- 미달 = ADR 0052 유지 (코드만)
+- 벤치마크 의무: 솔로 인디 사례 인용 (Pieter·Tony·Marc·Daniel·삼쩜삼·Habit Pixel 등)
+- 차단 잔존: 사서 인터뷰·자관 데이터 누설·사업자 등록 (PO 외부 작업)
+- 통과 앱 (Cycle 89): #31 freelancer-tax-helper (벤치마크 삼쩜삼)·#32 sidehustle-tracker (벤치마크 Habit Pixel)
+
+## 8F/G. PO 영구 정책 (메모리 단일 출처)
+- §8F Pain discovery + cashcow gate → memory feedback_pain_discovery_mandate.md (ADR 0055)
+- §8G Unstoppable continuous mode → memory feedback_unstoppable_continuous_mode.md (ADR 0056)
+
+## 8E. External research 흡수 (Cycle 85·ADR 0054)
+- 17 P-series Light 명령어 + B2C 시장 심층 보고서 박제 = `docs/research/external-2026-05/`
+- 인디 패턴 (Pieter Levels 5%·Tony Dinh 6개월·Marc Lou cross-link·Daniel Vassallo small bets) = 손절·archive 정량 룰
+- 5명 결제 룰 (D+30·D+60·D+90 마일스톤·archive 추천) = ADR 0053 + P44L 통합
+- 페르소나 우선순위 (γ 사서교사 + α 재단 위탁 = Tier 1·δ 기업 = Tier 2·β 작은도서관 = Tier 3·정보누리 잠식)
+- KOLAS III 종료 D-238 (2026-12-31)·일본 NDL JAPAN/MARC 80% 호환·MARC 처리 엔진 80% 재활용 가능
+- 글로벌 4 트랙 추가 (Chrome 확장·Windows 매크로·GPT 래퍼·KORMARC) = 30 앱 + 4 글로벌 = 34 자산
+- monorepo packages/ 승격 = 3번째 사용처 게이트 (Sandi Metz AHA)
+- ADR 0052 정합: 9 즉시 자율 + 5 부분 (코드만) + 3 외부 차단 (P34·P39·P40)
+
 ## 8B. Plan B 무중단 자율 (ADR 0025·PO 2026-05-03 채택)
 - 무중단 자율 사이클 = 7일 단위·P1~P28 큐 (~6.5개월)
 - Cycle 1 = per-block disaggregation publish (강제)

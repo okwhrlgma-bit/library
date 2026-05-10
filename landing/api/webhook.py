@@ -17,6 +17,7 @@ import hashlib
 import hmac
 import json
 import os
+from datetime import datetime, timezone
 from http.server import BaseHTTPRequestHandler
 
 
@@ -136,9 +137,7 @@ class handler(BaseHTTPRequestHandler):
                         "event_type": event_type,
                         "category": category,
                         "payload": payload,
-                        "received_at": __import__("datetime")
-                        .datetime.now(__import__("datetime").timezone.utc)
-                        .isoformat(),
+                        "received_at": datetime.now(timezone.utc).isoformat(),
                     }
                 )
                 mongo_logged = True

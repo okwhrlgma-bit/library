@@ -58,6 +58,8 @@ kormarc-ui = "kormarc_auto.ui.streamlit_app:run"
 kormarc-auto-launcher = "kormarc_auto.cli:run_launcher"
 # T2-2 신규 = console_scripts 통합·.bat 대체
 ka = "kormarc_auto.cli:main"  # short alias·사서 5분 도입
+# Cycle 648 = #15 homoglyph CLI entry_point (사서 1줄 명령·KORMARC 사칭 감사·founder fit ★★★)
+check-homoglyph = "kormarc_auto.text.cli_main:main"
 
 [build-system]
 requires = ["hatchling"]

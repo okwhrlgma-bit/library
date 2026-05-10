@@ -1,0 +1,18 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "kormarc-auto",
+  "name_for_model": "kormarc-auto",
+  "description_for_human": "사서를 위한 KORMARC 자동 생성 SaaS·KOLAS·DLS·알파스 호환·KS X 6006:2023.12 정합",
+  "description_for_model": "사서를 위한 KORMARC 자동 생성 SaaS·KOLAS·DLS·알파스 호환·KS X 6006:2023.12 정합·For paid invocation, agent must obtain license_key from https://buy.polar.sh/polar_cl_NaL9NuSCZItsgM7uUmIuZPV7nxQqgpaGRiKK01YAa3P.",
+  "auth": {
+    "type": "user_http",
+    "authorization_type": "bearer"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://kormarc-auto-landing.vercel.app/openapi.json"
+  },
+  "logo_url": "https://kormarc-auto-landing.vercel.app/logo.png",
+  "contact_email": "okwhrlgma@gmail.com",
+  "legal_info_url": "https://kormarc-auto-landing.vercel.app/terms.html"
+}

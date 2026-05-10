@@ -1,0 +1,31 @@
+# kormarc-auto
+
+> 사서를 위한 KORMARC 자동 생성 SaaS·KOLAS·DLS·알파스 호환·KS X 6006:2023.12 정합
+
+## Service
+- **id**: kormarc-auto
+- **landing**: https://kormarc-auto-landing.vercel.app
+- **api_base**: https://kormarc-auto-landing.vercel.app/api
+- **license**: Proprietary
+
+## For AI Agents
+
+이 서비스는 다른 AI 에이전트(Claude·ChatGPT·Cursor·기타)가 자율 발견·호출·결제할 수 있도록 표준 인터페이스를 제공합니다.
+
+### Capabilities
+- ISBN to KORMARC .mrc
+- 9 자료유형
+- KOLAS·DLS·알파스 호환
+- 880 vernacular
+- 5sec/99.82%
+
+### Payment
+- **pricing**: $15.0/month
+- **buy_url**: https://buy.polar.sh/polar_cl_NaL9NuSCZItsgM7uUmIuZPV7nxQqgpaGRiKK01YAa3P
+- **payment_processor**: Polar.sh (MoR·Stripe Connect Express)
+- **m2m_supported**: yes (license_key auto-generated on payment)
+
+### Discovery
+- **mcp**: see /mcp.json
+- **openapi**: see /openapi.json
+- **ai-plugin**: see /.well-known/ai-plugin.json
