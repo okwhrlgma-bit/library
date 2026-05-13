@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KORMARC 9 자료유형 정밀 가이드 — 사서 실무 표준 (2026)</title>
+<meta name="description" content="KORMARC 통합서지용 9 자료유형 정밀 가이드. 단행본·연속간행물·비도서·전자자료·시청각·녹음·지도·3차원·고서·008 06 코드·KS X 6006-0:2023.12 정합.">
+<meta name="keywords" content="KORMARC 9 자료유형,008 06 코드,KORMARC 단행본,연속간행물 KORMARC,비도서 KORMARC,전자자료 KORMARC,시청각 KORMARC">
+<link rel="canonical" href="https://kormarc-auto-landing.vercel.app/9-material-types-deep-dive.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="KORMARC 9 자료유형 정밀 가이드">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KORMARC 9 자료유형 정밀 가이드",
+  "datePublished": "2026-05-11",
+  "author": { "@type": "Organization", "name": "kormarc-auto" }
+}
+</script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", system-ui, sans-serif; line-height: 1.7; color: #1e293b; max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); color: #78350f; }
+  h2 { font-size: 1.35rem; color: #b91c1c; margin-top: 2rem; padding-bottom: 0.4rem; border-bottom: 2px solid #fed7aa; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+  th, td { padding: 0.6rem 0.7rem; border-bottom: 1px solid #e7e5e4; text-align: left; }
+  th { background: #fef3c7; color: #78350f; font-weight: 700; }
+  code { background: #fef3c7; padding: 0.15rem 0.4rem; border-radius: 0.2rem; font-size: 0.85rem; }
+  .ok { background: #d1fae5; padding: 0.8rem 1rem; border-radius: 0.4rem; color: #065f46; margin: 1rem 0; }
+  .source { font-size: 0.82rem; color: #64748b; font-style: italic; }
+  .cta { background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%); padding: 1.5rem; border-radius: 0.6rem; margin: 2rem 0; text-align: center; }
+  .cta a { display: inline-block; background: #b91c1c; color: #fff; padding: 0.85rem 1.6rem; border-radius: 0.5rem; font-weight: 700; text-decoration: none; margin-top: 0.7rem; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "kormarc-auto",
+      "item": "https://kormarc-auto-landing.vercel.app"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "KORMARC 9 자료유형 정밀 가이드 — 사서 실무 표준 (2026)",
+      "item": "https://kormarc-auto-landing.vercel.app/9-material-types-deep-dive.html"
+    }
+  ]
+}
+</script>
+<!-- i18n_meta_inject -->
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="ja_JP" />
+<meta property="og:locale:alternate" content="zh_CN" />
+<link rel="alternate" hreflang="ko" href="https://kormarc-auto-landing.vercel.app/" />
+<link rel="alternate" hreflang="x-default" href="https://kormarc-auto-landing.vercel.app/" />
+</head>
+<body>
+
+<h1>KORMARC 9 자료유형 정밀 가이드</h1>
+<p class="source">최초 발행: 2026-05-11 · 1차 출처: KS X 6006-0:2023.12 KORMARC 통합서지용·국립중앙도서관</p>
+
+<div class="ok">
+✅ KORMARC 통합서지용 9 자료유형 표준 (KS X 6006-0:2023.12)<br>
+✅ 008 06 코드·9 자료유형 자동 분류·자관 99.82% 정합<br>
+✅ kormarc-auto 1348 tests·9 builder 모듈 통합
+</div>
+
+<h2>1. KORMARC 9 자료유형 매트릭스</h2>
+
+<table>
+  <thead><tr><th>008 06</th><th>자료유형</th><th>kormarc 모듈</th></tr></thead>
+  <tbody>
+    <tr><td><code>s</code></td><td>단행본 단일발행</td><td>builder.py</td></tr>
+    <tr><td><code>m</code></td><td>다권물 (시리즈)</td><td>builder.py</td></tr>
+    <tr><td><code>c</code></td><td>연속간행물 발간중</td><td>serial.py</td></tr>
+    <tr><td><code>d</code></td><td>연속간행물 폐간</td><td>serial.py</td></tr>
+    <tr><td><code>b</code></td><td>비도서·전자자료</td><td>non_book.py·ebook.py</td></tr>
+    <tr><td><code>g</code></td><td>시청각자료 (영상·DVD)</td><td>multimedia.py</td></tr>
+    <tr><td><code>j</code></td><td>녹음자료·오디오북</td><td>audiobook.py</td></tr>
+    <tr><td><code>e</code></td><td>지도자료</td><td>비도서</td></tr>
+    <tr><td><code>r</code></td><td>3차원 입체</td><td>비도서</td></tr>
+    <tr><td>(별도)</td><td>고서·고문헌</td><td>rare_book.py</td></tr>
+  </tbody>
+</table>
+
+<h2>2. 단행본 (008 06 = s, m) — 가장 흔함</h2>
+
+<ul>
+  <li><strong>s</strong>: 단일발행 (1권만 발행·예: 「소년이 온다」)</li>
+  <li><strong>m</strong>: 다권물 (시리즈·예: 「조선왕조실록」 전 90권)</li>
+  <li>kormarc 자동 처리: ISBN 입력 → NL Korea API → 008·245·250·260 자동</li>
+  <li>KDC 6판 AI 추천 (top 3·confidence·reason)</li>
+</ul>
+
+<h2>3. 연속간행물 (008 06 = c, d)</h2>
+
+<ul>
+  <li><strong>c</strong>: 발간중 (예: 「한국도서관협회지」 현재 발간)</li>
+  <li><strong>d</strong>: 폐간 (예: 「○○○ 신문」 발간 중단)</li>
+  <li>ISSN (8자리)·발간 주기 (월간·계간·연간)·발간 이력</li>
+  <li>008 18~21 = 발간 주기 코드</li>
+</ul>
+
+<h2>4. 비도서·전자자료 (008 06 = b)</h2>
+
+<ul>
+  <li>전자책 (EPUB·PDF)·전자저널·DOI·856 URL 필드</li>
+  <li>CrossRef API 자동·DOI 매핑</li>
+  <li>학위논문 (Thesis) = b·502 필드 (학위 정보)</li>
+  <li>NLK 온라인자료과 표준 정합</li>
+</ul>
+
+<h2>5. 시청각 (008 06 = g)</h2>
+
+<ul>
+  <li>DVD·Blu-ray·비디오·교육 영상</li>
+  <li>007 = 매체 유형 코드</li>
+  <li>러닝타임·상영 등급·자막 언어 등</li>
+</ul>
+
+<h2>6. 녹음자료·오디오북 (008 06 = j)</h2>
+
+<ul>
+  <li>오디오북·강연·음악 CD·LP</li>
+  <li>MP3·AAC·FLAC 등 디지털 형식</li>
+  <li>856 = 다운로드 URL (전자자료 결합 시)</li>
+</ul>
+
+<h2>7. 지도자료 (008 06 = e)</h2>
+
+<ul>
+  <li>지도·지도책·항공사진·해도</li>
+  <li>034 = 좌표·축척 코드</li>
+  <li>255 = 수학적 데이터 표시</li>
+</ul>
+
+<h2>8. 3차원 입체 (008 06 = r)</h2>
+
+<ul>
+  <li>지구본·모형·게임·교구·실물</li>
+  <li>007 = 물리적 매체</li>
+  <li>300 = 형태 사항 (재질·크기)</li>
+</ul>
+
+<h2>9. 고서·고문헌 (별도 처리)</h2>
+
+<ul>
+  <li>한국 고전·왕조·필사본·목판본·활자본</li>
+  <li>880 한자 vernacular·왕조 연대→서기 자동</li>
+  <li>F5 사서 슈퍼앱 rare_book.py 모듈</li>
+  <li>국립중앙도서관 고서지 정합</li>
+</ul>
+
+<h2>10. kormarc-auto 자동 분류 (1차 출처)</h2>
+
+<ul>
+  <li>ISBN·ISSN·DOI 입력 시 자동 자료유형 식별</li>
+  <li>NL Korea API + 알라딘 + CrossRef + 사서 수동 fallback</li>
+  <li>9 builder 모듈 통합·자관 99.82% 정합 검증</li>
+  <li>1348 tests·6 skipped·회귀 0</li>
+</ul>
+
+<div class="cta">
+  <h3>🎁 사서 비개발자·도서관 IT 인력 X 환영</h3>
+  <p>9 자료유형 자동·자관 6,000+ 권 dogfood·99.82% 정합<br>
+  KS X 6006-0:2023.12 KORMARC 통합서지용 100% 정합</p>
+  <a href="https://kormarc-auto-landing.vercel.app/">📚 kormarc-auto 시작 →</a>
+</div>
+
+<p class="source" style="margin-top: 2rem;">
+참고: KS X 6006-0:2023.12 KORMARC 통합서지용·국립중앙도서관·KDC 6판·F5 자관 dogfood
+</p>
+
+
+<!-- internal_link_inject -->
+<nav style="border-top:1px solid #ddd;margin-top:32px;padding-top:24px;">
+<h3 style="font-size:16px;margin-bottom:12px;">📚 내부 관련 글</h3>
+<ul style="list-style:none;padding:0;line-height:1.8;">
+  <li><a href="https://kormarc-auto-landing.vercel.app/kdc-6th-deep-dive-guide">KDC 6판 정밀 가이드</a></li>
+  <li><a href="https://kormarc-auto-landing.vercel.app/google5MHHLcG_Czj7-m-XR-R1R0W6t9dKL4tsXclosvg7l14">google5MHHLcG_Czj7-m-XR-R1R0W6t9dKL4tsXclosvg7l14</a></li>
+  <li><a href="https://kormarc-auto-landing.vercel.app/terms-beta">베타 약관</a></li>
+</ul>
+</nav>
+</body>
+</html>

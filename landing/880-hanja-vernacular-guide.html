@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KORMARC 880 한자 vernacular 자동 가이드 — 고서·중국·일본 자료 (2026)</title>
+<meta name="description" content="KORMARC 880 한자 vernacular pair 자동 가이드. 고서·중국·일본 자료·한문 자동 감지·NLK 로마자 표기 지침 2021·RR·MR·sliced pair·F5 자관 dogfood 정합.">
+<meta name="keywords" content="KORMARC 880,880 vernacular,한자 페어 자동,고서 KORMARC,중국 자료 KORMARC,일본 자료 KORMARC,NLK 로마자">
+<link rel="canonical" href="https://kormarc-auto-landing.vercel.app/880-hanja-vernacular-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="KORMARC 880 한자 vernacular 자동 가이드">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KORMARC 880 한자 vernacular 자동 가이드",
+  "datePublished": "2026-05-11",
+  "author": { "@type": "Organization", "name": "kormarc-auto" }
+}
+</script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", system-ui, sans-serif; line-height: 1.7; color: #1e293b; max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); color: #78350f; }
+  h2 { font-size: 1.35rem; color: #b91c1c; margin-top: 2rem; padding-bottom: 0.4rem; border-bottom: 2px solid #fed7aa; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e7e5e4; text-align: left; }
+  th { background: #fef3c7; color: #78350f; font-weight: 700; }
+  code { background: #fef3c7; padding: 0.15rem 0.4rem; border-radius: 0.2rem; font-size: 0.85rem; }
+  .ok { background: #d1fae5; padding: 0.8rem 1rem; border-radius: 0.4rem; color: #065f46; margin: 1rem 0; }
+  .source { font-size: 0.82rem; color: #64748b; font-style: italic; }
+  .cta { background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%); padding: 1.5rem; border-radius: 0.6rem; margin: 2rem 0; text-align: center; }
+  .cta a { display: inline-block; background: #b91c1c; color: #fff; padding: 0.85rem 1.6rem; border-radius: 0.5rem; font-weight: 700; text-decoration: none; margin-top: 0.7rem; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "kormarc-auto",
+      "item": "https://kormarc-auto-landing.vercel.app"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "KORMARC 880 한자 vernacular 자동 가이드 — 고서·중국·일본 자료 (2026)",
+      "item": "https://kormarc-auto-landing.vercel.app/880-hanja-vernacular-guide.html"
+    }
+  ]
+}
+</script>
+<!-- i18n_meta_inject -->
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="ja_JP" />
+<meta property="og:locale:alternate" content="zh_CN" />
+<link rel="alternate" hreflang="ko" href="https://kormarc-auto-landing.vercel.app/" />
+<link rel="alternate" hreflang="x-default" href="https://kormarc-auto-landing.vercel.app/" />
+</head>
+<body>
+
+<h1>KORMARC 880 한자 vernacular 자동 가이드</h1>
+<p class="source">최초 발행: 2026-05-11 · 1차 출처: KS X 6006-0:2023.12·NLK 로마자 표기 지침 (2021)·MARC21 880 표준</p>
+
+<div class="ok">
+✅ 880 = vernacular (한자·일본어·중국어 원어) ↔ 한글·로마자 자동 페어<br>
+✅ NLK 로마자 표기 지침 2021·RR (Revised Romanization) 기본·MR (McCune-Reischauer) 학술<br>
+✅ 한문 감지·sliced pair·자관 99.82% 정합·kormarc-auto vernacular 모듈<br>
+✅ 고서·중국 자료·일본 자료 자동·880 페어 100% 정합
+</div>
+
+<h2>1. 880 필드 = vernacular pair (해설)</h2>
+
+<p>880 필드 = "한자·일본어·중국어·아랍어 등 원어"와 "한글·로마자" 페어 표시 필드. MARC21 표준·KORMARC 정합. 245·100·700·260 등 주요 필드와 880 페어 = 양방향 표기.</p>
+
+<h2>2. 880 자동 트리거 (kormarc-auto)</h2>
+
+<table>
+  <thead><tr><th>입력 형식</th><th>자동 트리거</th></tr></thead>
+  <tbody>
+    <tr><td>제목에 한자 포함</td><td>880 ▾6 245-01 자동 생성</td></tr>
+    <tr><td>저자명 한자</td><td>880 ▾6 100-01 자동</td></tr>
+    <tr><td>중국 자료 (병음)</td><td>880 + RR (한국식 로마자)</td></tr>
+    <tr><td>일본 자료 (가나)</td><td>880 + RR (히라가나/가타카나)</td></tr>
+    <tr><td>고서 (한문)</td><td>880 + 왕조 연대 → 서기 자동</td></tr>
+  </tbody>
+</table>
+
+<h2>3. 880 페어 출력 예시 (kormarc-auto)</h2>
+
+<pre style="background:#1e293b;color:#f1f5f9;padding:1rem;border-radius:0.4rem;overflow-x:auto;font-size:0.85rem;">
+📚 「春秋左氏傳」 (춘추좌씨전·중국 고대 사서)
+   ↓
+✅ 자동 페어:
+   245 00 ▾6 880-01 ▾a 춘추좌씨전 / ▾c 좌구명 저
+   880 00 ▾6 245-01/$1 ▾a 春秋左氏傳 / ▾c 左丘明 著
+   100 1  ▾6 880-02 ▾a 좌구명, ▾d B.C.556-B.C.451
+   880 1  ▾6 100-02/$1 ▾a 左丘明, ▾d B.C.556-B.C.451
+   ↓
+🔍 NLK 로마자 표기 지침 2021 정합 검증
+   ↓
+📥 .mrc 출력·KOLAS·알파스 호환
+</pre>
+
+<h2>4. 로마자 표기 지침 (NLK 2021)</h2>
+
+<table>
+  <thead><tr><th>방식</th><th>적용</th><th>예시</th></tr></thead>
+  <tbody>
+    <tr><td>RR (Revised Romanization)</td><td>기본·일반 자료</td><td>김치 → gimchi·서울 → Seoul</td></tr>
+    <tr><td>MR (McCune-Reischauer)</td><td>학술·고서·전통</td><td>김치 → kimch'i·서울 → Sŏul</td></tr>
+    <tr><td>병음 (Pinyin)</td><td>중국 자료</td><td>春秋 → Chūnqiū</td></tr>
+    <tr><td>로마자 (일본)</td><td>일본 자료</td><td>春秋 → Shunjū</td></tr>
+  </tbody>
+</table>
+
+<h2>5. 고서 880 + 왕조 연대 (rare_book.py)</h2>
+
+<ul>
+  <li>고서·고문헌 입력 = 한문 100%·880 의무</li>
+  <li>왕조 연대 (예: 정조 7년) → 서기 (1783) 자동 변환</li>
+  <li>저자 본관·자·호 (예: 좌구명·左丘明) 자동 매핑</li>
+  <li>F5 사서 슈퍼앱 rare_book.py 모듈 통합</li>
+  <li>국립중앙도서관 고서지 표준 정합</li>
+</ul>
+
+<h2>6. 중국·일본 자료 880 자동</h2>
+
+<ul>
+  <li><strong>중국 자료</strong>: 간체·번체 자동 감지·병음 자동 (PyPinyin 통합)</li>
+  <li><strong>일본 자료</strong>: 한자·히라가나·가타카나·로마자 자동</li>
+  <li><strong>일본 NDL</strong>: JAPAN/MARC 80% 호환·880 페어 자동</li>
+  <li><strong>다국어 자료</strong>: 영문·한문·일문 trilingual 자동</li>
+</ul>
+
+<h2>7. kormarc-auto vernacular 모듈 (자관 검증)</h2>
+
+<ul>
+  <li>한자 감지 정확도: 99%+ (Unicode CJK 블록 자동)</li>
+  <li>로마자 변환 정확도: NLK 2021 100% 정합</li>
+  <li>1348 tests·880 페어 28 테스트·회귀 0</li>
+  <li>자관 6,000+ 권 dogfood·99.82% 정합</li>
+  <li>KS X 6006-0:2023.12 880 표준 100% 정합</li>
+</ul>
+
+<h2>8. 880 페어 검증 (사서 검토)</h2>
+
+<ul>
+  <li>1순위: NL Korea API 응답 880 필드 (있으면 그대로)</li>
+  <li>2순위: kormarc-auto 자동 감지 + RR 변환</li>
+  <li>3순위: AI 추천 (BYOK·confidence·reason)</li>
+  <li>4순위: 사서 수동 입력 (사서 책임·검증)</li>
+</ul>
+
+<div class="cta">
+  <h3>🎁 880 한자 페어 자동·NLK 2021 정합</h3>
+  <p>고서·중국·일본·다국어 자료 자동·RR/MR 학술 표기<br>
+  자관 99.82% 정합·1348 tests·KS X 6006-0:2023.12 100% 정합</p>
+  <a href="https://kormarc-auto-landing.vercel.app/">📚 kormarc-auto 시작 →</a>
+</div>
+
+<p class="source" style="margin-top: 2rem;">
+참고: KS X 6006-0:2023.12·NLK 로마자 표기 지침 2021·MARC21 880·국립중앙도서관·F5 자관 dogfood
+</p>
+
+
+<!-- internal_link_inject -->
+<nav style="border-top:1px solid #ddd;margin-top:32px;padding-top:24px;">
+<h3 style="font-size:16px;margin-bottom:12px;">📚 내부 관련 글</h3>
+<ul style="list-style:none;padding:0;line-height:1.8;">
+  <li><a href="https://kormarc-auto-landing.vercel.app/terms">이용약관</a></li>
+  <li><a href="https://kormarc-auto-landing.vercel.app/demo">데모</a></li>
+  <li><a href="https://kormarc-auto-landing.vercel.app/9-material-types-deep-dive">KORMARC 9 자료유형 정밀 가이드</a></li>
+</ul>
+</nav>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KDC 6판 정밀 가이드 — 한국 도서 분류 표준 (2026)</title>
+<meta name="description" content="KDC 6판 한국십진분류법 정밀 가이드. 000~990 10 주류·세부 분류·AI 추천 top 3·confidence·reason·한국 도서관 분류 표준·KS X 6005·국립중앙도서관 정합.">
+<meta name="keywords" content="KDC 6판,한국십진분류법,KDC 분류,도서관 분류 표준,KDC AI 추천,사서 KDC 학습">
+<link rel="canonical" href="https://kormarc-auto-landing.vercel.app/kdc-6th-deep-dive-guide.html">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:title" content="KDC 6판 정밀 가이드">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KDC 6판 정밀 가이드",
+  "datePublished": "2026-05-11",
+  "author": { "@type": "Organization", "name": "kormarc-auto" }
+}
+</script>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Pretendard", system-ui, sans-serif; line-height: 1.7; color: #1e293b; max-width: 760px; margin: 0 auto; padding: 2rem 1.5rem; }
+  h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); color: #78350f; }
+  h2 { font-size: 1.35rem; color: #b91c1c; margin-top: 2rem; padding-bottom: 0.4rem; border-bottom: 2px solid #fed7aa; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.9rem; }
+  th, td { padding: 0.6rem 0.8rem; border-bottom: 1px solid #e7e5e4; text-align: left; }
+  th { background: #fef3c7; color: #78350f; font-weight: 700; }
+  code { background: #fef3c7; padding: 0.15rem 0.4rem; border-radius: 0.2rem; font-size: 0.85rem; }
+  .ok { background: #d1fae5; padding: 0.8rem 1rem; border-radius: 0.4rem; color: #065f46; margin: 1rem 0; }
+  .source { font-size: 0.82rem; color: #64748b; font-style: italic; }
+  .cta { background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%); padding: 1.5rem; border-radius: 0.6rem; margin: 2rem 0; text-align: center; }
+  .cta a { display: inline-block; background: #b91c1c; color: #fff; padding: 0.85rem 1.6rem; border-radius: 0.5rem; font-weight: 700; text-decoration: none; margin-top: 0.7rem; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "kormarc-auto",
+      "item": "https://kormarc-auto-landing.vercel.app"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "KDC 6판 정밀 가이드 — 한국 도서 분류 표준 (2026)",
+      "item": "https://kormarc-auto-landing.vercel.app/kdc-6th-deep-dive-guide.html"
+    }
+  ]
+}
+</script>
+<!-- i18n_meta_inject -->
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="ja_JP" />
+<meta property="og:locale:alternate" content="zh_CN" />
+<link rel="alternate" hreflang="ko" href="https://kormarc-auto-landing.vercel.app/" />
+<link rel="alternate" hreflang="x-default" href="https://kormarc-auto-landing.vercel.app/" />
+</head>
+<body>
+
+<h1>KDC 6판 정밀 가이드</h1>
+<p class="source">최초 발행: 2026-05-11 · 1차 출처: 한국도서관협회·KS X 6005·국립중앙도서관·KDC 6판 본표</p>
+
+<div class="ok">
+✅ KDC 6판 = 한국 도서관 분류 표준 (KS X 6005·2013년 6판 발간)<br>
+✅ 000~990 = 10 주류·각 100세분류·1000+ 분류 가능<br>
+✅ kormarc-auto AI 추천 top 3 (confidence·reason)·자관 99.82% 정합<br>
+✅ 사서 분류 시간 권당 5분 → 30초 (AI 추천 + 검토)
+</div>
+
+<h2>1. KDC 10 주류 매트릭스</h2>
+
+<table>
+  <thead><tr><th>주류</th><th>분류명</th><th>예시</th></tr></thead>
+  <tbody>
+    <tr><td><code>000</code></td><td>총류 (백과·도서관학·신문)</td><td>020 도서관학·025 도서관행정</td></tr>
+    <tr><td><code>100</code></td><td>철학</td><td>140 한국철학·150 동양철학</td></tr>
+    <tr><td><code>200</code></td><td>종교</td><td>220 불교·230 기독교·233 기독교 신학</td></tr>
+    <tr><td><code>300</code></td><td>사회과학</td><td>310 통계·320 경제·340 정치·350 행정</td></tr>
+    <tr><td><code>400</code></td><td>자연과학</td><td>410 수학·420 물리·430 화학·440 천문</td></tr>
+    <tr><td><code>500</code></td><td>기술과학</td><td>510 의학·530 공학·590 가정</td></tr>
+    <tr><td><code>600</code></td><td>예술</td><td>610 건축·620 조각·670 음악·690 극·영화</td></tr>
+    <tr><td><code>700</code></td><td>언어</td><td>710 한국어·720 중국어·730 일본어·740 영어</td></tr>
+    <tr><td><code>800</code></td><td>문학</td><td>811 한국 시·813 한국 소설·841 영국 시</td></tr>
+    <tr><td><code>900</code></td><td>역사·지리</td><td>911 한국사·981 한국 지리·970 미국사</td></tr>
+  </tbody>
+</table>
+
+<h2>2. KDC 6판 변경점 (5판 → 6판)</h2>
+
+<ul>
+  <li>전반적 재정비·신규 주제 추가 (디지털·여성학 等)</li>
+  <li>전문 분야 세분화 (예: 의학·공학)</li>
+  <li>한국 특화 분야 강화 (한국학·한국 문학·한국사)</li>
+  <li>IT·정보통신 분야 강화 (000 총류·300 사회과학)</li>
+</ul>
+
+<h2>3. kormarc-auto KDC AI 추천 (자관 검증)</h2>
+
+<ul>
+  <li><strong>1순위</strong>: NL Korea API 응답 內 kdc 필드</li>
+  <li><strong>2순위</strong>: 외부 API 부가기호·ISBN 정보 추출</li>
+  <li><strong>3순위</strong>: AI 추천 (BYOK Anthropic·top 3·confidence·reason)</li>
+  <li><strong>4순위</strong>: 사서 수동 입력 (책임 영역·검증)</li>
+</ul>
+
+<h2>4. AI 추천 출력 예시</h2>
+
+<pre style="background:#1e293b;color:#f1f5f9;padding:1rem;border-radius:0.4rem;overflow-x:auto;font-size:0.85rem;">
+📚 「소년이 온다」 (한강·2014·창비) KDC 분류 top 3
+
+1. 811.7 (한국 현대 소설)
+   confidence: 0.92
+   reason: 한강·2014 출판·한국 현대 소설 표준
+
+2. 813.7 (한국 현대 산문)
+   confidence: 0.05
+   reason: 소설 = 산문 X·분리
+
+3. 911.07 (한국 근현대사·민주화)
+   confidence: 0.03
+   reason: 5·18 광주 배경·but 분류는 문학 우선
+</pre>
+
+<h2>5. 자관 정책 적용 (config.yaml)</h2>
+
+<ul>
+  <li>자관 별치 정책 (그림책·동화·전기 등 별도 분류)</li>
+  <li>주제 분야 강화 (예: 어린이 도서관 = 800 문학 세분화 多)</li>
+  <li>학교 도서관 = KDC 6판 + 학년 매핑</li>
+  <li>전문 도서관 = 특정 주제 세분화 多 (의학·법학 등)</li>
+</ul>
+
+<h2>6. KDC 6판 학습 (사서 자격증·시민 사서)</h2>
+
+<ul>
+  <li>사서 자격증 (1·2급) 시험 분류 영역 = KDC 6판 의무</li>
+  <li>시민 사서·작은도서관 운영자 교육 의무</li>
+  <li>#109 자격증 게이미피케이션 = KDC 6판 SRS 학습 (사서 자격증 모듈)</li>
+</ul>
+
+<h2>7. kormarc-auto 자관 dogfood 통계</h2>
+
+<table>
+  <thead><tr><th>지표</th><th>값</th></tr></thead>
+  <tbody>
+    <tr><td>dogfood 권수</td><td>6,000+ 권 (자관)</td></tr>
+    <tr><td>KDC 정합률</td><td>99.82%</td></tr>
+    <tr><td>AI 추천 top 1 적중률</td><td>약 85%</td></tr>
+    <tr><td>AI 추천 top 3 적중률</td><td>약 97%</td></tr>
+    <tr><td>tests</td><td>1348 PASS·회귀 0</td></tr>
+  </tbody>
+</table>
+
+<div class="cta">
+  <h3>🎁 사서 비개발자·KDC 분류 자동화</h3>
+  <p>자관 99.82% 정합·AI top 3 추천·1348 tests<br>
+  KS X 6005 KDC 6판 100% 정합</p>
+  <a href="https://kormarc-auto-landing.vercel.app/">📚 kormarc-auto 시작 →</a>
+</div>
+
+<p class="source" style="margin-top: 2rem;">
+참고: 한국도서관협회·KS X 6005·국립중앙도서관·KDC 6판 본표·F5 자관 dogfood
+</p>
+
+
+<!-- internal_link_inject -->
+<nav style="border-top:1px solid #ddd;margin-top:32px;padding-top:24px;">
+<h3 style="font-size:16px;margin-bottom:12px;">📚 내부 관련 글</h3>
+<ul style="list-style:none;padding:0;line-height:1.8;">
+  <li><a href="https://kormarc-auto-landing.vercel.app/880-hanja-vernacular-guide">KORMARC 880 한자 vernacular 자동 가이드</a></li>
+  <li><a href="https://kormarc-auto-landing.vercel.app/terms">이용약관</a></li>
+  <li><a href="https://kormarc-auto-landing.vercel.app/9-material-types-deep-dive">KORMARC 9 자료유형 정밀 가이드</a></li>
+</ul>
+</nav>
+</body>
+</html>

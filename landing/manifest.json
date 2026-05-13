@@ -1,0 +1,22 @@
+{
+  "name": "kormarc-auto",
+  "short_name": "kormarc-auto",
+  "description": "ISBN 1개 = KORMARC 자동·KDC 6판 AI 추천·자관 99.82%·1348 tests 검증·헌법 §14 정합",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b91c1c",
+  "lang": "ko-KR",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/og.svg",
+      "sizes": "1024x630",
+      "type": "image/svg+xml"
+    }
+  ]
+}

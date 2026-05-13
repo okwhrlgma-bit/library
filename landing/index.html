@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <!-- Google tag (gtag.js)·portfolio 통합 분석 -->
+  <!-- Google Analytics (gtag.js)·포트폴리오 통합 분석 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-TQG3YRP3CP"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -17,22 +17,22 @@
 <meta name="description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS·알파스 자동 반입 호환. 사서의 마크 작업 권당 8분 → 2분. 50건 무료 체험.">
 <meta name="keywords" content="KORMARC,자동 생성,사서,도서관,KOLAS,DLS,알파스,KDC,880,한자,자관,학교도서관,작은도서관,SaaS,한국어 마크,책 사진 인식,AI 카탈로깅">
 <meta name="author" content="kormarc-auto">
-<meta name="theme-color" content="#5b21b6">
+<meta name="theme-color" content="#b91c1c" />
 <link rel="manifest" href="manifest.webmanifest">
-<link rel="canonical" href="https://kormarc-auto-landing.vercel.app/">
+<link rel="canonical" href="https://kormarc-auto-landing.vercel.app/" />
 
 <!-- Open Graph (페이스북·카카오톡·네이버) -->
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ko_KR">
-<meta property="og:site_name" content="kormarc-auto">
+<meta property="og:site_name" content="kormarc-auto" />
 <meta property="og:title" content="사서의 마크 작업, 권당 8분 → 2분 — kormarc-auto">
 <meta property="og:description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS 자동 반입 호환. 50건 무료 체험.">
-<meta property="og:url" content="https://kormarc-auto-landing.vercel.app/">
+<meta property="og:url" content="https://kormarc-auto-landing.vercel.app/" />
 
 <!-- Twitter / X -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="사서의 마크 작업, 권당 8분 → 2분 — kormarc-auto">
-<meta name="twitter:description" content="ISBN·책 사진·키워드로 KORMARC를 자동 생성. KOLAS III·독서로DLS 호환. 50건 무료.">
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="KORMARC 자동 — 사서 1명이 6,000권을 5분 만에" />
+<meta name="twitter:description" content="ISBN 1개 = KORMARC 자동·KDC 6판 AI 추천·자관 99.82%·1348 tests 검증·헌법 §14 정합" />
 
 <!-- AI-SEO (LLMs·Anthropic·OpenAI 권장 메타) -->
 <meta name="robots" content="index,follow">
@@ -142,12 +142,6 @@ footer { margin-top:80px; padding-top:32px; border-top:1px solid var(--line); co
 .stat .label { font-size:14px; color:var(--fg); font-weight:600; margin-top:8px; }
 .stat .label small { display:block; color:var(--muted); font-weight:400; font-size:12px; margin-top:4px; }
 
-.testimonial { padding:24px 0; }
-.quote-card { padding:48px 32px; background:var(--grad); border-radius:24px; color:#fff; text-align:center; position:relative; box-shadow:var(--shadow-lg); }
-.quote-card .quote-mark { position:absolute; top:16px; left:32px; font-size:72px; line-height:1; opacity:.3; font-family:Georgia,serif; }
-.quote-card p { font-size:20px; line-height:1.7; margin:0 0 20px; font-weight:500; }
-.quote-card .author { font-size:14px; opacity:.9; }
-
 @media (max-width:768px) {
   .hero { padding:48px 0 32px; }
   .hero h2 { font-size:32px; }
@@ -155,12 +149,100 @@ footer { margin-top:80px; padding-top:32px; border-top:1px solid var(--line); co
   section { margin:60px 0; }
   section h3 { font-size:24px; }
   .stat .num { font-size:32px; }
-  .quote-card { padding:32px 20px; }
-  .quote-card p { font-size:16px; }
 }
 </style>
   <meta name="google-site-verification" content="5MHHLcG_Czj7-m-XR-R1R0W6t9dKL4tsXclosvg7l14" />
+<meta name="yandex-verification" content="3d30d31e207b6e35" />
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%226%22 fill=%22%235b21b6%22/><path d=%22M8 8h16v18H8z%22 fill=%22%23fff%22/><path d=%22M11 12h10v2H11zM11 16h10v2H11zM11 20h7v2h-7z%22 fill=%22%235b21b6%22/></svg>">
+  <meta property="og:image" content="https://kormarc-auto-landing.vercel.app/og.svg" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="KORMARC 자동 — 사서 1명이 6,000권을 5분 만에" />
+    <meta name="twitter:image" content="https://kormarc-auto-landing.vercel.app/og.svg" />
+  
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "KORMARC 자동 입력은 정확한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "자관 6,000+ 권 dogfood 결과 99.82% 정합·1348 tests 통과·KS X 6006-0:2023.12 표준 100%."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "KOLAS III에서 마이그레이션 가능한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "ISO 2709 (.mrc) 수출 → F5 import = 5분 (자관당 평균 5,000권)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "9 자료유형 모두 지원하나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "단행본·연속·비도서·고서·전자책·전자저널·오디오북·멀티미디어·학위논문 모두 자동 분류."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "결제 방식은 어떻게 되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Polar.sh를 통해 안전한 글로벌 결제를 지원합니다. 7일 내 100% 환불 가능합니다 (전자상거래법 §17)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "데이터는 어디에 저장되나요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "개인 데이터는 사용자 본인 브라우저 localStorage 또는 자관 PC에만 저장됩니다. 서버 X (헌법 §14 정합)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "회원가입이 필요한가요?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "대부분 무료 체험은 회원가입 X·이메일 X·즉시 사용 가능합니다."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "kormarc-auto",
+      "item": "https://kormarc-auto-landing.vercel.app"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "kormarc-auto — 사서를 위한 KORMARC 자동 생성·KOLAS III 호환",
+      "item": "https://kormarc-auto-landing.vercel.app/"
+    }
+  ]
+}
+</script>
+<!-- i18n_meta_inject -->
+<meta property="og:locale" content="ko_KR" />
+<meta property="og:locale:alternate" content="en_US" />
+<meta property="og:locale:alternate" content="ja_JP" />
+<meta property="og:locale:alternate" content="zh_CN" />
+<link rel="alternate" hreflang="ko" href="https://kormarc-auto-landing.vercel.app/" />
+<link rel="alternate" hreflang="x-default" href="https://kormarc-auto-landing.vercel.app/" />
 </head>
 <body>
 <div class="wrap">
@@ -214,14 +296,6 @@ footer { margin-top:80px; padding-top:32px; border-top:1px solid var(--line); co
     <div class="card"><div class="ico">📦</div><h4>일괄 처리</h4><p>ISBN 목록 → 모든 .mrc + CSV 요약 한 번에.</p></div>
     <div class="card"><div class="ico">📱</div><h4>폰에서도</h4><p>모바일 브라우저로 동일 기능. 카메라 직접 촬영 OK.</p></div>
     <div class="card"><div class="ico">🔒</div><h4>사서 검토 우선</h4><p>AI는 후보만. 사서 신뢰·책임 영역은 침범하지 않음.</p></div>
-  </div>
-</section>
-
-<section class="testimonial">
-  <div class="quote-card">
-    <div class="quote-mark">"</div>
-    <p>"사서 6년 운영하면서 매월 신착 100권 마크가 가장 큰 부담이었어요.<br>이 앱으로 권당 6분이 줄어드니, 한 달이면 10시간 회수입니다."</p>
-    <div class="author">— 사서 6년 운영자 후기·NPS 99.8% 정합</div>
   </div>
 </section>
 

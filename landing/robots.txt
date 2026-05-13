@@ -1,15 +1,28 @@
+# robots.txt for kormarc-auto
+# Cycle 1361·seo_assets_inject·2026-05-11
+
 User-agent: *
 Allow: /
 
-# AI 검색 명시 허용 (Anthropic·OpenAI·Perplexity·Google AI 권장)
-User-agent: ClaudeBot
-Allow: /
+# AI 답변 엔진·LLM 봇 명시 허용 (AEO·`feedback_partnership_revenue_focus_2026_05_11`)
 User-agent: GPTBot
 Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
 User-agent: Google-Extended
 Allow: /
+
 User-agent: anthropic-ai
 Allow: /
 
