@@ -3,6 +3,15 @@
 사용법:
     python examples/generate_from_isbn.py 9788936434120
     python examples/generate_from_isbn.py 9788936434120 --output-dir ./my_output
+
+⚠️ KORMARC 필수 필드 사서 책임 영역 (CLAUDE.md §HARD RULES·자동 결정 금지):
+- 300 ▾a 형태사항 (페이지·크기): `pages`·`book_size` 입력 필수·외부 API에서 미제공 시 사서가 직접 입력
+- 005 transaction date: 빌더가 자동 처리·but pymarc 버전별 차이 가능·write 시점 보정 의무
+- 049 ▾l 등록번호: 자관별 prefix·복본 처리·사서 결정 영역
+
+빌더는 누락 필드에 placeholder 자동 채움 X (잘못된 데이터 박제 위험).
+누락 필드 = 명시적 한국어 경고 출력 (정직성·검증 시스템 정합).
+사서가 직접 확인 후 입력하는 것이 KORMARC 정합 100% 보장.
 """
 
 from __future__ import annotations
