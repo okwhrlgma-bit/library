@@ -16,9 +16,6 @@ import importlib.util
 import sys
 from pathlib import Path
 
-import pytest
-
-
 # webhook.py module load (Vercel serverless·sys.path 외)
 _WEBHOOK_PATH = (
     Path(__file__).resolve().parents[1] / "landing" / "api" / "webhook.py"
@@ -39,7 +36,7 @@ _classify_polar_event = _module._classify_polar_event
 
 def _make_polar_signature(secret: str, payload: bytes, timestamp: str = "1700000000") -> str:
     """Polar 표준 헤더 = t=timestamp,v1=hex_sig."""
-    signed = f"{timestamp}.".encode("utf-8") + payload
+    signed = f"{timestamp}.".encode() + payload
     sig = hmac.new(secret.encode("utf-8"), signed, hashlib.sha256).hexdigest()
     return f"t={timestamp},v1={sig}"
 

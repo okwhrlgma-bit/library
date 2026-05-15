@@ -37,7 +37,7 @@ def _get_secret(key: str, default: str = "") -> str:
 
         if hasattr(st, "secrets") and key in st.secrets:
             return str(st.secrets[key])
-    except Exception:  # noqa: BLE001 — Streamlit secrets 미설정 시 graceful fallback
+    except Exception:
         pass
     return os.environ.get(key, default)
 

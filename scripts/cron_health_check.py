@@ -16,7 +16,7 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import datetime, timedelta, timezone
+from datetime import UTC, datetime, timedelta
 
 
 def calculate_expiry(registered_iso: str, days: int = 7) -> datetime:
@@ -27,7 +27,7 @@ def calculate_expiry(registered_iso: str, days: int = 7) -> datetime:
 
 def hours_until_expiry(expiry: datetime) -> float:
     """현재 → 만료 시간 (시간 단위)."""
-    now = datetime.now(timezone.utc)
+    now = datetime.now(UTC)
     delta = expiry - now
     return round(delta.total_seconds() / 3600.0, 1)
 

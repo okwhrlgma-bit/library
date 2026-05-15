@@ -1,12 +1,12 @@
 """Cycle 498 — homoglyph 정규화 + 공격 탐지 (#15 opac_homoglyph_norm·founder fit ★★★)."""
 
 from kormarc_auto.text import (
-    normalize_for_search,
-    detect_homoglyph_attack,
-    contains_zero_width,
     audit_kormarc_record_homoglyph,
-    normalize_kormarc_field,
     build_homoglyph_sanity_report_kr,
+    contains_zero_width,
+    detect_homoglyph_attack,
+    normalize_for_search,
+    normalize_kormarc_field,
 )
 
 

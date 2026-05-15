@@ -16,7 +16,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from kormarc_auto.text import build_homoglyph_sanity_report_kr  # noqa: E402
+from kormarc_auto.text import build_homoglyph_sanity_report_kr
 
 
 def parse_kv_args(args: list[str]) -> dict:

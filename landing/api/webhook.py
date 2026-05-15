@@ -17,7 +17,7 @@ import hashlib
 import hmac
 import json
 import os
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from http.server import BaseHTTPRequestHandler
 
 
@@ -37,7 +37,7 @@ def _verify_polar(payload: bytes, sig_header: str, secret: str) -> bool:
             sig = v.strip().lower()
     if not (timestamp and sig):
         return False
-    signed = f"{timestamp}.".encode("utf-8") + payload
+    signed = f"{timestamp}.".encode() + payload
     try:
         expected = hmac.new(
             secret.encode("utf-8"), signed, hashlib.sha256
@@ -72,7 +72,7 @@ def _classify_polar_event(event_type: str) -> str:
 class handler(BaseHTTPRequestHandler):
     """Vercel Python serverless handler (POST·GET 둘 다)."""
 
-    def do_GET(self):  # noqa: N802
+    def do_GET(self):
         """헬스 체크."""
         self.send_response(200)
         self.send_header("Content-Type", "application/json; charset=utf-8")
@@ -89,7 +89,7 @@ class handler(BaseHTTPRequestHandler):
             ).encode("utf-8")
         )
 
-    def do_POST(self):  # noqa: N802
+    def do_POST(self):
         """Polar webhook 수신·검증·로그."""
         content_length = int(self.headers.get("Content-Length", 0))
         body = self.rfile.read(content_length) if content_length else b""
@@ -137,11 +137,11 @@ class handler(BaseHTTPRequestHandler):
                         "event_type": event_type,
                         "category": category,
                         "payload": payload,
-                        "received_at": datetime.now(timezone.utc).isoformat(),
+                        "received_at": datetime.now(UTC).isoformat(),
                     }
                 )
                 mongo_logged = True
-            except Exception:  # noqa: BLE001 — webhook 응답 우선·DB 로그 실패는 무시
+            except Exception:
                 mongo_logged = False
 
         self.send_response(200)
