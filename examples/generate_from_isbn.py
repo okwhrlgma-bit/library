@@ -21,6 +21,14 @@ import logging
 import sys
 from pathlib import Path
 
+# Windows cp949 환경에서 ✓·✗ 등 유니코드 문자 출력 시 UnicodeEncodeError 회피 (한국 사서 PC 정합)
+if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except (AttributeError, OSError):
+        pass
+
 from dotenv import load_dotenv
 
 # src 경로 추가 (개발 시 pip install -e . 안 한 상태에서도 동작)
