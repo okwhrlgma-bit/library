@@ -4,6 +4,34 @@
 
 > 새 SaaS에 적용 시 어느 버전을 가져왔는지 `decisions.md`에 기록하면 추후 동기화가 쉬워집니다.
 
+## [Unreleased] - 2026-05-20 외부 사서 친화 정직 헤더 + F5 spec + B1 SEO 시드 (6/1 가동 직전)
+
+### Added (3 commits·5/20 19:23~19:42)
+- `README.md` §0 정직 헤더 — 외부 사용자 0명·매출 ₩0·1차 베타·HARD RULE 명시 (`19f57dd`)
+- `BACKLOG.md` (root) — P0~P10 정직 시드·매주 갱신·`_meta/184` 정합 (`19f57dd`)
+- `docs/F5_BOOKDANBI_SPEC.md` — F5-1~9 모듈 spec·30분→5분·83% 절감·`_meta/172` 정합 (`19f57dd`)
+- `docs/self-assessment/README.md` — 5/14 동결 정직 README (`19f57dd`)
+- `.gitignore` `.vercel` 추가 (`19f57dd`)
+- `landing/index.html` hero amber 정직 알랏 박스 (외부 0명·자관 PILOT 1관·"안 산다" 환영) (`d7ab0f1`)
+- `DECISIONS.md` 5/20 결정 (`d7ab0f1`)
+- `learnings.md` 5/19~5/20 신규 학습 9건 (`d7ab0f1`)
+- `docs/B1_SEO_BLOG_5_SEEDS.md` — B1 SEO 블로그 5건·6월 SEO 빌드업·2027.05 시즌 (`768e281`)
+
+### Honest Header (영원 의무)
+- 외부 사용자: 0명·매출: ₩0·1차 베타·자관 PILOT 1관 round-trip 100%
+- 사서 5/18 "안 산다" 정직 인정 후 6/1 외부 사서 1cm 검증 시작
+
+### Verification
+- ruff: All checks passed·코드 변경 X·5/22 라이브 D-2 정합·HARD RULE 정합
+- 9 파일 변경·730 lines·3 commits·3 push
+
+### External Memory References (영원 박제)
+- `_meta/168·170·171·172·173·177·185` (수익화·F5·B1·사서 모집·정직 헤더·자기 회복)
+- `feedback_revenue_focus_no_company_drag_2026_05_20` (회사 끌려가지 X·헌법급)
+- `feedback_self_recovery_priority_2026_05_20` (자기 회복 영원·헌법급)
+
+---
+
 ## [Unreleased] - Cycle 60·61 UI/UX + 페르소나 깊이 시뮬 + 상업성/SEO/AEO/GEO
 
 ### Added (Cycle 61·Part 96·ADR 0045)
