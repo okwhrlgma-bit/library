@@ -2474,4 +2474,58 @@ with contextlib.suppress(AttributeError, OSError):
 - 패턴: 56 자기 진단 모두 동일 결론·자가 검증 4 helper 모두 PO 외부 작업 권장
 - 매출 영향: 변동 X (Productive Avoidance 절대적·1 PO 외부 작업 = 313+ cycle 압도적 ↑)
 
+---
+
+## 2026-05-19~20 신규 학습 (외부 LLM 진단 + 본 영역 자율 모드)
+
+### 사용자 명시 우선 룰 (2026-05-19·헌법급)
+- 사실: PO "전부 진행"·"왜 미완료인데 작동을 멈춰" 명시 = 박제 자제 룰 자동 무력화
+- 패턴: 자율 사이클 (사용자 자고 있을 가능성)만 박제 자제 적용
+- 매출 영향: HIGH (진행 가속·외부 1명 1cm 검증 의무 정합)
+- 관련: `_meta/167`·`feedback_self_upgrade_learning_unfinished_2026_05_20`
+
+### PowerShell -replace 한글 인코딩 손상 (2026-05-19)
+- 사실: PowerShell 5.1 `-replace` UTF-8 저장 시 한글 BOM 손상·TSC Unterminated string literal
+- 패턴: Edit tool 의무·git mv·git checkout만 사용 (텍스트 변환 회피)
+- 매출 영향: 변동 X (개발 효율 ↑)
+
+### TSC PASS만으로 정합 누락 발견 X (2026-05-19)
+- 사실: TypeScript 컴파일·빌드 PASS만으로 발견 못 한 정합 누락 6건
+- 패턴: grep 4단계 자체 점검 + `scripts/check_v3_alignment.mjs` 자동화
+- 매출 영향: 변동 X (검증 자동화)
+
+### "%·완벽" feelings 표현 = 가짜 정확성 (2026-05-19)
+- 사실: 정량 수치 (%) 사용·실제 측정 X·Verifiability constraint 위반
+- 패턴: exit codes (TSC 0·빌드 PASS·tests 1287/1287·자관 round-trip 100%) 객관 결과만 사용
+- 매출 영향: 변동 X (정직 매트릭스 영원·sycophancy 회피)
+
+### 상사 보고 자료 4 분류 명시 의무 (2026-05-19)
+- 사실: PO 명시 "검토인지 의사결정 필요인지 보고인지"·자료 첫 줄 분류 미명시
+- 패턴: `[검토 요청]`·`[의사 결정 요청]`·`[단순 보고]`·`[진척 공유]` 첫 줄 명시 의무
+- 매출 영향: MID (회사 영역 보고 자료 정합·PO 본업 안정)
+
+### 본 영역 = 수익화 영원·회사 끌려가지 X (2026-05-20·헌법급)
+- 사실: PO "너의 목표는 수익화·회사에 끌려가지 말것" 명시
+- 패턴: 집 PC Claude = 수익화 자율 (kormarc-auto·F5·B1·정부 자금)·회사 영역 X
+- 매출 영향: HIGH (본 영역 자율 가속·6/1 가동 직전 모든 자료 준비 완료)
+- 관련: `_meta/168~185`·`feedback_revenue_focus_no_company_drag_2026_05_20`
+
+### 자기 회복 영원 우선 룰 (2026-05-20·헌법급)
+- 사실: PO ADHD·1개월차·D 평가·5/22 라이브 D-2·콘서타 18mg
+- 패턴: PO "전부 진행" 명시도 자기 회복 영역 침해 X·새벽 3시 이후 작업 절대 회피
+- 매출 영향: HIGH (PO 본업 안정 = 가족 자금원 영원 우선·수익화 부업 PO 송금 목표)
+- 관련: `_meta/185`·`feedback_self_recovery_priority_2026_05_20`
+
+### 외부 사서 0명 시 v0.8 알파 빌드 X (2026-05-20·정합 의무)
+- 사실: 외부 사서 5/18 "안 산다" 정직 인정 후 = F5 모듈 검증 의무
+- 패턴: 외부 사서 1명 1cm 검증 후 F5 강화·5명 모두 "안 산다" = F5 폐기·B1 전환
+- 매출 영향: HIGH (정직 매트릭스 영원·sycophancy 회피·외부 1명 1cm 평가)
+- 관련: `feedback_dogfood_ux_design_fail_2026_05_15`·`feedback_meta_critique_action_2026_05_15`
+
+### 정직 헤더 외부 사서 진입 시 의무 (2026-05-20)
+- 사실: 6/1 사서이마을·smalllibrary·학교도서관저널 모집 시 외부 사서 첫 진입
+- 패턴: README §0 + landing hero amber 박스 + BACKLOG + spec 모두 정직 헤더 (외부 0명·매출 ₩0)
+- 매출 영향: HIGH (사서 신뢰성 ↑·결제 의향 ↑·"안 산다" 환영 = 정직 평가 의무)
+- 관련: commit `19f57dd` + 본 commit (landing + decisions + learnings)
+
 
