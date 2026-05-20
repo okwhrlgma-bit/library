@@ -100,3 +100,5 @@ backups/
 
 # 참고자료 (KORMARC PDF·HWP·법령 등 — git 추적 제외, 너무 큼)
 참고자료/
+
+.vercel
